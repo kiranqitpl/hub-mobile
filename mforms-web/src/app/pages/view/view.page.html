@@ -1,0 +1,371 @@
+<ion-content>
+  <div class="toolbar">
+    <ion-text>Details</ion-text>
+    <ion-buttons class="back">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <div class="container">
+    <div class="ion-margin-top ion-margin-bottom">
+      <p>Incident Report</p>
+    </div>
+
+
+    <div class="activeBackground">
+      <!---------------------------------------Incident Detalis----------------------------------->
+      <div class="headerTitle">
+        <p>Incident</p>
+      </div>
+      <ion-radio-group value="Actual">
+        <ion-item class="ra" lines="none">
+          <ion-radio value="Actual" checked></ion-radio>
+          <ion-label>{{incedent}}</ion-label>
+        </ion-item>
+      </ion-radio-group>
+      <hr/>
+      <!---------------------------------------Incident Detalis----------------------------------->
+
+      <!---------------------------------------Classification----------------------------------->
+      <div class="headerTitle">
+        <p>Classification</p>
+      </div>
+      <ion-row class="ion-no-padding" *ngIf="classificationChekBox.length > 0">
+        <ion-col size="6" *ngFor="let entry of classificationChekBox">
+          <ion-item class="ion-no-padding ra" lines="none" *ngIf="entry!==''">
+            <img src="./assets/check.png" class="ion-margin-end" />
+            <ion-label>{{entry}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <p class="question">Date of Incident</p>
+      <p class="question">{{dateOfIncident}}</p>
+
+      <p class="question">Time Of Incident</p>
+      <p class="question">{{timeOfIncident}}</p>
+
+      <p class="question">Date Reported</p>
+      <p class="question">{{dateReported}}</p>
+
+      <p class="question">Time Reported</p>
+      <p class="question">{{timeReported}}</p>
+
+      <div *ngIf="location!==''">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>{{location}}</ion-label>
+        </ion-item>
+      </div>
+      <ion-text *ngIf="location == 'Add Location'" class="regularTexrt">{{addLocation}}</ion-text>
+      <ion-text *ngIf="location == 'Choose Location'" class="regularTexrt">{{locationSelection}}</ion-text>
+      <ion-row class="ion-no-padding">
+        <ion-col size="6" *ngIf="shiftType!==''">
+          <p class="head">Shift Type</p>
+          <p class="value">{{shiftType}}</p>
+        </ion-col>
+        <ion-col size="6" *ngIf="superVisor!==''">
+          <p class="head">Supervisor</p>
+          <p class="value">{{superVisor}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-no-padding">
+        <ion-col size="12">
+          <p class="head">Name of Manager</p>
+          <p class="value">{{nameOfManager}}</p>
+        </ion-col>
+      </ion-row>
+      <hr/>
+      <!---------------------------------------Classification----------------------------------->
+     
+      <!---------------------------------------Photography----------------------------------->
+      <div *ngIf="imagePath !==''">
+        <div class="headerTitle">
+          <p>Photography</p>
+        </div>
+        <div class="ion-text-center" *ngIf="imagePath !==''">
+          <img src="{{imagePath}}" class="img-responsive">
+        </div>
+        <div *ngIf="imagePath ==''">
+          <h6 class="ion-text-center ion-no-margin">No Img Found</h6>
+        </div>
+        <hr />
+      </div>
+      <!---------------------------------------Photography----------------------------------->
+
+      <!---------------------------------------Incident Description----------------------------------->
+      <div class="headerTitle">
+        <p>Incident Description</p>
+      </div>
+      <p class="question">Description of incident (note: You must not use any personal details or names)</p>
+      <p class="value">{{descriptionIncident}}</p>
+      <p class="question">Immediate action taken</p>
+      <p class="value">{{immediateAction}}</p>
+      <ion-row class="ion-no-padding" *ngIf="insertPhotoisChecked">
+        <ion-col size="12">
+          <ion-item class="ion-no-padding ra" lines="none">
+            <img src="./assets/check.png" class="ion-margin-end" />
+            <ion-label>Insert Photo</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <div class="ion-text-center" *ngIf="insertPhotoisChecked">
+        <img src="{{imagePath2}}" class="img-responsive">
+      </div>
+      <div *ngIf="alcoholTest!==''">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Alcohol test completed</ion-label>
+        </ion-item>
+        <ion-text class="regularTexrt">{{alcoholTest}}</ion-text>
+      </div>
+      <div *ngIf="drugTest!==''">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Drug test completed</ion-label>
+        </ion-item>
+      </div>
+      <ion-text class="regularTexrt">{{drugTest}}</ion-text>
+      <hr />
+      <!---------------------------------------Incident Description----------------------------------->
+
+      <!---------------------------------------------Injury-------------------------------------------->
+
+      <div class="headerTitle">
+        <p>Injury</p>
+      </div>
+      <div *ngFor="let item of person_Array;let i = index">
+        <ion-card class="ion-no-padding ion-no-margin">
+          <p class="question">Person {{i+1}} Details</p>
+          <div *ngIf="item?.fullNameOfInjuredPerson">
+            <p class="question">Full name of Injured person</p>
+            <p class="value">{{item?.fullNameOfInjuredPerson}}</p>
+          </div>
+          <ion-row class="ion-no-padding ion-no-margin">
+            <ion-col size="6" class="ion-no-padding" *ngIf="item?.gender !==''">
+              <p class="question">Gender</p>
+              <p class="value">{{item?.gender}}</p>
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding" *ngIf="item?.dateOfBirth !==''">
+              <p class="question">Date of Birth</p>
+              <p class="value">{{item?.dateOfBirth|date}}</p>
+            </ion-col>
+          </ion-row>
+          <div *ngIf="item?.returnToNormalDuties !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Return to Normal Duties</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.returnToNormalDuties}}</p>
+          </div>
+          <div *ngIf="item?.alternate_duties !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Return to Alternate Duties</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.alternate_duties}}</p>
+          </div>
+          <div *ngIf="item?.part_of_body_injured_occured !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Part of Body Injured Occured</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.part_of_body_injured_occured}}</p>
+          </div>
+
+          <div *ngIf="item?.was_immediate_treatment !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Was Immediate Treatment Given</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.was_immediate_treatment}}</p>
+          </div>
+
+
+          <div *ngIf="item?.immediate_treatment_given_explanation !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Immediate Treatment Given Explanation</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.immediate_treatment_given_explanation}}</p>
+          </div>
+
+          <div *ngIf="item?.immediate_treatment_person_name !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Immediate Treatment Person_name</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.immediate_treatment_person_name}}</p>
+          </div>
+
+          <div *ngIf="item?.immediate_treatment_person_number !==''">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/radio.png" class="ion-margin-end" />
+              <ion-label>Immediate Treatment Person Number</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top">{{item?.immediate_treatment_person_number}}</p>
+          </div>
+          <div *ngIf="item?.injurryCheckBox.length>0">
+            <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+              <img src="./assets/check.png" class="ion-margin-end" />
+              <ion-label>Initial Injury/illness classification</ion-label>
+            </ion-item>
+            <p class="regularTexrt value ion-margin-top" *ngFor="let i of item?.injurryCheckBox">
+              <ion-text *ngIf="i.isChecked">{{i.val}},</ion-text>
+            </p>
+          </div>
+          <hr />
+        </ion-card>
+      </div>
+      <hr />
+      <!---------------------------------------------Injury-------------------------------------------->
+
+      <!---------------------------------------------Environmental-------------------------------------------->
+      <div class="headerTitle">
+        <p>Environmental</p>
+      </div>
+      <p class="question">Immediate action taken to minimize Environment impact</p>
+      <p class="value">{{environmentActionTaken}}</p>
+      <div *ngIf="chemicalSplit!==''">
+        <ion-item class="ion-no-padding ra ion-no-margin" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Was the chemical split?</ion-label>
+        </ion-item>
+        <p class="regularTexrt value ion-margin-top">
+          {{chemicalSplit}}
+        </p>
+      </div>
+      <div *ngIf="nameOfChemical!==''">
+        <p class="question">Name of chemical</p>
+        <p class="value">{{nameOfChemical}}</p>
+      </div>
+      <div *ngIf="approximateQtyofChemical">
+        <p class="question">Approximate Qty of Chemical</p>
+        <p class="value">{{approximateQtyofChemical}}</p>
+      </div>
+      <div class="ion-text-center" *ngIf="insertPhotoisChecked">
+        <div *ngIf="imagePath3 !== '' ">
+          <img src="{{imagePath3}}" class="img-responsive">
+        </div>
+      </div>
+      <div *ngIf="emergencySpill!==''">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Was the emergency spill kit used ?</ion-label>
+        </ion-item>
+        <p class="regularTexrt value ">{{emergencySpill}}</p>
+      </div>
+      <hr />
+      <!---------------------------------------------Environmental-------------------------------------------->
+
+      <!---------------------------------------------Reputation-------------------------------------------->
+      <div class="headerTitle">
+        <p>Reputation</p>
+      </div>
+      <div *ngIf="individualChecked">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/check.png" class="ion-margin-end" />
+          <ion-label>Was the reputation damages an individual or Company</ion-label>
+        </ion-item>
+      </div>
+      <p class="regularTexrt value" *ngIf="individualChecked">Individual</p>
+      <p class="regularTexrt value" *ngIf="companyChecked">Company</p>
+      <div *ngIf="individualChecked">
+        <p class="question">How has the Individual's reputation been damaged?</p>
+        <p class="value">{{individualReputationDamaged}}</p>
+      </div>
+      <div *ngIf="companyChecked">
+        <p class="question">How has the Company reputation been damaged?</p>
+        <p class="value">{{companyReputatonDamaged}}</p>
+      </div>
+
+      <div *ngIf="nagativeEffetct !==''">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Was the nagative effect internal or external</ion-label>
+        </ion-item>
+        <p class="regularTexrt value ">{{nagativeEffetct}}</p>
+      </div>
+      <p class="question">Name of any witness</p>
+      <p class="value">{{nameOfAnyWitness}}</p>
+      <!-- <p class="question">Contact of any witness</p>
+      <p class="value">{{contactOfAnyWitness}}</p> -->
+      <p class="question" *ngIf="possibleOutcomeOfIncident !== ''">What is the possible outcome of this incident ?</p>
+      <p class="value">{{possibleOutcomeOfIncident}}</p>
+      <p class="question" *ngIf="imagePath4 !==''">Upload evidence of the reputation damage</p>
+      <div class="ion-text-center" *ngIf="imagePath4 !==''">
+        <img src="{{imagePath4}}" class="img-responsive">
+      </div>
+      <hr/>
+      <!---------------------------------------------Reputation-------------------------------------------->
+
+      <!---------------------------------------------Security-------------------------------------------->
+
+      <div class="headerTitle" *ngIf="securityRadio!=='' && securityRadio!=='undefined'">
+        <p>Security</p>
+      </div>
+      <div *ngIf="securityRadio!=='' && securityRadio!=='undefined'">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>{{securityRadio}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="securityRadio =='Theft'">
+        <p class="question">What Has Been Stolen Item ? </p>
+        <p class="value">{{what_has_been_stolen_item}}</p>
+
+        <p class="question">What Is the specific Securities Incident ?</p>
+        <p class="value">{{what_is_the_specific_securities_incident}}</p>
+        <div>
+          <p class="question">Approximate value of stolen item</p>
+          <p class="value">{{approximate_value_of_stolen}}</p>
+        </div>
+      </div>
+      <div *ngIf="securityRadio=='IT'">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>What kind of IT security incident?</ion-label>
+        </ion-item>
+        <p class="regularTexrt value ion-margin-top" *ngFor="let i of itsecurityCheckbox">
+          <ion-text *ngIf="i.isChecked">{{i.val}},</ion-text>
+        </p>
+      </div>
+      <hr />
+      <!---------------------------------------------Security-------------------------------------------->
+
+      <!---------------------------------------------Asset-------------------------------------------->
+      <div class="headerTitle">
+        <p>Asset</p>
+      </div>
+      <p class="question">Asset Description</p>
+      <p class="value">{{assetDescription}}</p>
+      <div *ngIf="assetNumber=='' && assetNumber=='undefined'">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Does asset have a member?</ion-label>
+        </ion-item>
+        <p class="regularTexrt value">{{assetNumber}}</p>
+      </div>
+      <div *ngIf="assetNumber=='Yes'">
+        <p class="question">Asset Number</p>
+        <p class="value">{{assetsNumbers}}</p>
+      </div>
+      <p class="question" *ngIf="imagePath5!==''">Upload photo of damage</p>
+      <div class="ion-text-center" *ngIf="imagePath5 !==''">
+        <img src="{{imagePath5}}" class="img-responsive">
+      </div>
+      <hr/>
+      <!---------------------------------------------Asset-------------------------------------------->
+
+      <!---------------------------------------------Report-------------------------------------------->
+      <div class="headerTitle">
+        <p>Report</p>
+      </div>
+      <p class="question">What could have been done differently?</p>
+      <p class="value">{{doneDifferently}}</p>
+      <!---------------------------------------------Report-------------------------------------------->
+
+    </div>
+  </div>
+</ion-content>

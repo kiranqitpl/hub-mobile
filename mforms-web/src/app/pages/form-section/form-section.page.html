@@ -1,0 +1,17 @@
+<ion-content>
+  <div class="toolbar">
+    <ion-text>Sections</ion-text>
+    <ion-buttons class='back'>
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <div class="container">
+    <div class="btnView">
+      <ion-button class="login-btn" *ngFor="let item of data" (click)="next(item)">
+        {{item}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
