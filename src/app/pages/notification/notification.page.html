@@ -1,0 +1,37 @@
+<ion-content>
+  <div class="toolbar">
+    <ion-text>Notification</ion-text>
+    <ion-buttons class='back'>
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='logout'>
+      <ion-button (click)="logOut()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
+  <div class="container">
+    <ion-row>
+      <ion-col size="10">
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="trash" (click)="onDelete()"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-card *ngFor="let notification of notificationData; let i=index;">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="2">
+            <ion-checkbox (ionChange)="onDeleteDataSelect(notification.id)"></ion-checkbox>
+          </ion-col>
+          <ion-col size="10" (click)="onNotification(notification.id,notification.form_type)">
+            {{notification.message}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
