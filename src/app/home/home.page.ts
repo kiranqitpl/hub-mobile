@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 
 export class HomePage implements OnInit {
 
-  data = ["Admin", "Company", "Projects", "Workshops", "WHSE"];
+  data = ["Admin", "Company", "Projects", "Workshops", "Safety"];
   pageName: string;
 
   constructor(

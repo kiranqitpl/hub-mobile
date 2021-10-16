@@ -109,12 +109,13 @@ export class NotificationPage implements OnInit {
     formData.append('form_type', formType);
     this.globalService.postData('api/notification/getFormByNotificationID', formData).
       subscribe(result => {
+        console.log('result',result);
         if (result['status']) {
-          localStorage.setItem("singleView", JSON.stringify(result['data']))
+          // localStorage.setItem("singleView", JSON.stringify(result['data']))
           if (formType == this.globalService.formType_user) {
-            this.nav.navigateForward('view');
+            this.nav.navigateForward('view/'+result['data'].id);
           } else if (formType == this.globalService.formType_investigator) {
-            this.nav.navigateForward('investigation-view');
+            this.nav.navigateForward('investigation-view/'+result['data'].id);
           }
         }
       })

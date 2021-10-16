@@ -18,14 +18,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <!-- <div class="toolbar">
-    <ion-text>Edit Form</ion-text>
-    <ion-buttons class="back">
-      <ion-button (click)="goBack()">
-        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </div> -->
+
   <div class="container">
     <p>Incident Report</p>
   </div>
@@ -78,6 +71,8 @@
           <ion-input placeholder="Enter here" [(ngModel)]="possibleConsequence"></ion-input>
         </div>
       </div>
+
+      <!-------------------------------------------------Classification---------------------------------------------->
       <div *ngIf="selected==item && selected=='Classification'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -96,24 +91,26 @@
         </ion-list>
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Date of Incident</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date"
-            (ionChange)="dateSelect($event,'incident')" [(ngModel)]="dateOfIncident">
+          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date" (ionChange)="dateSelect($event,'incident')"
+            [(ngModel)]="dateOfIncident">
           </ion-datetime>
         </ion-item>
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Time of Incident</ion-label>
-          <ion-datetime displayFormat="HH:mm" placeholder="Select Time" (ionChange)="timeSelect($event,'timeIncident')" [(ngModel)]="timeOfIncident">
+          <ion-datetime displayFormat="HH:mm" placeholder="Select Time" (ionChange)="timeSelect($event,'timeIncident')"
+            [(ngModel)]="timeOfIncident">
           </ion-datetime>
         </ion-item>
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Date Reported</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date"
-            (ionChange)="dateSelect($event,'reported')" [(ngModel)]="dateReported">
+          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date" (ionChange)="dateSelect($event,'reported')"
+            [(ngModel)]="dateReported">
           </ion-datetime>
         </ion-item>
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Time Reported</ion-label>
-          <ion-datetime displayFormat="HH:mm" placeholder="Select Time" (ionChange)="timeSelect($event,'timeReported')" [(ngModel)]="timeReported">
+          <ion-datetime displayFormat="HH:mm" placeholder="Select Time" (ionChange)="timeSelect($event,'timeReported')"
+            [(ngModel)]="timeReported">
           </ion-datetime>
         </ion-item>
         <ion-radio-group [(ngModel)]="location">
@@ -140,7 +137,8 @@
           <p class="question">Choose Location</p>
           <ion-item class="ra" lines="none">
             <ion-select placeholder="Select Location" interface="action-sheet" [(ngModel)]="locationSelection">
-              <ion-select-option value="{{item?.location_name}}" *ngFor="let item of locationList">{{item?.location_name}}
+              <ion-select-option value="{{item?.location_name}}" *ngFor="let item of locationList">
+                {{item?.location_name}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -166,12 +164,14 @@
           </ion-buttons>
         </ion-item>
       </div>
+      <!-------------------------------------------------Classification---------------------------------------------->
+      <!-------------------------------------------------Photography------------------------------------------------->
       <div *ngIf="selected==item && selected=='Photography'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
           <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
         </div>
-        <hr />        
+        <hr />
         <div *ngIf="platformCheck === 'cordova'">
           <ion-button class="camera" expand="block" (click)="selectImage(1)">Upload Image</ion-button>
           <img src="{{imagePath}}" class="img-responsive" *ngIf="imagePath!==''" />
@@ -183,6 +183,9 @@
           </div>
         </div>
       </div>
+
+      <!-------------------------------------------------Photography-------------------------------------------------->
+      <!-------------------------------------------------Incident Description----------------------------------------->
       <div *ngIf="selected==item && selected=='Incident Description'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -282,6 +285,8 @@
           </div>
         </div>
       </div>
+      <!-------------------------------------------------Incident Description----------------------------------------->
+      <!-------------------------------------------------Injury------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Injury'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -323,10 +328,11 @@
           <p class="question">Full Name of Injured Person</p>
           <ion-item class="ra">
             <ion-select placeholder="{{person_one_details.injured_person_option}}" interface="action-sheet"
-              [(ngModel)]="person_one_details.fullNameOfInjuredPerson" value={{person_one_details.injured_person_option}}>            
-                <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
-                  {{item?.name_of_witness}}
-                </ion-select-option>            
+              [(ngModel)]="person_one_details.fullNameOfInjuredPerson"
+              value={{person_one_details.injured_person_option}}>
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
+              </ion-select-option>
             </ion-select>
           </ion-item>
           <div *ngIf='person_one_details.fullNameOfInjuredPerson=="Other"'>
@@ -462,11 +468,11 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_two_details.fullNameOfInjuredPerson">
-           
-                <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
-                  {{item?.name_of_witness}}
-                </ion-select-option>
-           
+
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
+              </ion-select-option>
+
             </ion-select>
           </ion-item>
           <div *ngIf='person_two_details.fullNameOfInjuredPerson=="Other"'>
@@ -602,11 +608,11 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_three_details.fullNameOfInjuredPerson">
-              
-                  <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
-                    {{item?.name_of_witness}}
-                  </ion-select-option>
-              
+
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
+              </ion-select-option>
+
             </ion-select>
           </ion-item>
           <div *ngIf='person_three_details.fullNameOfInjuredPerson=="Other"'>
@@ -743,11 +749,11 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_four_details.fullNameOfInjuredPerson">
-              
-                  <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
-                    {{item?.name_of_witness}}
-                  </ion-select-option>
-              
+
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
+              </ion-select-option>
+
             </ion-select>
           </ion-item>
           <div *ngIf='person_four_details.fullNameOfInjuredPerson=="Other"'>
@@ -876,6 +882,8 @@
           </div>
         </ion-card>
       </div>
+      <!-------------------------------------------------Injury------------------------------------------------------->
+      <!-------------------------------------------------Environmental------------------------------------------------>
       <div *ngIf="selected==item && selected=='Environmental'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -955,6 +963,8 @@
           </ion-row>
         </ion-radio-group>
       </div>
+      <!-------------------------------------------------Environmental------------------------------------------------>
+      <!-------------------------------------------------Reputation--------------------------------------------------->
       <div *ngIf="selected==item && selected=='Reputation'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1037,6 +1047,8 @@
           </div>
         </div> -->
       </div>
+      <!-------------------------------------------------Reputation--------------------------------------------------->
+      <!-------------------------------------------------Security----------------------------------------------------->
       <div *ngIf="selected==item && selected=='Security'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1095,6 +1107,8 @@
           <ion-input placeholder="Enter here" [(ngModel)]='specificSecurityIncident'></ion-input>
         </div>
       </div>
+      <!-------------------------------------------------Security----------------------------------------------------->
+      <!-------------------------------------------------Asset-------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Asset'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1136,7 +1150,7 @@
         <ion-input placeholder="Extent of Damage" [(ngModel)]="extentOfDamage"></ion-input>
         <p class="question">
           Upload photo of damage
-        </p>        
+        </p>
         <div *ngIf="platformCheck === 'cordova'">
           <ion-button class="camera" expand="block" (click)="selectImage(5)">Upload Image</ion-button>
           <img src="{{imagePath5}}" *ngIf="imagePath5!==''" class="img-responsive" />
@@ -1148,6 +1162,8 @@
           </div>
         </div>
       </div>
+      <!-------------------------------------------------Asset-------------------------------------------------------->
+      <!-------------------------------------------------Report------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Report'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1159,7 +1175,10 @@
         </p>
         <ion-input placeholder="Enter here" [(ngModel)]="doneDifferently"></ion-input>
       </div>
+      <!-------------------------------------------------Report------------------------------------------------------->
     </div>
   </div>
+
   <ion-button (click)="onSubmit()" class="btnSubmit" expand="full">UPDATE</ion-button>
+
 </ion-content>

@@ -21,6 +21,8 @@
         [rows]="role==investigatorRole ? investigatorData :rows" [rowHeight]="50" [columnMode]="'force'"
         [headerHeight]="50" [footerHeight]="50" (activate)="onActivate($event)">
 
+
+
         <ngx-datatable-column name="No" [width]="10" [resizeable]="true">
           <ng-template let-column="column" ngx-datatable-header-template>
             No
@@ -55,9 +57,8 @@
 
           <ng-template let-column="column" ngx-datatable-header-template>View</ng-template>
 
-          <ng-template let-value="value" ngx-datatable-cell-template>
-            {{value}}
-            <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="singleView(value)"></ion-icon>
+          <ng-template let-value="id" ngx-datatable-cell-template>
+            <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="singleView()"></ion-icon>
           </ng-template>
 
         </ngx-datatable-column>

@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class GlobalService {
 
   baseUrl: string = 'https://mforms-api-devel.horts.com.au/';
-                  // https://mforms-api-devel.horts.com.au/
+  // https://mforms-api-devel.horts.com.au/
 
   //Role 
   user: any = "31";
@@ -31,6 +31,18 @@ export class GlobalService {
       duration: 2000,
       mode: "ios",
       color: "dark"
+    });
+    toast.present();
+  }
+
+
+  async toast(msg, type) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      // mode: "ios",
+      color: type,
+      animated: true,
     });
     toast.present();
   }
@@ -94,7 +106,7 @@ export class GlobalService {
   }
 
   getDataWithId(url) {
-    
+
     // let header = new HttpHeaders();
     // header.set("token", localStorage.getItem("token"));
     // header.set("apikey", "as*37486a*()HGY")

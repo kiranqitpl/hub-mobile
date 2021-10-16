@@ -29,6 +29,8 @@ export class FormListPage implements OnInit {
   investigator_name: any;
   investigator_id: any;
 
+  getRowData: any;
+
 
   constructor(
     private nav: NavController,
@@ -194,12 +196,13 @@ export class FormListPage implements OnInit {
   }
 
   onActivate(e) {
+    ;
+    this.getRowData = e.row;
     localStorage.setItem("singleView", JSON.stringify(e.row));
   }
 
-  singleView(rowId) {
-    console.log('rowId', rowId);
-    this.nav.navigateRoot("view");
+  singleView() {
+    this.nav.navigateRoot("view/" + this.getRowData.id);
   }
 
   editClick() {
@@ -236,9 +239,11 @@ export class FormListPage implements OnInit {
   }
 
   viewInvestigation() {
-    let data = JSON.parse(localStorage.getItem("singleView"))
-    if (data.complete_status == 1) {
-      this.nav.navigateForward("investigation-view");
+
+    // let data = JSON.parse(localStorage.getItem("singleView"))
+    console.log('this.getRowData ', this.getRowData);
+    if (this.getRowData && this.getRowData.complete_status && this.getRowData.complete_status == 1) {
+      this.nav.navigateForward("investigation-view/" + this.getRowData.investigation_details.id);
     } else {
       this.global.presentToast("You haven't Investigation created")
     }
@@ -253,6 +258,7 @@ export class FormListPage implements OnInit {
   }
 
   selectInvestigator(e) {
+    console.log('selectInvestigator', e);
     this.investigator_name = e.detail.value;
     this.listOfUsers.forEach(user => {
       if (user.full_name == e.detail.value) {
@@ -266,21 +272,23 @@ export class FormListPage implements OnInit {
     fd.append("gm_name", this.gm_name);
     fd.append("investigator_id", this.investigator_id)
     fd.append("investigator_name", this.investigator_name)
-    let datas = {
-      incident_id: data.id,
-      gmL: this.gm_id,
-      gm_name: this.gm_name,
-      investigator_id: this.investigator_id,
-      investigator_name: this.investigator_name
-    }
+    // let datas = {
+    //   incident_id: data.id,
+    //   gmL: this.gm_id,
+    //   gm_name: this.gm_name,
+    //   investigator_id: this.investigator_id,
+    //   investigator_name: this.investigator_name
+    // }
+
+    console.log("fd", fd);
     this.global.presentLoading();
     this.global.postDataWithId("api/GeneralManager/assignedInvestigator", fd).subscribe((res: any) => {
-
-      if (res.status) {
-        this.global.presentToast(res.message);
-      } else {
-        this.global.presentToast(res.message);
-      }
+      this.global.presentToast(res.message);
+      // if (res.status) {
+      //   this.global.presentToast(res.message);
+      // } else {
+      //   this.global.presentToast(res.message);
+      // }
       this.global.dismissLoading();
     }, err => {
       console.log(err)

@@ -33,8 +33,12 @@ const routes: Routes = [
     path: 'form-list',
     loadChildren: () => import('./pages/form-list/form-list.module').then( m => m.FormListPageModule)
   },
+  // {
+  //   path: 'view',
+  //   loadChildren: () => import('./pages/view/view.module').then( m => m.ViewPageModule)
+  // },
   {
-    path: 'view',
+    path: 'view/:form_id',
     loadChildren: () => import('./pages/view/view.module').then( m => m.ViewPageModule)
   },
   {
@@ -57,8 +61,12 @@ const routes: Routes = [
     path: 'actions',
     loadChildren: () => import('./pages/actions/actions.module').then( m => m.ActionsPageModule)
   },
+  // {
+  //   path: 'investigation-view',
+  //   loadChildren: () => import('./pages/investigation-view/investigation-view.module').then( m => m.InvestigationViewPageModule)
+  // },
   {
-    path: 'investigation-view',
+    path: 'investigation-view/:investigation_id',
     loadChildren: () => import('./pages/investigation-view/investigation-view.module').then( m => m.InvestigationViewPageModule)
   },
   {

@@ -7,7 +7,7 @@
           <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
         </ion-button>
       </ion-buttons>
-    
+
       <ion-buttons class='saveBtn' (click)="saveItemOffline()">
         <ion-button>
           <ion-icon slot="icon-only" name="save-outline"></ion-icon>
@@ -17,13 +17,13 @@
     <div class="headerStyle"></div>
   </ion-toolbar>
 </ion-header>
-<ion-content>  
+<ion-content>
   <div class="container">
     <p>ReacIncident report</p>
   </div>
   <div class="ion-padding-start ion-padding-end">
     <div *ngFor="let item of data">
-      <ion-button  class="inci" *ngIf="selected!==item" (click)="checkDetails(item)">
+      <ion-button class="inci" *ngIf="selected!==item" (click)="checkDetails(item)">
         <p>{{item}}</p>
         <img class="plus" src="./assets/add.png" />
       </ion-button>
@@ -55,11 +55,13 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
+
         <div *ngIf="incedent == 'Near Miss'">
           <p class="question">Who witnessed the near miss?</p>
           <ion-item class="ra" lines="none">
             <ion-select placeholder="Select One" interface="action-sheet" [(ngModel)]="whoWitnessedNearThis">
-              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">{{item?.name_of_witness}}</ion-select-option>
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}</ion-select-option>
             </ion-select>
           </ion-item>
           <p class="question">
@@ -68,7 +70,7 @@
           <ion-input placeholder="Enter here" [(ngModel)]="possibleConsequence"></ion-input>
         </div>
       </div>
-
+      <!-------------------------------------------------Classification---------------------------------------------->
       <div *ngIf="selected==item && selected=='Classification'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -87,27 +89,29 @@
         </ion-list>
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Date of Incident</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date"
-            (ionChange)="dateSelect($event,'incident')" [(ngModel)]="selectedDate">
+          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date" (ionChange)="dateSelect($event,'incident')"
+            [(ngModel)]="selectedDate">
           </ion-datetime>
         </ion-item>
 
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Time of Incident</ion-label>
-          <ion-datetime displayFormat="hh:mm A" placeholder="Select Time" (ionChange)="timeSelect($event,'timeIncident')" [(ngModel)]="selectedTime">
+          <ion-datetime displayFormat="hh:mm A" placeholder="Select Time"
+            (ionChange)="timeSelect($event,'timeIncident')" [(ngModel)]="selectedTime">
           </ion-datetime>
         </ion-item>
 
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Date Reported</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date"
-            (ionChange)="dateSelect($event,'reported')" [(ngModel)]="selectedDateReported">
+          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date" (ionChange)="dateSelect($event,'reported')"
+            [(ngModel)]="selectedDateReported">
           </ion-datetime>
         </ion-item>
 
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Time Reported</ion-label>
-          <ion-datetime displayFormat="hh:mm A" placeholder="Select Time" (ionChange)="timeSelect($event,'timeReported')" [(ngModel)]="selectedTimeReported">
+          <ion-datetime displayFormat="hh:mm A" placeholder="Select Time"
+            (ionChange)="timeSelect($event,'timeReported')" [(ngModel)]="selectedTimeReported">
           </ion-datetime>
         </ion-item>
         <ion-radio-group [(ngModel)]="location">
@@ -134,18 +138,21 @@
           <p class="question">Choose Location</p>
           <ion-item class="ra" lines="none">
             <ion-select placeholder="Select Location" interface="action-sheet" [(ngModel)]="locationSelection">
-              <ion-select-option value="{{item?.location_name}}" *ngFor="let item of locationList">{{item?.location_name}}</ion-select-option>              
+              <ion-select-option value="{{item?.location_name}}" *ngFor="let item of locationList">
+                {{item?.location_name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </div>
         <ion-item class="ra" lines="none">
           <ion-select placeholder="Shift Type" interface="action-sheet" [(ngModel)]='shiftType'>
-            <ion-select-option value="{{item?.shift_type}}" *ngFor="let item of shiftTypeList">{{item?.shift_type}}</ion-select-option>
+            <ion-select-option value="{{item?.shift_type}}" *ngFor="let item of shiftTypeList">{{item?.shift_type}}
+            </ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item class="ra" lines="none">
           <ion-select placeholder="Supervisor" interface="action-sheet" [(ngModel)]="superVisor">
-            <ion-select-option value="{{item?.full_name}}" *ngFor="let item of superVisorList">{{item?.full_name}}</ion-select-option>
+            <ion-select-option value="{{item?.full_name}}" *ngFor="let item of superVisorList">{{item?.full_name}}
+            </ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item class="ra" lines="none">
@@ -157,6 +164,8 @@
           </ion-buttons>
         </ion-item>
       </div>
+      <!-------------------------------------------------Classification---------------------------------------------->
+      <!-------------------------------------------------Photography------------------------------------------------->
       <div *ngIf="selected==item && selected=='Photography'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -174,6 +183,8 @@
           </div>
         </div>
       </div>
+      <!-------------------------------------------------Photography-------------------------------------------------->
+      <!-------------------------------------------------Incident Description----------------------------------------->
       <div *ngIf="selected==item && selected=='Incident Description'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -282,6 +293,8 @@
         </div>
 
       </div>
+      <!-------------------------------------------------Incident Description----------------------------------------->
+      <!-------------------------------------------------Injury------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Injury'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -324,9 +337,10 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_one_details.fullNameOfInjuredPerson">
-              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">{{item?.name_of_witness}}
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
               </ion-select-option>
-              
+
             </ion-select>
           </ion-item>
           <div *ngIf='person_one_details.fullNameOfInjuredPerson=="Other"'>
@@ -468,7 +482,8 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_two_details.fullNameOfInjuredPerson">
-              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">{{item?.name_of_witness}}
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -602,7 +617,8 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_three_details.fullNameOfInjuredPerson">
-              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">{{item?.name_of_witness}}
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -739,7 +755,8 @@
           <ion-item class="ra">
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_four_details.fullNameOfInjuredPerson">
-              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">{{item?.name_of_witness}}
+              <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
+                {{item?.name_of_witness}}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -871,6 +888,8 @@
           <img src="./assets/person.jpg" class="img-responsive">
         </ion-card>
       </div>
+      <!-------------------------------------------------Injury------------------------------------------------------->
+      <!-------------------------------------------------Environmental------------------------------------------------>
       <div *ngIf="selected==item && selected=='Environmental'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -952,6 +971,8 @@
           </ion-row>
         </ion-radio-group>
       </div>
+      <!-------------------------------------------------Environmental------------------------------------------------>
+      <!-------------------------------------------------Reputation--------------------------------------------------->
       <div *ngIf="selected==item && selected=='Reputation'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1035,6 +1056,8 @@
           </div>
         </div> -->
       </div>
+      <!-------------------------------------------------Reputation--------------------------------------------------->
+      <!-------------------------------------------------Security----------------------------------------------------->
       <div *ngIf="selected==item && selected=='Security'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1095,6 +1118,8 @@
           <ion-input placeholder="Enter here" [(ngModel)]='specificSecurityIncident'></ion-input>
         </div>
       </div>
+      <!-------------------------------------------------Security----------------------------------------------------->
+      <!-------------------------------------------------Asset-------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Asset'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1148,6 +1173,8 @@
           </div>
         </div>
       </div>
+      <!-------------------------------------------------Asset-------------------------------------------------------->
+      <!-------------------------------------------------Report------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Report'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -1157,8 +1184,9 @@
         <p class="question">
           What could have done differently?
         </p>
-        <ion-input placeholder="Enter here" [(ngModel)]="doneDifferently" (ionChange)="inputChange($event)" ></ion-input>
+        <ion-input placeholder="Enter here" [(ngModel)]="doneDifferently" (ionChange)="inputChange($event)"></ion-input>
       </div>
+      <!-------------------------------------------------Report------------------------------------------------------->
     </div>
   </div>
   <ion-button (click)="onSubmit()" expand="full" class="btnSubmit">SUBMIT</ion-button>

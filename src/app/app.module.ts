@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Camera } from '@ionic-native/Camera/ngx';
@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    // RouterModule
   ],
   providers: [{
     provide: RouteReuseStrategy,
@@ -26,7 +27,8 @@ import { AppRoutingModule } from './app-routing.module';
   },
     Camera,
     File,
-    Base64
+    Base64,
+    
   ],
   bootstrap: [AppComponent],
 })

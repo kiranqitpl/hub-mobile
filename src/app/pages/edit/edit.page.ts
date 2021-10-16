@@ -21,15 +21,15 @@ export class EditPage implements OnInit {
   approximateValueOfStolen: any = '';
   specificSecurityIncident: '';
   data: any = [];
-  drugTest: any;
-  selected: any;
-  imageUri: any;
+  drugTest: any = "" ; 
+  selected: any = "" ; 
+  imageUri: any = "" ; 
   locationList: any = [];
-  image2Uri: any;
+  image2Uri: any = "" ; 
   image3Uri: any = '';
-  wasThereAnyWitnessOfIncident: any;
-  image4Uri: any;
-  image5Uri: any;
+  wasThereAnyWitnessOfIncident: any = "" ; 
+  image4Uri: any = "" ; 
+  image5Uri: any = "" ; 
   imagePath: any = '';
   imagePath2: any = '';
   imagePath3: any = '';
@@ -44,16 +44,16 @@ export class EditPage implements OnInit {
   alcoholTest: any = '';
   formCount: any = '1';
   injuredPerson: any = '';
-  gender: any;
+  gender: any = "" ; 
   todayDate = new Date();
   returnToNormalDuties: any = '';
   alternativeDuties: any = '';
   injuryCheckBox: any = [];
-  securityRadio: any;
+  securityRadio: any = "" ; 
   itemsArray: any = [1];
   emergencySpill: any = '';
   itsecurityCheckbox: any = [];
-  assetNumber: any;
+  assetNumber: any = "" ; 
   reputationCheckBox: any = [];
   possibleConsequence: any = '';
   addLocation: any = '';
@@ -105,9 +105,9 @@ export class EditPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties:'',
+    explanation: '',
+    other_name: '',
 
     injurryCheckBox: [
       {
@@ -162,9 +162,9 @@ export class EditPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: '',
+    explanation: '',
+    other_name: '',
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -196,7 +196,7 @@ export class EditPage implements OnInit {
       },
     ]
   }
-  nagativeEffetct: any;
+  nagativeEffetct: any = "" ; 
   person_three_details: any = {
     alternate_duties: '',//returnToAlernateDuties
     date_of_birth: '',//dateOfBirth
@@ -219,9 +219,9 @@ export class EditPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: '',
+    explanation: '',
+    other_name: '',
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -275,9 +275,9 @@ export class EditPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: '',
+    explanation: '',
+    other_name: '',
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -434,7 +434,7 @@ export class EditPage implements OnInit {
       this.platformCheck = 'cordova'
     }
   }
-  id: any;
+  id: any = "" ; 
   ionViewWillEnter() {
     this.global.getDataWithId("api/Witness/getWitnessList").subscribe((res: any) => {
       if (res) {
@@ -860,8 +860,8 @@ export class EditPage implements OnInit {
       this.itemsArray = [1, 2, 3, 4];
     }
   }
-  individualChecked: any;
-  companyChecked: any;
+  individualChecked: any = "" ; 
+  companyChecked: any = "" ; 
   reputationCheckboxEvent(e, entry) {
     this.reputationCheckBox.forEach((element) => {
       if (element.val === 'Individual') {
@@ -1000,7 +1000,7 @@ export class EditPage implements OnInit {
 
   onSubmit() {
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = null
+      this.person_one_details.returnToAlernateDuties = ""
     }
     this.person_one_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1008,7 +1008,7 @@ export class EditPage implements OnInit {
       }
     });
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = null
+      this.person_two_details.returnToAlernateDuties = ''
     }
     this.person_two_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1017,7 +1017,7 @@ export class EditPage implements OnInit {
     });
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = null
+      this.person_three_details.returnToAlernateDuties = ''
     }
     this.person_three_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1026,7 +1026,7 @@ export class EditPage implements OnInit {
     });
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = null
+      this.person_four_details.returnToAlernateDuties = ''
     }
     this.person_four_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1153,8 +1153,8 @@ export class EditPage implements OnInit {
         radioBtnValueofClassficationRadio: this.location,
         dropDownofShiftType: this.shiftType,
         superVisorDropdownValue: this.superVisor,
-        addLocation: null,
-        locationSelection: null,
+        addLocation: '',
+        locationSelection: '',
         nameOfManager: this.nameOfManager,
         locationRadioValue: this.location
       }
@@ -1173,7 +1173,7 @@ export class EditPage implements OnInit {
       }
 
       let incidentDataObject = {
-        image: null,
+        image: '',
         alcoholTest: this.alcoholTest
       }
       if (this.insertPhotoisChecked) {
@@ -1187,9 +1187,9 @@ export class EditPage implements OnInit {
 
       let environmentalDataColletion = {
         chemicalSplit: this.chemicalSplit,
-        nameOfChemical: null,
-        image: null,
-        approximateQtyofChemical: null,
+        nameOfChemical: '',
+        image: '',
+        approximateQtyofChemical: '',
         emergencySpill: this.emergencySpill
       }
       if (this.chemicalSplit === 'Yes') {
@@ -1202,8 +1202,8 @@ export class EditPage implements OnInit {
 
       let reputationCollectionData = {
         image: this.imagePath4,
-        individualReputationDamaged: null,
-        companyReputationDamged: null,
+        individualReputationDamaged: '',
+        companyReputationDamged: '',
         reputationCheckBox: this.reputationCheckBox
       }
       if (this.individualChecked) {
@@ -1215,7 +1215,7 @@ export class EditPage implements OnInit {
 
       let securityCollectionData = {
         securityRadiovalue: this.securityRadio,
-        itsecurityCheckbox: null
+        itsecurityCheckbox: ''
       }
       if (this.securityRadio == 'IT') {
         securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
@@ -1224,28 +1224,28 @@ export class EditPage implements OnInit {
       let assetCollectionData = {
         assetNumberRadioValue: this.assetNumber,
         image: this.imagePath5,
-        assetsNumbers: null
+        assetsNumbers: ''
       }
       if (this.assetNumber == 'Yes') {
         assetCollectionData.assetsNumbers = this.assetsNumbers
       };
 
       if (this.person_one_details.returnToNormalDuties === 'Yes') {
-        this.person_one_details.returnToAlernateDuties = null
+        this.person_one_details.returnToAlernateDuties = ''
       }
 
 
       if (this.person_two_details.returnToNormalDuties === 'Yes') {
-        this.person_two_details.returnToAlernateDuties = null
+        this.person_two_details.returnToAlernateDuties = ''
       }
 
       if (this.person_three_details.returnToNormalDuties === 'Yes') {
-        this.person_three_details.returnToAlernateDuties = null
+        this.person_three_details.returnToAlernateDuties = ''
       }
       //4
 
       if (this.person_four_details.returnToNormalDuties === 'Yes') {
-        this.person_four_details.returnToAlernateDuties = null
+        this.person_four_details.returnToAlernateDuties = ''
       }
       if (this.image3Uri !== '') {
         this.checmicalDetails.chemical_photo = this.image3Uri
@@ -1351,7 +1351,7 @@ export class EditPage implements OnInit {
 
   saveItemOffline() {
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = null
+      this.person_one_details.returnToAlernateDuties = ''
     }
     this.person_one_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1359,7 +1359,7 @@ export class EditPage implements OnInit {
       }
     });
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = null
+      this.person_two_details.returnToAlernateDuties = ''
     }
     this.person_two_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1368,7 +1368,7 @@ export class EditPage implements OnInit {
     });
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = null
+      this.person_three_details.returnToAlernateDuties = ''
     }
     this.person_three_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1377,7 +1377,7 @@ export class EditPage implements OnInit {
     });
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = null
+      this.person_four_details.returnToAlernateDuties = ''
     }
     this.person_four_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1486,8 +1486,8 @@ export class EditPage implements OnInit {
       radioBtnValueofClassficationRadio: this.location,
       dropDownofShiftType: this.shiftType,
       superVisorDropdownValue: this.superVisor,
-      addLocation: null,
-      locationSelection: null,
+      addLocation: '',
+      locationSelection: '',
       nameOfManager: this.nameOfManager,
       locationRadioValue: this.location
     }
@@ -1506,7 +1506,7 @@ export class EditPage implements OnInit {
     }
 
     let incidentDataObject = {
-      image: null,
+      image: '',
       alcoholTest: this.alcoholTest
     }
     if (this.insertPhotoisChecked) {
@@ -1520,9 +1520,9 @@ export class EditPage implements OnInit {
 
     let environmentalDataColletion = {
       chemicalSplit: this.chemicalSplit,
-      nameOfChemical: null,
-      image: null,
-      approximateQtyofChemical: null,
+      nameOfChemical: '',
+      image: '',
+      approximateQtyofChemical: '',
       emergencySpill: this.emergencySpill
     }
     if (this.chemicalSplit === 'Yes') {
@@ -1535,8 +1535,8 @@ export class EditPage implements OnInit {
 
     let reputationCollectionData = {
       image: this.imagePath4,
-      individualReputationDamaged: null,
-      companyReputationDamged: null,
+      individualReputationDamaged: '',
+      companyReputationDamged: '',
       reputationCheckBox: this.reputationCheckBox
     }
     if (this.individualChecked) {
@@ -1548,7 +1548,7 @@ export class EditPage implements OnInit {
 
     let securityCollectionData = {
       securityRadiovalue: this.securityRadio,
-      itsecurityCheckbox: null
+      itsecurityCheckbox: ''
     }
     if (this.securityRadio == 'IT') {
       securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
@@ -1557,28 +1557,28 @@ export class EditPage implements OnInit {
     let assetCollectionData = {
       assetNumberRadioValue: this.assetNumber,
       image: this.imagePath5,
-      assetsNumbers: null
+      assetsNumbers: ''
     }
     if (this.assetNumber == 'Yes') {
       assetCollectionData.assetsNumbers = this.assetsNumbers
     };
 
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = null
+      this.person_one_details.returnToAlernateDuties = ''
     }
 
 
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = null
+      this.person_two_details.returnToAlernateDuties ='' ;
     }
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = null
+      this.person_three_details.returnToAlernateDuties = '';
     }
     //4
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = null
+      this.person_four_details.returnToAlernateDuties = ''
     }
     if (this.image3Uri !== '') {
       this.checmicalDetails.chemical_photo = this.image3Uri

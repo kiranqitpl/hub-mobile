@@ -53,8 +53,6 @@ export class ActionsPage implements OnInit {
   isFrom:any;
   ionViewWillEnter() {
 
-
-
     let isOpenFrom = localStorage.getItem("isActionsForm");
     this.isFrom=isOpenFrom;
     if(isOpenFrom =='edit'){
@@ -124,6 +122,7 @@ export class ActionsPage implements OnInit {
       fd.append("priority", this.priority);
       fd.append("expected_completion", this.expected_completion);
       fd.append("description_of_required_action", this.description_of_required_action);
+      fd.append("investigator_id", localStorage.getItem("id"));
       this.global.postData("api/Investigator/InvestigationAction", fd).subscribe((res: any) => {
         if(res.status){
           this.global.presentToast(res.message)

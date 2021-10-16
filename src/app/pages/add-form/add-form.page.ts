@@ -21,12 +21,12 @@ import * as moment from 'moment';
 export class AddFormPage implements OnInit {
   data: any = [];
   selected: any = 'Incident';
-  imageUri: any;
-  image2Uri: any;
+  imageUri: any = "" ; 
+  image2Uri: any = "" ; 
   image3Uri: any = '';
-  image4Uri: any;
+  image4Uri: any = "" ; 
   drugTestImageUri: any = '';
-  image5Uri: any;
+  image5Uri: any = "" ; 
   imagePath: any = '';
   imagePath2: any = '';
   imagePath3: any = '';
@@ -43,16 +43,16 @@ export class AddFormPage implements OnInit {
   drugImage: any = '';
   formCount: any = '1';
   injuredPerson: any = '';
-  gender: any;
+  gender: any='';
   todayDate = new Date();
   returnToNormalDuties: any = '';
   alternativeDuties: any = '';
   injuryCheckBox: any = [];
-  securityRadio: any;
+  securityRadio: any='';
   itemsArray: any = [1];
   emergencySpill: any = '';
   itsecurityCheckbox: any = [];
-  assetNumber: any;
+  assetNumber: any='';
   reputationCheckBox: any = [];
   possibleConsequence: any = '';
   addLocation: any = '';
@@ -100,9 +100,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: "",
+    explanation: "",
+    other_name: "",
     immediateTreatmentGivenExplanation: '',//added
     administeredPersonName: '',//added
     adminsteredPersonNumber: '',//added
@@ -161,9 +161,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: "",
+    explanation: "",
+    other_name: "",
 
     injurryCheckBox: [
       {
@@ -196,7 +196,7 @@ export class AddFormPage implements OnInit {
       },
     ]
   }
-  nagativeEffetct: any;
+  nagativeEffetct: any="";
   person_three_details: any = {
     alternate_duties: '',//returnToAlernateDuties
     date_of_birth: '',//dateOfBirth
@@ -220,9 +220,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: "",
+    explanation: "",
+    other_name: "",
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -277,9 +277,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: null,
-    explanation: null,
-    other_name: null,
+    returnToAlernateDuties: "",
+    explanation: "",
+    other_name: "",
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -312,26 +312,26 @@ export class AddFormPage implements OnInit {
     ]
   }
   platformCheck: any = '';
-  minDate: any;
+  minDate: any="";
   //added field
-  dateOfIncident: any;
-  timeOfIncident: any;
-  dateReported: any;
-  timeReported: any;
-  wasThereAnyWitnessOfIncident: any;
-  // alcoholTestCompleted:any;variable = alcoholTest
-  // alcoholTestDocument:any; = imagePath2
-  //drugTest:any;
-  // drugTestImage:any; variable = drugImage
-  normalDutiesExplanation: any;
-  partOfBodyInjured: any;
-  // wasImmediateTreatment:any; injurry
-  immediateTreatmentGivenExplanation: any;
-  immediateTreatmentPersonName: any;
-  immediateTreatmentPersonNumber: any;
-  stolenItem: any; //added
-  specificSecurityIncident: any; //added
-  approximateValueOfStolen; //added
+  dateOfIncident: any = "" ; 
+  timeOfIncident: any = "" ; 
+  dateReported: any = "" ; 
+  timeReported: any = "" ; 
+  wasThereAnyWitnessOfIncident: any = "" ; 
+  // alcoholTestCompleted:any = "" ; variable = alcoholTest
+  // alcoholTestDocument:any = "" ; = imagePath2
+  //drugTest:any = "" ; 
+  // drugTestImage:any = "" ; variable = drugImage
+  normalDutiesExplanation: any = "" ; 
+  partOfBodyInjured: any = "" ; 
+  // wasImmediateTreatment:any = "" ; injurry
+  immediateTreatmentGivenExplanation: any = "" ; 
+  immediateTreatmentPersonName: any = "" ; 
+  immediateTreatmentPersonNumber: any = "" ; 
+  stolenItem: any = "" ; //added
+  specificSecurityIncident: any = "" ; //added
+  approximateValueOfStolen:any = "" ; //added
   witnessList: any = [];
   managerList: any = [];
   superVisorList: any = [];
@@ -347,13 +347,13 @@ export class AddFormPage implements OnInit {
 
   url: any = '';
 
-  selectedTime: any;
+  selectedTime: any = "" ; 
   selectedDate;
-  selectedDateReported: any;
-  selectedTimeReported: any;
+  selectedDateReported: any = "" ; 
+  selectedTimeReported: any = "" ; 
 
-  individualChecked: any;
-  companyChecked: any;
+  individualChecked: any = "" ; 
+  companyChecked: any = "" ; 
 
   constructor(
     private nav: NavController,
@@ -682,7 +682,7 @@ export class AddFormPage implements OnInit {
 
   saveItemOffline() {
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = null
+      this.person_one_details.returnToAlernateDuties = ""
     }
     this.person_one_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -691,7 +691,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = null
+      this.person_two_details.returnToAlernateDuties = ""
     }
     this.person_two_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -700,7 +700,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = null
+      this.person_three_details.returnToAlernateDuties = ""
     }
     this.person_three_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -709,7 +709,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = null
+      this.person_four_details.returnToAlernateDuties = ""
     }
     this.person_four_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -817,8 +817,8 @@ export class AddFormPage implements OnInit {
       radioBtnValueofClassficationRadio: this.location,
       dropDownofShiftType: this.shiftType,
       superVisorDropdownValue: this.superVisor,
-      addLocation: null,
-      locationSelection: null,
+      addLocation: "",
+      locationSelection: "",
       nameOfManager: this.nameOfManager,
       locationRadioValue: this.location
     }
@@ -832,7 +832,7 @@ export class AddFormPage implements OnInit {
       classificationObjectData.locationSelection = this.locationSelection
     }
     let incidentDataObject = {
-      image: null,
+      image: "",
       alcoholTest: this.alcoholTest
     }
     if (this.insertPhotoisChecked) {
@@ -843,9 +843,9 @@ export class AddFormPage implements OnInit {
     }
     let environmentalDataColletion = {
       chemicalSplit: this.chemicalSplit,
-      nameOfChemical: null,
-      image: null,
-      approximateQtyofChemical: null,
+      nameOfChemical: "",
+      image: "",
+      approximateQtyofChemical: "",
       emergencySpill: this.emergencySpill
     }
     if (this.chemicalSplit === 'Yes') {
@@ -855,8 +855,8 @@ export class AddFormPage implements OnInit {
     }
     let reputationCollectionData = {
       image: this.imagePath4,
-      individualReputationDamaged: null,
-      companyReputationDamged: null,
+      individualReputationDamaged: "",
+      companyReputationDamged: "",
       reputationCheckBox: this.reputationCheckBox
     }
     if (this.individualChecked) {
@@ -867,7 +867,7 @@ export class AddFormPage implements OnInit {
     }
     let securityCollectionData = {
       securityRadiovalue: this.securityRadio,
-      itsecurityCheckbox: null
+      itsecurityCheckbox: ""
     }
     if (this.securityRadio == 'IT') {
       securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
@@ -875,22 +875,22 @@ export class AddFormPage implements OnInit {
     let assetCollectionData = {
       assetNumberRadioValue: this.assetNumber,
       image: this.imagePath5,
-      assetsNumbers: null
+      assetsNumbers: ""
     }
     if (this.assetNumber == 'Yes') {
       assetCollectionData.assetsNumbers = this.assetsNumbers
     };
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = null
+      this.person_one_details.returnToAlernateDuties = ""
     }
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = null
+      this.person_two_details.returnToAlernateDuties = ""
     }
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = null
+      this.person_three_details.returnToAlernateDuties = ""
     }
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = null
+      this.person_four_details.returnToAlernateDuties = ""
     }
     let fd = new FormData();
     fd.append("photography_image", this.imagePath);
@@ -1012,7 +1012,7 @@ export class AddFormPage implements OnInit {
   onSubmit() {
 
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = null
+      this.person_one_details.returnToAlernateDuties = ""
     }
     this.person_one_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1021,7 +1021,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = null
+      this.person_two_details.returnToAlernateDuties = ""
     }
     this.person_two_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1030,7 +1030,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = null
+      this.person_three_details.returnToAlernateDuties = ""
     }
     this.person_three_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1039,7 +1039,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = null
+      this.person_four_details.returnToAlernateDuties = ""
     }
     this.person_four_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1070,33 +1070,34 @@ export class AddFormPage implements OnInit {
       }
     })
     if (this.incedent === '') {
-      this.global.presentToast("Incident : Incident is Required");
+      this.global.toast("Incident : Incident is Required", 'danger');
     } else if (this.descriptionIncident === '') {
 
-      this.global.presentToast("Incident Description - Please enter Description of incident")
+      // this.global.presentToast("Incident Description - Please enter Description of incident")
+      this.global.toast("Incident Description - Please enter Description of incident", 'danger');
     } else if (this.immediateAction === '') {
 
-      this.global.presentToast("Incident Description - Immediate action taken filed is Required")
+      this.global.toast("Incident Description - Immediate action taken filed is Required", 'danger')
     } else if (this.environmentActionTaken === '') {
 
-      this.global.presentToast("Environmental - Please enter Immediate action taken to minimize Environmental impact")
+      this.global.toast("Environmental - Please enter Immediate action taken to minimize Environmental impact", 'danger')
     } else if (this.nameOfAnyWitness === '') {
 
-      this.global.presentToast("Reputation - Please enter name of any witness")
+      this.global.toast("Reputation - Please enter name of any witness", 'danger')
     } else if (this.possibleOutcomeOfIncident === '') {
 
-      this.global.presentToast("Reputation - Please enter possible outcome of this incident")
+      this.global.toast("Reputation - Please enter possible outcome of this incident", 'danger')
     } else if (this.assetDescription === '') {
 
-      this.global.presentToast("Asset - Please enter asset description")
+      this.global.toast("Asset - Please enter asset description", 'danger')
     } else if (this.extentOfDamage === '') {
 
-      this.global.presentToast("Asset - Please enter Extent of Damage")
+      this.global.toast("Asset - Please enter Extent of Damage", 'danger')
     } else if (this.doneDifferently === '') {
 
-      this.global.presentToast("Report - Please enter what could have been done differently")
+      this.global.toast("Report - Please enter what could have been done differently", 'danger')
     } else if (this.nameOfManager === '' || this.nameOfManager === "Name of Manager") {
-      this.global.presentToast("Classification - Please Select the manager")
+      this.global.toast("Classification - Please Select the manager", 'danger')
     } else {
       this.person_one_details.alternate_duties = this.person_one_details.returnToAlernateDuties
       this.person_one_details.date_of_birth = this.person_one_details.dateOfBirth
@@ -1171,8 +1172,8 @@ export class AddFormPage implements OnInit {
         radioBtnValueofClassficationRadio: this.location,
         dropDownofShiftType: this.shiftType,
         superVisorDropdownValue: this.superVisor,
-        addLocation: null,
-        locationSelection: null,
+        addLocation: "",
+        locationSelection: "",
         nameOfManager: this.nameOfManager,
         locationRadioValue: this.location
       }
@@ -1186,7 +1187,7 @@ export class AddFormPage implements OnInit {
         classificationObjectData.locationSelection = this.locationSelection
       }
       let incidentDataObject = {
-        image: null,
+        image: "",
         alcoholTest: this.alcoholTest
       }
       if (this.insertPhotoisChecked) {
@@ -1197,9 +1198,9 @@ export class AddFormPage implements OnInit {
       }
       let environmentalDataColletion = {
         chemicalSplit: this.chemicalSplit,
-        nameOfChemical: null,
-        image: null,
-        approximateQtyofChemical: null,
+        nameOfChemical: "",
+        image: "",
+        approximateQtyofChemical: "",
         emergencySpill: this.emergencySpill
       }
       if (this.chemicalSplit === 'Yes') {
@@ -1209,8 +1210,8 @@ export class AddFormPage implements OnInit {
       }
       let reputationCollectionData = {
         image: this.imagePath4,
-        individualReputationDamaged: null,
-        companyReputationDamged: null,
+        individualReputationDamaged: "",
+        companyReputationDamged: "",
         reputationCheckBox: this.reputationCheckBox
       }
       if (this.individualChecked) {
@@ -1221,7 +1222,7 @@ export class AddFormPage implements OnInit {
       }
       let securityCollectionData = {
         securityRadiovalue: this.securityRadio,
-        itsecurityCheckbox: null
+        itsecurityCheckbox: ""
       }
       if (this.securityRadio == 'IT') {
         securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
@@ -1229,22 +1230,22 @@ export class AddFormPage implements OnInit {
       let assetCollectionData = {
         assetNumberRadioValue: this.assetNumber,
         image: this.imagePath5,
-        assetsNumbers: null
+        assetsNumbers: ""
       }
       if (this.assetNumber == 'Yes') {
         assetCollectionData.assetsNumbers = this.assetsNumbers
       };
       if (this.person_one_details.returnToNormalDuties === 'Yes') {
-        this.person_one_details.returnToAlernateDuties = null
+        this.person_one_details.returnToAlernateDuties = ""
       }
       if (this.person_two_details.returnToNormalDuties === 'Yes') {
-        this.person_two_details.returnToAlernateDuties = null
+        this.person_two_details.returnToAlernateDuties = ""
       }
       if (this.person_three_details.returnToNormalDuties === 'Yes') {
-        this.person_three_details.returnToAlernateDuties = null
+        this.person_three_details.returnToAlernateDuties = ""
       }
       if (this.person_four_details.returnToNormalDuties === 'Yes') {
-        this.person_four_details.returnToAlernateDuties = null
+        this.person_four_details.returnToAlernateDuties = ""
       }
       let fd = new FormData();
       fd.append("photography_image", this.imagePath);

@@ -1,5 +1,7 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-investigation-view',
@@ -7,21 +9,49 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./investigation-view.page.scss'],
 })
 export class InvestigationViewPage implements OnInit {
-  data:any;
-  constructor(private nav:NavController) { }
+
+  data: any;
+
+
+  constructor(private nav: NavController,
+    private activatedRoute: ActivatedRoute,
+    private globalService: GlobalService) { }
 
   ngOnInit() {
+    this.loadData()
+  }
+
+
+  loadData() {
+    this.globalService.presentLoading();
+    this.activatedRoute.params.subscribe(
+      (params: Params) => {
+        console.log(params['investigation_id']);
+        this.globalService.getData('api/investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(result => {
+          console.log('investigation_id', result);
+          if (result['status']) {
+            this.data = result['data'][0];
+            console.log('this.data', this.data);
+          } else {
+            console.log("error");
+          }
+          this.globalService.dismissLoading();
+        }), error => {
+          this.globalService.dismissLoading();
+          console.log("error", error);
+        }
+      })
   }
 
 
 
-  goBack(){
+  goBack() {
     this.nav.back();
   }
 
-  ionViewWillEnter(){
-    let d = JSON.parse(localStorage.getItem("singleView"));
-    this.data = d.investigation_details;
+  ionViewWillEnter() {
+    // let d = JSON.parse(localStorage.getItem("singleView"));
+    // this.data = d.investigation_details;
   }
 
 }
