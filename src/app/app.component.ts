@@ -18,8 +18,8 @@ export class AppComponent {
     if(token==''){
       nav.navigateRoot("login");
     }else{
-      // nav.navigateRoot("home");
-      nav.navigateRoot("dashboard");
+      nav.navigateRoot("home");
+      // nav.navigateRoot("dashboard");
     }
     this.initializeApp();
   }

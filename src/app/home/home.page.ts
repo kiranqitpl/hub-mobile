@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
   }
 
   next(item) {
-    if (item == "WHSE") {
+    if (item == "Safety") {
       this.nav.navigateForward("dashboard")
     }
   }
@@ -42,13 +42,9 @@ export class HomePage implements OnInit {
   // getRout() {
   //   console.log('activatedRoute', this.activatedRoute);
   //   console.log('activatedRoute', this.activatedRoute['_routerState'].snapshot.url);
-
   //   let rout = this.activatedRoute['_routerState'].snapshot.url;
-
   //   console.log('rout', rout.split("/"));
-
   //   this.pageName = rout.split("/")['1'];
-    
   //   console.log('this.pageName', this.pageName);
   // }
 }

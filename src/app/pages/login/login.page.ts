@@ -62,7 +62,8 @@ export class LoginPage implements OnInit {
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res?.data?.id)
           localStorage.setItem("name", res?.data?.full_name)
-          this.nav.navigateRoot('dashboard')
+          this.nav.navigateRoot('home')
+          // this.nav.navigateRoot('dashboard')
           // this.global.presentToast(res.message);
         } else {
           this.global.presentToast(res.message);

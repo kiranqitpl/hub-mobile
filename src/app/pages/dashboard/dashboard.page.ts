@@ -56,10 +56,6 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  // goBack() {
-  //   this.nav.back();
-  // }
-
   logOut() {
     localStorage.clear();
     this.nav.navigateRoot("login")

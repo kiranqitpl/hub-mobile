@@ -280,7 +280,6 @@ export class FormListPage implements OnInit {
     //   investigator_name: this.investigator_name
     // }
 
-    console.log("fd", fd);
     this.global.presentLoading();
     this.global.postDataWithId("api/GeneralManager/assignedInvestigator", fd).subscribe((res: any) => {
       this.global.presentToast(res.message);

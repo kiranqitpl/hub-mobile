@@ -66,51 +66,28 @@ export class GlobalService {
     header.set("Access-Control-Allow-Headers", "*")
     header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
     header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
       header.set("token", localStorage.getItem("token"));
     }
     return header;
   }
 
   getData(url) {
-
-    // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-    // header.set("Access-Control-Allow-Origin", "*");
-    // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-    // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
-
     let headers = this.setHeader();
     return this.http.get(this.baseUrl + url, { headers: headers });
   }
 
   postData(url, data) {
-
-    // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-    // header.set("Access-Control-Allow-Origin", "*");
-    // header.set("Content-Type", "application/json");
-    // header.set("Access-Control-Allow-Headers", "*")
-    // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-    // header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
     let headers = this.setHeader();
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
   postDataWithId(url, data) {
-
-    // let header = new HttpHeaders();
-    // header.set("token", localStorage.getItem("token"));
-
     let headers = this.setHeader();
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
   getDataWithId(url) {
-
-    // let header = new HttpHeaders();
-    // header.set("token", localStorage.getItem("token"));
-    // header.set("apikey", "as*37486a*()HGY")
-
     let headers = this.setHeader();
     return this.http.get(this.baseUrl + url, { headers: headers });
   }

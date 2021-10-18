@@ -78,6 +78,7 @@
         </div>
         <hr />
         <ion-list class="ion-no-padding">
+          
           <ion-row class='ion-no-padding'>
             <ion-col size="6" *ngFor="let entry of classificationChekBox">
               <ion-item lines="none" class="ion-no-padding">
@@ -86,6 +87,18 @@
               </ion-item>
             </ion-col>
           </ion-row>
+
+          <!-- <ion-radio-group (ionChange)="onClassificationRadio($event)">
+            <ion-row>
+              <ion-col size="6" *ngFor="let entry of classificationChekBox">
+                <ion-item class="ra" lines="none">
+                  <ion-label>{{entry.val}}</ion-label>
+                  <ion-radio slot="start" value="{{entry.val}}"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group> -->
+
         </ion-list>
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Date of Incident</ion-label>
@@ -1175,6 +1188,7 @@
       </div>
       <!-------------------------------------------------Asset-------------------------------------------------------->
       <!-------------------------------------------------Report------------------------------------------------------->
+
       <div *ngIf="selected==item && selected=='Report'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>

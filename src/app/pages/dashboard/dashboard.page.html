@@ -1,16 +1,16 @@
 <ion-content>
   <div class="toolbar">
     <ion-text>Dashboard</ion-text>
-    <!-- <ion-buttons class='back'>
-      <ion-button (click)="goBack()">
+    <ion-buttons class='back'>
+      <ion-button (click)="nav.back()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
-    </ion-buttons> -->
-    <!-- <ion-buttons class='logout'>
+    </ion-buttons>
+    <ion-buttons class='logout'>
       <ion-button (click)="logOut()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
-    </ion-buttons> -->
+    </ion-buttons>
   </div>
   <div class="container">
     <div class="addForm" (click)="next()" [hidden]="role==gmRole">
@@ -21,8 +21,8 @@
     <ion-button class="login-btn" *ngFor="let item of data" (click)="navGo(item)">
         {{item}}
     </ion-button>
-    <ion-button class="login-btn logouts" (click)="logOut()">
+    <!-- <ion-button class="login-btn logouts" (click)="logOut()">
       Logout
-    </ion-button>
+    </ion-button> -->
   </div>
 </ion-content>

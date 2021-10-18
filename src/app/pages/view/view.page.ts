@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ManagersPage } from 'src/app/modals/managers/managers.page';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-import { File } from '@ionic-native/file/ngx';
 import { GlobalService } from 'src/app/services/global.service';
+import { File } from '@ionic-native/file/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
@@ -180,6 +180,7 @@ export class ViewPage implements OnInit {
   }];
 
   personDetails: any = [];
+
   person_one_details: any = {
     alternate_duties: '',//returnToAlernateDuties
     date_of_birth: '',//dateOfBirth
@@ -398,11 +399,10 @@ export class ViewPage implements OnInit {
     private modal: ModalController,
     private camera: Camera,
     public actionSheetController: ActionSheetController,
-    private file: File,
     private global: GlobalService,
-    private base64: Base64,
     private activatedRoute: ActivatedRoute
   ) { }
+
   ngOnInit() {
     this.loadData();
   }
@@ -415,7 +415,6 @@ export class ViewPage implements OnInit {
       (params: Params) => {
         // console.log(params['incident_id']);
         this.global.getData('api/add_form/getIncidentFormByID/' + params['form_id']).subscribe(result => {
-          console.log('ionViewWillEnter', result['data'][0]);
           data = result['data'][0];
           if (data != "") {
             this.what_has_been_stolen_item = data['what_has_been_stolen_item']
@@ -767,30 +766,37 @@ export class ViewPage implements OnInit {
                 }
               })
             });
+
             if (this.formCount == "1") {
               this.person_Array.push(this.person_one_details);
             }
+
             if (this.formCount == "2") {
               this.person_Array.push(this.person_one_details);
               this.person_Array.push(this.person_two_details);
             }
+
             if (this.formCount == "3") {
               this.person_Array.push(this.person_one_details);
               this.person_Array.push(this.person_two_details);
               this.person_Array.push(this.person_three_details);
             }
+
             if (this.formCount == "4") {
               this.person_Array.push(this.person_one_details);
               this.person_Array.push(this.person_two_details);
               this.person_Array.push(this.person_three_details);
               this.person_Array.push(this.person_four_details);
             }
+
             if (this.individualChecked) {
               this.individualReputationDamaged = data['individual_damage_value'];
             }
+
             if (this.companyChecked) {
               this.companyReputatonDamaged = data['company_damage_value'];
             }
+
             this.nagativeEffetct = data['reputation_negative_effect'];
             this.nameOfAnyWitness = data['name_of_witness'];
             this.contactOfAnyWitness = data['contact_of_witness'];
@@ -798,6 +804,7 @@ export class ViewPage implements OnInit {
             if (data['reputation_damage_image'] !== '') {
               this.imagePath4 = data['reputation_damage_image']
             }
+
             this.securityRadio = data['security_option'];
             if (this.securityRadio == 'IT') {
               let t = data['it_option_value'].split(",");
@@ -809,6 +816,7 @@ export class ViewPage implements OnInit {
                 })
               })
             }
+
             this.assetDescription = data['asset_description'];
             this.assetNumber = data['asset_has_number'];
             this.assetsNumbers = data['asset_number'];
@@ -821,6 +829,7 @@ export class ViewPage implements OnInit {
             console.log("error");
           }
           this.global.dismissLoading();
+
         }), error => {
           this.global.dismissLoading();
           console.log(error);
@@ -967,311 +976,6 @@ export class ViewPage implements OnInit {
       ia[i] = byteString.charCodeAt(i)
     return new Blob([ia], { type: mimeString })
   }
-
-  // onSubmit() {
-  //   if (this.person_one_details.returnToNormalDuties === 'Yes') {
-  //     this.person_one_details.returnToAlernateDuties = null
-  //   }
-  //   this.person_one_details.injurryCheckBox.forEach(element => {
-  //     if (element.isChecked) {
-  //       this.person_one_details.injury_value.push(element.val)
-  //     }
-  //   });
-
-  //   if (this.person_two_details.returnToNormalDuties === 'Yes') {
-  //     this.person_two_details.returnToAlernateDuties = null
-  //   }
-
-  //   this.person_two_details.injurryCheckBox.forEach(element => {
-  //     if (element.isChecked) {
-  //       this.person_two_details.injury_value.push(element.val)
-  //     }
-  //   });
-  //   //3
-
-  //   if (this.person_three_details.returnToNormalDuties === 'Yes') {
-  //     this.person_three_details.returnToAlernateDuties = null
-  //   }
-  //   this.person_three_details.injurryCheckBox.forEach(element => {
-  //     if (element.isChecked) {
-  //       this.person_three_details.injury_value.push(element.val)
-  //     }
-  //   });
-  //   //4
-
-  //   if (this.person_four_details.returnToNormalDuties === 'Yes') {
-  //     this.person_four_details.returnToAlernateDuties = null
-  //   }
-  //   this.person_four_details.injurryCheckBox.forEach(element => {
-  //     if (element.isChecked) {
-  //       this.person_four_details.injury_value.push(element.val)
-  //     }
-  //   });
-
-  //   this.personDetails.push(this.person_one_details);
-  //   this.personDetails.push(this.person_two_details);
-  //   this.personDetails.push(this.person_three_details);
-  //   this.personDetails.push(this.person_four_details);
-
-  //   let classiCheckedValue: any = [];
-  //   let repuCheckedValue: any = [];
-  //   let it_option_value: any = [];
-  //   this.itsecurityCheckbox.forEach(element => {
-  //     if (element.isChecked) {
-  //       it_option_value.push(element.val)
-  //     }
-  //   });
-  //   this.classificationChekBox.forEach((el: any) => {
-  //     if (el.isChecked) {
-  //       classiCheckedValue.push(el.val)
-  //     }
-  //   });
-  //   this.reputationCheckBox.forEach((el: any) => {
-  //     if (el.isChecked) {
-  //       repuCheckedValue.push(el.val)
-  //     }
-  //   })
-  //   if (this.descriptionIncident === '') {
-  //     this.global.presentToast("Please enter Description of incident")
-  //   } else if (this.immediateAction === '') {
-  //     this.global.presentToast("Immediate action taken filed is Required")
-  //   } else if (this.environmentActionTaken === '') {
-  //     this.global.presentToast("Please enter Immediate action taken to minimize Environmental impact")
-  //   } else if (this.nameOfAnyWitness === '') {
-  //     this.global.presentToast("Please enter name of any witness")
-  //   } else if (this.contactOfAnyWitness === '') {
-  //     this.global.presentToast("Please enter contact of any witness")
-  //   } else if (this.possibleOutcomeOfIncident === '') {
-  //     this.global.presentToast("Please enter possible outcome of this incident")
-  //   } else if (this.assetDescription === '') {
-  //     this.global.presentToast("Please enter asset description")
-  //   } else if (this.extentOfDamage === '') {
-  //     this.global.presentToast("Please enter Extent of Damage")
-  //   } else if (this.doneDifferently === '') {
-  //     this.global.presentToast("Please enter what could have been done differently")
-  //   } else if (this.nameOfManager === '') {
-  //     this.global.presentToast("Please Select the manager")
-  //   } else {
-
-  //     this.person_one_details.alternate_duties = this.person_one_details.returnToAlernateDuties
-  //     this.person_one_details.date_of_birth = this.person_one_details.dateOfBirth
-  //     this.person_one_details.duties_explanation = this.person_one_details.explanation
-  //     this.person_one_details.initital_injury = this.person_one_details.injury_value.join(',')
-  //     this.person_one_details.injured_person_option = this.person_one_details.fullNameOfInjuredPerson
-  //     this.person_one_details.injured_person_option_value = this.person_one_details.other_name
-  //     this.person_one_details.normal_duties = this.person_one_details.returnToNormalDuties;
-
-  //     this.person_two_details.alternate_duties = this.person_two_details.returnToAlernateDuties
-  //     this.person_two_details.date_of_birth = this.person_two_details.dateOfBirth
-  //     this.person_two_details.duties_explanation = this.person_two_details.explanation
-  //     this.person_two_details.initital_injury = this.person_two_details.injury_value.join(',')
-  //     this.person_two_details.injured_person_option = this.person_two_details.fullNameOfInjuredPerson
-  //     this.person_two_details.injured_person_option_value = this.person_two_details.other_name
-  //     this.person_two_details.normal_duties = this.person_two_details.returnToNormalDuties
-
-  //     this.person_three_details.alternate_duties = this.person_three_details.returnToAlernateDuties
-  //     this.person_three_details.date_of_birth = this.person_three_details.dateOfBirth
-  //     this.person_three_details.duties_explanation = this.person_three_details.explanation
-  //     this.person_three_details.initital_injury = this.person_three_details.injury_value.join(',')
-  //     this.person_three_details.injured_person_option = this.person_three_details.fullNameOfInjuredPerson
-  //     this.person_three_details.injured_person_option_value = this.person_three_details.other_name
-  //     this.person_three_details.normal_duties = this.person_three_details.returnToNormalDuties
-
-  //     this.person_four_details.alternate_duties = this.person_four_details.returnToAlernateDuties
-  //     this.person_four_details.date_of_birth = this.person_four_details.dateOfBirth
-  //     this.person_four_details.duties_explanation = this.person_four_details.explanation
-  //     this.person_four_details.initital_injury = this.person_four_details.injury_value.join(',')
-  //     this.person_four_details.injured_person_option = this.person_four_details.fullNameOfInjuredPerson
-  //     this.person_four_details.injured_person_option_value = this.person_four_details.other_name
-  //     this.person_four_details.normal_duties = this.person_four_details.returnToNormalDuties
-
-  //     let requiredData = {
-  //       descriptionIncident: this.descriptionIncident,
-  //       immediateAction: this.immediateAction,
-  //       environmentActionTaken: this.environmentActionTaken,
-  //       nameOfAnyWitness: this.nameOfAnyWitness,
-  //       contactOfAnyWitness: this.contactOfAnyWitness,
-  //       possibleOutcomeOfIncident: this.possibleOutcomeOfIncident,
-  //       assetDescription: this.assetDescription,
-  //       extentOfDamage: this.extentOfDamage,
-  //       doneDifferently: this.doneDifferently
-  //     };
-
-
-  //     if (this.incedent == 'Near Miss') {
-  //       let nonRequirementIncident = {
-  //         incidentRadio: this.incedent,
-  //         whoWitnessedNearThis: this.whoWitnessedNearThis,
-  //         possibleConsequence: this.possibleConsequence
-  //       }
-  //     }
-  //     let classificationObjectData = {
-  //       ClassificationCheckBoxCollectionData: this.classificationChekBox,
-  //       radioBtnValueofClassficationRadio: this.location,
-  //       dropDownofShiftType: this.shiftType,
-  //       superVisorDropdownValue: this.superVisor,
-  //       addLocation: null,
-  //       locationSelection: null,
-  //       nameOfManager: this.nameOfManager,
-  //       locationRadioValue: this.location
-  //     }
-  //     if (this.location === 'Add Location') {
-  //       classificationObjectData.addLocation = this.addLocation;
-  //     }
-  //     if (this.location === 'Choose Location') {
-  //       classificationObjectData.locationSelection = this.locationSelection
-  //     }
-  //     let photoGraphyData = {
-  //       image: this.imagePath
-  //     }
-  //     let incidentDataObject = {
-  //       image: null,
-  //       alcoholTest: this.alcoholTest
-  //     }
-  //     if (this.insertPhotoisChecked) {
-  //       let imageData = {
-  //         image: this.imagePath2
-  //       }
-  //       incidentDataObject.image = this.imagePath2
-  //     }
-  //     let environmentalDataColletion = {
-  //       chemicalSplit: this.chemicalSplit,
-  //       nameOfChemical: null,
-  //       image: null,
-  //       approximateQtyofChemical: null,
-  //       emergencySpill: this.emergencySpill
-  //     }
-  //     if (this.chemicalSplit === 'Yes') {
-  //       environmentalDataColletion.nameOfChemical = this.nameOfChemical;
-  //       environmentalDataColletion.image = this.imagePath3;
-  //       environmentalDataColletion.approximateQtyofChemical = this.approximateQtyofChemical
-  //     }
-  //     let reputationCollectionData = {
-  //       image: this.imagePath4,
-  //       individualReputationDamaged: null,
-  //       companyReputationDamged: null,
-  //       reputationCheckBox: this.reputationCheckBox
-  //     }
-  //     if (this.individualChecked) {
-  //       reputationCollectionData.individualReputationDamaged = this.individualReputationDamaged
-  //     }
-  //     if (this.companyChecked) {
-  //       reputationCollectionData.companyReputationDamged = this.companyReputatonDamaged
-  //     }
-  //     let securityCollectionData = {
-  //       securityRadiovalue: this.securityRadio,
-  //       itsecurityCheckbox: null
-  //     }
-  //     if (this.securityRadio == 'IT') {
-  //       securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
-  //     }
-  //     let assetCollectionData = {
-  //       assetNumberRadioValue: this.assetNumber,
-  //       image: this.imagePath5,
-  //       assetsNumbers: null
-  //     }
-  //     if (this.assetNumber == 'Yes') {
-  //       assetCollectionData.assetsNumbers = this.assetsNumbers
-  //     };
-  //     //1
-  //     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-  //       this.person_one_details.returnToAlernateDuties = null
-  //     }
-
-  //     //2
-  //     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-  //       this.person_two_details.returnToAlernateDuties = null
-  //     }
-  //     //3
-  //     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-  //       this.person_three_details.returnToAlernateDuties = null
-  //     }
-  //     //4
-  //     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-  //       this.person_four_details.returnToAlernateDuties = null
-  //     }
-  //     if (this.image3Uri !== '') {
-  //       this.checmicalDetails.chemical_photo = this.image3Uri
-  //     }
-
-  //     let fd = new FormData();
-  //     if (this.imageUri !== '') {
-  //       fd.append("photography_image", this.imageUri);
-  //     }
-  //     if (this.image4Uri !== '') {
-  //       fd.append("reputation_damage_image", this.image4Uri);
-  //     }
-  //     if (this.image5Uri !== '') {
-  //       fd.append("extent_damage_image", this.image5Uri);
-  //     }
-  //     fd.append("id", this.id);
-  //     fd.append("incident_value", this.incedent);
-  //     fd.append("incident_near_miss", this.whoWitnessedNearThis);
-  //     fd.append("incident_near_miss_other", this.possibleConsequence);
-  //     fd.append("classification_value", classiCheckedValue.join(','));
-  //     fd.append("classification_location_option", this.location);
-  //     if (this.location == 'Add Location') {
-  //       fd.append("classification_location_value", this.addLocation)
-  //     }
-  //     if (this.location == 'Choose Location') {
-  //       fd.append("classification_location_value", this.locationSelection)
-  //     }
-  //     fd.append("classification_shift_type", this.shiftType);
-  //     fd.append("classification_supervisor", this.superVisor);
-  //     fd.append("classification_manager", this.nameOfManager);
-  //     fd.append("incident_description", this.descriptionIncident);
-  //     fd.append("incident_description_action", this.immediateAction);
-  //     //incident photo pending from postman and here also 
-  //     fd.append("incident_description_alcohol_test", this.alcoholTest);
-  //     fd.append("injury_persons", this.formCount);//form value
-  //     fd.append("environmental_description", this.environmentActionTaken);
-  //     fd.append("was_a_chemical_split", this.chemicalSplit);
-  //     //checmical split value inner side query
-  //     fd.append("emergency_spill_kit_used", this.emergencySpill);
-  //     fd.append("reputation_option", repuCheckedValue);
-  //     if (this.individualChecked) {
-  //       fd.append("individual_damage_value", this.individualReputationDamaged)
-  //     }
-  //     if (this.companyChecked) {
-  //       fd.append("company_damage_value", this.companyReputatonDamaged)
-  //     }
-  //     if (this.image2Uri !== '') {
-  //       fd.append("incident_description_photo", this.image2Uri)
-  //     }
-  //     fd.append("reutation_negative_effect", this.nagativeEffetct);
-  //     fd.append("name_of_witness", this.nameOfAnyWitness);
-  //     fd.append("contact_of_witness", this.contactOfAnyWitness);
-  //     fd.append("possible_outcome_incident", this.possibleOutcomeOfIncident);
-  //     fd.append("security_option", this.securityRadio);
-  //     if (this.securityRadio == 'IT') {
-  //       fd.append("it_option_value", it_option_value.join(',')) // chexkbox and inner value
-  //     }
-  //     fd.append("asset_description", this.assetDescription);
-  //     fd.append("asset_has_number", this.assetNumber);
-  //     if (this.assetNumber == 'Yes') {
-  //       fd.append("asset_number", this.assetsNumbers);
-  //     }
-  //     fd.append("extent_of_damage", this.extentOfDamage);
-  //     fd.append("report", this.doneDifferently);
-  //     fd.append("person_details", JSON.stringify(this.personDetails));
-  //     fd.append("chemical_details", JSON.stringify(this.checmicalDetails))
-  //     this.global.presentLoading();
-  //     this.global.postData("api/add_form/submit", fd).subscribe((res: any) => {
-  //       if (res.status) {
-  //         this.global.presentToast(res.message)
-  //         this.nav.navigateForward("home");
-  //         this.global.dismissLoading();
-  //       } else {
-  //         this.global.presentToast(res.message)
-  //         this.global.dismissLoading();
-  //       }
-  //     }, err => {
-  //       console.log("err", err);
-  //       this.global.dismissLoading();
-  //     })
-
-  //   }
-  // }
 
   b64toBlob(b64Data, contentType) {
     contentType = contentType || '';
