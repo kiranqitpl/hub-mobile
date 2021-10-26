@@ -142,9 +142,6 @@ let DashboardPage = class DashboardPage {
             this.nav.navigateForward("notification");
         }
     }
-    // goBack() {
-    //   this.nav.back();
-    // }
     logOut() {
         localStorage.clear();
         this.nav.navigateRoot("login");
@@ -245,7 +242,7 @@ let GlobalService = class GlobalService {
         header.set("Access-Control-Allow-Headers", "*");
         header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
         header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
             header.set("token", localStorage.getItem("token"));
         }
         return header;
@@ -259,13 +256,14 @@ let GlobalService = class GlobalService {
         return this.http.get(this.baseUrl + url, { headers: headers });
     }
     postData(url, data) {
-        // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-        // header.set("Access-Control-Allow-Origin", "*");
-        // header.set("Content-Type", "application/json");
-        // header.set("Access-Control-Allow-Headers", "*")
-        // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-        // header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        let headers = this.setHeader();
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
+        headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Content-Type", "application/json");
+        headers.set("Access-Control-Allow-headerss", "*");
+        headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+        headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        console.log('headers', headers);
+        // let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
     postDataWithId(url, data) {
@@ -317,7 +315,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <!-- <ion-buttons class='back'>\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons> -->\n    <!-- <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons> -->\n  </div>\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"next()\" [hidden]=\"role==gmRole\">\n      <img src=\"./assets/form.png\"/>\n      <p class=\"addF\">ADD FORM</p>\n    </div>\n    <div class='btnView'></div>\n    <ion-button class=\"login-btn\" *ngFor=\"let item of data\" (click)=\"navGo(item)\">\n        {{item}}\n    </ion-button>\n    <ion-button class=\"login-btn logouts\" (click)=\"logOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='back'>\n      <ion-button (click)=\"nav.back()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"next()\" [hidden]=\"role==gmRole\">\n      <img src=\"./assets/form.png\"/>\n      <p class=\"addF\">ADD FORM</p>\n    </div>\n    <div class='btnView'></div>\n    <ion-button class=\"login-btn\" *ngFor=\"let item of data\" (click)=\"navGo(item)\">\n        {{item}}\n    </ion-button>\n    <!-- <ion-button class=\"login-btn logouts\" (click)=\"logOut()\">\n      Logout\n    </ion-button> -->\n  </div>\n</ion-content>\n");
 
 /***/ })
 

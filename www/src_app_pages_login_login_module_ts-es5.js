@@ -220,12 +220,13 @@
       3679);
 
       var _LoginPage = /*#__PURE__*/function () {
-        function LoginPage(nav, global, formBuilder) {
+        function LoginPage(nav, global, formBuilder, platform) {
           _classCallCheck(this, LoginPage);
 
           this.nav = nav;
           this.global = global;
           this.formBuilder = formBuilder;
+          this.platform = platform;
           this.email = '';
           this.password = '';
           this.isSubmitted = false;
@@ -266,8 +267,12 @@
               var fd = new FormData();
               fd.append("email", this.ionicForm.value.email);
               fd.append("password", this.ionicForm.value.password);
+              console.log('email', this.ionicForm.value.email);
+              console.log('password', this.ionicForm.value.password);
               this.global.postData("api/user/login", fd).subscribe(function (res) {
                 var _a, _b;
+
+                console.log('login', res);
 
                 if (res.status) {
                   localStorage.setItem("email", res.data.email);
@@ -275,8 +280,10 @@
                   localStorage.setItem("id", (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.id);
                   localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name);
 
-                  _this.nav.navigateRoot('dashboard'); // this.global.presentToast(res.message);
+                  _this.nav.navigateRoot('home'); // this.nav.navigateRoot('dashboard')
 
+
+                  _this.global.presentToast(res.message);
                 } else {
                   _this.global.presentToast(res.message);
                 }
@@ -285,7 +292,11 @@
               }, function (err) {
                 _this.global.dismissLoading();
 
-                console.log("errs", err);
+                console.log("login errs", err);
+
+                _this.global.presentToast(err.message);
+
+                _this.global.presentToast(JSON.parse(err));
               });
             } else {
               return false;
@@ -303,6 +314,8 @@
           type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
         }, {
           type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormBuilder
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.Platform
         }];
       };
 
@@ -501,7 +514,7 @@
             header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
             header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-            if (localStorage.getItem("token")) {
+            if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
               header.set("token", localStorage.getItem("token"));
             }
 
@@ -522,13 +535,16 @@
         }, {
           key: "postData",
           value: function postData(url, data) {
-            // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-            // header.set("Access-Control-Allow-Origin", "*");
-            // header.set("Content-Type", "application/json");
-            // header.set("Access-Control-Allow-Headers", "*")
-            // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            // header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-            var headers = this.setHeader();
+            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+              'apikey': 'as*37486a*()HGY'
+            });
+            headers.set("Access-Control-Allow-Origin", "*");
+            headers.set("Content-Type", "application/json");
+            headers.set("Access-Control-Allow-headerss", "*");
+            headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+            headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+            console.log('headers', headers); // let headers = this.setHeader();
+
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
             });

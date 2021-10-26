@@ -957,7 +957,7 @@ export class AddFormPage implements OnInit {
     fd.append("what_has_been_stolen_item", this.stolenItem);
     fd.append("what_is_the_specific_securities_incident", this.specificSecurityIncident);
     fd.append("approximate_value_of_stolen", this.approximateValueOfStolen);
-    fd.append('investigator_id', localStorage.getItem('id'));
+    fd.append('user_id', localStorage.getItem('id'));
 
     this.global.presentLoading();
 
@@ -1151,22 +1151,24 @@ export class AddFormPage implements OnInit {
       this.person_four_details.immediate_treatment_person_name = this.person_four_details.administeredPersonName
       this.person_four_details.immediate_treatment_person_number = this.person_four_details.adminsteredPersonNumber
 
-      let requiredData = {
-        descriptionIncident: this.descriptionIncident,
-        immediateAction: this.immediateAction,
-        environmentActionTaken: this.environmentActionTaken,
-        nameOfAnyWitness: this.nameOfAnyWitness,
-        contactOfAnyWitness: this.contactOfAnyWitness,
-        possibleOutcomeOfIncident: this.possibleOutcomeOfIncident,
-        assetDescription: this.assetDescription,
-        extentOfDamage: this.extentOfDamage,
-        doneDifferently: this.doneDifferently
-      };
-      let nonRequirementIncident = {
-        incidentRadio: this.incedent,
-        whoWitnessedNearThis: this.whoWitnessedNearThis,
-        possibleConsequence: this.possibleConsequence
-      }
+      // let requiredData = {
+      //   descriptionIncident: this.descriptionIncident,
+      //   immediateAction: this.immediateAction,
+      //   environmentActionTaken: this.environmentActionTaken,
+      //   nameOfAnyWitness: this.nameOfAnyWitness,
+      //   contactOfAnyWitness: this.contactOfAnyWitness,
+      //   possibleOutcomeOfIncident: this.possibleOutcomeOfIncident,
+      //   assetDescription: this.assetDescription,
+      //   extentOfDamage: this.extentOfDamage,
+      //   doneDifferently: this.doneDifferently
+      // };
+      // let nonRequirementIncident = {
+      //   incidentRadio: this.incedent,
+      //   whoWitnessedNearThis: this.whoWitnessedNearThis,
+      //   possibleConsequence: this.possibleConsequence
+      // }
+
+  
       let classificationObjectData = {
         ClassificationCheckBoxCollectionData: this.classificationChekBox,
         radioBtnValueofClassficationRadio: this.location,

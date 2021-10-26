@@ -12031,7 +12031,6 @@
             //   investigator_name: this.investigator_name
             // }
 
-            console.log("fd", fd);
             this.global.presentLoading();
             this.global.postDataWithId("api/GeneralManager/assignedInvestigator", fd).subscribe(function (res) {
               _this30.global.presentToast(res.message); // if (res.status) {

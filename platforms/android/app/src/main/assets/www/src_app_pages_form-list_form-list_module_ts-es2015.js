@@ -7148,7 +7148,6 @@ let FormListPage = class FormListPage {
         //   investigator_id: this.investigator_id,
         //   investigator_name: this.investigator_name
         // }
-        console.log("fd", fd);
         this.global.presentLoading();
         this.global.postDataWithId("api/GeneralManager/assignedInvestigator", fd).subscribe((res) => {
             this.global.presentToast(res.message);

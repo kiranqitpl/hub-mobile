@@ -78,11 +78,18 @@
       /*! @angular/router */
       39895);
 
-      var routes = [// {
-      //   path: 'home',
-      //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-      // },
-      {
+      var routes = [{
+        path: 'home',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_home_home_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./home/home.module */
+          3467)).then(function (m) {
+            return m.HomePageModule;
+          });
+        }
+      }, {
         path: 'dashboard',
         loadChildren: function loadChildren() {
           return __webpack_require__.e(
@@ -95,8 +102,8 @@
         }
       }, {
         path: '',
-        redirectTo: 'dashboard',
-        // redirectTo: 'home',
+        // redirectTo: 'dashboard',
+        redirectTo: 'home',
         pathMatch: 'full'
       }, {
         path: 'login',
@@ -350,8 +357,7 @@
           if (token == '') {
             nav.navigateRoot("login");
           } else {
-            // nav.navigateRoot("home");
-            nav.navigateRoot("dashboard");
+            nav.navigateRoot("home"); // nav.navigateRoot("dashboard");
           }
 
           this.initializeApp();

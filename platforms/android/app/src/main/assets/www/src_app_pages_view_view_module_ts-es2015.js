@@ -92,19 +92,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ViewPage": function() { return /* binding */ ViewPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_view_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./view.page.html */ 17616);
 /* harmony import */ var _view_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view.page.scss */ 17466);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 39895);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 39895);
 /* harmony import */ var src_app_modals_managers_managers_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/modals/managers/managers.page */ 58127);
 /* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
-/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/file/ngx */ 20138);
-/* harmony import */ var src_app_services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/global.service */ 97465);
-/* harmony import */ var _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/base64/ngx */ 31531);
-
-
+/* harmony import */ var src_app_services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/global.service */ 97465);
 
 
 
@@ -115,14 +111,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ViewPage = class ViewPage {
-    constructor(nav, modal, camera, actionSheetController, file, global, base64, activatedRoute) {
+    constructor(nav, modal, camera, actionSheetController, global, activatedRoute) {
         this.nav = nav;
         this.modal = modal;
         this.camera = camera;
         this.actionSheetController = actionSheetController;
-        this.file = file;
         this.global = global;
-        this.base64 = base64;
         this.activatedRoute = activatedRoute;
         this.data = [
             'Incident',
@@ -478,7 +472,6 @@ let ViewPage = class ViewPage {
         this.activatedRoute.params.subscribe((params) => {
             // console.log(params['incident_id']);
             this.global.getData('api/add_form/getIncidentFormByID/' + params['form_id']).subscribe(result => {
-                console.log('ionViewWillEnter', result['data'][0]);
                 data = result['data'][0];
                 if (data != "") {
                     this.what_has_been_stolen_item = data['what_has_been_stolen_item'];
@@ -933,7 +926,7 @@ let ViewPage = class ViewPage {
         });
     }
     selectImage(e) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
             const actionSheet = yield this.actionSheetController.create({
                 header: 'Select Image source',
                 buttons: [
@@ -974,7 +967,7 @@ let ViewPage = class ViewPage {
         this.incedent = e.detail.value;
     }
     openModal() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
             const modal = yield this.modal.create({
                 component: src_app_modals_managers_managers_page__WEBPACK_IMPORTED_MODULE_2__.ManagersPage,
                 cssClass: 'managers',
@@ -997,294 +990,6 @@ let ViewPage = class ViewPage {
             ia[i] = byteString.charCodeAt(i);
         return new Blob([ia], { type: mimeString });
     }
-    // onSubmit() {
-    //   if (this.person_one_details.returnToNormalDuties === 'Yes') {
-    //     this.person_one_details.returnToAlernateDuties = null
-    //   }
-    //   this.person_one_details.injurryCheckBox.forEach(element => {
-    //     if (element.isChecked) {
-    //       this.person_one_details.injury_value.push(element.val)
-    //     }
-    //   });
-    //   if (this.person_two_details.returnToNormalDuties === 'Yes') {
-    //     this.person_two_details.returnToAlernateDuties = null
-    //   }
-    //   this.person_two_details.injurryCheckBox.forEach(element => {
-    //     if (element.isChecked) {
-    //       this.person_two_details.injury_value.push(element.val)
-    //     }
-    //   });
-    //   //3
-    //   if (this.person_three_details.returnToNormalDuties === 'Yes') {
-    //     this.person_three_details.returnToAlernateDuties = null
-    //   }
-    //   this.person_three_details.injurryCheckBox.forEach(element => {
-    //     if (element.isChecked) {
-    //       this.person_three_details.injury_value.push(element.val)
-    //     }
-    //   });
-    //   //4
-    //   if (this.person_four_details.returnToNormalDuties === 'Yes') {
-    //     this.person_four_details.returnToAlernateDuties = null
-    //   }
-    //   this.person_four_details.injurryCheckBox.forEach(element => {
-    //     if (element.isChecked) {
-    //       this.person_four_details.injury_value.push(element.val)
-    //     }
-    //   });
-    //   this.personDetails.push(this.person_one_details);
-    //   this.personDetails.push(this.person_two_details);
-    //   this.personDetails.push(this.person_three_details);
-    //   this.personDetails.push(this.person_four_details);
-    //   let classiCheckedValue: any = [];
-    //   let repuCheckedValue: any = [];
-    //   let it_option_value: any = [];
-    //   this.itsecurityCheckbox.forEach(element => {
-    //     if (element.isChecked) {
-    //       it_option_value.push(element.val)
-    //     }
-    //   });
-    //   this.classificationChekBox.forEach((el: any) => {
-    //     if (el.isChecked) {
-    //       classiCheckedValue.push(el.val)
-    //     }
-    //   });
-    //   this.reputationCheckBox.forEach((el: any) => {
-    //     if (el.isChecked) {
-    //       repuCheckedValue.push(el.val)
-    //     }
-    //   })
-    //   if (this.descriptionIncident === '') {
-    //     this.global.presentToast("Please enter Description of incident")
-    //   } else if (this.immediateAction === '') {
-    //     this.global.presentToast("Immediate action taken filed is Required")
-    //   } else if (this.environmentActionTaken === '') {
-    //     this.global.presentToast("Please enter Immediate action taken to minimize Environmental impact")
-    //   } else if (this.nameOfAnyWitness === '') {
-    //     this.global.presentToast("Please enter name of any witness")
-    //   } else if (this.contactOfAnyWitness === '') {
-    //     this.global.presentToast("Please enter contact of any witness")
-    //   } else if (this.possibleOutcomeOfIncident === '') {
-    //     this.global.presentToast("Please enter possible outcome of this incident")
-    //   } else if (this.assetDescription === '') {
-    //     this.global.presentToast("Please enter asset description")
-    //   } else if (this.extentOfDamage === '') {
-    //     this.global.presentToast("Please enter Extent of Damage")
-    //   } else if (this.doneDifferently === '') {
-    //     this.global.presentToast("Please enter what could have been done differently")
-    //   } else if (this.nameOfManager === '') {
-    //     this.global.presentToast("Please Select the manager")
-    //   } else {
-    //     this.person_one_details.alternate_duties = this.person_one_details.returnToAlernateDuties
-    //     this.person_one_details.date_of_birth = this.person_one_details.dateOfBirth
-    //     this.person_one_details.duties_explanation = this.person_one_details.explanation
-    //     this.person_one_details.initital_injury = this.person_one_details.injury_value.join(',')
-    //     this.person_one_details.injured_person_option = this.person_one_details.fullNameOfInjuredPerson
-    //     this.person_one_details.injured_person_option_value = this.person_one_details.other_name
-    //     this.person_one_details.normal_duties = this.person_one_details.returnToNormalDuties;
-    //     this.person_two_details.alternate_duties = this.person_two_details.returnToAlernateDuties
-    //     this.person_two_details.date_of_birth = this.person_two_details.dateOfBirth
-    //     this.person_two_details.duties_explanation = this.person_two_details.explanation
-    //     this.person_two_details.initital_injury = this.person_two_details.injury_value.join(',')
-    //     this.person_two_details.injured_person_option = this.person_two_details.fullNameOfInjuredPerson
-    //     this.person_two_details.injured_person_option_value = this.person_two_details.other_name
-    //     this.person_two_details.normal_duties = this.person_two_details.returnToNormalDuties
-    //     this.person_three_details.alternate_duties = this.person_three_details.returnToAlernateDuties
-    //     this.person_three_details.date_of_birth = this.person_three_details.dateOfBirth
-    //     this.person_three_details.duties_explanation = this.person_three_details.explanation
-    //     this.person_three_details.initital_injury = this.person_three_details.injury_value.join(',')
-    //     this.person_three_details.injured_person_option = this.person_three_details.fullNameOfInjuredPerson
-    //     this.person_three_details.injured_person_option_value = this.person_three_details.other_name
-    //     this.person_three_details.normal_duties = this.person_three_details.returnToNormalDuties
-    //     this.person_four_details.alternate_duties = this.person_four_details.returnToAlernateDuties
-    //     this.person_four_details.date_of_birth = this.person_four_details.dateOfBirth
-    //     this.person_four_details.duties_explanation = this.person_four_details.explanation
-    //     this.person_four_details.initital_injury = this.person_four_details.injury_value.join(',')
-    //     this.person_four_details.injured_person_option = this.person_four_details.fullNameOfInjuredPerson
-    //     this.person_four_details.injured_person_option_value = this.person_four_details.other_name
-    //     this.person_four_details.normal_duties = this.person_four_details.returnToNormalDuties
-    //     let requiredData = {
-    //       descriptionIncident: this.descriptionIncident,
-    //       immediateAction: this.immediateAction,
-    //       environmentActionTaken: this.environmentActionTaken,
-    //       nameOfAnyWitness: this.nameOfAnyWitness,
-    //       contactOfAnyWitness: this.contactOfAnyWitness,
-    //       possibleOutcomeOfIncident: this.possibleOutcomeOfIncident,
-    //       assetDescription: this.assetDescription,
-    //       extentOfDamage: this.extentOfDamage,
-    //       doneDifferently: this.doneDifferently
-    //     };
-    //     if (this.incedent == 'Near Miss') {
-    //       let nonRequirementIncident = {
-    //         incidentRadio: this.incedent,
-    //         whoWitnessedNearThis: this.whoWitnessedNearThis,
-    //         possibleConsequence: this.possibleConsequence
-    //       }
-    //     }
-    //     let classificationObjectData = {
-    //       ClassificationCheckBoxCollectionData: this.classificationChekBox,
-    //       radioBtnValueofClassficationRadio: this.location,
-    //       dropDownofShiftType: this.shiftType,
-    //       superVisorDropdownValue: this.superVisor,
-    //       addLocation: null,
-    //       locationSelection: null,
-    //       nameOfManager: this.nameOfManager,
-    //       locationRadioValue: this.location
-    //     }
-    //     if (this.location === 'Add Location') {
-    //       classificationObjectData.addLocation = this.addLocation;
-    //     }
-    //     if (this.location === 'Choose Location') {
-    //       classificationObjectData.locationSelection = this.locationSelection
-    //     }
-    //     let photoGraphyData = {
-    //       image: this.imagePath
-    //     }
-    //     let incidentDataObject = {
-    //       image: null,
-    //       alcoholTest: this.alcoholTest
-    //     }
-    //     if (this.insertPhotoisChecked) {
-    //       let imageData = {
-    //         image: this.imagePath2
-    //       }
-    //       incidentDataObject.image = this.imagePath2
-    //     }
-    //     let environmentalDataColletion = {
-    //       chemicalSplit: this.chemicalSplit,
-    //       nameOfChemical: null,
-    //       image: null,
-    //       approximateQtyofChemical: null,
-    //       emergencySpill: this.emergencySpill
-    //     }
-    //     if (this.chemicalSplit === 'Yes') {
-    //       environmentalDataColletion.nameOfChemical = this.nameOfChemical;
-    //       environmentalDataColletion.image = this.imagePath3;
-    //       environmentalDataColletion.approximateQtyofChemical = this.approximateQtyofChemical
-    //     }
-    //     let reputationCollectionData = {
-    //       image: this.imagePath4,
-    //       individualReputationDamaged: null,
-    //       companyReputationDamged: null,
-    //       reputationCheckBox: this.reputationCheckBox
-    //     }
-    //     if (this.individualChecked) {
-    //       reputationCollectionData.individualReputationDamaged = this.individualReputationDamaged
-    //     }
-    //     if (this.companyChecked) {
-    //       reputationCollectionData.companyReputationDamged = this.companyReputatonDamaged
-    //     }
-    //     let securityCollectionData = {
-    //       securityRadiovalue: this.securityRadio,
-    //       itsecurityCheckbox: null
-    //     }
-    //     if (this.securityRadio == 'IT') {
-    //       securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
-    //     }
-    //     let assetCollectionData = {
-    //       assetNumberRadioValue: this.assetNumber,
-    //       image: this.imagePath5,
-    //       assetsNumbers: null
-    //     }
-    //     if (this.assetNumber == 'Yes') {
-    //       assetCollectionData.assetsNumbers = this.assetsNumbers
-    //     };
-    //     //1
-    //     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-    //       this.person_one_details.returnToAlernateDuties = null
-    //     }
-    //     //2
-    //     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-    //       this.person_two_details.returnToAlernateDuties = null
-    //     }
-    //     //3
-    //     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-    //       this.person_three_details.returnToAlernateDuties = null
-    //     }
-    //     //4
-    //     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-    //       this.person_four_details.returnToAlernateDuties = null
-    //     }
-    //     if (this.image3Uri !== '') {
-    //       this.checmicalDetails.chemical_photo = this.image3Uri
-    //     }
-    //     let fd = new FormData();
-    //     if (this.imageUri !== '') {
-    //       fd.append("photography_image", this.imageUri);
-    //     }
-    //     if (this.image4Uri !== '') {
-    //       fd.append("reputation_damage_image", this.image4Uri);
-    //     }
-    //     if (this.image5Uri !== '') {
-    //       fd.append("extent_damage_image", this.image5Uri);
-    //     }
-    //     fd.append("id", this.id);
-    //     fd.append("incident_value", this.incedent);
-    //     fd.append("incident_near_miss", this.whoWitnessedNearThis);
-    //     fd.append("incident_near_miss_other", this.possibleConsequence);
-    //     fd.append("classification_value", classiCheckedValue.join(','));
-    //     fd.append("classification_location_option", this.location);
-    //     if (this.location == 'Add Location') {
-    //       fd.append("classification_location_value", this.addLocation)
-    //     }
-    //     if (this.location == 'Choose Location') {
-    //       fd.append("classification_location_value", this.locationSelection)
-    //     }
-    //     fd.append("classification_shift_type", this.shiftType);
-    //     fd.append("classification_supervisor", this.superVisor);
-    //     fd.append("classification_manager", this.nameOfManager);
-    //     fd.append("incident_description", this.descriptionIncident);
-    //     fd.append("incident_description_action", this.immediateAction);
-    //     //incident photo pending from postman and here also 
-    //     fd.append("incident_description_alcohol_test", this.alcoholTest);
-    //     fd.append("injury_persons", this.formCount);//form value
-    //     fd.append("environmental_description", this.environmentActionTaken);
-    //     fd.append("was_a_chemical_split", this.chemicalSplit);
-    //     //checmical split value inner side query
-    //     fd.append("emergency_spill_kit_used", this.emergencySpill);
-    //     fd.append("reputation_option", repuCheckedValue);
-    //     if (this.individualChecked) {
-    //       fd.append("individual_damage_value", this.individualReputationDamaged)
-    //     }
-    //     if (this.companyChecked) {
-    //       fd.append("company_damage_value", this.companyReputatonDamaged)
-    //     }
-    //     if (this.image2Uri !== '') {
-    //       fd.append("incident_description_photo", this.image2Uri)
-    //     }
-    //     fd.append("reutation_negative_effect", this.nagativeEffetct);
-    //     fd.append("name_of_witness", this.nameOfAnyWitness);
-    //     fd.append("contact_of_witness", this.contactOfAnyWitness);
-    //     fd.append("possible_outcome_incident", this.possibleOutcomeOfIncident);
-    //     fd.append("security_option", this.securityRadio);
-    //     if (this.securityRadio == 'IT') {
-    //       fd.append("it_option_value", it_option_value.join(',')) // chexkbox and inner value
-    //     }
-    //     fd.append("asset_description", this.assetDescription);
-    //     fd.append("asset_has_number", this.assetNumber);
-    //     if (this.assetNumber == 'Yes') {
-    //       fd.append("asset_number", this.assetsNumbers);
-    //     }
-    //     fd.append("extent_of_damage", this.extentOfDamage);
-    //     fd.append("report", this.doneDifferently);
-    //     fd.append("person_details", JSON.stringify(this.personDetails));
-    //     fd.append("chemical_details", JSON.stringify(this.checmicalDetails))
-    //     this.global.presentLoading();
-    //     this.global.postData("api/add_form/submit", fd).subscribe((res: any) => {
-    //       if (res.status) {
-    //         this.global.presentToast(res.message)
-    //         this.nav.navigateForward("home");
-    //         this.global.dismissLoading();
-    //       } else {
-    //         this.global.presentToast(res.message)
-    //         this.global.dismissLoading();
-    //       }
-    //     }, err => {
-    //       console.log("err", err);
-    //       this.global.dismissLoading();
-    //     })
-    //   }
-    // }
     b64toBlob(b64Data, contentType) {
         contentType = contentType || '';
         var sliceSize = 512;
@@ -1304,17 +1009,15 @@ let ViewPage = class ViewPage {
     }
 };
 ViewPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.NavController },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.ModalController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController },
     { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_3__.Camera },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.ActionSheetController },
-    { type: _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_4__.File },
-    { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_5__.GlobalService },
-    { type: _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_6__.Base64 },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ActionSheetController },
+    { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_4__.GlobalService },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__.ActivatedRoute }
 ];
-ViewPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
+ViewPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-view',
         template: _raw_loader_view_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_view_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -1404,7 +1107,7 @@ let GlobalService = class GlobalService {
         header.set("Access-Control-Allow-Headers", "*");
         header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
         header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
             header.set("token", localStorage.getItem("token"));
         }
         return header;
@@ -1418,13 +1121,14 @@ let GlobalService = class GlobalService {
         return this.http.get(this.baseUrl + url, { headers: headers });
     }
     postData(url, data) {
-        // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-        // header.set("Access-Control-Allow-Origin", "*");
-        // header.set("Content-Type", "application/json");
-        // header.set("Access-Control-Allow-Headers", "*")
-        // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-        // header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        let headers = this.setHeader();
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
+        headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Content-Type", "application/json");
+        headers.set("Access-Control-Allow-headerss", "*");
+        headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+        headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        console.log('headers', headers);
+        // let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
     postDataWithId(url, data) {
@@ -1476,7 +1180,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Details</ion-text>\n    <ion-buttons class=\"back\">\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n  <div class=\"container\">\n    <div class=\"ion-margin-top ion-margin-bottom\">\n      <p>Incident Report</p>\n    </div>\n\n\n    <div class=\"activeBackground\">\n      <!---------------------------------------Incident Detalis----------------------------------->\n      <div class=\"headerTitle\">\n        <p>Incident</p>\n      </div>\n      <ion-radio-group value=\"Actual\">\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-radio value=\"Actual\" checked></ion-radio>\n          <ion-label>{{incedent}}</ion-label>\n        </ion-item>\n      </ion-radio-group>\n      <hr/>\n      <!---------------------------------------Incident Detalis----------------------------------->\n\n      <!---------------------------------------Classification----------------------------------->\n      <div class=\"headerTitle\">\n        <p>Classification</p>\n      </div>\n      <ion-row class=\"ion-no-padding\" *ngIf=\"classificationChekBox.length > 0\">\n        <ion-col size=\"6\" *ngFor=\"let entry of classificationChekBox\">\n          <ion-item class=\"ion-no-padding ra\" lines=\"none\" *ngIf=\"entry!==''\">\n            <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n            <ion-label>{{entry}}</ion-label>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <p class=\"question\">Date of Incident</p>\n      <p class=\"question\">{{dateOfIncident}}</p>\n\n      <p class=\"question\">Time Of Incident</p>\n      <p class=\"question\">{{timeOfIncident}}</p>\n\n      <p class=\"question\">Date Reported</p>\n      <p class=\"question\">{{dateReported}}</p>\n\n      <p class=\"question\">Time Reported</p>\n      <p class=\"question\">{{timeReported}}</p>\n\n      <div *ngIf=\"location!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>{{location}}</ion-label>\n        </ion-item>\n      </div>\n      <ion-text *ngIf=\"location == 'Add Location'\" class=\"regularTexrt\">{{addLocation}}</ion-text>\n      <ion-text *ngIf=\"location == 'Choose Location'\" class=\"regularTexrt\">{{locationSelection}}</ion-text>\n      <ion-row class=\"ion-no-padding\">\n        <ion-col size=\"6\" *ngIf=\"shiftType!==''\">\n          <p class=\"head\">Shift Type</p>\n          <p class=\"value\">{{shiftType}}</p>\n        </ion-col>\n        <ion-col size=\"6\" *ngIf=\"superVisor!==''\">\n          <p class=\"head\">Supervisor</p>\n          <p class=\"value\">{{superVisor}}</p>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-no-padding\">\n        <ion-col size=\"12\">\n          <p class=\"head\">Name of Manager</p>\n          <p class=\"value\">{{nameOfManager}}</p>\n        </ion-col>\n      </ion-row>\n      <hr/>\n      <!---------------------------------------Classification----------------------------------->\n     \n      <!---------------------------------------Photography----------------------------------->\n      <div *ngIf=\"imagePath !==''\">\n        <div class=\"headerTitle\">\n          <p>Photography</p>\n        </div>\n        <div class=\"ion-text-center\" *ngIf=\"imagePath !==''\">\n          <img src=\"{{imagePath}}\" class=\"img-responsive\">\n        </div>\n        <div *ngIf=\"imagePath ==''\">\n          <h6 class=\"ion-text-center ion-no-margin\">No Img Found</h6>\n        </div>\n        <hr />\n      </div>\n      <!---------------------------------------Photography----------------------------------->\n\n      <!---------------------------------------Incident Description----------------------------------->\n      <div class=\"headerTitle\">\n        <p>Incident Description</p>\n      </div>\n      <p class=\"question\">Description of incident (note: You must not use any personal details or names)</p>\n      <p class=\"value\">{{descriptionIncident}}</p>\n      <p class=\"question\">Immediate action taken</p>\n      <p class=\"value\">{{immediateAction}}</p>\n      <ion-row class=\"ion-no-padding\" *ngIf=\"insertPhotoisChecked\">\n        <ion-col size=\"12\">\n          <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n            <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n            <ion-label>Insert Photo</ion-label>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      <div class=\"ion-text-center\" *ngIf=\"insertPhotoisChecked\">\n        <img src=\"{{imagePath2}}\" class=\"img-responsive\">\n      </div>\n      <div *ngIf=\"alcoholTest!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Alcohol test completed</ion-label>\n        </ion-item>\n        <ion-text class=\"regularTexrt\">{{alcoholTest}}</ion-text>\n      </div>\n      <div *ngIf=\"drugTest!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Drug test completed</ion-label>\n        </ion-item>\n      </div>\n      <ion-text class=\"regularTexrt\">{{drugTest}}</ion-text>\n      <hr />\n      <!---------------------------------------Incident Description----------------------------------->\n\n      <!---------------------------------------------Injury-------------------------------------------->\n\n      <div class=\"headerTitle\">\n        <p>Injury</p>\n      </div>\n      <div *ngFor=\"let item of person_Array;let i = index\">\n        <ion-card class=\"ion-no-padding ion-no-margin\">\n          <p class=\"question\">Person {{i+1}} Details</p>\n          <div *ngIf=\"item?.fullNameOfInjuredPerson\">\n            <p class=\"question\">Full name of Injured person</p>\n            <p class=\"value\">{{item?.fullNameOfInjuredPerson}}</p>\n          </div>\n          <ion-row class=\"ion-no-padding ion-no-margin\">\n            <ion-col size=\"6\" class=\"ion-no-padding\" *ngIf=\"item?.gender !==''\">\n              <p class=\"question\">Gender</p>\n              <p class=\"value\">{{item?.gender}}</p>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\" *ngIf=\"item?.dateOfBirth !==''\">\n              <p class=\"question\">Date of Birth</p>\n              <p class=\"value\">{{item?.dateOfBirth|date}}</p>\n            </ion-col>\n          </ion-row>\n          <div *ngIf=\"item?.returnToNormalDuties !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Return to Normal Duties</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.returnToNormalDuties}}</p>\n          </div>\n          <div *ngIf=\"item?.alternate_duties !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Return to Alternate Duties</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.alternate_duties}}</p>\n          </div>\n          <div *ngIf=\"item?.part_of_body_injured_occured !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Part of Body Injured Occured</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.part_of_body_injured_occured}}</p>\n          </div>\n\n          <div *ngIf=\"item?.was_immediate_treatment !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Was Immediate Treatment Given</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.was_immediate_treatment}}</p>\n          </div>\n\n\n          <div *ngIf=\"item?.immediate_treatment_given_explanation !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Immediate Treatment Given Explanation</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.immediate_treatment_given_explanation}}</p>\n          </div>\n\n          <div *ngIf=\"item?.immediate_treatment_person_name !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Immediate Treatment Person_name</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.immediate_treatment_person_name}}</p>\n          </div>\n\n          <div *ngIf=\"item?.immediate_treatment_person_number !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Immediate Treatment Person Number</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.immediate_treatment_person_number}}</p>\n          </div>\n          <div *ngIf=\"item?.injurryCheckBox.length>0\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n              <ion-label>Initial Injury/illness classification</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\" *ngFor=\"let i of item?.injurryCheckBox\">\n              <ion-text *ngIf=\"i.isChecked\">{{i.val}},</ion-text>\n            </p>\n          </div>\n          <hr />\n        </ion-card>\n      </div>\n      <hr />\n      <!---------------------------------------------Injury-------------------------------------------->\n\n      <!---------------------------------------------Environmental-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Environmental</p>\n      </div>\n      <p class=\"question\">Immediate action taken to minimize Environment impact</p>\n      <p class=\"value\">{{environmentActionTaken}}</p>\n      <div *ngIf=\"chemicalSplit!==''\">\n        <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the chemical split?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value ion-margin-top\">\n          {{chemicalSplit}}\n        </p>\n      </div>\n      <div *ngIf=\"nameOfChemical!==''\">\n        <p class=\"question\">Name of chemical</p>\n        <p class=\"value\">{{nameOfChemical}}</p>\n      </div>\n      <div *ngIf=\"approximateQtyofChemical\">\n        <p class=\"question\">Approximate Qty of Chemical</p>\n        <p class=\"value\">{{approximateQtyofChemical}}</p>\n      </div>\n      <div class=\"ion-text-center\" *ngIf=\"insertPhotoisChecked\">\n        <div *ngIf=\"imagePath3 !== '' \">\n          <img src=\"{{imagePath3}}\" class=\"img-responsive\">\n        </div>\n      </div>\n      <div *ngIf=\"emergencySpill!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the emergency spill kit used ?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value \">{{emergencySpill}}</p>\n      </div>\n      <hr />\n      <!---------------------------------------------Environmental-------------------------------------------->\n\n      <!---------------------------------------------Reputation-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Reputation</p>\n      </div>\n      <div *ngIf=\"individualChecked\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the reputation damages an individual or Company</ion-label>\n        </ion-item>\n      </div>\n      <p class=\"regularTexrt value\" *ngIf=\"individualChecked\">Individual</p>\n      <p class=\"regularTexrt value\" *ngIf=\"companyChecked\">Company</p>\n      <div *ngIf=\"individualChecked\">\n        <p class=\"question\">How has the Individual's reputation been damaged?</p>\n        <p class=\"value\">{{individualReputationDamaged}}</p>\n      </div>\n      <div *ngIf=\"companyChecked\">\n        <p class=\"question\">How has the Company reputation been damaged?</p>\n        <p class=\"value\">{{companyReputatonDamaged}}</p>\n      </div>\n\n      <div *ngIf=\"nagativeEffetct !==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the nagative effect internal or external</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value \">{{nagativeEffetct}}</p>\n      </div>\n      <p class=\"question\">Name of any witness</p>\n      <p class=\"value\">{{nameOfAnyWitness}}</p>\n      <!-- <p class=\"question\">Contact of any witness</p>\n      <p class=\"value\">{{contactOfAnyWitness}}</p> -->\n      <p class=\"question\" *ngIf=\"possibleOutcomeOfIncident !== ''\">What is the possible outcome of this incident ?</p>\n      <p class=\"value\">{{possibleOutcomeOfIncident}}</p>\n      <p class=\"question\" *ngIf=\"imagePath4 !==''\">Upload evidence of the reputation damage</p>\n      <div class=\"ion-text-center\" *ngIf=\"imagePath4 !==''\">\n        <img src=\"{{imagePath4}}\" class=\"img-responsive\">\n      </div>\n      <hr/>\n      <!---------------------------------------------Reputation-------------------------------------------->\n\n      <!---------------------------------------------Security-------------------------------------------->\n\n      <div class=\"headerTitle\" *ngIf=\"securityRadio!=='' && securityRadio!=='undefined'\">\n        <p>Security</p>\n      </div>\n      <div *ngIf=\"securityRadio!=='' && securityRadio!=='undefined'\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>{{securityRadio}}</ion-label>\n        </ion-item>\n      </div>\n      <div *ngIf=\"securityRadio =='Theft'\">\n        <p class=\"question\">What Has Been Stolen Item ? </p>\n        <p class=\"value\">{{what_has_been_stolen_item}}</p>\n\n        <p class=\"question\">What Is the specific Securities Incident ?</p>\n        <p class=\"value\">{{what_is_the_specific_securities_incident}}</p>\n        <div>\n          <p class=\"question\">Approximate value of stolen item</p>\n          <p class=\"value\">{{approximate_value_of_stolen}}</p>\n        </div>\n      </div>\n      <div *ngIf=\"securityRadio=='IT'\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>What kind of IT security incident?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value ion-margin-top\" *ngFor=\"let i of itsecurityCheckbox\">\n          <ion-text *ngIf=\"i.isChecked\">{{i.val}},</ion-text>\n        </p>\n      </div>\n      <hr />\n      <!---------------------------------------------Security-------------------------------------------->\n\n      <!---------------------------------------------Asset-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Asset</p>\n      </div>\n      <p class=\"question\">Asset Description</p>\n      <p class=\"value\">{{assetDescription}}</p>\n      <div *ngIf=\"assetNumber=='' && assetNumber=='undefined'\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Does asset have a member?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value\">{{assetNumber}}</p>\n      </div>\n      <div *ngIf=\"assetNumber=='Yes'\">\n        <p class=\"question\">Asset Number</p>\n        <p class=\"value\">{{assetsNumbers}}</p>\n      </div>\n      <p class=\"question\" *ngIf=\"imagePath5!==''\">Upload photo of damage</p>\n      <div class=\"ion-text-center\" *ngIf=\"imagePath5 !==''\">\n        <img src=\"{{imagePath5}}\" class=\"img-responsive\">\n      </div>\n      <hr/>\n      <!---------------------------------------------Asset-------------------------------------------->\n\n      <!---------------------------------------------Report-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Report</p>\n      </div>\n      <p class=\"question\">What could have been done differently?</p>\n      <p class=\"value\">{{doneDifferently}}</p>\n      <!---------------------------------------------Report-------------------------------------------->\n\n    </div>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Details</ion-text>\n    <ion-buttons class=\"back\">\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n  <div class=\"container\">\n    <div class=\"ion-margin-top ion-margin-bottom\">\n      <p>Incident Report</p>\n    </div>\n\n    <div class=\"activeBackground\">\n      <!---------------------------------------Incident Detalis----------------------------------->\n      <div class=\"headerTitle\">\n        <p>Incident</p>\n      </div>\n      <ion-radio-group value=\"Actual\">\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-radio value=\"Actual\" checked></ion-radio>\n          <ion-label>{{incedent}}</ion-label>\n        </ion-item>\n      </ion-radio-group>\n      <hr/>\n      <!---------------------------------------Incident Detalis----------------------------------->\n\n      <!---------------------------------------Classification----------------------------------->\n      <div class=\"headerTitle\">\n        <p>Classification</p>\n      </div>\n      <ion-row class=\"ion-no-padding\" *ngIf=\"classificationChekBox.length > 0\">\n        <ion-col size=\"6\" *ngFor=\"let entry of classificationChekBox\">\n          <ion-item class=\"ion-no-padding ra\" lines=\"none\" *ngIf=\"entry!==''\">\n            <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n            <ion-label>{{entry}}</ion-label>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n\n      <p class=\"question\">Date of Incident</p>\n      <p class=\"question\">{{dateOfIncident}}</p>\n\n      <p class=\"question\">Time Of Incident</p>\n      <p class=\"question\">{{timeOfIncident}}</p>\n\n      <p class=\"question\">Date Reported</p>\n      <p class=\"question\">{{dateReported}}</p>\n\n      <p class=\"question\">Time Reported</p>\n      <p class=\"question\">{{timeReported}}</p>\n\n      <div *ngIf=\"location!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>{{location}}</ion-label>\n        </ion-item>\n      </div>\n      <ion-text *ngIf=\"location == 'Add Location'\" class=\"regularTexrt\">{{addLocation}}</ion-text>\n      <ion-text *ngIf=\"location == 'Choose Location'\" class=\"regularTexrt\">{{locationSelection}}</ion-text>\n      <ion-row class=\"ion-no-padding\">\n        <ion-col size=\"6\" *ngIf=\"shiftType!==''\">\n          <p class=\"head\">Shift Type</p>\n          <p class=\"value\">{{shiftType}}</p>\n        </ion-col>\n        <ion-col size=\"6\" *ngIf=\"superVisor!==''\">\n          <p class=\"head\">Supervisor</p>\n          <p class=\"value\">{{superVisor}}</p>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-no-padding\">\n        <ion-col size=\"12\">\n          <p class=\"head\">Name of Manager</p>\n          <p class=\"value\">{{nameOfManager}}</p>\n        </ion-col>\n      </ion-row>\n      <hr/>\n      <!---------------------------------------Classification----------------------------------->\n     \n      <!---------------------------------------Photography----------------------------------->\n      <div *ngIf=\"imagePath !==''\">\n        <div class=\"headerTitle\">\n          <p>Photography</p>\n        </div>\n        <div class=\"ion-text-center\" *ngIf=\"imagePath !==''\">\n          <img src=\"{{imagePath}}\" class=\"img-responsive\">\n        </div>\n        <div *ngIf=\"imagePath ==''\">\n          <h6 class=\"ion-text-center ion-no-margin\">No Img Found</h6>\n        </div>\n        <hr />\n      </div>\n      <!---------------------------------------Photography----------------------------------->\n\n      <!---------------------------------------Incident Description----------------------------------->\n      <div class=\"headerTitle\">\n        <p>Incident Description</p>\n      </div>\n      <p class=\"question\">Description of incident (note: You must not use any personal details or names)</p>\n      <p class=\"value\">{{descriptionIncident}}</p>\n      <p class=\"question\">Immediate action taken</p>\n      <p class=\"value\">{{immediateAction}}</p>\n      <ion-row class=\"ion-no-padding\" *ngIf=\"insertPhotoisChecked\">\n        <ion-col size=\"12\">\n          <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n            <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n            <ion-label>Insert Photo</ion-label>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      <div class=\"ion-text-center\" *ngIf=\"insertPhotoisChecked\">\n        <img src=\"{{imagePath2}}\" class=\"img-responsive\">\n      </div>\n      <div *ngIf=\"alcoholTest!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Alcohol test completed</ion-label>\n        </ion-item>\n        <ion-text class=\"regularTexrt\">{{alcoholTest}}</ion-text>\n      </div>\n      <div *ngIf=\"drugTest!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Drug test completed</ion-label>\n        </ion-item>\n      </div>\n      <ion-text class=\"regularTexrt\">{{drugTest}}</ion-text>\n      <hr />\n      <!---------------------------------------Incident Description----------------------------------->\n\n      <!---------------------------------------------Injury-------------------------------------------->\n\n      <div class=\"headerTitle\">\n        <p>Injury</p>\n      </div>\n      <div *ngFor=\"let item of person_Array;let i = index\">\n        <ion-card class=\"ion-no-padding ion-no-margin\">\n          <p class=\"question\">Person {{i+1}} Details</p>\n          <div *ngIf=\"item?.fullNameOfInjuredPerson\">\n            <p class=\"question\">Full name of Injured person</p>\n            <p class=\"value\">{{item?.fullNameOfInjuredPerson}}</p>\n          </div>\n          <ion-row class=\"ion-no-padding ion-no-margin\">\n            <ion-col size=\"6\" class=\"ion-no-padding\" *ngIf=\"item?.gender !==''\">\n              <p class=\"question\">Gender</p>\n              <p class=\"value\">{{item?.gender}}</p>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\" *ngIf=\"item?.dateOfBirth !==''\">\n              <p class=\"question\">Date of Birth</p>\n              <p class=\"value\">{{item?.dateOfBirth|date}}</p>\n            </ion-col>\n          </ion-row>\n          <div *ngIf=\"item?.returnToNormalDuties !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Return to Normal Duties</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.returnToNormalDuties}}</p>\n          </div>\n          <div *ngIf=\"item?.alternate_duties !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Return to Alternate Duties</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.alternate_duties}}</p>\n          </div>\n          <div *ngIf=\"item?.part_of_body_injured_occured !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Part of Body Injured Occured</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.part_of_body_injured_occured}}</p>\n          </div>\n\n          <div *ngIf=\"item?.was_immediate_treatment !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Was Immediate Treatment Given</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.was_immediate_treatment}}</p>\n          </div>\n\n\n          <div *ngIf=\"item?.immediate_treatment_given_explanation !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Immediate Treatment Given Explanation</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.immediate_treatment_given_explanation}}</p>\n          </div>\n\n          <div *ngIf=\"item?.immediate_treatment_person_name !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Immediate Treatment Person_name</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.immediate_treatment_person_name}}</p>\n          </div>\n\n          <div *ngIf=\"item?.immediate_treatment_person_number !==''\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n              <ion-label>Immediate Treatment Person Number</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\">{{item?.immediate_treatment_person_number}}</p>\n          </div>\n          <div *ngIf=\"item?.injurryCheckBox.length>0\">\n            <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n              <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n              <ion-label>Initial Injury/illness classification</ion-label>\n            </ion-item>\n            <p class=\"regularTexrt value ion-margin-top\" *ngFor=\"let i of item?.injurryCheckBox\">\n              <ion-text *ngIf=\"i.isChecked\">{{i.val}},</ion-text>\n            </p>\n          </div>\n          <hr />\n        </ion-card>\n      </div>\n      <hr />\n      <!---------------------------------------------Injury-------------------------------------------->\n\n      <!---------------------------------------------Environmental-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Environmental</p>\n      </div>\n      <p class=\"question\">Immediate action taken to minimize Environment impact</p>\n      <p class=\"value\">{{environmentActionTaken}}</p>\n      <div *ngIf=\"chemicalSplit!==''\">\n        <ion-item class=\"ion-no-padding ra ion-no-margin\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the chemical split?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value ion-margin-top\">\n          {{chemicalSplit}}\n        </p>\n      </div>\n      <div *ngIf=\"nameOfChemical!==''\">\n        <p class=\"question\">Name of chemical</p>\n        <p class=\"value\">{{nameOfChemical}}</p>\n      </div>\n      <div *ngIf=\"approximateQtyofChemical\">\n        <p class=\"question\">Approximate Qty of Chemical</p>\n        <p class=\"value\">{{approximateQtyofChemical}}</p>\n      </div>\n      <div class=\"ion-text-center\" *ngIf=\"insertPhotoisChecked\">\n        <div *ngIf=\"imagePath3 !== '' \">\n          <img src=\"{{imagePath3}}\" class=\"img-responsive\">\n        </div>\n      </div>\n      <div *ngIf=\"emergencySpill!==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the emergency spill kit used ?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value \">{{emergencySpill}}</p>\n      </div>\n      <hr />\n      <!---------------------------------------------Environmental-------------------------------------------->\n\n      <!---------------------------------------------Reputation-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Reputation</p>\n      </div>\n      <div *ngIf=\"individualChecked\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/check.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the reputation damages an individual or Company</ion-label>\n        </ion-item>\n      </div>\n      <p class=\"regularTexrt value\" *ngIf=\"individualChecked\">Individual</p>\n      <p class=\"regularTexrt value\" *ngIf=\"companyChecked\">Company</p>\n      <div *ngIf=\"individualChecked\">\n        <p class=\"question\">How has the Individual's reputation been damaged?</p>\n        <p class=\"value\">{{individualReputationDamaged}}</p>\n      </div>\n      <div *ngIf=\"companyChecked\">\n        <p class=\"question\">How has the Company reputation been damaged?</p>\n        <p class=\"value\">{{companyReputatonDamaged}}</p>\n      </div>\n\n      <div *ngIf=\"nagativeEffetct !==''\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Was the nagative effect internal or external</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value \">{{nagativeEffetct}}</p>\n      </div>\n      <p class=\"question\">Name of any witness</p>\n      <p class=\"value\">{{nameOfAnyWitness}}</p>\n      <!-- <p class=\"question\">Contact of any witness</p>\n      <p class=\"value\">{{contactOfAnyWitness}}</p> -->\n      <p class=\"question\" *ngIf=\"possibleOutcomeOfIncident !== ''\">What is the possible outcome of this incident ?</p>\n      <p class=\"value\">{{possibleOutcomeOfIncident}}</p>\n      <p class=\"question\" *ngIf=\"imagePath4 !==''\">Upload evidence of the reputation damage</p>\n      <div class=\"ion-text-center\" *ngIf=\"imagePath4 !==''\">\n        <img src=\"{{imagePath4}}\" class=\"img-responsive\">\n      </div>\n      <hr/>\n      <!---------------------------------------------Reputation-------------------------------------------->\n\n      <!---------------------------------------------Security-------------------------------------------->\n\n      <div class=\"headerTitle\" *ngIf=\"securityRadio!=='' && securityRadio!=='undefined'\">\n        <p>Security</p>\n      </div>\n      <div *ngIf=\"securityRadio!=='' && securityRadio!=='undefined'\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>{{securityRadio}}</ion-label>\n        </ion-item>\n      </div>\n      <div *ngIf=\"securityRadio =='Theft'\">\n        <p class=\"question\">What Has Been Stolen Item ? </p>\n        <p class=\"value\">{{what_has_been_stolen_item}}</p>\n\n        <p class=\"question\">What Is the specific Securities Incident ?</p>\n        <p class=\"value\">{{what_is_the_specific_securities_incident}}</p>\n        <div>\n          <p class=\"question\">Approximate value of stolen item</p>\n          <p class=\"value\">{{approximate_value_of_stolen}}</p>\n        </div>\n      </div>\n      <div *ngIf=\"securityRadio=='IT'\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>What kind of IT security incident?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value ion-margin-top\" *ngFor=\"let i of itsecurityCheckbox\">\n          <ion-text *ngIf=\"i.isChecked\">{{i.val}},</ion-text>\n        </p>\n      </div>\n      <hr />\n      <!---------------------------------------------Security-------------------------------------------->\n\n      <!---------------------------------------------Asset-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Asset</p>\n      </div>\n      <p class=\"question\">Asset Description</p>\n      <p class=\"value\">{{assetDescription}}</p>\n      <div *ngIf=\"assetNumber=='' && assetNumber=='undefined'\">\n        <ion-item class=\"ion-no-padding ra\" lines=\"none\">\n          <img src=\"./assets/radio.png\" class=\"ion-margin-end\" />\n          <ion-label>Does asset have a member?</ion-label>\n        </ion-item>\n        <p class=\"regularTexrt value\">{{assetNumber}}</p>\n      </div>\n      <div *ngIf=\"assetNumber=='Yes'\">\n        <p class=\"question\">Asset Number</p>\n        <p class=\"value\">{{assetsNumbers}}</p>\n      </div>\n      <p class=\"question\" *ngIf=\"imagePath5!==''\">Upload photo of damage</p>\n      <div class=\"ion-text-center\" *ngIf=\"imagePath5 !==''\">\n        <img src=\"{{imagePath5}}\" class=\"img-responsive\">\n      </div>\n      <hr/>\n      <!---------------------------------------------Asset-------------------------------------------->\n\n      <!---------------------------------------------Report-------------------------------------------->\n      <div class=\"headerTitle\">\n        <p>Report</p>\n      </div>\n      <p class=\"question\">What could have been done differently?</p>\n      <p class=\"value\">{{doneDifferently}}</p>\n      <!---------------------------------------------Report-------------------------------------------->\n\n    </div>\n  </div>\n</ion-content>");
 
 /***/ })
 

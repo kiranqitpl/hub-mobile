@@ -66,30 +66,54 @@ export class GlobalService {
     header.set("Access-Control-Allow-Headers", "*")
     header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
     header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    
     if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
       header.set("token", localStorage.getItem("token"));
     }
+
     return header;
   }
 
-  getData(url) {
+   getData(url) {
+
+    // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
+    // header.set("Access-Control-Allow-Origin", "*");
+    // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+    // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
+
     let headers = this.setHeader();
     return this.http.get(this.baseUrl + url, { headers: headers });
   }
 
   postData(url, data) {
-    let headers = this.setHeader();
+
+    let headers = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
+    headers.set("Access-Control-Allow-Origin", "*");
+    headers.set("Content-Type", "application/json");
+    headers.set("Access-Control-Allow-headerss", "*")
+    headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+    headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    console.log('headers',headers);
+    // let headers = this.setHeader();
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
   postDataWithId(url, data) {
+
+    // let header = new HttpHeaders();
+    // header.set("token", localStorage.getItem("token"));
+
     let headers = this.setHeader();
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
   getDataWithId(url) {
+    
+    // let header = new HttpHeaders();
+    // header.set("token", localStorage.getItem("token"));
+    // header.set("apikey", "as*37486a*()HGY")
+
     let headers = this.setHeader();
     return this.http.get(this.baseUrl + url, { headers: headers });
   }
-
 }

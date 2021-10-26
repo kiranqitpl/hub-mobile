@@ -40,18 +40,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const routes = [
-    // {
-    //   path: 'home',
-    //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-    // },
+    {
+        path: 'home',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_home_home_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./home/home.module */ 3467)).then(m => m.HomePageModule)
+    },
     {
         path: 'dashboard',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_dashboard_dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/dashboard/dashboard.module */ 71659)).then(m => m.DashboardPageModule)
     },
     {
         path: '',
-        redirectTo: 'dashboard',
-        // redirectTo: 'home',
+        // redirectTo: 'dashboard',
+        redirectTo: 'home',
         pathMatch: 'full'
     },
     {
@@ -168,8 +168,8 @@ let AppComponent = class AppComponent {
             nav.navigateRoot("login");
         }
         else {
-            // nav.navigateRoot("home");
-            nav.navigateRoot("dashboard");
+            nav.navigateRoot("home");
+            // nav.navigateRoot("dashboard");
         }
         this.initializeApp();
     }
