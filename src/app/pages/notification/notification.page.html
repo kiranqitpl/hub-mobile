@@ -27,7 +27,8 @@
           <ion-col size="2">
             <ion-checkbox (ionChange)="onDeleteDataSelect(notification.id)"></ion-checkbox>
           </ion-col>
-          <ion-col size="10" (click)="onNotification(notification.id,notification.form_type)">
+          <ion-col size="10"
+            (click)="onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)">
             {{notification.message}}
           </ion-col>
         </ion-row>

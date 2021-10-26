@@ -197,13 +197,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -218,15 +218,23 @@
       var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/environments/environment */
       92340);
+      /* harmony import */
+
+
+      var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/shared-service/shared.service */
+      49481);
 
       var _NotificationPage = /*#__PURE__*/function () {
-        function NotificationPage(nav, globalService) {
+        function NotificationPage(nav, globalService, sharedService) {
           _classCallCheck(this, NotificationPage);
 
           this.nav = nav;
           this.globalService = globalService;
-          this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.type;
+          this.sharedService = sharedService;
+          this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
           this.notificationId = [];
+          this.notificationData = '';
         }
 
         _createClass(NotificationPage, [{
@@ -251,7 +259,58 @@
           value: function getUserData() {
             this.userId = localStorage.getItem('id');
             this.roleId = localStorage.getItem('role');
-          }
+          } //----------------------------------- Load Notification Data ---------------------------------------------------------// 
+
+        }, {
+          key: "onNotificationLoad",
+          value: function onNotificationLoad() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var _this = this;
+
+              var formData, url;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      formData = new FormData();
+                      formData.append("type", this.type);
+                      formData.append("user_id", this.userId); // this.notificationData = await this.sharedService.notificationLoad(formData);
+                      // console.log("this.notificationData ", this.notificationData);
+
+                      url = "";
+
+                      if (this.roleId == this.globalService.investigator) {
+                        url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
+                      } else if (this.roleId == this.globalService.gm) {
+                        url = 'api/notification/getGMNotificationByGmID';
+                      }
+
+                      if (url != "") {
+                        // this.globalService.presentLoading();
+                        this.globalService.postData(url, formData).subscribe(function (result) {
+                          if (result['status']) {
+                            _this.notificationData = result['data'];
+                          } // this.globalService.dismissLoading();
+
+                        }), function (error) {
+                          // this.globalService.dismissLoading();
+                          console.log('error', error);
+                        };
+                      } else {
+                        // this.globalService.dismissLoading();
+                        console.log("error");
+                      }
+
+                    case 6:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          } //----------------------------------- Load Notification Data ---------------------------------------------------------//
+          //----------------------------------- Delete Notification ---------------------------------------------------------//
+
         }, {
           key: "filterArrayData",
           value: function filterArrayData(rowId) {
@@ -277,37 +336,12 @@
             }
           }
         }, {
-          key: "onNotificationLoad",
-          value: function onNotificationLoad() {
-            var _this = this;
-
-            var formData = new FormData();
-            formData.append("type", this.type);
-            formData.append("user_id", this.userId);
-            var url = "";
-
-            if (this.roleId == this.globalService.investigator) {
-              url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-            } else if (this.roleId == this.globalService.gm) {
-              url = 'api/notification/getGMNotificationByGmID';
-            }
-
-            if (url != "") {
-              this.globalService.postData(url, formData).subscribe(function (result) {
-                if (result['status']) {
-                  _this.notificationData = result['data'];
-                }
-              }), function (error) {
-                console.log('error', error);
-              };
-            }
-          }
-        }, {
           key: "onDelete",
           value: function onDelete() {
             var _this2 = this;
 
             if (this.notificationId.length != 0) {
+              this.globalService.presentLoading();
               var url = 'api/notification/deleteNotificationByNotificationID';
               var formData = new FormData();
               formData.append("id", JSON.stringify(this.notificationId));
@@ -317,31 +351,39 @@
                 }
 
                 _this2.globalService.presentToast(result['message']);
+
+                _this2.globalService.dismissLoading();
               }), function (error) {
+                _this2.globalService.dismissLoading();
+
                 console.log('error', error);
               };
             }
-          }
+          } //----------------------------------- Delete Notification ---------------------------------------------------------//
+          //----------------------------------- Re-direct on detail page --------------------------------------------------------//
+
         }, {
-          key: "onNotification",
-          value: function onNotification(rowID, formType) {
+          key: "onNotificationDetaliPage",
+          value: function onNotificationDetaliPage(rowID, formId, formType, isSeen) {
             var _this3 = this;
 
-            var formData = new FormData();
-            formData.append('id', rowID);
-            formData.append('form_type', formType);
-            this.globalService.postData('api/notification/getFormByNotificationID', formData).subscribe(function (result) {
-              console.log('result', result);
+            if (formType == this.globalService.formType_user) {
+              this.nav.navigateForward('view/' + formId);
+            } else if (formType == this.globalService.formType_investigator) {
+              this.nav.navigateForward('investigation-view/' + formId);
+            }
 
-              if (result['status']) {
-                // localStorage.setItem("singleView", JSON.stringify(result['data']))
-                if (formType == _this3.globalService.formType_user) {
-                  _this3.nav.navigateForward('view/' + result['data'].id);
-                } else if (formType == _this3.globalService.formType_investigator) {
-                  _this3.nav.navigateForward('investigation-view/' + result['data'].id);
+            if (isSeen == 0) {
+              this.globalService.getData('api/notification/changeNotificationSeen/' + rowID).subscribe(function (result) {
+                console.log('result', result);
+
+                if (result['status']) {
+                  _this3.sharedService.notViewNotiCount = _this3.sharedService.notViewNotiCount != 0 ? _this3.sharedService.notViewNotiCount - 1 : 0;
                 }
-              }
-            });
+              }), function (error) {
+                console.log("error", error);
+              };
+            }
           }
         }]);
 
@@ -350,13 +392,15 @@
 
       _NotificationPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController
         }, {
           type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+        }, {
+          type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService
         }];
       };
 
-      _NotificationPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+      _NotificationPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-notification',
         template: _raw_loader_notification_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_notification_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -422,7 +466,8 @@
           this.http = http;
           this.loadingController = loadingController;
           this.baseUrl = 'https://mforms-api-devel.horts.com.au/'; // https://mforms-api-devel.horts.com.au/
-          //Role 
+
+          this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
 
           this.user = "31";
           this.gm = "32";
@@ -436,35 +481,6 @@
         _createClass(GlobalService, [{
           key: "presentToast",
           value: function presentToast(msg) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var toast;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      _context.next = 2;
-                      return this.toastController.create({
-                        message: msg,
-                        duration: 2000,
-                        mode: "ios",
-                        color: "dark"
-                      });
-
-                    case 2:
-                      toast = _context.sent;
-                      toast.present();
-
-                    case 4:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
-          }
-        }, {
-          key: "toast",
-          value: function toast(msg, type) {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var toast;
               return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -475,9 +491,8 @@
                       return this.toastController.create({
                         message: msg,
                         duration: 2000,
-                        // mode: "ios",
-                        color: type,
-                        animated: true
+                        mode: "ios",
+                        color: "dark"
                       });
 
                     case 2:
@@ -493,26 +508,28 @@
             }));
           }
         }, {
-          key: "presentLoading",
-          value: function presentLoading() {
+          key: "toast",
+          value: function toast(msg, type) {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var loading;
+              var toast;
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
                   switch (_context3.prev = _context3.next) {
                     case 0:
                       _context3.next = 2;
-                      return this.loadingController.create({
-                        cssClass: 'my-custom-class',
-                        message: 'Please wait...'
+                      return this.toastController.create({
+                        message: msg,
+                        duration: 2000,
+                        // mode: "ios",
+                        color: type,
+                        animated: true
                       });
 
                     case 2:
-                      loading = _context3.sent;
-                      _context3.next = 5;
-                      return loading.present();
+                      toast = _context3.sent;
+                      toast.present();
 
-                    case 5:
+                    case 4:
                     case "end":
                       return _context3.stop();
                   }
@@ -521,22 +538,50 @@
             }));
           }
         }, {
-          key: "dismissLoading",
-          value: function dismissLoading() {
+          key: "presentLoading",
+          value: function presentLoading() {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+              var loading;
               return regeneratorRuntime.wrap(function _callee4$(_context4) {
                 while (1) {
                   switch (_context4.prev = _context4.next) {
                     case 0:
                       _context4.next = 2;
-                      return this.loadingController.dismiss();
+                      return this.loadingController.create({
+                        cssClass: 'my-custom-class',
+                        message: 'Please wait...'
+                      });
 
                     case 2:
+                      loading = _context4.sent;
+                      _context4.next = 5;
+                      return loading.present();
+
+                    case 5:
                     case "end":
                       return _context4.stop();
                   }
                 }
               }, _callee4, this);
+            }));
+          }
+        }, {
+          key: "dismissLoading",
+          value: function dismissLoading() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                  switch (_context5.prev = _context5.next) {
+                    case 0:
+                      _context5.next = 2;
+                      return this.loadingController.dismiss();
+
+                    case 2:
+                    case "end":
+                      return _context5.stop();
+                  }
+                }
+              }, _callee5, this);
             }));
           }
         }, {
@@ -560,10 +605,6 @@
         }, {
           key: "getData",
           value: function getData(url) {
-            // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-            // header.set("Access-Control-Allow-Origin", "*");
-            // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
             var headers = this.setHeader();
             return this.http.get(this.baseUrl + url, {
               headers: headers
@@ -572,16 +613,7 @@
         }, {
           key: "postData",
           value: function postData(url, data) {
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
-              'apikey': 'as*37486a*()HGY'
-            });
-            headers.set("Access-Control-Allow-Origin", "*");
-            headers.set("Content-Type", "application/json");
-            headers.set("Access-Control-Allow-headerss", "*");
-            headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-            console.log('headers', headers); // let headers = this.setHeader();
-
+            var headers = this.setHeader();
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
             });
@@ -589,8 +621,6 @@
         }, {
           key: "postDataWithId",
           value: function postDataWithId(url, data) {
-            // let header = new HttpHeaders();
-            // header.set("token", localStorage.getItem("token"));
             var headers = this.setHeader();
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
@@ -599,13 +629,35 @@
         }, {
           key: "getDataWithId",
           value: function getDataWithId(url) {
-            // let header = new HttpHeaders();
-            // header.set("token", localStorage.getItem("token"));
-            // header.set("apikey", "as*37486a*()HGY")
             var headers = this.setHeader();
             return this.http.get(this.baseUrl + url, {
               headers: headers
             });
+          }
+        }, {
+          key: "postData1",
+          value: function postData1(url, data) {
+            var headers = this.setHeader();
+            return this.http.post(this.baseUrl1 + url, data, {
+              headers: headers
+            });
+          }
+        }, {
+          key: "getData1",
+          value: function getData1(url) {
+            var headers = this.setHeader();
+            return this.http.get(this.baseUrl1 + url, {
+              headers: headers
+            }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+            //   map((response) => {
+            //     console.log('response', response);
+            //     if (!response['status']) {
+            //       throw new Error('Value expected!');
+            //     }
+            //     response;
+            //   }),
+            //   catchError(() => of())
+            // );
           }
         }]);
 
@@ -660,7 +712,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Notification</ion-text>\n    <ion-buttons class='back'>\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-card *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-card-content>\n        <ion-row>\n          <ion-col size=\"2\">\n            <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n          </ion-col>\n          <ion-col size=\"10\" (click)=\"onNotification(notification.id,notification.form_type)\">\n            {{notification.message}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Notification</ion-text>\n    <ion-buttons class='back'>\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-card *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-card-content>\n        <ion-row>\n          <ion-col size=\"2\">\n            <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n          </ion-col>\n          <ion-col size=\"10\"\n            (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n            {{notification.message}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

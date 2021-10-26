@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  type : 1,   // type = 0=>all 1=>unread 2=> read
+  type: 1,   // type = 0=>all 1=>unread  2=>read  notification
+  allType: 0, // type = 0=>all 1=> unread 2=> read notification
+  imageUrl : './assets/',
+
 };
 
 /*

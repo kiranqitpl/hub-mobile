@@ -1,6 +1,9 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
+import { environment } from 'src/environments/environment';
+
+import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,13 +19,35 @@ export class DashboardPage implements OnInit {
   investigatorRole: any;
   managerRole: any;
   supervisorRole: any;
+  userId: string;
+  roleId: string;
+  type: any = environment.allType;
+  // notViewNotiCount: number = 0;
+
+  _menu = [
+    {
+      // menuName: "Incident", route: "/add-form"
+      menuName: "Incident", route: "/incident-form"
+    },
+    {
+      menuName: "Hazard Report", route: "/add-form"
+    },
+    {
+      menuName: "SBO", route: "#"
+    },
+  ];
 
   constructor(
     private nav: NavController,
-    private global: GlobalService
+    private global: GlobalService,
+    private sharedService: SharedService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.userId = localStorage.getItem('id');
+    this.roleId = localStorage.getItem('role');
+    this.onNotificationLoad();
+  }
 
   ionViewWillEnter() {
     this.userRole = this.global.user;
@@ -33,8 +58,8 @@ export class DashboardPage implements OnInit {
     this.role = localStorage.getItem("role");
     if (this.role == this.userRole) {
       this.data = ["Previous Form", "Notification"]
-    } else if (this.role == this.gmRole) {
-      this.data = ["Submitted Form", "Notification"]
+      // } else if (this.role == this.gmRole) {
+      //   this.data = ["Submitted Form", "Notification"]
     } else {
       this.data = ["Submitted Form", "Notification"]
     }
@@ -44,9 +69,9 @@ export class DashboardPage implements OnInit {
     this.nav.navigateForward("incident-type")
   }
 
-  pendingForm() {
-    this.nav.navigateForward("form-list")
-  }
+  // pendingForm() {
+  //   this.nav.navigateForward("form-list")
+  // }
 
   navGo(item) {
     if (item === 'Previous Form' || item == 'Submitted Form') {
@@ -61,4 +86,44 @@ export class DashboardPage implements OnInit {
     this.nav.navigateRoot("login")
   }
 
+  onNotificationLoad() {
+    let formData = new FormData();
+    formData.append("type", this.type);
+    formData.append("user_id", this.userId);
+
+    // this.sharedService.notificationLoad(formData);
+
+
+    let url = "";
+    if (this.roleId == this.global.investigator) {
+      url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
+    } else if (this.roleId == this.global.gm) {
+      url = 'api/notification/getGMNotificationByGmID';
+    }
+    if (url != "") {
+      // this.global.presentLoading();
+      this.global.postData(url, formData).subscribe(result => {
+        if (result['status']) {
+          let count: number = 0;
+          result['data'].forEach(element => {
+            if (element.is_seen == 0) {
+              count = count + 1;
+            }
+          });
+          this.sharedService.notViewNotiCount = count
+          // this.notViewNotiCount = count;
+        } else {
+          console.log('error');
+        }
+        // this.global.dismissLoading();
+      }), error => {
+        // this.global.dismissLoading();
+        console.log('error', error);
+      }
+
+    } else {
+      // this.global.dismissLoading();
+      console.log("error");
+    }
+  }
 }

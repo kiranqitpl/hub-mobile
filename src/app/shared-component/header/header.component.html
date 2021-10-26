@@ -1,8 +1,12 @@
 <div class="toolbar">
-  <!-- <ion-text>{{pageName}}</ion-text> -->
-  <ion-text>ggggg</ion-text>
-  <ion-buttons class='back' slot="end">
-    <ion-button (click)="logout()">
+  <ion-text>{{pageName}}</ion-text>
+  <ion-buttons class='back'>
+    <ion-button (click)="onGoBack()">
+      <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons class='logout'>
+    <ion-button (click)="onLogOut()">
       <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-buttons>

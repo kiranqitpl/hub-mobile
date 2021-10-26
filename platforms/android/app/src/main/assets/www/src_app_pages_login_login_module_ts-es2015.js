@@ -108,11 +108,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let LoginPage = class LoginPage {
-    constructor(nav, global, formBuilder, platform) {
+    constructor(nav, global, formBuilder) {
         this.nav = nav;
         this.global = global;
         this.formBuilder = formBuilder;
-        this.platform = platform;
         this.email = '';
         this.password = '';
         this.isSubmitted = false;
@@ -145,33 +144,32 @@ let LoginPage = class LoginPage {
             // if (this.platform.is("cordova")) {
             //   this.global.presentLoading();
             // }
-            this.global.presentLoading();
+            // this.global.presentLoading();
             const fd = new FormData();
             fd.append("email", this.ionicForm.value.email);
             fd.append("password", this.ionicForm.value.password);
-            console.log('email', this.ionicForm.value.email);
-            console.log('password', this.ionicForm.value.password);
             this.global.postData("api/user/login", fd).subscribe((res) => {
                 var _a, _b;
-                console.log('login', res);
                 if (res.status) {
                     localStorage.setItem("email", res.data.email);
                     localStorage.setItem("role", res.data.role);
                     localStorage.setItem("id", (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.id);
                     localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name);
+                    // if (res.data.role == this.global.user) {
+                    //   this.nav.navigateRoot('dashboard')
+                    // } else {
                     this.nav.navigateRoot('home');
+                    // }
                     // this.nav.navigateRoot('dashboard')
-                    this.global.presentToast(res.message);
+                    // this.global.presentToast(res.message);
                 }
                 else {
                     this.global.presentToast(res.message);
                 }
-                this.global.dismissLoading();
+                // this.global.dismissLoading();
             }, err => {
-                this.global.dismissLoading();
-                console.log("login errs", err);
-                this.global.presentToast(err.message);
-                this.global.presentToast(JSON.parse(err));
+                // this.global.dismissLoading();
+                console.log("errs", err);
             });
         }
         else {
@@ -182,8 +180,7 @@ let LoginPage = class LoginPage {
 LoginPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController },
     { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormBuilder },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.Platform }
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormBuilder }
 ];
 LoginPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
@@ -223,6 +220,7 @@ let GlobalService = class GlobalService {
         this.loadingController = loadingController;
         this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
         // https://mforms-api-devel.horts.com.au/
+        this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/';
         //Role 
         this.user = "31";
         this.gm = "32";
@@ -282,36 +280,38 @@ let GlobalService = class GlobalService {
         return header;
     }
     getData(url) {
-        // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-        // header.set("Access-Control-Allow-Origin", "*");
-        // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-        // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
         let headers = this.setHeader();
         return this.http.get(this.baseUrl + url, { headers: headers });
     }
     postData(url, data) {
-        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-        headers.set("Access-Control-Allow-Origin", "*");
-        headers.set("Content-Type", "application/json");
-        headers.set("Access-Control-Allow-headerss", "*");
-        headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-        headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        console.log('headers', headers);
-        // let headers = this.setHeader();
+        let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
     postDataWithId(url, data) {
-        // let header = new HttpHeaders();
-        // header.set("token", localStorage.getItem("token"));
         let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
     getDataWithId(url) {
-        // let header = new HttpHeaders();
-        // header.set("token", localStorage.getItem("token"));
-        // header.set("apikey", "as*37486a*()HGY")
         let headers = this.setHeader();
         return this.http.get(this.baseUrl + url, { headers: headers });
+    }
+    postData1(url, data) {
+        let headers = this.setHeader();
+        return this.http.post(this.baseUrl1 + url, data, { headers: headers });
+    }
+    getData1(url) {
+        let headers = this.setHeader();
+        return this.http.get(this.baseUrl1 + url, { headers: headers });
+        // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+        //   map((response) => {
+        //     console.log('response', response);
+        //     if (!response['status']) {
+        //       throw new Error('Value expected!');
+        //     }
+        //     response;
+        //   }),
+        //   catchError(() => of())
+        // );
     }
 };
 GlobalService.ctorParameters = () => [

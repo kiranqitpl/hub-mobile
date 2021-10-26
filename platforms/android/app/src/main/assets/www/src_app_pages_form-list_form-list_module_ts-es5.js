@@ -11770,7 +11770,6 @@
           value: function ionViewWillEnter() {
             var _this29 = this;
 
-            this.global.presentLoading();
             this.role = localStorage.getItem("role");
             this.userRole = this.global.user;
             this.gmRole = this.global.gm;
@@ -11786,7 +11785,8 @@
               this.global.postData("api/Add_form/get", {
                 investigator_id: this.gm_id
               }).subscribe(function (res) {
-                var _a;
+                var _a; // this.global.presentLoading()
+
 
                 if (res) {
                   var data = [];
@@ -11810,15 +11810,16 @@
 
                   _this29.rows = _this29.listData;
                   _this29.investigatorData = data;
-                }
+                } // this.global.dismissLoading();
 
-                _this29.global.dismissLoading();
               }, function (err) {
+                // this.global.dismissLoading()
                 console.log("Err response", err);
               });
             } else {
               this.global.postData("api/add_form/get", {}).subscribe(function (res) {
-                var _a, _b;
+                var _a, _b; // this.global.presentLoading()
+
 
                 if (res) {
                   if (_this29.role == _this29.gmRole) {
@@ -11856,21 +11857,18 @@
                     });
                     _this29.listData = res.data;
                     _this29.rows = _this29.listData;
-                  }
+                  } // this.global.dismissLoading();
 
-                  _this29.global.dismissLoading();
-                } else {
-                  _this29.global.dismissLoading();
+                } else {// this.global.dismissLoading();
                 }
               }, function (error) {
-                console.log(error);
-
-                _this29.global.dismissLoading();
+                console.log(error); // this.global.dismissLoading();
               });
             }
 
             this.global.postData("api/add_form/get", {}).subscribe(function (res) {
-              var _a, _b;
+              var _a, _b; // this.global.presentLoading()
+
 
               if (res) {
                 if (_this29.role == _this29.gmRole) {
@@ -11913,16 +11911,12 @@
                   });
                   _this29.listData = res.data;
                   _this29.rows = _this29.listData;
-                }
+                } // this.global.dismissLoading();
 
-                _this29.global.dismissLoading();
-              } else {
-                _this29.global.dismissLoading();
+              } else {// this.global.dismissLoading();
               }
             }, function (error) {
-              console.log(error);
-
-              _this29.global.dismissLoading();
+              console.log(error); // this.global.dismissLoading();
             });
           }
         }, {
@@ -12106,7 +12100,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>List of Forms</ion-text>\n    <ion-buttons class=\"back\">\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n\n    <ion-buttons class=\"logout\">\n      <ion-button (click)=\"logOut()\">\n        <ion-icon name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"ion-margin-top ion-margin-bottom\">\n\n      <ngx-datatable [scrollbarH]=\"true\" class=\"material\" [limit]=\"10\"\n        [rows]=\"role==investigatorRole ? investigatorData :rows\" [rowHeight]=\"50\" [columnMode]=\"'force'\"\n        [headerHeight]=\"50\" [footerHeight]=\"50\" (activate)=\"onActivate($event)\">\n\n\n\n        <ngx-datatable-column name=\"No\" [width]=\"10\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            No\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"inValue\" [minWidth]=\"200\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Type\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"noc\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Date\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"time\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Time\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"manager\" [minWidth]=\"200\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Manager Assigned\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\">\n\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n\n          <ng-template let-value=\"id\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"singleView()\"></ion-icon>\n          </ng-template>\n\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" *ngIf=\"role==userRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Edit\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"editClick()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" *ngIf=\"role==userRole\" name=\"cStatus\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Status\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-text *ngIf=\"value=='0'\">Incomplete</ion-text>\n            <ion-text *ngIf=\"value=='1'\">Complete</ion-text>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"ivalue\" [minWidth]=\"300\" [resizeable]=\"true\" *ngIf=\"role==gmRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Assign Investigator\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <!-- {{value}}             -->\n            <ion-item class=\"ion-no-padding ion-no-margin dropDownStyle\" lines=\"none\">\n              <ion-select placeholder=\"Select Investigator\" value={{value}} (ionChange)=\"selectInvestigator($event)\">\n                <ion-select-option value=\"{{item?.full_name}}\" *ngFor=\"let item of listOfUsers\">{{item?.full_name}}\n                </ion-select-option>\n              </ion-select>\n            </ion-item>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Investigation\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"investigation()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Actions\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"actions()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Investigation<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" (click)=\"viewInvestigation()\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Actions<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" (click)=\"viewActionForm()\" slot=\"icon-only\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n      </ngx-datatable>\n\n    </div>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>List of Forms</ion-text>\n    <ion-buttons class=\"back\">\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n\n    <ion-buttons class=\"logout\">\n      <ion-button (click)=\"logOut()\">\n        <ion-icon name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"ion-margin-top ion-margin-bottom\">\n\n      <ngx-datatable [scrollbarH]=\"true\" class=\"material\" [limit]=\"10\"\n        [rows]=\"role==investigatorRole ? investigatorData :rows\" [rowHeight]=\"50\" [columnMode]=\"'force'\"\n        [headerHeight]=\"50\" [footerHeight]=\"50\" (activate)=\"onActivate($event)\">\n\n        <ngx-datatable-column name=\"No\" [width]=\"10\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            No\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"inValue\" [minWidth]=\"200\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Type\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"noc\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Date\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"time\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Time\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"manager\" [minWidth]=\"200\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Manager Assigned\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\">\n\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n\n          <ng-template let-value=\"id\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"singleView()\"></ion-icon>\n          </ng-template>\n\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" *ngIf=\"role==userRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Edit\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"editClick()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" *ngIf=\"role==userRole\" name=\"cStatus\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Status\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-text *ngIf=\"value=='0'\">Incomplete</ion-text>\n            <ion-text *ngIf=\"value=='1'\">Complete</ion-text>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"ivalue\" [minWidth]=\"300\" [resizeable]=\"true\" *ngIf=\"role==gmRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Assign Investigator\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <!-- {{value}}             -->\n            <ion-item class=\"ion-no-padding ion-no-margin dropDownStyle\" lines=\"none\">\n              <ion-select placeholder=\"Select Investigator\" value={{value}} (ionChange)=\"selectInvestigator($event)\">\n                <ion-select-option value=\"{{item?.full_name}}\" *ngFor=\"let item of listOfUsers\">{{item?.full_name}}\n                </ion-select-option>\n              </ion-select>\n            </ion-item>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Investigation\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"investigation()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Actions\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"actions()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Investigation<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" (click)=\"viewInvestigation()\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Actions<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" (click)=\"viewActionForm()\" slot=\"icon-only\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n      </ngx-datatable>\n\n    </div>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

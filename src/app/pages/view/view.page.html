@@ -23,7 +23,7 @@
           <ion-label>{{incedent}}</ion-label>
         </ion-item>
       </ion-radio-group>
-      <hr/>
+      <hr />
       <!---------------------------------------Incident Detalis----------------------------------->
 
       <!---------------------------------------Classification----------------------------------->
@@ -46,10 +46,10 @@
       <p class="question">{{timeOfIncident}}</p>
 
       <p class="question">Date Reported</p>
-      <p class="question">{{dateReported}}</p>
+      <p class="question">{{dateReported }}</p>
 
       <p class="question">Time Reported</p>
-      <p class="question">{{timeReported}}</p>
+      <p class="question">{{timeReported }}</p>
 
       <div *ngIf="location!==''">
         <ion-item class="ion-no-padding ra" lines="none">
@@ -75,9 +75,9 @@
           <p class="value">{{nameOfManager}}</p>
         </ion-col>
       </ion-row>
-      <hr/>
+      <hr />
       <!---------------------------------------Classification----------------------------------->
-     
+
       <!---------------------------------------Photography----------------------------------->
       <div *ngIf="imagePath !==''">
         <div class="headerTitle">
@@ -126,7 +126,19 @@
         </ion-item>
       </div>
       <ion-text class="regularTexrt">{{drugTest}}</ion-text>
+
+
+      <div *ngIf="returnToAlternateDuties!==''">
+        <ion-item class="ion-no-padding ra" lines="none">
+          <img src="./assets/radio.png" class="ion-margin-end" />
+          <ion-label>Return to Alternate Duties</ion-label>
+        </ion-item>
+      </div>
+
+      <ion-text class="regularTexrt">{{returnToAlternateDuties}}</ion-text>
       <hr />
+
+      <img *ngIf="returnToDutiesImage != '' " src="{{returnToDutiesImage}}" />
       <!---------------------------------------Incident Description----------------------------------->
 
       <!---------------------------------------------Injury-------------------------------------------->
@@ -296,7 +308,7 @@
       <div class="ion-text-center" *ngIf="imagePath4 !==''">
         <img src="{{imagePath4}}" class="img-responsive">
       </div>
-      <hr/>
+      <hr />
       <!---------------------------------------------Reputation-------------------------------------------->
 
       <!---------------------------------------------Security-------------------------------------------->
@@ -354,7 +366,7 @@
       <div class="ion-text-center" *ngIf="imagePath5 !==''">
         <img src="{{imagePath5}}" class="img-responsive">
       </div>
-      <hr/>
+      <hr />
       <!---------------------------------------------Asset-------------------------------------------->
 
       <!---------------------------------------------Report-------------------------------------------->

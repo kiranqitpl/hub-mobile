@@ -92,9 +92,9 @@
       }, {
         path: 'dashboard',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_pages_dashboard_dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_dashboard_dashboard_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/dashboard/dashboard.module */
           71659)).then(function (m) {
             return m.DashboardPageModule;
@@ -156,9 +156,9 @@
       {
         path: 'view/:form_id',
         loadChildren: function loadChildren() {
-          return Promise.all(
+          return __webpack_require__.e(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_view_view_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          "src_app_pages_view_view_module_ts").then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/view/view.module */
           89760)).then(function (m) {
             return m.ViewPageModule;
@@ -248,23 +248,34 @@
       }, {
         path: 'notification',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_notification_notification_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/notification/notification.module */
           89770)).then(function (m) {
             return m.NotificationPageModule;
           });
         }
       }, {
-        path: 'header',
+        path: 'safety-menu',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_shared-module_header_header_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./shared-module/header/header.module */
-          73257)).then(function (m) {
-            return m.HeaderPageModule;
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_safety-menu_safety-menu_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./pages/safety-menu/safety-menu.module */
+          71764)).then(function (m) {
+            return m.SafetyMenuPageModule;
+          });
+        }
+      }, {
+        path: 'incident-form',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./pages/incident-form/incident-form.module */
+          66501)).then(function (m) {
+            return m.IncidentFormPageModule;
           });
         }
       }];
@@ -483,7 +494,7 @@
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
@@ -528,6 +539,12 @@
       var _app_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ./app-routing.module */
       90158);
+      /* harmony import */
+
+
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @angular/forms */
+      3679);
 
       var _AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
@@ -536,10 +553,10 @@
       _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_4__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_9__.HttpClientModule // RouterModule
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_4__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_9__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.ReactiveFormsModule // RouterModule
         ],
         providers: [{
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouteReuseStrategy,
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouteReuseStrategy,
           useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicRouteStrategy
         }, _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__.AppComponent]
@@ -578,8 +595,9 @@
 
       var _environment = {
         production: false,
-        type: 1 // type = 0=>all 1=>unread 2=> read
-
+        type: 1,
+        allType: 0,
+        imageUrl: './assets/'
       };
       /*
        * For easier debugging in development mode, you can import the following file

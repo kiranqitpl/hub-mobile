@@ -10,6 +10,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule
     // RouterModule
   ],
   providers: [{
@@ -28,7 +30,7 @@ import { AppRoutingModule } from './app-routing.module';
     Camera,
     File,
     Base64,
-    
+
   ],
   bootstrap: [AppComponent],
 })

@@ -1,11 +1,13 @@
 import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { ManagersPage } from 'src/app/modals/managers/managers.page';
-import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { GlobalService } from 'src/app/services/global.service';
-import { File } from '@ionic-native/file/ngx';
-import { Base64 } from '@ionic-native/base64/ngx';
+import { ActivatedRoute, Params } from '@angular/router';
+import * as moment from 'moment';
+
+// import { ManagersPage } from 'src/app/modals/managers/managers.page';
+// import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+// import { File } from '@ionic-native/file/ngx';
+// import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
   selector: 'app-view',
@@ -394,10 +396,13 @@ export class ViewPage implements OnInit {
     quality: 50,
   };
 
+  returnToAlternateDuties: any = "";
+  returnToDutiesImage: any = "";
+
   constructor(
+    // private modal: ModalController,
+    // private camera: Camera,
     private nav: NavController,
-    private modal: ModalController,
-    private camera: Camera,
     public actionSheetController: ActionSheetController,
     private global: GlobalService,
     private activatedRoute: ActivatedRoute
@@ -409,23 +414,25 @@ export class ViewPage implements OnInit {
 
   loadData() {
     // let data = JSON.parse(localStorage.getItem('singleView'));
-    this.global.presentLoading();
+    // this.global.presentLoading();
     let data = "";
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        // console.log(params['incident_id']);
         this.global.getData('api/add_form/getIncidentFormByID/' + params['form_id']).subscribe(result => {
+          // this.global.dismissLoading();
           data = result['data'][0];
           if (data != "") {
             this.what_has_been_stolen_item = data['what_has_been_stolen_item']
             this.approximate_value_of_stolen = data['approximate_value_of_stolen']
             this.dateReported = data['date_reported']
             this.dateOfIncident = data['date_of_incident'];
+            // console.log('moment',moment(data['time_of_incident']).format('hh:mm:ss'));
             this.timeOfIncident = data['time_of_incident'];
+            // console.log('this.timeOfIncident ', this.timeOfIncident);
             this.timeReported = data['time_reported'];
             this.what_is_the_specific_securities_incident = data['what_is_the_specific_securities_incident']
             this.drugTest = data['drug_test_completed']
-            this.timeReported = data['time_reported'];
+            // this.timeReported = data['time_reported'];
             this.id = data['id'];
             this.incedent = data['incident_value'];
             this.whoWitnessedNearThis = data['incident_near_miss'];
@@ -454,9 +461,11 @@ export class ViewPage implements OnInit {
                 this.imagePath2 = data['incident_description_photo'];
               }
             }
-
+            this.returnToAlternateDuties = data['return_to_alternate_duties'];
+            this.returnToDutiesImage = data['return_to_alternate_duties_image'];
             this.alcoholTest = data['incident_description_alcohol_test'];
             this.formCount = data['injury_persons'];
+
             if (data['injury_persons'] != '' && JSON.parse(data['injury_persons']) == 1) {
               this.itemsArray = [1]
             }
@@ -541,7 +550,6 @@ export class ViewPage implements OnInit {
 
             }
 
-
             if (data && data['person_details'] && data['person_details'][1] && data['person_details'][1]['alternate_duties']) {
 
               this.person_two_details = {
@@ -610,7 +618,6 @@ export class ViewPage implements OnInit {
 
             }
 
-
             if (data && data['person_details'] && data['person_details'][2] && data['person_details'][2]['alternate_duties']) {
               this.person_three_details = {
                 alternate_duties: data['person_details'][2]['alternate_duties'],
@@ -676,6 +683,7 @@ export class ViewPage implements OnInit {
               })
 
             }
+
             if (data && data['person_details'] && data['person_details'][3] && data['person_details'][3]['alternate_duties']) {
 
               this.person_four_details = {
@@ -828,110 +836,12 @@ export class ViewPage implements OnInit {
           } else {
             console.log("error");
           }
-          this.global.dismissLoading();
-
         }), error => {
-          this.global.dismissLoading();
+          // this.global.dismissLoading();
           console.log(error);
         }
       }
     );
-  }
-
-  itemsChangeForm(e) {
-    let ee = JSON.parse(e.detail.value);
-    if (ee == 1) {
-      this.itemsArray = [1];
-    }
-    if (ee == 2) {
-      this.itemsArray = [1, 2];
-    }
-    if (ee == 3) {
-      this.itemsArray = [1, 2, 3];
-    }
-    if (ee == 4) {
-      this.itemsArray = [1, 2, 3, 4];
-    }
-  }
-
-  reputationCheckboxEvent(e, entry) {
-    this.reputationCheckBox.forEach((element) => {
-      if (element.val === 'Individual') {
-        this.individualChecked = element.isChecked;
-      } else if (element.val === 'Company') {
-        this.companyChecked = element.isChecked;
-      }
-    });
-  }
-
-  pickImage(sourceType, e) {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: sourceType,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-    };
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // this.croppedImagePath = 'data:image/jpeg;base64,' + imageData;
-        const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-        if (e == 1) {
-          this.imagePath = 'data:image/jpeg;base64,' + imageData;
-          let t = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-          let realData = this.imagePath.split(",")[1];
-          let blob = this.b64toBlob(realData, 'image/jpeg');
-          this.imageUri = imageData;
-        }
-        if (e == 2) {
-          this.imagePath2 = 'data:image/jpeg;base64,' + imageData;
-          let t = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-          this.image2Uri = imageData;
-        }
-        if (e == 3) {
-          this.imagePath3 = 'data:image/jpeg;base64,' + imageData;
-          this.image3Uri = imageData
-        }
-        if (e == 4) {
-          this.imagePath4 = 'data:image/jpeg;base64,' + imageData;
-          this.image4Uri = imageData
-        }
-        if (e == 5) {
-          this.imagePath5 = 'data:image/jpeg;base64,' + imageData;
-          this.image5Uri = imageData
-        }
-      },
-      (err) => {
-        // Handle error
-        console.log("errOf Image ", err)
-      }
-    );
-  }
-
-  async selectImage(e) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Select Image source',
-      buttons: [
-        {
-          text: 'Load from Library',
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, e);
-          },
-        },
-        {
-          text: 'Use Camera',
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.CAMERA, e);
-          },
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-      ],
-    });
-    await actionSheet.present();
   }
 
   goBack() {
@@ -942,57 +852,153 @@ export class ViewPage implements OnInit {
     this.nav.navigateForward('dashboard');
   }
 
-  checkDetails(i) {
-    this.selected = i;
-  }
+  // itemsChangeForm(e) {
+  //   let ee = JSON.parse(e.detail.value);
+  //   if (ee == 1) {
+  //     this.itemsArray = [1];
+  //   }
+  //   if (ee == 2) {
+  //     this.itemsArray = [1, 2];
+  //   }
+  //   if (ee == 3) {
+  //     this.itemsArray = [1, 2, 3];
+  //   }
+  //   if (ee == 4) {
+  //     this.itemsArray = [1, 2, 3, 4];
+  //   }
+  // }
 
-  deSelect(i) {
-    this.selected = '';
-  }
+  // reputationCheckboxEvent(e, entry) {
+  //   this.reputationCheckBox.forEach((element) => {
+  //     if (element.val === 'Individual') {
+  //       this.individualChecked = element.isChecked;
+  //     } else if (element.val === 'Company') {
+  //       this.companyChecked = element.isChecked;
+  //     }
+  //   });
+  // }
 
-  checkIncident(e) {
-    this.incedent = e.detail.value;
-  }
+  // pickImage(sourceType, e) {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     sourceType: sourceType,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //   };
+  //   this.camera.getPicture(options).then(
+  //     (imageData) => {
+  //       // imageData is either a base64 encoded string or a file URI
+  //       // this.croppedImagePath = 'data:image/jpeg;base64,' + imageData;
+  //       const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+  //       if (e == 1) {
+  //         this.imagePath = 'data:image/jpeg;base64,' + imageData;
+  //         let t = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+  //         let realData = this.imagePath.split(",")[1];
+  //         let blob = this.b64toBlob(realData, 'image/jpeg');
+  //         this.imageUri = imageData;
+  //       }
+  //       if (e == 2) {
+  //         this.imagePath2 = 'data:image/jpeg;base64,' + imageData;
+  //         let t = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+  //         this.image2Uri = imageData;
+  //       }
+  //       if (e == 3) {
+  //         this.imagePath3 = 'data:image/jpeg;base64,' + imageData;
+  //         this.image3Uri = imageData
+  //       }
+  //       if (e == 4) {
+  //         this.imagePath4 = 'data:image/jpeg;base64,' + imageData;
+  //         this.image4Uri = imageData
+  //       }
+  //       if (e == 5) {
+  //         this.imagePath5 = 'data:image/jpeg;base64,' + imageData;
+  //         this.image5Uri = imageData
+  //       }
+  //     },
+  //     (err) => {
+  //       // Handle error
+  //       console.log("errOf Image ", err)
+  //     }
+  //   );
+  // }
 
-  async openModal() {
-    const modal = await this.modal.create({
-      component: ManagersPage,
-      cssClass: 'managers',
-    });
-    modal.onDidDismiss().then((res) => {
-      if (res?.data?.name) {
-        this.nameOfManager = res.data.name;
-      }
-    });
-    return await modal.present();
-  }
+  // async selectImage(e) {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Select Image source',
+  //     buttons: [
+  //       {
+  //         text: 'Load from Library',
+  //         handler: () => {
+  //           this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, e);
+  //         },
+  //       },
+  //       {
+  //         text: 'Use Camera',
+  //         handler: () => {
+  //           this.pickImage(this.camera.PictureSourceType.CAMERA, e);
+  //         },
+  //       },
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //       },
+  //     ],
+  //   });
+  //   await actionSheet.present();
+  // }
 
-  DataURIToBlob(dataURI: string) {
-    const splitDataURI = dataURI.split(',')
-    const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
-    const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
-    const ia = new Uint8Array(byteString.length)
-    for (let i = 0; i < byteString.length; i++)
-      ia[i] = byteString.charCodeAt(i)
-    return new Blob([ia], { type: mimeString })
-  }
+  // checkDetails(i) {
+  //   this.selected = i;
+  // }
 
-  b64toBlob(b64Data, contentType) {
-    contentType = contentType || '';
-    var sliceSize = 512;
-    var byteCharacters = atob(b64Data);
-    var byteArrays = [];
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      var slice = byteCharacters.slice(offset, offset + sliceSize);
-      var byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      var byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    var blob = new Blob(byteArrays, { type: contentType });
-    return blob;
-  }
+  // deSelect(i) {
+  //   this.selected = '';
+  // }
+
+  // checkIncident(e) {
+  //   this.incedent = e.detail.value;
+  // }
+
+  // async openModal() {
+  //   const modal = await this.modal.create({
+  //     component: ManagersPage,
+  //     cssClass: 'managers',
+  //   });
+  //   modal.onDidDismiss().then((res) => {
+  //     if (res?.data?.name) {
+  //       this.nameOfManager = res.data.name;
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
+
+  // DataURIToBlob(dataURI: string) {
+  //   const splitDataURI = dataURI.split(',')
+  //   const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
+  //   const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
+  //   const ia = new Uint8Array(byteString.length)
+  //   for (let i = 0; i < byteString.length; i++)
+  //     ia[i] = byteString.charCodeAt(i)
+  //   return new Blob([ia], { type: mimeString })
+  // }
+
+  // b64toBlob(b64Data, contentType) {
+  //   contentType = contentType || '';
+  //   var sliceSize = 512;
+  //   var byteCharacters = atob(b64Data);
+  //   var byteArrays = [];
+  //   for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+  //     var slice = byteCharacters.slice(offset, offset + sliceSize);
+  //     var byteNumbers = new Array(slice.length);
+  //     for (var i = 0; i < slice.length; i++) {
+  //       byteNumbers[i] = slice.charCodeAt(i);
+  //     }
+  //     var byteArray = new Uint8Array(byteNumbers);
+  //     byteArrays.push(byteArray);
+  //   }
+  //   var blob = new Blob(byteArrays, { type: contentType });
+  //   return blob;
+  // }
 
 }

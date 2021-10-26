@@ -220,13 +220,12 @@
       3679);
 
       var _LoginPage = /*#__PURE__*/function () {
-        function LoginPage(nav, global, formBuilder, platform) {
+        function LoginPage(nav, global, formBuilder) {
           _classCallCheck(this, LoginPage);
 
           this.nav = nav;
           this.global = global;
           this.formBuilder = formBuilder;
-          this.platform = platform;
           this.email = '';
           this.password = '';
           this.isSubmitted = false;
@@ -263,40 +262,32 @@
               // if (this.platform.is("cordova")) {
               //   this.global.presentLoading();
               // }
-              this.global.presentLoading();
+              // this.global.presentLoading();
               var fd = new FormData();
               fd.append("email", this.ionicForm.value.email);
               fd.append("password", this.ionicForm.value.password);
-              console.log('email', this.ionicForm.value.email);
-              console.log('password', this.ionicForm.value.password);
               this.global.postData("api/user/login", fd).subscribe(function (res) {
                 var _a, _b;
-
-                console.log('login', res);
 
                 if (res.status) {
                   localStorage.setItem("email", res.data.email);
                   localStorage.setItem("role", res.data.role);
                   localStorage.setItem("id", (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.id);
-                  localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name);
+                  localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name); // if (res.data.role == this.global.user) {
+                  //   this.nav.navigateRoot('dashboard')
+                  // } else {
 
-                  _this.nav.navigateRoot('home'); // this.nav.navigateRoot('dashboard')
+                  _this.nav.navigateRoot('home'); // }
+                  // this.nav.navigateRoot('dashboard')
+                  // this.global.presentToast(res.message);
 
-
-                  _this.global.presentToast(res.message);
                 } else {
                   _this.global.presentToast(res.message);
-                }
+                } // this.global.dismissLoading();
 
-                _this.global.dismissLoading();
               }, function (err) {
-                _this.global.dismissLoading();
-
-                console.log("login errs", err);
-
-                _this.global.presentToast(err.message);
-
-                _this.global.presentToast(JSON.parse(err));
+                // this.global.dismissLoading();
+                console.log("errs", err);
               });
             } else {
               return false;
@@ -314,8 +305,6 @@
           type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
         }, {
           type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormBuilder
-        }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.Platform
         }];
       };
 
@@ -385,7 +374,8 @@
           this.http = http;
           this.loadingController = loadingController;
           this.baseUrl = 'https://mforms-api-devel.horts.com.au/'; // https://mforms-api-devel.horts.com.au/
-          //Role 
+
+          this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
 
           this.user = "31";
           this.gm = "32";
@@ -523,10 +513,6 @@
         }, {
           key: "getData",
           value: function getData(url) {
-            // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-            // header.set("Access-Control-Allow-Origin", "*");
-            // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
             var headers = this.setHeader();
             return this.http.get(this.baseUrl + url, {
               headers: headers
@@ -535,16 +521,7 @@
         }, {
           key: "postData",
           value: function postData(url, data) {
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
-              'apikey': 'as*37486a*()HGY'
-            });
-            headers.set("Access-Control-Allow-Origin", "*");
-            headers.set("Content-Type", "application/json");
-            headers.set("Access-Control-Allow-headerss", "*");
-            headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-            console.log('headers', headers); // let headers = this.setHeader();
-
+            var headers = this.setHeader();
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
             });
@@ -552,8 +529,6 @@
         }, {
           key: "postDataWithId",
           value: function postDataWithId(url, data) {
-            // let header = new HttpHeaders();
-            // header.set("token", localStorage.getItem("token"));
             var headers = this.setHeader();
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
@@ -562,13 +537,35 @@
         }, {
           key: "getDataWithId",
           value: function getDataWithId(url) {
-            // let header = new HttpHeaders();
-            // header.set("token", localStorage.getItem("token"));
-            // header.set("apikey", "as*37486a*()HGY")
             var headers = this.setHeader();
             return this.http.get(this.baseUrl + url, {
               headers: headers
             });
+          }
+        }, {
+          key: "postData1",
+          value: function postData1(url, data) {
+            var headers = this.setHeader();
+            return this.http.post(this.baseUrl1 + url, data, {
+              headers: headers
+            });
+          }
+        }, {
+          key: "getData1",
+          value: function getData1(url) {
+            var headers = this.setHeader();
+            return this.http.get(this.baseUrl1 + url, {
+              headers: headers
+            }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+            //   map((response) => {
+            //     console.log('response', response);
+            //     if (!response['status']) {
+            //       throw new Error('Value expected!');
+            //     }
+            //     response;
+            //   }),
+            //   catchError(() => of())
+            // );
           }
         }]);
 

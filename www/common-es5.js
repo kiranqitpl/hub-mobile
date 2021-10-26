@@ -787,6 +787,8 @@
             var _this = this;
 
             this.global.getDataWithId("api/Manager/getManagerList").subscribe(function (res) {
+              console.log('res', res);
+
               if (res) {
                 _this.data = res.data;
               }
@@ -824,6 +826,248 @@
     },
 
     /***/
+    49481:
+    /*!***********************************************************!*\
+      !*** ./src/app/services/shared-service/shared.service.ts ***!
+      \***********************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "SharedService": function SharedService() {
+          return (
+            /* binding */
+            _SharedService
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ../global.service */
+      97465);
+
+      var _SharedService = /*#__PURE__*/function () {
+        function SharedService(globalService) {
+          _classCallCheck(this, SharedService);
+
+          this.globalService = globalService;
+        }
+
+        _createClass(SharedService, [{
+          key: "notificationLoad",
+          value: function notificationLoad(formData) {
+            var _this2 = this;
+
+            var roleId = localStorage.getItem('role');
+            var url = "";
+
+            if (roleId) {
+              if (roleId == this.globalService.investigator) {
+                url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
+              } else if (roleId == this.globalService.gm) {
+                url = 'api/notification/getGMNotificationByGmID';
+              }
+            }
+
+            if (url != "") {
+              new Promise(function (resolve, reject) {
+                _this2.globalService.postData(url, formData).subscribe(function (result) {
+                  console.log('notificationLoad', result);
+
+                  if (result['status']) {
+                    var count = 0;
+                    result['data'].forEach(function (element) {
+                      if (element.is_seen == 0) {
+                        count = count + 1;
+                      }
+                    });
+                    _this2.notViewNotiCount = count;
+                    return result['data'];
+                  } else {
+                    console.log('error');
+                  }
+
+                  setTimeout(function () {
+                    resolve("Success!");
+                  });
+                });
+              });
+            } // this.globalService.postData(url, formData).subscribe(result => {
+            //   console.log('notificationLoad', result);
+            //   if (result['status']) {
+            //     let count: number = 0;
+            //     result['data'].forEach(element => {
+            //       if (element.is_seen == 0) {
+            //         count = count + 1;
+            //       }
+            //     });
+            //     this.notViewNotiCount = count;
+            //     return result['data'];
+            //   } else {
+            //     console.log('error');
+            //   }
+            // }), error => {
+            //   console.log('error', error);
+            // }
+
+          }
+        }, {
+          key: "getWitness",
+          value: function getWitness() {
+            var data;
+            this.globalService.getData1("Witness/getWitnessList").subscribe(function (res) {
+              console.log('getWitness', res);
+              console.log('getWitness', res.status);
+
+              if (res.status) {
+                data = res.data;
+              }
+            }, function (err) {
+              console.log(err);
+            });
+          }
+        }]);
+
+        return SharedService;
+      }();
+
+      _SharedService.ctorParameters = function () {
+        return [{
+          type: _global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService
+        }];
+      };
+
+      _SharedService = (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root'
+      })], _SharedService);
+      /***/
+    },
+
+    /***/
+    13998:
+    /*!*************************************************************!*\
+      !*** ./src/app/shared-component/header/header.component.ts ***!
+      \*************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "HeaderComponent": function HeaderComponent() {
+          return (
+            /* binding */
+            _HeaderComponent
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _raw_loader_header_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! !raw-loader!./header.component.html */
+      62377);
+      /* harmony import */
+
+
+      var _header_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./header.component.scss */
+      41789);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic/angular */
+      80476);
+
+      var _HeaderComponent = /*#__PURE__*/function () {
+        function HeaderComponent(nav) {
+          _classCallCheck(this, HeaderComponent);
+
+          this.nav = nav;
+        }
+
+        _createClass(HeaderComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {}
+        }, {
+          key: "onGoBack",
+          value: function onGoBack() {
+            this.nav.back();
+          }
+        }, {
+          key: "onLogOut",
+          value: function onLogOut() {
+            localStorage.clear();
+            this.nav.navigateRoot("login");
+          }
+        }]);
+
+        return HeaderComponent;
+      }();
+
+      _HeaderComponent.ctorParameters = function () {
+        return [{
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.NavController
+        }];
+      };
+
+      _HeaderComponent.propDecorators = {
+        pageName: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input
+        }]
+      };
+      _HeaderComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+        selector: 'app-header',
+        template: _raw_loader_header_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_header_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
+      })], _HeaderComponent);
+      /***/
+    },
+
+    /***/
     80248:
     /*!****************************************************!*\
       !*** ./src/app/modals/managers/managers.page.scss ***!
@@ -842,6 +1086,24 @@
     },
 
     /***/
+    41789:
+    /*!***************************************************************!*\
+      !*** ./src/app/shared-component/header/header.component.scss ***!
+      \***************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJoZWFkZXIuY29tcG9uZW50LnNjc3MifQ== */";
+      /***/
+    },
+
+    /***/
     72329:
     /*!******************************************************************************************!*\
       !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modals/managers/managers.page.html ***!
@@ -856,6 +1118,24 @@
 
 
       __webpack_exports__["default"] = "<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>Name of the Managers</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"close()\">\n        <ion-icon name=\"close\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ion-input placeholder=\"Search manager\" [(ngModel)]=\"term\"></ion-input>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list>\n    <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"close(item)\" *ngFor=\"let item of data|filter:term\">\n      <ion-label>{{item?.full_name}}</ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>\n";
+      /***/
+    },
+
+    /***/
+    62377:
+    /*!*****************************************************************************************************!*\
+      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/shared-component/header/header.component.html ***!
+      \*****************************************************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "<div class=\"toolbar\">\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back'>\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>";
       /***/
     }
   }]);

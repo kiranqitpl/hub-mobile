@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+
   constructor(
     private nav: NavController,
     private platform: Platform,
@@ -15,15 +16,17 @@ export class AppComponent {
     private _location: Location,
   ) {
     let token = localStorage.getItem("email") ? localStorage.getItem("email") : '';
-    if(token==''){
+    if (token == '') {
       nav.navigateRoot("login");
-    }else{
+    } else {
       nav.navigateRoot("home");
       // nav.navigateRoot("dashboard");
     }
     this.initializeApp();
   }
+
   initializeApp() {
+
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       if (this._location.isCurrentPathEqualTo('/login')) {
         this.showExitConfirm();
@@ -32,6 +35,7 @@ export class AppComponent {
         this._location.back();
       }
     });
+
     this.platform.backButton.subscribeWithPriority(5, () => {
       this.alertController.getTop().then(res => {
         if (res) {
@@ -41,6 +45,7 @@ export class AppComponent {
         console.log(err);
       })
     });
+    
   }
 
   showExitConfirm() {
@@ -67,6 +72,4 @@ export class AppComponent {
         alert.present();
       });
   }
-
-
 }

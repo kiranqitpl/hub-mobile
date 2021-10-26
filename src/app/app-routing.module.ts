@@ -77,9 +77,14 @@ const routes: Routes = [
     path: 'notification',
     loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
   },
+
   {
-    path: 'header',
-    loadChildren: () => import('./shared-module/header/header.module').then( m => m.HeaderPageModule)
+    path: 'safety-menu',
+    loadChildren: () => import('./pages/safety-menu/safety-menu.module').then( m => m.SafetyMenuPageModule)
+  },
+  {
+    path: 'incident-form',
+    loadChildren: () => import('./pages/incident-form/incident-form.module').then( m => m.IncidentFormPageModule)
   },
 
 ];

@@ -21,8 +21,6 @@
         [rows]="role==investigatorRole ? investigatorData :rows" [rowHeight]="50" [columnMode]="'force'"
         [headerHeight]="50" [footerHeight]="50" (activate)="onActivate($event)">
 
-
-
         <ngx-datatable-column name="No" [width]="10" [resizeable]="true">
           <ng-template let-column="column" ngx-datatable-header-template>
             No

@@ -201,26 +201,14 @@
         <ion-input placeholder="Immediate action taken" [(ngModel)]="immediateAction"></ion-input>
         <p class="question">Was there any Witnesses of the incident</p>
         <ion-input placeholder="Witnesses of the incident" [(ngModel)]="wasThereAnyWitnessOfIncident"></ion-input>
-        <!-- <ion-list>
-          <ion-item class="ra ion-no-padding" lines="none">
-            <ion-label>Insert Photo</ion-label>
-            <ion-checkbox slot="start" [(ngModel)]="insertPhotoisChecked"></ion-checkbox>
-          </ion-item>
-        </ion-list> -->
-        <!-- <ion-button *ngIf="insertPhotoisChecked" class="camera" expand="block" (click)="selectImage(2)">Upload Image
-        </ion-button>
-        <img src="{{imagePath2}}" *ngIf="imagePath2!==''" /> -->
-        <!-- <div *ngIf="platformCheck === 'cordova'">
-          <ion-button *ngIf="insertPhotoisChecked" class="camera" expand="block" (click)="selectImage(2)">Upload Image
-          </ion-button>
-          <img src="{{imagePath2}}" *ngIf="imagePath2!==''" class="img-responsive" />
-        </div> -->
+       
         <div *ngIf="platformCheck !== 'cordova'">
           <input *ngIf="insertPhotoisChecked" type='file' (change)="onSelectFile($event,2)">
           <div class="ion-text-center">
             <img [src]="imagePath2" height="200" class="img-responsive" *ngIf="imagePath2!==''"> <br />
           </div>
         </div>
+
         <ion-radio-group [(ngModel)]="alcoholTest">
           <ion-item class="ra" lines="none">
             <ion-label>Alcohol test completed</ion-label>
@@ -246,6 +234,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
+
         <ion-radio-group [(ngModel)]="drugTest">
           <ion-item class="ra" lines="none">
             <ion-label>Drug test completed</ion-label>
@@ -284,6 +273,50 @@
               *ngIf="drugImage!=='' && drugImage !== undefined && drugImage !== null"> <br />
           </div>
         </div>
+
+
+        <ion-radio-group [(ngModel)]="returnToAlternateDuties">
+          <ion-item class="ra" lines="none">
+            <ion-label>Return to Alternate Duties</ion-label>
+          </ion-item>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                <ion-label>Yes</ion-label>
+                <ion-radio slot="start" value="Yes"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                <ion-label>No</ion-label>
+                <ion-radio slot="start" value="No"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                <ion-label>Not Required</ion-label>
+                <ion-radio slot="start" value="Not Required"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-text class="mandatoryField">* If selected yes please take a photo or upload the Certificate of Capacity COC.</ion-text>
+        </ion-radio-group>
+
+        <div *ngIf="platformCheck === 'cordova'">
+          <ion-button *ngIf="returnToAlternateDuties=='Yes'" class="camera" expand="block" (click)="selectImage(7)">Upload Image
+          </ion-button>
+          <img src="{{returnToDutiesImage}}" *ngIf="returnToDutiesImage!==''" class="img-responsive" />
+        </div>
+
+        <div *ngIf="platformCheck !== 'cordova'">
+          <input *ngIf="returnToAlternateDuties=='Yes'" type='file' (change)="onSelectFile($event,7)">
+          <div class="ion-text-center">
+            <img [src]="returnToDutiesImage" height="200" class="img-responsive" *ngIf="returnToDutiesImage!==''"> <br />
+          </div>
+        </div>
+
+
       </div>
       <!-------------------------------------------------Incident Description----------------------------------------->
       <!-------------------------------------------------Injury------------------------------------------------------->

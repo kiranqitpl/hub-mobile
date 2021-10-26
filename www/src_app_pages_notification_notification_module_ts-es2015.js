@@ -95,10 +95,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_notification_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./notification.page.html */ 92291);
 /* harmony import */ var _notification_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notification.page.scss */ 44088);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/global.service */ 97465);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ 92340);
+/* harmony import */ var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/shared-service/shared.service */ 49481);
+
 
 
 
@@ -107,11 +109,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let NotificationPage = class NotificationPage {
-    constructor(nav, globalService) {
+    constructor(nav, globalService, sharedService) {
         this.nav = nav;
         this.globalService = globalService;
-        this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.type;
+        this.sharedService = sharedService;
+        this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
         this.notificationId = [];
+        this.notificationData = '';
     }
     goBack() {
         this.nav.back();
@@ -128,6 +132,41 @@ let NotificationPage = class NotificationPage {
         this.userId = localStorage.getItem('id');
         this.roleId = localStorage.getItem('role');
     }
+    //----------------------------------- Load Notification Data ---------------------------------------------------------// 
+    onNotificationLoad() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            let formData = new FormData();
+            formData.append("type", this.type);
+            formData.append("user_id", this.userId);
+            // this.notificationData = await this.sharedService.notificationLoad(formData);
+            // console.log("this.notificationData ", this.notificationData);
+            let url = "";
+            if (this.roleId == this.globalService.investigator) {
+                url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
+            }
+            else if (this.roleId == this.globalService.gm) {
+                url = 'api/notification/getGMNotificationByGmID';
+            }
+            if (url != "") {
+                // this.globalService.presentLoading();
+                this.globalService.postData(url, formData).subscribe(result => {
+                    if (result['status']) {
+                        this.notificationData = result['data'];
+                    }
+                    // this.globalService.dismissLoading();
+                }), error => {
+                    // this.globalService.dismissLoading();
+                    console.log('error', error);
+                };
+            }
+            else {
+                // this.globalService.dismissLoading();
+                console.log("error");
+            }
+        });
+    }
+    //----------------------------------- Load Notification Data ---------------------------------------------------------//
+    //----------------------------------- Delete Notification ---------------------------------------------------------//
     filterArrayData(rowId) {
         let data = [];
         data['result'] = false;
@@ -148,29 +187,9 @@ let NotificationPage = class NotificationPage {
             this.notificationId.push(rowId);
         }
     }
-    onNotificationLoad() {
-        let formData = new FormData();
-        formData.append("type", this.type);
-        formData.append("user_id", this.userId);
-        let url = "";
-        if (this.roleId == this.globalService.investigator) {
-            url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-        }
-        else if (this.roleId == this.globalService.gm) {
-            url = 'api/notification/getGMNotificationByGmID';
-        }
-        if (url != "") {
-            this.globalService.postData(url, formData).subscribe(result => {
-                if (result['status']) {
-                    this.notificationData = result['data'];
-                }
-            }), error => {
-                console.log('error', error);
-            };
-        }
-    }
     onDelete() {
         if (this.notificationId.length != 0) {
+            this.globalService.presentLoading();
             let url = 'api/notification/deleteNotificationByNotificationID';
             let formData = new FormData();
             formData.append("id", JSON.stringify(this.notificationId));
@@ -179,36 +198,42 @@ let NotificationPage = class NotificationPage {
                     this.onNotificationLoad();
                 }
                 this.globalService.presentToast(result['message']);
+                this.globalService.dismissLoading();
             }), error => {
+                this.globalService.dismissLoading();
                 console.log('error', error);
             };
         }
     }
-    onNotification(rowID, formType) {
-        let formData = new FormData();
-        formData.append('id', rowID);
-        formData.append('form_type', formType);
-        this.globalService.postData('api/notification/getFormByNotificationID', formData).
-            subscribe(result => {
-            console.log('result', result);
-            if (result['status']) {
-                // localStorage.setItem("singleView", JSON.stringify(result['data']))
-                if (formType == this.globalService.formType_user) {
-                    this.nav.navigateForward('view/' + result['data'].id);
+    //----------------------------------- Delete Notification ---------------------------------------------------------//
+    //----------------------------------- Re-direct on detail page --------------------------------------------------------//
+    onNotificationDetaliPage(rowID, formId, formType, isSeen) {
+        if (formType == this.globalService.formType_user) {
+            this.nav.navigateForward('view/' + formId);
+        }
+        else if (formType == this.globalService.formType_investigator) {
+            this.nav.navigateForward('investigation-view/' + formId);
+        }
+        if (isSeen == 0) {
+            this.globalService.getData('api/notification/changeNotificationSeen/' + rowID).
+                subscribe(result => {
+                console.log('result', result);
+                if (result['status']) {
+                    this.sharedService.notViewNotiCount = this.sharedService.notViewNotiCount != 0 ? (this.sharedService.notViewNotiCount - 1) : 0;
                 }
-                else if (formType == this.globalService.formType_investigator) {
-                    this.nav.navigateForward('investigation-view/' + result['data'].id);
-                }
-            }
-        });
+            }), error => {
+                console.log("error", error);
+            };
+        }
     }
 };
 NotificationPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController },
-    { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController },
+    { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
+    { type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService }
 ];
 NotificationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-notification',
         template: _raw_loader_notification_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_notification_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -245,6 +270,7 @@ let GlobalService = class GlobalService {
         this.loadingController = loadingController;
         this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
         // https://mforms-api-devel.horts.com.au/
+        this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/';
         //Role 
         this.user = "31";
         this.gm = "32";
@@ -304,36 +330,38 @@ let GlobalService = class GlobalService {
         return header;
     }
     getData(url) {
-        // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-        // header.set("Access-Control-Allow-Origin", "*");
-        // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-        // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
         let headers = this.setHeader();
         return this.http.get(this.baseUrl + url, { headers: headers });
     }
     postData(url, data) {
-        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-        headers.set("Access-Control-Allow-Origin", "*");
-        headers.set("Content-Type", "application/json");
-        headers.set("Access-Control-Allow-headerss", "*");
-        headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-        headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        console.log('headers', headers);
-        // let headers = this.setHeader();
+        let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
     postDataWithId(url, data) {
-        // let header = new HttpHeaders();
-        // header.set("token", localStorage.getItem("token"));
         let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
     getDataWithId(url) {
-        // let header = new HttpHeaders();
-        // header.set("token", localStorage.getItem("token"));
-        // header.set("apikey", "as*37486a*()HGY")
         let headers = this.setHeader();
         return this.http.get(this.baseUrl + url, { headers: headers });
+    }
+    postData1(url, data) {
+        let headers = this.setHeader();
+        return this.http.post(this.baseUrl1 + url, data, { headers: headers });
+    }
+    getData1(url) {
+        let headers = this.setHeader();
+        return this.http.get(this.baseUrl1 + url, { headers: headers });
+        // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+        //   map((response) => {
+        //     console.log('response', response);
+        //     if (!response['status']) {
+        //       throw new Error('Value expected!');
+        //     }
+        //     response;
+        //   }),
+        //   catchError(() => of())
+        // );
     }
 };
 GlobalService.ctorParameters = () => [
@@ -371,7 +399,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Notification</ion-text>\n    <ion-buttons class='back'>\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-card *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-card-content>\n        <ion-row>\n          <ion-col size=\"2\">\n            <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n          </ion-col>\n          <ion-col size=\"10\" (click)=\"onNotification(notification.id,notification.form_type)\">\n            {{notification.message}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Notification</ion-text>\n    <ion-buttons class='back'>\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-card *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-card-content>\n        <ion-row>\n          <ion-col size=\"2\">\n            <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n          </ion-col>\n          <ion-col size=\"10\"\n            (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n            {{notification.message}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>");
 
 /***/ })
 

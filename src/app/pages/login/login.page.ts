@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { NavController, Platform } from '@ionic/angular'
 import { GlobalService } from 'src/app/services/global.service'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -16,7 +18,7 @@ export class LoginPage implements OnInit {
     private nav: NavController,
     private global: GlobalService,
     public formBuilder: FormBuilder,
-    public platform: Platform
+    // public platform: Platform
   ) {
     this.ionicForm = this.formBuilder.group({
       email: [
@@ -51,34 +53,33 @@ export class LoginPage implements OnInit {
       // if (this.platform.is("cordova")) {
       //   this.global.presentLoading();
       // }
-      this.global.presentLoading();
+      // this.global.presentLoading();
       const fd = new FormData();
       fd.append("email", this.ionicForm.value.email);
       fd.append("password", this.ionicForm.value.password);
 
-      console.log('email',this.ionicForm.value.email);
-
-      console.log('password',this.ionicForm.value.password);
-
       this.global.postData("api/user/login", fd).subscribe((res: any) => {
-        console.log('login',res);
         if (res.status) {
           localStorage.setItem("email", res.data.email);
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res?.data?.id)
           localStorage.setItem("name", res?.data?.full_name)
-          this.nav.navigateRoot('home')
+
+          // if (res.data.role == this.global.user) {
+          //   this.nav.navigateRoot('dashboard')
+          // } else {
+            this.nav.navigateRoot('home')
+          // }
+
           // this.nav.navigateRoot('dashboard')
-          this.global.presentToast(res.message);
+          // this.global.presentToast(res.message);
         } else {
           this.global.presentToast(res.message);
         }
-        this.global.dismissLoading();
+        // this.global.dismissLoading();
       }, err => {
-        this.global.dismissLoading();
-        console.log("login errs", err)
-        this.global.presentToast(err.message);
-        this.global.presentToast(JSON.parse(err));
+        // this.global.dismissLoading();
+        console.log("errs", err)
       })
     } else {
       return false

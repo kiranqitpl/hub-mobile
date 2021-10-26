@@ -331,7 +331,8 @@
           this.http = http;
           this.loadingController = loadingController;
           this.baseUrl = 'https://mforms-api-devel.horts.com.au/'; // https://mforms-api-devel.horts.com.au/
-          //Role 
+
+          this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
 
           this.user = "31";
           this.gm = "32";
@@ -469,10 +470,6 @@
         }, {
           key: "getData",
           value: function getData(url) {
-            // let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-            // header.set("Access-Control-Allow-Origin", "*");
-            // header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            // header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
             var headers = this.setHeader();
             return this.http.get(this.baseUrl + url, {
               headers: headers
@@ -481,16 +478,7 @@
         }, {
           key: "postData",
           value: function postData(url, data) {
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
-              'apikey': 'as*37486a*()HGY'
-            });
-            headers.set("Access-Control-Allow-Origin", "*");
-            headers.set("Content-Type", "application/json");
-            headers.set("Access-Control-Allow-headerss", "*");
-            headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-            console.log('headers', headers); // let headers = this.setHeader();
-
+            var headers = this.setHeader();
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
             });
@@ -498,8 +486,6 @@
         }, {
           key: "postDataWithId",
           value: function postDataWithId(url, data) {
-            // let header = new HttpHeaders();
-            // header.set("token", localStorage.getItem("token"));
             var headers = this.setHeader();
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
@@ -508,13 +494,35 @@
         }, {
           key: "getDataWithId",
           value: function getDataWithId(url) {
-            // let header = new HttpHeaders();
-            // header.set("token", localStorage.getItem("token"));
-            // header.set("apikey", "as*37486a*()HGY")
             var headers = this.setHeader();
             return this.http.get(this.baseUrl + url, {
               headers: headers
             });
+          }
+        }, {
+          key: "postData1",
+          value: function postData1(url, data) {
+            var headers = this.setHeader();
+            return this.http.post(this.baseUrl1 + url, data, {
+              headers: headers
+            });
+          }
+        }, {
+          key: "getData1",
+          value: function getData1(url) {
+            var headers = this.setHeader();
+            return this.http.get(this.baseUrl1 + url, {
+              headers: headers
+            }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+            //   map((response) => {
+            //     console.log('response', response);
+            //     if (!response['status']) {
+            //       throw new Error('Value expected!');
+            //     }
+            //     response;
+            //   }),
+            //   catchError(() => of())
+            // );
           }
         }]);
 

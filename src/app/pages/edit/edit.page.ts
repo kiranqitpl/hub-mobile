@@ -21,15 +21,15 @@ export class EditPage implements OnInit {
   approximateValueOfStolen: any = '';
   specificSecurityIncident: '';
   data: any = [];
-  drugTest: any = "" ; 
-  selected: any = "" ; 
-  imageUri: any = "" ; 
+  drugTest: any = "";
+  selected: any = "";
+  imageUri: any = "";
   locationList: any = [];
-  image2Uri: any = "" ; 
+  image2Uri: any = "";
   image3Uri: any = '';
-  wasThereAnyWitnessOfIncident: any = "" ; 
-  image4Uri: any = "" ; 
-  image5Uri: any = "" ; 
+  wasThereAnyWitnessOfIncident: any = "";
+  image4Uri: any = "";
+  image5Uri: any = "";
   imagePath: any = '';
   imagePath2: any = '';
   imagePath3: any = '';
@@ -44,16 +44,16 @@ export class EditPage implements OnInit {
   alcoholTest: any = '';
   formCount: any = '1';
   injuredPerson: any = '';
-  gender: any = "" ; 
+  gender: any = "";
   todayDate = new Date();
   returnToNormalDuties: any = '';
   alternativeDuties: any = '';
   injuryCheckBox: any = [];
-  securityRadio: any = "" ; 
+  securityRadio: any = "";
   itemsArray: any = [1];
   emergencySpill: any = '';
   itsecurityCheckbox: any = [];
-  assetNumber: any = "" ; 
+  assetNumber: any = "";
   reputationCheckBox: any = [];
   possibleConsequence: any = '';
   addLocation: any = '';
@@ -105,7 +105,7 @@ export class EditPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties:'',
+    returnToAlernateDuties: '',
     explanation: '',
     other_name: '',
 
@@ -196,7 +196,7 @@ export class EditPage implements OnInit {
       },
     ]
   }
-  nagativeEffetct: any = "" ; 
+  nagativeEffetct: any = "";
   person_three_details: any = {
     alternate_duties: '',//returnToAlernateDuties
     date_of_birth: '',//dateOfBirth
@@ -310,10 +310,14 @@ export class EditPage implements OnInit {
     ]
   }
   platformCheck: any = '';
-  dateOfIncident: string;
-  dateReported: string;
-  timeOfIncident: string;
-  timeReported: string;
+  dateOfIncident: string = '';
+  dateReported: string = '';
+  timeOfIncident: string = '';
+  timeReported: string = '';
+
+  returnToAlternateDuties: any = "";
+  returnToDutiesImage: any = "";
+
   constructor(
     private nav: NavController,
     private modal: ModalController,
@@ -427,6 +431,7 @@ export class EditPage implements OnInit {
   managerList: any = [];
   superVisorList: any = [];
   shiftTypeList: any = [];
+
   ngOnInit() {
     if (!this.platform.is('cordova')) {
       this.platformCheck = 'browser'
@@ -434,7 +439,8 @@ export class EditPage implements OnInit {
       this.platformCheck = 'cordova'
     }
   }
-  id: any = "" ; 
+  id: any = "";
+
   ionViewWillEnter() {
     this.global.getDataWithId("api/Witness/getWitnessList").subscribe((res: any) => {
       if (res) {
@@ -475,7 +481,7 @@ export class EditPage implements OnInit {
       }
     })
 
-    
+
     let data = JSON.parse(localStorage.getItem('singleView'));
     this.drugTest = data.drug_test_completed;
     this.id = data.id;
@@ -483,9 +489,9 @@ export class EditPage implements OnInit {
     this.whoWitnessedNearThis = data.incident_near_miss;
     this.dateReported = data.date_reported
     this.dateOfIncident = data.date_of_incident;
-    this.timeOfIncident = moment(data.time_of_incident,"HH:mm:ss").format("HH:mm");
-    this.timeReported = moment(data.time_reported,"HH:mm:ss").format("HH:mm");
-    if (data.was_there_any_witness_of_the_incident!=='' && data.was_there_any_witness_of_the_incident!==undefined && data.was_there_any_witness_of_the_incident!=='undefined'){
+    this.timeOfIncident = moment(data.time_of_incident, "HH:mm:ss").format("HH:mm");
+    this.timeReported = moment(data.time_reported, "HH:mm:ss").format("HH:mm");
+    if (data.was_there_any_witness_of_the_incident !== '' && data.was_there_any_witness_of_the_incident !== undefined && data.was_there_any_witness_of_the_incident !== 'undefined') {
       this.wasThereAnyWitnessOfIncident = data.was_there_any_witness_of_the_incident;
     }
     this.possibleConsequence = data.incident_near_miss_other;
@@ -516,6 +522,7 @@ export class EditPage implements OnInit {
     }
     this.alcoholTest = data.incident_description_alcohol_test;
     this.formCount = data.injury_persons;
+
     if (JSON.parse(data.injury_persons) == 1) {
       this.itemsArray = [1]
     }
@@ -528,6 +535,11 @@ export class EditPage implements OnInit {
     if (JSON.parse(data.injury_persons) == 4) {
       this.itemsArray = [1, 2, 3, 4]
     }
+
+    this.returnToAlternateDuties = data.return_to_alternate_duties;
+    this.returnToDutiesImage = data.return_to_alternate_duties_image;
+
+
     this.person_one_details = {
       alternate_duties: data?.person_details[0].alternate_duties,
       date_of_birth: data?.person_details[0].date_of_birth,
@@ -581,7 +593,7 @@ export class EditPage implements OnInit {
       ]
     }
 
-    let one = data.person_details[0].initital_injury.split(",")
+    let one = data.person_details[0].initital_injury.split(",");
     this.person_one_details.injurryCheckBox.forEach((el) => {
       one.forEach((ele) => {
 
@@ -781,6 +793,8 @@ export class EditPage implements OnInit {
         }
       })
     })
+
+
     this.environmentActionTaken = data.environmental_description;
     this.chemicalSplit = data.was_a_chemical_split;
     this.nameOfChemical = data.chemical_details.chemical_name;
@@ -860,8 +874,10 @@ export class EditPage implements OnInit {
       this.itemsArray = [1, 2, 3, 4];
     }
   }
-  individualChecked: any = "" ; 
-  companyChecked: any = "" ; 
+
+  individualChecked: any = "";
+  companyChecked: any = "";
+
   reputationCheckboxEvent(e, entry) {
     this.reputationCheckBox.forEach((element) => {
       if (element.val === 'Individual') {
@@ -913,6 +929,9 @@ export class EditPage implements OnInit {
         if (e == 5) {
           this.imagePath5 = 'data:image/jpeg;base64,' + imageData;
           this.image5Uri = imageData
+        }
+        if (e == 7) {
+          this.returnToDutiesImage = 'data:image/jpeg;base64,' + imageData;;
         }
       },
       (err) => {
@@ -995,8 +1014,6 @@ export class EditPage implements OnInit {
 
     return new Blob([ia], { type: mimeString })
   }
-
-
 
   onSubmit() {
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
@@ -1268,7 +1285,7 @@ export class EditPage implements OnInit {
       fd.append("incident_near_miss", this.whoWitnessedNearThis);
       fd.append("incident_near_miss_other", this.possibleConsequence);
       fd.append("classification_value", classiCheckedValue.join(','));
-      fd.append("reputation_negative_effect",this.nagativeEffetct)
+      fd.append("reputation_negative_effect", this.nagativeEffetct)
       fd.append("classification_location_option", this.location);
       if (this.location == 'Add Location') {
         fd.append("classification_location_value", this.addLocation)
@@ -1327,7 +1344,10 @@ export class EditPage implements OnInit {
       fd.append("extent_of_damage", this.extentOfDamage);
       fd.append("report", this.doneDifferently);
       fd.append("person_details", JSON.stringify(this.personDetails));
-      fd.append("chemical_details", JSON.stringify(this.checmicalDetails))
+      fd.append("chemical_details", JSON.stringify(this.checmicalDetails));
+
+      fd.append("return_to_alternate_duties", this.returnToAlternateDuties);
+      fd.append("return_to_alternate_duties_image", this.returnToDutiesImage);
 
       this.global.presentLoading();
       this.global.postData("api/add_form/submit", fd).subscribe((res: any) => {
@@ -1569,7 +1589,7 @@ export class EditPage implements OnInit {
 
 
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties ='' ;
+      this.person_two_details.returnToAlernateDuties = '';
     }
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
@@ -1659,7 +1679,10 @@ export class EditPage implements OnInit {
     fd.append("extent_of_damage", this.extentOfDamage);
     fd.append("report", this.doneDifferently);
     fd.append("person_details", JSON.stringify(this.personDetails));
-    fd.append("chemical_details", JSON.stringify(this.checmicalDetails))
+    fd.append("chemical_details", JSON.stringify(this.checmicalDetails));
+
+    fd.append("return_to_alternate_duties", this.returnToAlternateDuties);
+    fd.append("return_to_alternate_duties_image", this.returnToDutiesImage);
 
     this.global.presentLoading();
     this.global.postData("api/Add_form/submit_incomplete", fd).subscribe((res: any) => {
@@ -1727,6 +1750,9 @@ export class EditPage implements OnInit {
         }
         if (e == 5) {
           this.imagePath5 = event.target.result;
+        }
+        if (e == 7) {
+          this.returnToDutiesImage = event.target.result;
         }
       }
     }

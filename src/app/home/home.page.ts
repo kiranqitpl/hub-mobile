@@ -1,6 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class HomePage implements OnInit {
-
   data = ["Admin", "Company", "Projects", "Workshops", "Safety"];
   pageName: string;
 
   constructor(
     private nav: NavController,
-    private activatedRoute: ActivatedRoute
+    private globalService: GlobalService
   ) { }
 
   ionViewWillEnter() { }
@@ -26,7 +26,11 @@ export class HomePage implements OnInit {
 
   next(item) {
     if (item == "Safety") {
-      this.nav.navigateForward("dashboard")
+      // if (localStorage.getItem('role') != this.globalService.gm) {
+      //   this.nav.navigateForward("safety-menu");
+      // } else {
+        this.nav.navigateForward("dashboard")
+      // }
     }
   }
 

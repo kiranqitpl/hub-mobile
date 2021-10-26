@@ -27,6 +27,8 @@
         <p>{{item}}</p>
         <img class="plus" src="./assets/add.png" />
       </ion-button>
+      <!-------------------------------------------------Incident---------------------------------------------->
+
       <div *ngIf="selected==item && selected=='Incident'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
@@ -70,6 +72,9 @@
           <ion-input placeholder="Enter here" [(ngModel)]="possibleConsequence"></ion-input>
         </div>
       </div>
+
+      <!-------------------------------------------------Incident---------------------------------------------->
+
       <!-------------------------------------------------Classification---------------------------------------------->
       <div *ngIf="selected==item && selected=='Classification'" class="activeBackground">
         <div class="headerTitle">
@@ -87,6 +92,17 @@
               </ion-item>
             </ion-col>
           </ion-row>
+
+          <!-- <ion-radio-group (ionChange)="onClassificationRadio($event)">
+            <ion-row>
+              <ion-col size="6" *ngFor="let entry of classificationChekBox">
+                <ion-item class="ra" lines="none">
+                  <ion-label>{{entry.val}}</ion-label>
+                  <ion-radio slot="start" value="{{entry.val}}"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group> -->
 
         </ion-list>
         <ion-item class="ra" lines="none">
@@ -186,6 +202,8 @@
         </div>
       </div>
       <!-------------------------------------------------Photography-------------------------------------------------->
+
+
       <!-------------------------------------------------Incident Description----------------------------------------->
       <div *ngIf="selected==item && selected=='Incident Description'" class="activeBackground">
         <div class="headerTitle">
@@ -200,26 +218,11 @@
         <ion-input placeholder="Description of incident" [(ngModel)]="descriptionIncident"></ion-input>
         <p class="question">Immediate action taken</p>
         <ion-input placeholder="Immediate action taken" [(ngModel)]="immediateAction"></ion-input>
-        <!-- <ion-list>
-          <ion-item class="ra ion-no-padding" lines="none">
-            <ion-label>Insert Photo</ion-label>
-            <ion-checkbox slot="start" [(ngModel)]="insertPhotoisChecked"></ion-checkbox>
-          </ion-item>
-        </ion-list> -->
 
         <p class="question">Was there any Witnesses of the incident</p>
         <ion-input placeholder="Witnesses of the incident" [(ngModel)]="wasThereAnyWitnessOfIncident"></ion-input>
-        <!-- <div *ngIf="platformCheck === 'cordova'">
-        <ion-button *ngIf="insertPhotoisChecked" class="camera" expand="block" (click)="selectImage(2)">Upload Image
-        </ion-button>
-        <img src="{{imagePath2}}" *ngIf="imagePath2!==''" class="img-responsive"/>
-        </div>
-        <div *ngIf="platformCheck !== 'cordova'">
-          <input *ngIf="insertPhotoisChecked" type='file' (change)="onSelectFile($event,2)">
-          <div class="ion-text-center">
-            <img [src]="imagePath2" height="200" class="img-responsive" *ngIf="imagePath2!==''"> <br />
-          </div>
-        </div> -->
+
+        <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
         <ion-radio-group [(ngModel)]="alcoholTest">
           <ion-item class="ra" lines="none">
             <ion-label>Alcohol test completed</ion-label>
@@ -245,17 +248,24 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
+
         <div *ngIf="platformCheck === 'cordova'">
           <ion-button *ngIf="alcoholTest=='Yes'" class="camera" expand="block" (click)="selectImage(2)">Upload Image
           </ion-button>
           <img src="{{imagePath2}}" *ngIf="imagePath2!==''" class="img-responsive" />
         </div>
+
         <div *ngIf="platformCheck !== 'cordova'">
           <input *ngIf="alcoholTest=='Yes'" type='file' (change)="onSelectFile($event,2)">
           <div class="ion-text-center">
             <img [src]="imagePath2" height="200" class="img-responsive" *ngIf="imagePath2!==''"> <br />
           </div>
         </div>
+        <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
+
+
+        <!----------------------------------------------- Drug Test -------------------------------------------------------->
+
         <ion-radio-group [(ngModel)]="drugTest">
           <ion-item class="ra" lines="none">
             <ion-label>Drug test completed</ion-label>
@@ -287,6 +297,7 @@
           </ion-button>
           <img src="{{drugImage}}" *ngIf="drugImage!==''" class="img-responsive" />
         </div>
+
         <div *ngIf="platformCheck !== 'cordova'">
           <input *ngIf="drugTest=='Yes'" type='file' (change)="onSelectFile($event,6)">
           <div class="ion-text-center">
@@ -294,8 +305,60 @@
           </div>
         </div>
 
+        <!----------------------------------------------- Drug Test -------------------------------------------------------->
+
+
+        <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->
+
+        <ion-radio-group [(ngModel)]="returnToAlternateDuties">
+          <ion-item class="ra" lines="none">
+            <ion-label>Return to Alternate Duties</ion-label>
+          </ion-item>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                <ion-label>Yes</ion-label>
+                <ion-radio slot="start" value="Yes"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                <ion-label>No</ion-label>
+                <ion-radio slot="start" value="No"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                <ion-label>Not Required</ion-label>
+                <ion-radio slot="start" value="Not Required"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-text class="mandatoryField">* If selected yes please take a photo or upload the Certificate of Capacity
+            COC.</ion-text>
+        </ion-radio-group>
+
+        <div *ngIf="platformCheck === 'cordova'">
+          <ion-button *ngIf="returnToAlternateDuties=='Yes'" class="camera" expand="block" (click)="selectImage(7)">
+            Upload Image
+          </ion-button>
+          <img src="{{returnToDutiesImage}}" *ngIf="returnToDutiesImage!==''" class="img-responsive" />
+        </div>
+
+        <div *ngIf="platformCheck !== 'cordova'">
+          <input *ngIf="returnToAlternateDuties == 'Yes'" type='file' (change)="onSelectFile($event,7)">
+          <div class="ion-text-center" *ngIf="returnToDutiesImage !=='' && returnToAlternateDuties == 'Yes' ">
+            <img [src]="returnToDutiesImage" height="200" class="img-responsive"> <br />
+          </div>
+        </div>
+
+        <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->
+
       </div>
       <!-------------------------------------------------Incident Description----------------------------------------->
+
+
       <!-------------------------------------------------Injury------------------------------------------------------->
       <div *ngIf="selected==item && selected=='Injury'" class="activeBackground">
         <div class="headerTitle">
@@ -303,6 +366,7 @@
           <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
         </div>
         <hr />
+
         <ion-radio-group [(ngModel)]="formCount" (ionChange)="itemsChangeForm($event)">
           <ion-row>
             <ion-col size="3">
@@ -331,6 +395,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
+
         <ion-card *ngIf="itemsArray.length>=1">
           <div class="headerTitle">
             <p class="questionHead">Person 1 Details</p>
@@ -362,6 +427,7 @@
             <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="person_one_details.dateOfBirth">
             </ion-datetime>
           </ion-item>
+
           <ion-radio-group [(ngModel)]="person_one_details.returnToNormalDuties">
             <ion-item class="ra" lines="none">
               <ion-label>Return to Normal Duties</ion-label>
@@ -381,10 +447,12 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
+          
           <div *ngIf="person_one_details.returnToNormalDuties === 'No'">
             <p class="question">Explanation:</p>
             <ion-input placeholder="Enter here" [(ngModel)]="normalDutiesExplanation"> </ion-input>
           </div>
+
           <div>
             <ion-radio-group [(ngModel)]="person_one_details.returnToAlernateDuties">
               <ion-row>
@@ -408,6 +476,7 @@
               </ion-row>
             </ion-radio-group>
           </div>
+
           <div *ngIf="person_one_details.returnToAlernateDuties==='No'">
             <p class="question">Explanation:</p>
             <ion-input placeholder="Enter here" [(ngModel)]="person_one_details.explanation"></ion-input>
@@ -415,6 +484,7 @@
           <ion-item class="ra">
             <ion-label>Initial Injury / IIIness Classification</ion-label>
           </ion-item>
+
           <ion-list class="ion-no-padding">
             <ion-row class="ion-no-padding">
               <ion-col size="6" class="ion-no-padding" *ngFor="let entry of person_one_details.injurryCheckBox">
@@ -476,6 +546,7 @@
 
           <img class="img-responsive" src="./assets/person.jpg">
         </ion-card>
+
         <ion-card *ngIf="itemsArray.length>=2">
           <div class="headerTitle">
             <p class="questionHead">Person 2 Details</p>
@@ -611,6 +682,7 @@
           </div>
           <img src="./assets/person.jpg" class="img-responsive">
         </ion-card>
+
         <ion-card *ngIf="itemsArray.length>=3">
           <div class="headerTitle">
             <p class="questionHead">Person 3 Details</p>
@@ -749,6 +821,7 @@
           </div>
           <img src="./assets/person.jpg" class="img-responsive">
         </ion-card>
+
         <ion-card *ngIf="itemsArray.length>=4">
           <div class="headerTitle">
             <p class="questionHead">Person 4 Details</p>
@@ -889,8 +962,10 @@
 
           <img src="./assets/person.jpg" class="img-responsive">
         </ion-card>
+
       </div>
       <!-------------------------------------------------Injury------------------------------------------------------->
+
       <!-------------------------------------------------Environmental------------------------------------------------>
       <div *ngIf="selected==item && selected=='Environmental'" class="activeBackground">
         <div class="headerTitle">

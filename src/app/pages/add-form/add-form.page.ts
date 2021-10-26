@@ -11,22 +11,20 @@ import { File } from '@ionic-native/file/ngx';
 import { GlobalService } from 'src/app/services/global.service';
 import { Base64 } from '@ionic-native/base64/ngx';
 import * as moment from 'moment';
-
 @Component({
   selector: 'app-add-form',
   templateUrl: './add-form.page.html',
   styleUrls: ['./add-form.page.scss'],
 })
-
 export class AddFormPage implements OnInit {
   data: any = [];
   selected: any = 'Incident';
-  imageUri: any = "" ; 
-  image2Uri: any = "" ; 
+  imageUri: any;
+  image2Uri: any;
   image3Uri: any = '';
-  image4Uri: any = "" ; 
+  image4Uri: any;
   drugTestImageUri: any = '';
-  image5Uri: any = "" ; 
+  image5Uri: any;
   imagePath: any = '';
   imagePath2: any = '';
   imagePath3: any = '';
@@ -43,16 +41,16 @@ export class AddFormPage implements OnInit {
   drugImage: any = '';
   formCount: any = '1';
   injuredPerson: any = '';
-  gender: any='';
+  gender: any;
   todayDate = new Date();
   returnToNormalDuties: any = '';
   alternativeDuties: any = '';
   injuryCheckBox: any = [];
-  securityRadio: any='';
+  securityRadio: any;
   itemsArray: any = [1];
   emergencySpill: any = '';
   itsecurityCheckbox: any = [];
-  assetNumber: any='';
+  assetNumber: any;
   reputationCheckBox: any = [];
   possibleConsequence: any = '';
   addLocation: any = '';
@@ -100,9 +98,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: "",
-    explanation: "",
-    other_name: "",
+    returnToAlernateDuties: null,
+    explanation: null,
+    other_name: null,
     immediateTreatmentGivenExplanation: '',//added
     administeredPersonName: '',//added
     adminsteredPersonNumber: '',//added
@@ -161,9 +159,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: "",
-    explanation: "",
-    other_name: "",
+    returnToAlernateDuties: null,
+    explanation: null,
+    other_name: null,
 
     injurryCheckBox: [
       {
@@ -196,7 +194,7 @@ export class AddFormPage implements OnInit {
       },
     ]
   }
-  nagativeEffetct: any="";
+  nagativeEffetct: any;
   person_three_details: any = {
     alternate_duties: '',//returnToAlernateDuties
     date_of_birth: '',//dateOfBirth
@@ -220,9 +218,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: "",
-    explanation: "",
-    other_name: "",
+    returnToAlernateDuties: null,
+    explanation: null,
+    other_name: null,
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -277,9 +275,9 @@ export class AddFormPage implements OnInit {
     dateOfBirth: '',
     injury_value: [],
     returnToNormalDuties: '',
-    returnToAlernateDuties: "",
-    explanation: "",
-    other_name: "",
+    returnToAlernateDuties: null,
+    explanation: null,
+    other_name: null,
     injurryCheckBox: [
       {
         val: 'FAI',
@@ -312,48 +310,23 @@ export class AddFormPage implements OnInit {
     ]
   }
   platformCheck: any = '';
-  minDate: any="";
+  minDate: any;
   //added field
-  dateOfIncident: any = "" ; 
-  timeOfIncident: any = "" ; 
-  dateReported: any = "" ; 
-  timeReported: any = "" ; 
-  wasThereAnyWitnessOfIncident: any = "" ; 
-  // alcoholTestCompleted:any = "" ; variable = alcoholTest
-  // alcoholTestDocument:any = "" ; = imagePath2
-  //drugTest:any = "" ; 
-  // drugTestImage:any = "" ; variable = drugImage
-  normalDutiesExplanation: any = "" ; 
-  partOfBodyInjured: any = "" ; 
-  // wasImmediateTreatment:any = "" ; injurry
-  immediateTreatmentGivenExplanation: any = "" ; 
-  immediateTreatmentPersonName: any = "" ; 
-  immediateTreatmentPersonNumber: any = "" ; 
-  stolenItem: any = "" ; //added
-  specificSecurityIncident: any = "" ; //added
-  approximateValueOfStolen:any = "" ; //added
-  witnessList: any = [];
-  managerList: any = [];
-  superVisorList: any = [];
-  shiftTypeList: any = [];
-  locationList: any = [];
-  personDetails: any = [];
-  croppedImagepath: any = '';
-  isLoading = false;
-  imagePickerOptions = {
-    maximumImagesCount: 1,
-    quality: 50,
-  };
-
-  url: any = '';
-
-  selectedTime: any = "" ; 
-  selectedDate;
-  selectedDateReported: any = "" ; 
-  selectedTimeReported: any = "" ; 
-
-  individualChecked: any = "" ; 
-  companyChecked: any = "" ; 
+  dateOfIncident: any = "";
+  timeOfIncident: any = "";
+  dateReported: any = "";
+  timeReported: any = "";
+  wasThereAnyWitnessOfIncident: any = "";
+  normalDutiesExplanation: any = "";
+  partOfBodyInjured: any = "";
+  immediateTreatmentGivenExplanation: any = "";
+  immediateTreatmentPersonName: any = "";
+  immediateTreatmentPersonNumber: any = "";
+  stolenItem: any = ""; //added
+  specificSecurityIncident: any = ""; //added
+  approximateValueOfStolen: any = "";  //added
+  returnToAlternateDuties: any = "";
+  returnToDutiesImage: any = "";
 
   constructor(
     private nav: NavController,
@@ -367,6 +340,7 @@ export class AddFormPage implements OnInit {
   ) {
 
     this.minDate = moment(new Date()).format("YYYY-MM-DD");
+
 
     this.data = [
       'Incident',
@@ -465,11 +439,11 @@ export class AddFormPage implements OnInit {
       },
     ];
   }
-
+  personDetails: any = [];
   ngOnInit() {
     this.incedent = localStorage.getItem("incidentType");
 
-    console.log('getItem', localStorage.getItem('id'));
+    console.log("inient", this.incedent)
   }
 
   itemsChangeForm(e) {
@@ -487,7 +461,8 @@ export class AddFormPage implements OnInit {
       this.itemsArray = [1, 2, 3, 4];
     }
   }
-
+  individualChecked: any;
+  companyChecked: any;
   reputationCheckboxEvent(e, entry) {
     this.reputationCheckBox.forEach((element) => {
       if (element.val === 'Individual') {
@@ -497,6 +472,13 @@ export class AddFormPage implements OnInit {
       }
     });
   }
+  croppedImagepath: any = '';
+  isLoading = false;
+
+  imagePickerOptions = {
+    maximumImagesCount: 1,
+    quality: 50,
+  };
 
   pickImage(sourceType, e) {
     const options: CameraOptions = {
@@ -508,34 +490,39 @@ export class AddFormPage implements OnInit {
     };
     this.camera.getPicture(options).then(
       (imageData) => {
-        const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+        // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+        let image = 'data:image/jpeg;base64,' + imageData;
         if (e == 1) {
-          this.imagePath = 'data:image/jpeg;base64,' + imageData;
-          let t = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-          let realData = this.imagePath.split(",")[1];
+          this.imagePath = image;
+          // let t = this.DataURIToBlob(image);
+          // let realData = this.imagePath.split(",")[1];
           this.imageUri = imageData;
         }
         if (e == 2) {
-          this.imagePath2 = 'data:image/jpeg;base64,' + imageData;
-          let t = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+          this.imagePath2 = image;
+          let t = this.DataURIToBlob(image);
           this.image2Uri = imageData;
         }
         if (e == 3) {
-          this.imagePath3 = 'data:image/jpeg;base64,' + imageData;
+          this.imagePath3 = image;
           this.image3Uri = imageData
         }
         if (e == 4) {
-          this.imagePath4 = 'data:image/jpeg;base64,' + imageData;
+          this.imagePath4 = image;
           this.image4Uri = imageData
         }
         if (e == 5) {
-          this.imagePath5 = 'data:image/jpeg;base64,' + imageData;
+          this.imagePath5 = image;
           this.image5Uri = imageData
         }
         if (e == 6) {
-          this.drugImage = 'data:image/jpeg;base64,' + imageData;
+          this.drugImage = image;
           this.drugTestImageUri = imageData
         }
+        if (e == 7) {
+          this.returnToDutiesImage = image;
+        }
+
       },
       (err) => {
         console.log("errOf Image ", err)
@@ -543,6 +530,11 @@ export class AddFormPage implements OnInit {
     );
   }
 
+  witnessList: any = [];
+  managerList: any = [];
+  superVisorList: any = [];
+  shiftTypeList: any = [];
+  locationList: any = [];
   ionViewWillEnter() {
     if (!this.platform.is('cordova')) {
       this.platformCheck = 'browser'
@@ -550,6 +542,8 @@ export class AddFormPage implements OnInit {
       this.platformCheck = 'cordova'
     }
     this.incedent = localStorage.getItem("incidentType");
+
+    console.log("inient", this.incedent)
     this.global.getDataWithId("api/Witness/getWitnessList").subscribe((res: any) => {
       if (res) {
         this.witnessList = res.data;
@@ -566,6 +560,7 @@ export class AddFormPage implements OnInit {
       console.log(err);
     });
 
+
     this.global.getDataWithId("api/Supervisor/getSupervisorList").subscribe((res: any) => {
       if (res) {
         this.superVisorList = res.data;
@@ -573,6 +568,7 @@ export class AddFormPage implements OnInit {
     }, err => {
       console.log("Eror", err)
     })
+
 
     this.global.getDataWithId("api/Shift/get_shift_typelist").subscribe((res: any) => {
       if (res) {
@@ -584,11 +580,13 @@ export class AddFormPage implements OnInit {
 
     this.global.getDataWithId("api/location/getLocation").subscribe((res: any) => {
       if (res) {
+        console.log("res location", res);
         this.locationList = res.data
       }
     })
 
   }
+
 
   async selectImage(e) {
     const actionSheet = await this.actionSheetController.create({
@@ -648,6 +646,7 @@ export class AddFormPage implements OnInit {
       imagePath2: this.imagePath2,
       drugTest: this.drugTest,
       drugImage: this.drugImage,
+      returnToDutiesImage: this.returnToDutiesImage,
       formCount: this.formCount,
       person_one_details: this.person_one_details,
       person_two_details: this.person_two_details,
@@ -680,9 +679,10 @@ export class AddFormPage implements OnInit {
     localStorage.setItem("addFormDataStore", JSON.stringify(localDataStore))
   }
 
+
   saveItemOffline() {
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = ""
+      this.person_one_details.returnToAlernateDuties = null
     }
     this.person_one_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -690,8 +690,10 @@ export class AddFormPage implements OnInit {
       }
     });
 
+
+
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = ""
+      this.person_two_details.returnToAlernateDuties = null
     }
     this.person_two_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -700,7 +702,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = ""
+      this.person_three_details.returnToAlernateDuties = null
     }
     this.person_three_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -709,7 +711,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = ""
+      this.person_four_details.returnToAlernateDuties = null
     }
     this.person_four_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -794,31 +796,37 @@ export class AddFormPage implements OnInit {
     this.person_four_details.immediate_treatment_person_name = this.person_four_details.administeredPersonName
     this.person_four_details.immediate_treatment_person_number = this.person_four_details.adminsteredPersonNumber
 
-    let requiredData = {
-      descriptionIncident: this.descriptionIncident,
-      immediateAction: this.immediateAction,
-      environmentActionTaken: this.environmentActionTaken,
-      nameOfAnyWitness: this.nameOfAnyWitness,
-      contactOfAnyWitness: this.contactOfAnyWitness,
-      possibleOutcomeOfIncident: this.possibleOutcomeOfIncident,
-      assetDescription: this.assetDescription,
-      extentOfDamage: this.extentOfDamage,
-      doneDifferently: this.doneDifferently
-    };
+    // let requiredData = {
+    //   descriptionIncident: this.descriptionIncident,
+    //   immediateAction: this.immediateAction,
+    //   environmentActionTaken: this.environmentActionTaken,
+    //   nameOfAnyWitness: this.nameOfAnyWitness,
+    //   contactOfAnyWitness: this.contactOfAnyWitness,
+    //   possibleOutcomeOfIncident: this.possibleOutcomeOfIncident,
+    //   assetDescription: this.assetDescription,
+    //   extentOfDamage: this.extentOfDamage,
+    //   doneDifferently: this.doneDifferently
+    // };
 
-    let nonRequirementIncident = {
-      incidentRadio: this.incedent,
-      whoWitnessedNearThis: this.whoWitnessedNearThis,
-      possibleConsequence: this.possibleConsequence
-    }
+
+
+
+    // let nonRequirementIncident = {
+    //   incidentRadio: this.incedent,
+    //   whoWitnessedNearThis: this.whoWitnessedNearThis,
+    //   possibleConsequence: this.possibleConsequence
+    // }
+
+
+
 
     let classificationObjectData = {
       ClassificationCheckBoxCollectionData: this.classificationChekBox,
       radioBtnValueofClassficationRadio: this.location,
       dropDownofShiftType: this.shiftType,
       superVisorDropdownValue: this.superVisor,
-      addLocation: "",
-      locationSelection: "",
+      addLocation: null,
+      locationSelection: null,
       nameOfManager: this.nameOfManager,
       locationRadioValue: this.location
     }
@@ -832,7 +840,7 @@ export class AddFormPage implements OnInit {
       classificationObjectData.locationSelection = this.locationSelection
     }
     let incidentDataObject = {
-      image: "",
+      image: null,
       alcoholTest: this.alcoholTest
     }
     if (this.insertPhotoisChecked) {
@@ -843,9 +851,9 @@ export class AddFormPage implements OnInit {
     }
     let environmentalDataColletion = {
       chemicalSplit: this.chemicalSplit,
-      nameOfChemical: "",
-      image: "",
-      approximateQtyofChemical: "",
+      nameOfChemical: null,
+      image: null,
+      approximateQtyofChemical: null,
       emergencySpill: this.emergencySpill
     }
     if (this.chemicalSplit === 'Yes') {
@@ -855,8 +863,8 @@ export class AddFormPage implements OnInit {
     }
     let reputationCollectionData = {
       image: this.imagePath4,
-      individualReputationDamaged: "",
-      companyReputationDamged: "",
+      individualReputationDamaged: null,
+      companyReputationDamged: null,
       reputationCheckBox: this.reputationCheckBox
     }
     if (this.individualChecked) {
@@ -867,7 +875,7 @@ export class AddFormPage implements OnInit {
     }
     let securityCollectionData = {
       securityRadiovalue: this.securityRadio,
-      itsecurityCheckbox: ""
+      itsecurityCheckbox: null
     }
     if (this.securityRadio == 'IT') {
       securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
@@ -875,22 +883,22 @@ export class AddFormPage implements OnInit {
     let assetCollectionData = {
       assetNumberRadioValue: this.assetNumber,
       image: this.imagePath5,
-      assetsNumbers: ""
+      assetsNumbers: null
     }
     if (this.assetNumber == 'Yes') {
       assetCollectionData.assetsNumbers = this.assetsNumbers
     };
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = ""
+      this.person_one_details.returnToAlernateDuties = null
     }
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = ""
+      this.person_two_details.returnToAlernateDuties = null
     }
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = ""
+      this.person_three_details.returnToAlernateDuties = null
     }
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = ""
+      this.person_four_details.returnToAlernateDuties = null
     }
     let fd = new FormData();
     fd.append("photography_image", this.imagePath);
@@ -959,9 +967,13 @@ export class AddFormPage implements OnInit {
     fd.append("approximate_value_of_stolen", this.approximateValueOfStolen);
     fd.append('user_id', localStorage.getItem('id'));
 
-    this.global.presentLoading();
+    fd.append("return_to_alternate_duties", this.returnToAlternateDuties);
+    fd.append("return_to_alternate_duties_image", this.returnToDutiesImage);
 
+
+    this.global.presentLoading();
     this.global.postData("api/Add_form/submit_incomplete", fd).subscribe((res: any) => {
+      console.log("part of data", res)
       if (res.status) {
         this.global.presentToast(res.message)
         this.global.dismissLoading();
@@ -974,7 +986,10 @@ export class AddFormPage implements OnInit {
       console.log("err", err);
       this.global.dismissLoading();
     })
+
   }
+
+
 
   deSelect(i) {
     this.selected = '';
@@ -997,6 +1012,7 @@ export class AddFormPage implements OnInit {
     return await modal.present();
   }
 
+
   DataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',')
     const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
@@ -1009,10 +1025,11 @@ export class AddFormPage implements OnInit {
     return new Blob([ia], { type: mimeString })
   }
 
-  onSubmit() {
 
+
+  onSubmit() {
     if (this.person_one_details.returnToNormalDuties === 'Yes') {
-      this.person_one_details.returnToAlernateDuties = ""
+      this.person_one_details.returnToAlernateDuties = null
     }
     this.person_one_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1020,8 +1037,10 @@ export class AddFormPage implements OnInit {
       }
     });
 
+
+
     if (this.person_two_details.returnToNormalDuties === 'Yes') {
-      this.person_two_details.returnToAlernateDuties = ""
+      this.person_two_details.returnToAlernateDuties = null
     }
     this.person_two_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1030,7 +1049,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_three_details.returnToNormalDuties === 'Yes') {
-      this.person_three_details.returnToAlernateDuties = ""
+      this.person_three_details.returnToAlernateDuties = null
     }
     this.person_three_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1039,7 +1058,7 @@ export class AddFormPage implements OnInit {
     });
 
     if (this.person_four_details.returnToNormalDuties === 'Yes') {
-      this.person_four_details.returnToAlernateDuties = ""
+      this.person_four_details.returnToAlernateDuties = null
     }
     this.person_four_details.injurryCheckBox.forEach(element => {
       if (element.isChecked) {
@@ -1069,35 +1088,35 @@ export class AddFormPage implements OnInit {
         repuCheckedValue.push(el.val)
       }
     })
+
     if (this.incedent === '') {
-      this.global.toast("Incident : Incident is Required", 'danger');
+      this.global.presentToast("Incident : Incident is Required");
     } else if (this.descriptionIncident === '') {
 
-      // this.global.presentToast("Incident Description - Please enter Description of incident")
-      this.global.toast("Incident Description - Please enter Description of incident", 'danger');
+      this.global.presentToast("Incident Description - Please enter Description of incident")
     } else if (this.immediateAction === '') {
 
-      this.global.toast("Incident Description - Immediate action taken filed is Required", 'danger')
+      this.global.presentToast("Incident Description - Immediate action taken filed is Required")
     } else if (this.environmentActionTaken === '') {
 
-      this.global.toast("Environmental - Please enter Immediate action taken to minimize Environmental impact", 'danger')
+      this.global.presentToast("Environmental - Please enter Immediate action taken to minimize Environmental impact")
     } else if (this.nameOfAnyWitness === '') {
 
-      this.global.toast("Reputation - Please enter name of any witness", 'danger')
+      this.global.presentToast("Reputation - Please enter name of any witness")
     } else if (this.possibleOutcomeOfIncident === '') {
 
-      this.global.toast("Reputation - Please enter possible outcome of this incident", 'danger')
+      this.global.presentToast("Reputation - Please enter possible outcome of this incident")
     } else if (this.assetDescription === '') {
 
-      this.global.toast("Asset - Please enter asset description", 'danger')
+      this.global.presentToast("Asset - Please enter asset description")
     } else if (this.extentOfDamage === '') {
 
-      this.global.toast("Asset - Please enter Extent of Damage", 'danger')
+      this.global.presentToast("Asset - Please enter Extent of Damage")
     } else if (this.doneDifferently === '') {
-
-      this.global.toast("Report - Please enter what could have been done differently", 'danger')
+      this.global.presentToast("Report - Please enter what could have been done differently")
     } else if (this.nameOfManager === '' || this.nameOfManager === "Name of Manager") {
-      this.global.toast("Classification - Please Select the manager", 'danger')
+
+      this.global.presentToast("Classification - Please Select the manager")
     } else {
       this.person_one_details.alternate_duties = this.person_one_details.returnToAlernateDuties
       this.person_one_details.date_of_birth = this.person_one_details.dateOfBirth
@@ -1167,15 +1186,13 @@ export class AddFormPage implements OnInit {
       //   whoWitnessedNearThis: this.whoWitnessedNearThis,
       //   possibleConsequence: this.possibleConsequence
       // }
-
-  
       let classificationObjectData = {
         ClassificationCheckBoxCollectionData: this.classificationChekBox,
         radioBtnValueofClassficationRadio: this.location,
         dropDownofShiftType: this.shiftType,
         superVisorDropdownValue: this.superVisor,
-        addLocation: "",
-        locationSelection: "",
+        addLocation: null,
+        locationSelection: null,
         nameOfManager: this.nameOfManager,
         locationRadioValue: this.location
       }
@@ -1189,7 +1206,7 @@ export class AddFormPage implements OnInit {
         classificationObjectData.locationSelection = this.locationSelection
       }
       let incidentDataObject = {
-        image: "",
+        image: null,
         alcoholTest: this.alcoholTest
       }
       if (this.insertPhotoisChecked) {
@@ -1200,9 +1217,9 @@ export class AddFormPage implements OnInit {
       }
       let environmentalDataColletion = {
         chemicalSplit: this.chemicalSplit,
-        nameOfChemical: "",
-        image: "",
-        approximateQtyofChemical: "",
+        nameOfChemical: null,
+        image: null,
+        approximateQtyofChemical: null,
         emergencySpill: this.emergencySpill
       }
       if (this.chemicalSplit === 'Yes') {
@@ -1212,8 +1229,8 @@ export class AddFormPage implements OnInit {
       }
       let reputationCollectionData = {
         image: this.imagePath4,
-        individualReputationDamaged: "",
-        companyReputationDamged: "",
+        individualReputationDamaged: null,
+        companyReputationDamged: null,
         reputationCheckBox: this.reputationCheckBox
       }
       if (this.individualChecked) {
@@ -1224,7 +1241,7 @@ export class AddFormPage implements OnInit {
       }
       let securityCollectionData = {
         securityRadiovalue: this.securityRadio,
-        itsecurityCheckbox: ""
+        itsecurityCheckbox: null
       }
       if (this.securityRadio == 'IT') {
         securityCollectionData.itsecurityCheckbox = this.itsecurityCheckbox
@@ -1232,31 +1249,64 @@ export class AddFormPage implements OnInit {
       let assetCollectionData = {
         assetNumberRadioValue: this.assetNumber,
         image: this.imagePath5,
-        assetsNumbers: ""
+        assetsNumbers: null
       }
       if (this.assetNumber == 'Yes') {
         assetCollectionData.assetsNumbers = this.assetsNumbers
       };
       if (this.person_one_details.returnToNormalDuties === 'Yes') {
-        this.person_one_details.returnToAlernateDuties = ""
+        this.person_one_details.returnToAlernateDuties = null
       }
       if (this.person_two_details.returnToNormalDuties === 'Yes') {
-        this.person_two_details.returnToAlernateDuties = ""
+        this.person_two_details.returnToAlernateDuties = null
       }
       if (this.person_three_details.returnToNormalDuties === 'Yes') {
-        this.person_three_details.returnToAlernateDuties = ""
+        this.person_three_details.returnToAlernateDuties = null
       }
       if (this.person_four_details.returnToNormalDuties === 'Yes') {
-        this.person_four_details.returnToAlernateDuties = ""
+        this.person_four_details.returnToAlernateDuties = null
       }
       let fd = new FormData();
-      fd.append("photography_image", this.imagePath);
-      fd.append("reputation_damage_image", this.imagePath4);
-      fd.append("extent_damage_image", this.imagePath5);
-      fd.append("incident_value", this.incedent);
+
+
+      //----------------------------------- Incident -----------------------------------// 
+
+      fd.append("incident_value", this.incedent);                       // required
       fd.append("incident_near_miss", this.whoWitnessedNearThis);
       fd.append("incident_near_miss_other", this.possibleConsequence);
+
+      //----------------------------------- Incident -----------------------------------// 
+
+
+      //----------------------------------- photography -----------------------------------//
+
+      fd.append("photography_image", this.imagePath);
+
+      //----------------------------------- photography -----------------------------------//
+
+
+      //----------------------------------- Incident Description -----------------------------------//
+
+      fd.append("incident_description", this.descriptionIncident);          //required
+      fd.append("incident_description_action", this.immediateAction);       //incident photo pending from postman and here also  // required
+      fd.append("incident_description_alcohol_test", this.alcoholTest);
+      fd.append("alcohol_test_completed", this.alcoholTest);
+      fd.append("incident_description_photo", this.imagePath2)              // alcohal test image
+      fd.append("drug_test_completed", this.drugTest);
+      fd.append("was_there_any_witness_of_the_incident", this.wasThereAnyWitnessOfIncident);
+      fd.append("return_to_alternate_duties", this.returnToAlternateDuties);
+      fd.append("return_to_alternate_duties_image", this.returnToDutiesImage);
+
+
+      //----------------------------------- Incident Description -----------------------------------//
+
+      //----------------------------------- Classification -----------------------------------//
+
       fd.append("classification_value", classiCheckedValue.join(','));
+      fd.append("date_of_incident", this.dateOfIncident);
+      fd.append("time_of_incident", this.timeOfIncident);
+      fd.append("date_reported", this.dateReported);
+      fd.append("time_reported", this.timeReported);
       fd.append("classification_location_option", this.location);
       if (this.location == 'Add Location') {
         fd.append("classification_location_value", this.addLocation)
@@ -1266,16 +1316,30 @@ export class AddFormPage implements OnInit {
       }
       fd.append("classification_shift_type", this.shiftType);
       fd.append("classification_supervisor", this.superVisor);
-      fd.append("classification_manager", this.nameOfManager);
-      fd.append("incident_description", this.descriptionIncident);
-      fd.append("incident_description_action", this.immediateAction);
-      //incident photo pending from postman and here also 
-      fd.append("incident_description_alcohol_test", this.alcoholTest);
-      fd.append("injury_persons", this.formCount);//form value
-      fd.append("environmental_description", this.environmentActionTaken);
-      fd.append("was_a_chemical_split", this.chemicalSplit);
-      //checmical split value inner side query
+      fd.append("classification_manager", this.nameOfManager);      // required
+
+      //----------------------------------- Classification -----------------------------------//
+
+      //-------------------------------------------Injury ----------------------------------//
+
+      fd.append("injury_persons", this.formCount);                      //form value
+      fd.append("person_details", JSON.stringify(this.personDetails));
+      fd.append("part_of_body_injured_occured", this.partOfBodyInjured);
+
+      //-------------------------------------------Injury ----------------------------------//
+
+      //-------------------------------------------Enviornment ----------------------------------//
+
+      fd.append("environmental_description", this.environmentActionTaken);          // required
+      fd.append("was_a_chemical_split", this.chemicalSplit);                        //checmical split value inner side query
+      fd.append("chemical_details", JSON.stringify(this.checmicalDetails))
       fd.append("emergency_spill_kit_used", this.emergencySpill);
+
+      //-------------------------------------------Enviornment ----------------------------------//
+
+      //-------------------------------------------Reputation ----------------------------------//
+
+      fd.append("reputation_damage_image", this.imagePath4);
       fd.append("reputation_option", repuCheckedValue);
       if (this.individualChecked) {
         fd.append("individual_damage_value", this.individualReputationDamaged)
@@ -1283,39 +1347,46 @@ export class AddFormPage implements OnInit {
       if (this.companyChecked) {
         fd.append("company_damage_value", this.companyReputatonDamaged)
       }
-      fd.append("incident_description_photo", this.imagePath2)
+      fd.append("name_of_witness", this.nameOfAnyWitness);                       // required
+      fd.append("possible_outcome_incident", this.possibleOutcomeOfIncident);   // required
       fd.append("reutation_negative_effect", this.nagativeEffetct);
-      fd.append("name_of_witness", this.nameOfAnyWitness);
-      fd.append("contact_of_witness", this.contactOfAnyWitness);
-      fd.append("possible_outcome_incident", this.possibleOutcomeOfIncident);
+
+      //-------------------------------------------Reputation ----------------------------------//
+
+      //----------------------------------- Security-----------------------------------//
       fd.append("security_option", this.securityRadio);
       if (this.securityRadio == 'IT') {
         fd.append("it_option_value", it_option_value.join(',')) // chexkbox and inner value
       }
-      fd.append("asset_description", this.assetDescription);
+      fd.append("what_has_been_stolen_item", this.stolenItem);
+      fd.append("approximate_value_of_stolen", this.approximateValueOfStolen);
+      fd.append("what_is_the_specific_securities_incident", this.specificSecurityIncident);
+
+
+      //----------------------------------- Security-----------------------------------//
+
+      //-------------------------------------------Asset ----------------------------------//
+
+      fd.append("asset_description", this.assetDescription);  // required
       fd.append("asset_has_number", this.assetNumber);
       if (this.assetNumber == 'Yes') {
         fd.append("asset_number", this.assetsNumbers);
       }
-      fd.append("extent_of_damage", this.extentOfDamage);
-      fd.append("report", this.doneDifferently);
-      fd.append("person_details", JSON.stringify(this.personDetails));
-      fd.append("chemical_details", JSON.stringify(this.checmicalDetails))
-      /* extra field added in api */
-      fd.append("date_of_incident", this.dateOfIncident);
-      fd.append("time_of_incident", this.timeOfIncident);
-      fd.append("date_reported", this.dateReported);
-      fd.append("time_reported", this.timeReported);
-      fd.append("was_there_any_witness_of_the_incident", this.wasThereAnyWitnessOfIncident);
-      fd.append("alcohol_test_completed", this.alcoholTest);
-      fd.append("drug_test_completed", this.drugTest);
-      fd.append("part_of_body_injured_occured", this.partOfBodyInjured);
-      fd.append("what_has_been_stolen_item", this.stolenItem);
-      fd.append("what_is_the_specific_securities_incident", this.specificSecurityIncident);
-      fd.append("approximate_value_of_stolen", this.approximateValueOfStolen);
-      fd.append('user_id', localStorage.getItem('id'));
-      this.global.presentLoading();
+      fd.append("extent_of_damage", this.extentOfDamage);   // required
+      fd.append("extent_damage_image", this.imagePath5);
 
+      //-------------------------------------------Asset ----------------------------------//
+
+      //-------------------------------------------Report ----------------------------------//
+
+      fd.append("report", this.doneDifferently);
+
+      //-------------------------------------------Report ----------------------------------//
+
+      // fd.append("contact_of_witness", this.contactOfAnyWitness);
+      fd.append('user_id', localStorage.getItem('id'));
+
+      this.global.presentLoading();
       this.global.postData("api/add_form/submit", fd).subscribe((res: any) => {
         if (res.status) {
           this.global.presentToast(res.message)
@@ -1330,10 +1401,10 @@ export class AddFormPage implements OnInit {
         console.log("err", err);
         this.global.dismissLoading();
       })
-
     }
   }
 
+  url: any = '';
   onSelectFile(event, e) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
@@ -1357,9 +1428,17 @@ export class AddFormPage implements OnInit {
         if (e == 6) {
           this.drugImage = event.target.result;
         }
+        if (e == 7) {
+          this.returnToDutiesImage = event.target.result;
+        }
       }
     }
   }
+
+  selectedTime: any;
+  selectedDate;
+  selectedDateReported: any;
+  selectedTimeReported: any;
 
   dateSelect(e: any, from) {
     if (from == 'incident') {
@@ -1370,6 +1449,8 @@ export class AddFormPage implements OnInit {
       this.selectedDateReported = e.detail.value;
     }
   }
+
+
 
   timeSelect(e: any, from) {
     if (from == 'timeIncident') {
@@ -1383,6 +1464,7 @@ export class AddFormPage implements OnInit {
   }
 
   inputChange(e) {
+    console.log(e.detail.value);
     let localDataStore = {
       incedent: this.incedent,
       whoWitnessedNearThis: this.whoWitnessedNearThis,
