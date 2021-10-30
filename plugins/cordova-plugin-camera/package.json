@@ -1,39 +1,34 @@
 {
-  "_args": [
-    [
-      "cordova-plugin-camera@5.0.3",
-      "D:\\Projects\\ionic_project\\hub"
-    ]
-  ],
-  "_development": true,
-  "_from": "cordova-plugin-camera@5.0.3",
+  "_from": "cordova-plugin-camera@^5.0.3",
   "_id": "cordova-plugin-camera@5.0.3",
   "_inBundle": false,
   "_integrity": "sha512-CfoqP8+0XGm8wS0Ri6BCaTTq195Z7ny/tXrD14DsYyR7hHjf1nn+B643tzdYuPNVynxMLRQa1T8n1EkCxFyUog==",
   "_location": "/cordova-plugin-camera",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-camera@5.0.3",
+    "raw": "cordova-plugin-camera@^5.0.3",
     "name": "cordova-plugin-camera",
     "escapedName": "cordova-plugin-camera",
-    "rawSpec": "5.0.3",
+    "rawSpec": "^5.0.3",
     "saveSpec": null,
-    "fetchSpec": "5.0.3"
+    "fetchSpec": "^5.0.3"
   },
   "_requiredBy": [
     "#DEV:/"
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-camera/-/cordova-plugin-camera-5.0.3.tgz",
-  "_spec": "5.0.3",
-  "_where": "D:\\Projects\\ionic_project\\hub",
+  "_shasum": "eb045f15ffa7722ffbec35a0cb32c1a0c5f91066",
+  "_spec": "cordova-plugin-camera@^5.0.3",
+  "_where": "C:\\Apps\\Repos\\mforms-web",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
     "url": "https://github.com/apache/cordova-plugin-camera/issues"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-camera",
     "platforms": [
@@ -44,6 +39,7 @@
       "osx"
     ]
   },
+  "deprecated": false,
   "description": "Cordova Camera Plugin",
   "devDependencies": {
     "@cordova/eslint-config": "^3.0.0"

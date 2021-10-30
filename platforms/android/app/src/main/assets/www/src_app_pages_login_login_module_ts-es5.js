@@ -217,7 +217,8 @@
 
       var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/forms */
-      3679);
+      3679); // import { HTTP } from '@ionic-native/http';
+
 
       var _LoginPage = /*#__PURE__*/function () {
         function LoginPage(nav, global, formBuilder) {
@@ -264,29 +265,40 @@
               // }
               // this.global.presentLoading();
               var fd = new FormData();
+              console.log('this.ionicForm.value', this.ionicForm.value);
               fd.append("email", this.ionicForm.value.email);
-              fd.append("password", this.ionicForm.value.password);
+              fd.append("password", this.ionicForm.value.password); // let data = new Object();
+              // data["email"] = this.ionicForm.value.email;
+              // data["password"] = this.ionicForm.value.password;
+
+              console.log('login here', fd);
               this.global.postData("api/user/login", fd).subscribe(function (res) {
                 var _a, _b;
+
+                console.log('login', res);
+                console.log(res.status);
+                console.log(res.data); // data received by server
+
+                console.log(res.headers);
 
                 if (res.status) {
                   localStorage.setItem("email", res.data.email);
                   localStorage.setItem("role", res.data.role);
                   localStorage.setItem("id", (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.id);
-                  localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name); // if (res.data.role == this.global.user) {
-                  //   this.nav.navigateRoot('dashboard')
-                  // } else {
+                  localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name);
 
-                  _this.nav.navigateRoot('home'); // }
-                  // this.nav.navigateRoot('dashboard')
-                  // this.global.presentToast(res.message);
-
+                  _this.nav.navigateRoot('home');
                 } else {
                   _this.global.presentToast(res.message);
-                } // this.global.dismissLoading();
+                }
 
+                _this.global.dismissLoading();
               }, function (err) {
                 // this.global.dismissLoading();
+                _this.global.presentToast(err);
+
+                _this.global.presentToast(JSON.stringify(err));
+
                 console.log("errs", err);
               });
             } else {
@@ -313,278 +325,6 @@
         template: _raw_loader_login_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_login_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
       })], _LoginPage);
-      /***/
-    },
-
-    /***/
-    97465:
-    /*!********************************************!*\
-      !*** ./src/app/services/global.service.ts ***!
-      \********************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "GlobalService": function GlobalService() {
-          return (
-            /* binding */
-            _GlobalService
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! tslib */
-      64762);
-      /* harmony import */
-
-
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @ionic/angular */
-      80476);
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! @angular/core */
-      37716);
-      /* harmony import */
-
-
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @angular/common/http */
-      91841);
-
-      var _GlobalService = /*#__PURE__*/function () {
-        function GlobalService(toastController, http, loadingController) {
-          _classCallCheck(this, GlobalService);
-
-          this.toastController = toastController;
-          this.http = http;
-          this.loadingController = loadingController;
-          this.baseUrl = 'https://mforms-api-devel.horts.com.au/'; // https://mforms-api-devel.horts.com.au/
-
-          this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
-
-          this.user = "31";
-          this.gm = "32";
-          this.investigator = "33";
-          this.manager = "34";
-          this.supervisior = "35";
-          this.formType_user = 1;
-          this.formType_investigator = 2;
-        }
-
-        _createClass(GlobalService, [{
-          key: "presentToast",
-          value: function presentToast(msg) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var toast;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      _context.next = 2;
-                      return this.toastController.create({
-                        message: msg,
-                        duration: 2000,
-                        mode: "ios",
-                        color: "dark"
-                      });
-
-                    case 2:
-                      toast = _context.sent;
-                      toast.present();
-
-                    case 4:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
-          }
-        }, {
-          key: "toast",
-          value: function toast(msg, type) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-              var toast;
-              return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                while (1) {
-                  switch (_context2.prev = _context2.next) {
-                    case 0:
-                      _context2.next = 2;
-                      return this.toastController.create({
-                        message: msg,
-                        duration: 2000,
-                        // mode: "ios",
-                        color: type,
-                        animated: true
-                      });
-
-                    case 2:
-                      toast = _context2.sent;
-                      toast.present();
-
-                    case 4:
-                    case "end":
-                      return _context2.stop();
-                  }
-                }
-              }, _callee2, this);
-            }));
-          }
-        }, {
-          key: "presentLoading",
-          value: function presentLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var loading;
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                while (1) {
-                  switch (_context3.prev = _context3.next) {
-                    case 0:
-                      _context3.next = 2;
-                      return this.loadingController.create({
-                        cssClass: 'my-custom-class',
-                        message: 'Please wait...'
-                      });
-
-                    case 2:
-                      loading = _context3.sent;
-                      _context3.next = 5;
-                      return loading.present();
-
-                    case 5:
-                    case "end":
-                      return _context3.stop();
-                  }
-                }
-              }, _callee3, this);
-            }));
-          }
-        }, {
-          key: "dismissLoading",
-          value: function dismissLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-              return regeneratorRuntime.wrap(function _callee4$(_context4) {
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      _context4.next = 2;
-                      return this.loadingController.dismiss();
-
-                    case 2:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }
-              }, _callee4, this);
-            }));
-          }
-        }, {
-          key: "setHeader",
-          value: function setHeader() {
-            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
-              'apikey': 'as*37486a*()HGY'
-            });
-            header.set("Access-Control-Allow-Origin", "*");
-            header.set("Content-Type", "application/json");
-            header.set("Access-Control-Allow-Headers", "*");
-            header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-            header.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-            if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
-              header.set("token", localStorage.getItem("token"));
-            }
-
-            return header;
-          }
-        }, {
-          key: "getData",
-          value: function getData(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl + url, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "postData",
-          value: function postData(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl + url, data, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "postDataWithId",
-          value: function postDataWithId(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl + url, data, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "getDataWithId",
-          value: function getDataWithId(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl + url, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "postData1",
-          value: function postData1(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl1 + url, data, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "getData1",
-          value: function getData1(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl1 + url, {
-              headers: headers
-            }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
-            //   map((response) => {
-            //     console.log('response', response);
-            //     if (!response['status']) {
-            //       throw new Error('Value expected!');
-            //     }
-            //     response;
-            //   }),
-            //   catchError(() => of())
-            // );
-          }
-        }]);
-
-        return GlobalService;
-      }();
-
-      _GlobalService.ctorParameters = function () {
-        return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ToastController
-        }, {
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient
-        }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.LoadingController
-        }];
-      };
-
-      _GlobalService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
-        providedIn: 'root'
-      })], _GlobalService);
       /***/
     },
 

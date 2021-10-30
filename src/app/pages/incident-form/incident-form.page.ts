@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-import { ActionSheetController, ModalController } from '@ionic/angular';
-
+import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 
@@ -11,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { GlobalService } from 'src/app/services/global.service';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 import { ManagersPage } from 'src/app/modals/managers/managers.page';
+
 
 
 @Component({
@@ -32,7 +32,26 @@ export class IncidentFormPage implements OnInit {
   selectedTabList: any = [];
   disabledTab: boolean;
   itemsArray: any = [1];
-  reputationWitnessList: any = []
+  reputationWitnessList: any = [];
+  platformCheck: any = '';
+
+
+  //-------------------------------------- Image variables ----------------------------------------------------//
+  photoGraphy = [];
+  photoGraphyObject: any = {};
+  alcohalImages = [];
+  alcohalImagesObject: any = {};
+  drugTestImages = [];
+  drugTestImagesObject: any = {};
+  alterDutyImages = [];
+  alterDutyImagesObject: any = {};
+  chemicalImages = [];
+  chemicalImagesObject: any = {};
+  damageImages = [];
+  damageImagesObject: any = {};
+  //-------------------------------------- Image variables ----------------------------------------------------//
+
+  base64Image = ""
 
   //-------------------------------------- Forms ----------------------------------------------------//
 
@@ -132,10 +151,6 @@ export class IncidentFormPage implements OnInit {
   ];
 
   injuryList =
-    // [
-    // {
-    //   id: '',
-    //   list: 
     [
       {
         val: 'FAI',
@@ -146,7 +161,6 @@ export class IncidentFormPage implements OnInit {
         val: 'MTI',
         isChecked: false,
         desc: 'MTI: Medical Treatment Injury, an injury or disease that resulted in a certain level of treatment (not first aid treatment) given by a physician or medical personnel under standing orders of a physician.'
-
       },
       {
         val: 'ADI',
@@ -184,6 +198,63 @@ export class IncidentFormPage implements OnInit {
       // }
     ];
 
+  bodyParts = [
+    {
+      val: 'Cranium (holds the brain)',
+    },
+    {
+      val: 'Mandibles (lower jaw)',
+    },
+    {
+      val: 'Maxilla (upper jaw)',
+    },
+    {
+      val: 'Nasal bone',
+    },
+    {
+      val: 'Eyes',
+    },
+    {
+      val: 'Nose',
+    },
+    {
+      val: 'Ears',
+    },
+    {
+      val: 'Tongue',
+    },
+    {
+      val: 'Teeth',
+    },
+    {
+      val: 'Cheeks',
+    },
+    {
+      val: 'Chin',
+    },
+    {
+      val: 'Trachea',
+    },
+    {
+      val: 'Esophagus',
+    },
+    {
+      val: 'Cervical vertebrae',
+    },
+    {
+      val: 'Chest',
+    },
+    {
+      val: 'Pectoralis (upper chest)',
+    },
+    {
+      val: 'Lungs',
+    },
+    {
+      val: 'Heart',
+    },
+  ]
+
   constructor(
     private globalService: GlobalService,
     private sharedService: SharedService,
@@ -191,11 +262,19 @@ export class IncidentFormPage implements OnInit {
     public actionSheetController: ActionSheetController,
     private camera: Camera,
     private fb: FormBuilder,
-    private nav: NavController
+    private nav: NavController,
+    private platform: Platform
   ) { }
 
 
   ngOnInit() {
+
+    if (!this.platform.is('cordova')) {
+      this.platformCheck = 'browser'
+    } else {
+      this.platformCheck = 'cordova'
+    }
+
     this.loadWitness();
     this.loadShift();
     this.loadSuperwiser();
@@ -203,28 +282,32 @@ export class IncidentFormPage implements OnInit {
     this.findValueInWitness();
 
     this.incidentForm = this.fb.group({
-      incident_value: [''],   // required field
+      incident_value: [''],                // required field
       incident_near_miss: [''],
       incident_near_miss_other: [''],
     });
 
     this.photoGraphyForm = this.fb.group({
-      photography_image: ['']
+      photography_image: [''],                                 // photography image
     });
 
     this.incidentDesForm = this.fb.group({
-      incident_description: ['', Validators.required],  // required field
+      incident_description: ['', Validators.required],         // required field
       incident_description_action: ['', Validators.required],  // required field
       seen_differently: [''],
       was_there_any_witness_of_the_incident: [''],
+
       incident_description_alcohol_test: [''],
       // alcohol_test_completed: [''],
-      incident_description_photo: [''],   // alcohal image
+      incident_description_photo: [''],                         // incident description images
+
+      alcohol_test_image: [''],                                 // alcohal images
 
       drug_test_completed: [''],
+      drug_test_image: [''],                                    // drug test image
 
       return_to_alternate_duties: [''],
-      return_to_alternate_duties_image: ['']
+      return_to_alternate_duties_image: ['']                    //return to alternate duties image
     });
 
     this.classificationForm = this.fb.group({
@@ -239,7 +322,7 @@ export class IncidentFormPage implements OnInit {
       // selectLocation: [''],
       classification_shift_type: [''],
       classification_supervisor: [''],
-      classification_manager: ['', Validators.required]   // required field
+      classification_manager: ['', Validators.required]          // required field
     });
 
     this.injuryForm = this.fb.group({
@@ -250,35 +333,35 @@ export class IncidentFormPage implements OnInit {
     });
 
     this.enviornmentForm = this.fb.group({
-      environmental_description: [''],  // required
+      environmental_description: [''],                           // required
       was_a_chemical_split: [''],
       chemical_details:
         this.fb.group({
           chemical_name: [''],
-          chemical_photo: [''],
+          chemical_photo: [''],                                  // chemical images
           approximate_quantity: [''],
           insertPhotoCheckBox: [false],
         }),
       //chemical photo insert checkbox
       emergency_spill_kit_used: [''],
+      out_of_split_kit: ['']
     });
 
     this.reputationDesForm = this.fb.group({
       reputation_option: new FormArray([]),
       individual_damage_value: [''],
       company_damage_value: [''],
-      reputation_damage_image: [''],
-      reutation_negative_effect: [''],
+      reputation_negative_effect: [''],
       effected_department: [''],
       external_party: [''],
-      name_of_witness: [''],    // required field
+      name_of_witness: [''],                                   // required field
       other_witness_details:
         this.fb.group({
           other_witness_name: [''],
           other_witness_mobile_no: [''],
           other_witness_email: ['']
         }),
-      possible_outcome_incident: [''], // required field
+      possible_outcome_incident: [''],                          // required field
     });
 
     this.securityForm = this.fb.group({
@@ -290,11 +373,11 @@ export class IncidentFormPage implements OnInit {
     });
 
     this.assetDescriptionForm = this.fb.group({
-      asset_description: [''],  // required field
+      asset_description: [''],                                   // required field
       asset_has_number: [''],
       asset_number: [''],
-      extent_of_damage: [''],  // required field
-      extent_damage_image: ['']
+      extent_of_damage: [''],                                    // required field       
+      extent_damage_image: ['']                                 // extent damage image
     });
 
     this.reportForm = this.fb.group({
@@ -360,10 +443,7 @@ export class IncidentFormPage implements OnInit {
   }
 
   onSelectTabItem(i) {
-    // console.log('onSelectTabItem', i);
     this.selectedTabItem = i;
-    // console.log('  this.selectedTabItem', this.selectedTabItem);
-
   }
 
   onDeSelectTabItem(i) {
@@ -373,79 +453,231 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  async selectImage(e) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Select Image source',
-      buttons: [
-        {
-          text: 'Load from Library',
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, e);
-          },
-        },
-        {
-          text: 'Use Camera',
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.CAMERA, e);
-          },
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-      ],
+  // async selectImage(e) {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Select Image source',
+  //     buttons: [
+  //       {
+  //         text: 'Load from Library',
+  //         handler: () => {
+  //           this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, e);
+  //         },
+  //       },
+  //       {
+  //         text: 'Use Camera',
+  //         handler: () => {
+  //           this.pickImage(this.camera.PictureSourceType.CAMERA, e);
+  //         },
+  //       },
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //       },
+  //     ],
+  //   });
+  //   await actionSheet.present();
+  // }
+
+  // pickImage(sourceType, e) {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     sourceType: sourceType,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //   };
+  //   this.camera.getPicture(options).then(
+  //     (imageData) => {
+  //       // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+  //       let image = 'data:image/jpeg;base64,' + imageData;
+  //       // if (e == 1) {
+  //       //   this.imagePath = image;
+  //       //   // let t = this.DataURIToBlob(image);
+  //       //   // let realData = this.imagePath.split(",")[1];
+  //       //   this.imageUri = imageData;
+  //       // }
+  //       // if (e == 2) {
+  //       //   this.imagePath2 = image;
+  //       //   let t = this.DataURIToBlob(image);
+  //       //   this.image2Uri = imageData;
+  //       // }
+  //       // if (e == 3) {
+  //       //   this.imagePath3 = image;
+  //       //   this.image3Uri = imageData
+  //       // }
+  //       // if (e == 4) {
+  //       //   this.imagePath4 = image;
+  //       //   this.image4Uri = imageData
+  //       // }
+  //       // if (e == 5) {
+  //       //   this.imagePath5 = image;
+  //       //   this.image5Uri = imageData
+  //       // }
+  //       // if (e == 6) {
+  //       //   this.drugImage = image;
+  //       //   this.drugTestImageUri = imageData
+  //       // }
+  //       // if (e == 7) {
+  //       //   this.returnToDutiesImage = image;
+  //       // }
+
+  //     },
+  //     (err) => {
+  //       console.log("errOf Image ", err)
+  //     }
+  //   );
+  // }
+
+  // fileToBase64 = (file) => {
+  //   let image: any;
+  //   let reader = new FileReader();
+  //   reader.onload = (function (file) {
+  //     return function (e) {
+  //       image = e.target.result;
+  //       this.base64Image = e.target.result;
+  //     };
+  //   })(file);
+  //   reader.readAsDataURL(file);
+  // };
+
+  // convertDataURIToBinary(dataURI) {
+  //   var BASE64_MARKER = ';base64,';
+  //   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+  //   var base64 = dataURI.substring(base64Index);
+  //   var raw = window.atob(base64);
+  //   var rawLength = raw.length;
+  //   var array = new Uint8Array(new ArrayBuffer(rawLength));
+  //   for (let i = 0; i < rawLength; i++) {
+  //     array[i] = raw.charCodeAt(i);
+  //   }
+  //   return array;
+  // }
+
+  getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
     });
-    await actionSheet.present();
   }
 
-  pickImage(sourceType, e) {
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: sourceType,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-    };
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-        let image = 'data:image/jpeg;base64,' + imageData;
-        // if (e == 1) {
-        //   this.imagePath = image;
-        //   // let t = this.DataURIToBlob(image);
-        //   // let realData = this.imagePath.split(",")[1];
-        //   this.imageUri = imageData;
-        // }
-        // if (e == 2) {
-        //   this.imagePath2 = image;
-        //   let t = this.DataURIToBlob(image);
-        //   this.image2Uri = imageData;
-        // }
-        // if (e == 3) {
-        //   this.imagePath3 = image;
-        //   this.image3Uri = imageData
-        // }
-        // if (e == 4) {
-        //   this.imagePath4 = image;
-        //   this.image4Uri = imageData
-        // }
-        // if (e == 5) {
-        //   this.imagePath5 = image;
-        //   this.image5Uri = imageData
-        // }
-        // if (e == 6) {
-        //   this.drugImage = image;
-        //   this.drugTestImageUri = imageData
-        // }
-        // if (e == 7) {
-        //   this.returnToDutiesImage = image;
-        // }
+  onPhotoGraphy(event) {
+    this.photoGraphy = []
+    this.photoGraphyObject = {}
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.getBase64(event.target.files[i]).then(
+        data => {
+          // this.convertDataURIToBinary(data);
+          this.photoGraphyObject[i] = data
+          this.photoGraphy.push(data);
+        }).catch(error => {
+          console.log('error',error);
+        });
+    }
+  }
 
-      },
-      (err) => {
-        console.log("errOf Image ", err)
-      }
-    );
+
+  onAlochaolImage(event) {
+    this.alcohalImages = [];
+    this.alcohalImagesObject = {};
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.getBase64(event.target.files[i]).then(
+        data => {
+          this.alcohalImagesObject[i] = data
+          this.alcohalImages.push(data);
+        }).catch(error => {
+          console.log('error',error);
+        });
+    }
+  }
+
+  onAlcohalTestSelect(event) {
+    if (event.target.value != 'Yes') {
+      this.alcohalImages = [];
+      this.alcohalImagesObject = {};
+    }
+  }
+
+  onDrugTestImage(event) {
+    this.drugTestImages = [];
+    this.drugTestImagesObject = {};
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.getBase64(event.target.files[i]).then(
+        data => {
+          // let blobImage = this.convertDataURIToBinary(data);
+          this.drugTestImagesObject[i] = data
+          this.drugTestImages.push(data);
+        }).catch(error => {
+          console.log('error',error);
+        });
+    }
+  }
+
+  onDrugTestSelect(event) {
+    if (event.target.value != 'Yes') {
+      this.drugTestImages = [];
+      this.drugTestImagesObject = {};
+    }
+  }
+
+  onReturnToDutyImage(event) {
+    this.alterDutyImagesObject = {};
+    this.alterDutyImages = [];
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.getBase64(event.target.files[i]).then(
+        data => {
+          this.alterDutyImagesObject[i] = data
+          this.alterDutyImages.push(data);
+        }).catch(error => {
+          console.log('error',error);
+        });
+    }
+  }
+
+  onReturnToDutySelect(event) {
+    if (event.target.value != 'Yes') {
+      this.alterDutyImages = [];
+      this.alterDutyImagesObject = {};
+    }
+  }
+
+  onChemicalImageSelect(event) {
+    this.chemicalImages = [];
+    this.chemicalImagesObject = {};
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.getBase64(event.target.files[i]).then(
+        data => {
+          this.chemicalImagesObject[i] = data
+          this.chemicalImages.push(data);
+        }).catch(error => {
+          console.log('error',error);
+        });
+    }
+    this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
+    // console.log('chemical_photo', this.enviornmentForm.controls['chemical_details']);
+    // console.log('kkk', this.enviornmentForm.controls['chemical_details'].value.chemical_photo);
+  }
+
+  onInsertImageSelect(event) {
+    if (!event.detail.checked) {
+      this.chemicalImages = [];
+      this.chemicalImagesObject = {};
+    }
+  }
+
+  onSelectDamageImage(event) {
+    this.damageImages = [];
+    this.damageImagesObject = {};
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.getBase64(event.target.files[i]).then(
+        data => {
+          this.damageImagesObject[i] = data
+          this.damageImages.push(data);
+        }).catch(error => {
+          console.log('error',error);
+        });
+    }
   }
 
   async onOpenModal() {
@@ -462,6 +694,11 @@ export class IncidentFormPage implements OnInit {
 
     return await modal.present();
   }
+
+  // onSelectedBodyPart(event) {
+  //   console.log('event',event);
+  //   console.log(this.injuryForm);
+  // }
 
   validation() {
     let enviornmental: boolean = false;
@@ -535,6 +772,7 @@ export class IncidentFormPage implements OnInit {
 
   onSubmit(val) {
     // console.log('incidentForm', this.incidentForm.value);
+    // console.log('incidentForm', this.photoGraphyForm.value);
     // console.log('incidentDesForm', this.incidentDesForm.value);
     // console.log('classificationForm', this.classificationForm.value);
     // console.log('injuryForm', this.injuryForm.value);
@@ -551,34 +789,36 @@ export class IncidentFormPage implements OnInit {
     }
     if ((val == 'submit' && validation) || (val == 'incomplete_submit' && validation == false)) {
       let fd = new FormData();
-      //----------------------------------- Incident -----------------------------------// 
+      //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
-      fd.append("incident_value", this.incidentForm.value['incident_value']);                       // required
+      fd.append("incident_value", this.incidentForm.value['incident_value']);                             // required
       fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss']);
       fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other']);
 
-      //----------------------------------- Incident -----------------------------------// 
+      //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
-      //----------------------------------- photography -----------------------------------//
+      //---------------------------------------------- photography -------------------------------------------------------------//
 
-      fd.append("photography_image", this.imagePath);
+      fd.append("photography_image", JSON.stringify(this.photoGraphyObject));
 
-      //----------------------------------- photography -----------------------------------//
+      //---------------------------------------------- photography --------------------------------------------------------------//
 
-      //----------------------------------- Incident Description -----------------------------------//
-      fd.append("incident_description", this.incidentDesForm.value['incident_description']);          //required
-      fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action']);       //incident photo pending from postman and here also  // required
+      //--------------------------------------------- Incident Description ------------------------------------------------------//
+      fd.append("incident_description", this.incidentDesForm.value['incident_description']);              //required
+      fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action']); //incident photo pending from postman and here also  // required
       fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test']);
       fd.append("alcohol_test_completed", this.incidentDesForm.value['incident_description_alcohol_test']);
-      fd.append("incident_description_photo", this.incidentDesForm.value['incident_description_photo'])              // alcohal test image
       fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed']);
       fd.append("seen_differently", this.incidentDesForm.value['seen_differently']);
       fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
       fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
-      fd.append("return_to_alternate_duties_image", this.incidentDesForm.value['return_to_alternate_duties_image']);
-      //----------------------------------- Incident Description -----------------------------------//
 
-      //----------------------------------- Classification -----------------------------------//
+      fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject))                          // alcohal test image
+      fd.append("drug_test_image", JSON.stringify(this.drugTestImagesObject));                           // drug_test_image
+      fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject));         // return_to_alternate_duties_image       
+      //----------------------------------------------- Incident Description -----------------------------------------------------//
+
+      //----------------------------------------------- Classification -----------------------------------------------------------//
 
       fd.append("classification_value", this.classificationForm.value['classification_value'].join(','));
       fd.append("date_of_incident", this.classificationForm.value['date_of_incident']);
@@ -594,75 +834,72 @@ export class IncidentFormPage implements OnInit {
       }
       fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type']);
       fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
-      fd.append("classification_manager", this.classificationForm.value['classification_manager']);      // required
+      fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
 
-      //----------------------------------- Classification -----------------------------------//
+      //--------------------------------------------------- Classification ---------------------------------------------------------//
 
-      //-------------------------------------------Injury ----------------------------------//
+      //----------------------------------------------------- Injury ---------------------------------------------------------------//
 
-      fd.append("injury_persons", this.injuryForm.value['injury_persons']);    //form value
+      fd.append("injury_persons", this.injuryForm.value['injury_persons']);                                 // form value
       fd.append("person_details", JSON.stringify(this.injuryForm.value['person_details']));
-      // fd.append("part_of_body_injured_occured", this.injuryForm.value['part_of_body_injured_occured']);
-      //-------------------------------------------Injury ----------------------------------//
 
-      //-------------------------------------------Enviornment ----------------------------------//
-      fd.append("environmental_description", this.enviornmentForm.value['environmental_description']);          // required
-      fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split']);                        //checmical split value inner side query
-      fd.append("chemical_details", JSON.stringify(this.enviornmentForm.value['chemical_details']))
+      //------------------------------------------------------ Injury ---------------------------------------------------------------//
+
+      //------------------------------------------------------ Enviornment ----------------------------------------------------------//
+      fd.append("environmental_description", this.enviornmentForm.value['environmental_description']);      // required
+      fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split']);                // chemical split value inner side query
+      fd.append("chemical_details", JSON.stringify(this.enviornmentForm.value['chemical_details']))         // data with image
       fd.append("emergency_spill_kit_used", this.enviornmentForm.value['emergency_spill_kit_used']);
+      fd.append("out_of_split_kit", this.enviornmentForm.value['out_of_split_kit']);
+      //------------------------------------------------------ Enviornment -----------------------------------------------------------//
 
-      //-------------------------------------------Enviornment ----------------------------------//
-
-      //-------------------------------------------Reputation ----------------------------------// 
+      //------------------------------------------------------ Reputation -------------------------------------------------------------// 
       fd.append("reputation_option", this.reputationDesForm.value['reputation_option']);
       fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value'])
       fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value'])
-      fd.append("reputation_damage_image", '');
-      fd.append("reutation_negative_effect", this.reputationDesForm.value['reutation_negative_effect']);
+      // fd.append("reputation_damage_image", '');
+      fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect']);
       fd.append("effected_department", this.reputationDesForm.value['effected_department']);
       fd.append("external_party", this.reputationDesForm.value['external_party']);
       fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
       fd.append("other_witness_details", JSON.stringify(this.reputationDesForm.value['other_witness_details']));
-      fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident']);   // required
+      fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident']);    // required
 
-      //-------------------------------------------Reputation ----------------------------------//
+      //--------------------------------------------------------- Reputation -----------------------------------------------------------//
 
-      //----------------------------------- Security-----------------------------------/
+      //--------------------------------------------------------- Security -------------------------------------------------------------//
       fd.append("security_option", this.securityForm.value['security_option']);
       if (this.securityForm.value['security_option'] == 'IT') {
-        fd.append("it_option_value", this.securityForm.value['it_option_value'].join(',')) // chexkbox and inner value
+        fd.append("it_option_value", this.securityForm.value['it_option_value'].join(','))                  // chexkbox and inner value
       }
       fd.append("what_has_been_stolen_item", this.securityForm.value['what_has_been_stolen_item']);
       fd.append("approximate_value_of_stolen", this.securityForm.value['approximate_value_of_stolen']);
       fd.append("what_is_the_specific_securities_incident", this.securityForm.value['what_is_the_specific_securities_incident']);
-      //----------------------------------- Security-----------------------------------//
+      //---------------------------------------------------------- Security--------------------------------------------------------------//
 
-      //-------------------------------------------Asset ----------------------------------//
+      //---------------------------------------------------------- Asset ----------------------------------------------------------------//
 
-      fd.append("asset_description", this.assetDescriptionForm.value['asset_description']);  // required
+      fd.append("asset_description", this.assetDescriptionForm.value['asset_description']);                 // required
       fd.append("asset_has_number", this.assetDescriptionForm.value['asset_has_number']);
       if (this.assetDescriptionForm.value['asset_has_number'] == 'Yes') {
         fd.append("asset_number", this.assetDescriptionForm.value['asset_number']);
       }
-      fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage']);   // required
-      fd.append("extent_damage_image", this.assetDescriptionForm.value['extent_damage_image']);
+      fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage']);                   // required
+      fd.append("extent_damage_image", JSON.stringify(this.damageImagesObject));                            // extent_damage_image
 
-      //-------------------------------------------Asset ----------------------------------//
+      //---------------------------------------------------------- Asset -----------------------------------------------------------------//
 
-      //-------------------------------------------Report ----------------------------------//
+      //--------------------------------------------------------  Report -----------------------------------------------------------------//
 
       fd.append("report", this.reportForm.value['report']);
 
-      //-------------------------------------------Report ----------------------------------//
-
-      // fd.append("contact_of_witness", this.contactOfAnyWitness);
+      //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
       fd.append('user_id', localStorage.getItem('id'));
       let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
       this.globalService.postData1(url, fd).subscribe((res: any) => {
         // this.globalService.presentLoading();
-        // console.log("part of data", res)
         if (res.status) {
           this.globalService.presentToast(res.message)
           this.nav.navigateRoot("form-list")
@@ -672,7 +909,7 @@ export class IncidentFormPage implements OnInit {
         // this.globalService.dismissLoading();
       }, err => {
         console.log("err", err);
-        this.globalService.dismissLoading();
+        // this.globalService.dismissLoading();
       })
     }
   }
@@ -702,26 +939,6 @@ export class IncidentFormPage implements OnInit {
       })
     }
     this.selectedTabList = formArray.value;
-    // console.log('formArray.value', this.selectedTabList);
-  }
-
-  onInitialInjuryChange(event, personalDetailIndex, injueyListIndex) {
-    // for (var j = 0; j <= this.injuryForm.value['person_details'].length; j++) {
-    //   if (event.target.checked) {
-    //     if (j == personalDetailIndex) {
-    //       this.injuryForm.value['person_details'][personalDetailIndex]['initital_injury'].push(event.target.value);
-    //     }
-    //   } else {
-    //     if (j == personalDetailIndex) {
-    //       this.injuryForm.value['person_details'][personalDetailIndex]['initital_injury'].forEach((ele, k) => {
-    //         if (ele == event.target.value) {
-    //           this.injuryForm.value['person_details'][personalDetailIndex]['initital_injury'].splice(k, 1);
-    //           return;
-    //         }
-    //       });
-    //     }
-    //   }
-    // }
   }
 
   onSecurityItOption(event) {
@@ -849,10 +1066,5 @@ export class IncidentFormPage implements OnInit {
         this.injuryForm.value["person_details"].pop();
       }
     }
-    // console.log(this.injuryPersonDetails);
-    // console.log('person_details2', this.injuryForm.value["person_details"]);
   }
-
 }
-
-

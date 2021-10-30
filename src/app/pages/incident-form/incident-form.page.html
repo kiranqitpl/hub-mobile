@@ -91,10 +91,13 @@
           <ion-button class="camera" expand="block" (click)="selectImage(1)">Upload Image</ion-button>
           <!-- <img src="{{imagePath}}" class="img-responsive" *ngIf="imagePath!==''" /> -->
         </div>
-        <div *ngIf="platformCheck !== 'cordova'">
-          <input type='file' (change)="onSelectFile($event,1)" formControlName="photography_image">
-          <div class="ion-text-center">
-            <!-- <img [src]="imagePath" height="200" class="img-responsive" *ngIf="imagePath!==''"> <br /> -->
+        <div *ngIf="platformCheck === 'browser'">
+          <input type='file' value="photography_image" multiple (change)="onPhotoGraphy($event)">
+
+          <div class="ion-text-center" *ngIf="photoGraphy.length > 0">
+            <div *ngFor="let photographyImages of photoGraphy">
+              <img [src]="photographyImages" height="100" class="img-responsive"> <br />
+            </div>
           </div>
         </div>
       </div>
@@ -130,7 +133,8 @@
           </ion-input>
 
           <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
-          <ion-radio-group formControlName="incident_description_alcohol_test">
+          <ion-radio-group formControlName="incident_description_alcohol_test"
+            (ionChange)="onAlcohalTestSelect($event)">
             <ion-item class="ra" lines="none">
               <ion-label>Alcohol test completed</ion-label>
             </ion-item>
@@ -156,21 +160,22 @@
             </ion-row>
           </ion-radio-group>
 
-          <div *ngIf="platformCheck === 'cordova'">
-            <ion-button *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'" class="camera"
-              expand="block" (click)="selectImage(2)">Upload Image
-            </ion-button>
-            <img src="" *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'"
-              class="img-responsive" />
-          </div>
+          <div *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'">
+            <div *ngIf="platformCheck === 'cordova'">
+              <ion-button *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'" class="camera"
+                expand="block" (click)="selectImage(2)">Upload Image
+              </ion-button>
+              <img src="" *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'"
+                class="img-responsive" />
+            </div>
 
-          <div *ngIf="platformCheck !== 'cordova'">
-            <input *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'" type='file'
-              (change)="onSelectFile($event,2)">
-            <div class="ion-text-center">
-              <img [src]="" height="200" class="img-responsive"
-                *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'">
-              <br />
+            <div *ngIf="platformCheck === 'browser'">
+              <input type='file' value="incident_description_photo" multiple (change)="onAlochaolImage($event)">
+              <div class="ion-text-center" *ngIf="alcohalImages.length > 0">
+                <div *ngFor="let alcohalImage of alcohalImages">
+                  <img [src]="alcohalImage" height="100" class="img-responsive"> <br />
+                </div>
+              </div>
             </div>
           </div>
           <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
@@ -178,7 +183,7 @@
 
           <!----------------------------------------------- Drug Test -------------------------------------------------------->
 
-          <ion-radio-group formControlName="drug_test_completed">
+          <ion-radio-group formControlName="drug_test_completed" (ionChange)="onDrugTestSelect($event)">
             <ion-item class="ra" lines="none">
               <ion-label>Drug test completed</ion-label>
             </ion-item>
@@ -204,20 +209,21 @@
             </ion-row>
           </ion-radio-group>
 
-          <div *ngIf="platformCheck === 'cordova'">
-            <ion-button *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'" class="camera" expand="block"
-              (click)="selectImage(6)">Upload Image
-            </ion-button>
-            <img src="" *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'" class="img-responsive" />
-          </div>
+          <div *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'">
+            <div *ngIf="platformCheck === 'cordova'">
+              <ion-button *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'" class="camera" expand="block"
+                (click)="selectImage(6)">Upload Image
+              </ion-button>
+              <img src="" *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'" class="img-responsive" />
+            </div>
 
-          <div *ngIf="platformCheck !== 'cordova'">
-            <input *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'" type='file'
-              (change)="onSelectFile($event,6)">
-            <div class="ion-text-center">
-              <img [src]="" height="200" class="img-responsive"
-                *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'">
-              <br />
+            <div *ngIf="platformCheck === 'browser'">
+              <input type='file' value="drug_test_image" multiple (change)="onDrugTestImage($event)">
+              <div class="ion-text-center" *ngIf="drugTestImages.length > 0">
+                <div *ngFor="let drugTestImage of drugTestImages">
+                  <img [src]="drugTestImage" height="100" class="img-responsive"> <br />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -226,7 +232,7 @@
 
           <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->
 
-          <ion-radio-group formControlName="return_to_alternate_duties">
+          <ion-radio-group formControlName="return_to_alternate_duties" (ionChange)="onReturnToDutySelect($event)">
             <ion-item class="ra" lines="none">
               <ion-label>Return to Alternate Duties</ion-label>
             </ion-item>
@@ -251,22 +257,29 @@
               </ion-col>
             </ion-row>
 
-            <ion-text class="mandatoryField">* If selected yes please take a photo or upload the Certificate of Capacity
+            <ion-text class="mandatoryField">* If selected yes please take a photo or upload the Certificate of
+              Capacity
               COC.</ion-text>
           </ion-radio-group>
-          <div *ngIf="platformCheck === 'cordova'">
-            <ion-button *ngIf="returnToAlternateDuties=='Yes'" class="camera" expand="block" (click)="selectImage(7)">
-              Upload Image
-            </ion-button>
-            <img src="" *ngIf="incidentDesForm.value['return_to_alternate_duties']=='Yes'" class="img-responsive" />
-          </div>
-
-          <div *ngIf="platformCheck !== 'cordova'">
-            <input *ngIf="incidentDesForm.value['return_to_alternate_duties']=='Yes'" type='file'
-              (change)="onSelectFile($event,7)">
-            <div class="ion-text-center" *ngIf=" incidentDesForm.value['return_to_alternate_duties']=='Yes' ">
-              <img [src]="" height="200" class="img-responsive"> <br />
+          <div *ngIf="incidentDesForm.value['return_to_alternate_duties']=='Yes'">
+            <div *ngIf=" platformCheck==='cordova'">
+              <ion-button *ngIf=" returnToAlternateDuties=='Yes'" class=" camera" expand="block"
+                (click)="selectImage(7)">
+                Upload Image
+              </ion-button>
+              <img src="" *ngIf="incidentDesForm.value['return_to_alternate_duties']=='Yes'" class="img-responsive" />
             </div>
+
+            <div *ngIf="platformCheck === 'browser'">
+              <input type='file' value="return_to_alternate_duties_image" multiple
+                (change)="onReturnToDutyImage($event)">
+              <div class="ion-text-center" *ngIf="alterDutyImages.length > 0">
+                <div *ngFor="let returnToAlterDutyImage of alterDutyImages">
+                  <img [src]="returnToAlterDutyImage" height="100" class="img-responsive"> <br />
+                </div>
+              </div>
+            </div>
+
           </div>
           <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->
         </div>
@@ -341,7 +354,8 @@
 
         <div *ngIf="classificationForm.value['classification_location_option'] =='Add Location'">
           <p class="question">Add Location</p>
-          <ion-input placeholder="Please add the location" formControlName="classification_location_value"></ion-input>
+          <ion-input placeholder="Please add the location" formControlName="classification_location_value">
+          </ion-input>
         </div>
 
         <div *ngIf="classificationForm.value['classification_location_option'] == 'Choose Location'">
@@ -525,8 +539,6 @@
                 <ion-label>Initial Injury / IIIness Classification</ion-label>
               </ion-item>
 
-
-
               <ion-radio-group formControlName="initital_injury">
                 <ion-row>
                   <ion-col size="6" *ngFor="let injuryKeys of injuryList;">
@@ -541,10 +553,28 @@
                   </ion-col>
                 </ion-row>
               </ion-radio-group>
+
+
+              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Male'" class="img-responsive"
+                src="{{imagePath+'Male_Silhouette.png'}}">
+              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Female'" class="img-responsive"
+                src="{{imagePath+'Female_Silhouette.png'}}">
+
               <div>
-                <p class="question">Part of body injured:</p>
+
+                <ion-item>
+                  <ion-label>Part of body injured:</ion-label>
+                  <ion-select multiple="true" cancelText="Cancel" okText="Ok" formControlName="part_of_body_injured_occured">
+                    <!-- <ion-select multiple="true" cancelText="Cancel" okText="Ok" (ionChange)="onSelectedBodyPart($event)"
+                    formControlName="part_of_body_injured_occured"> -->
+                    <ion-select-option value="{{bodyPartsVal.val}}" *ngFor="let bodyPartsVal of bodyParts">
+                      {{bodyPartsVal.val}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <!-- <p class="question">Part of body injured:</p>
                 <ion-input placeholder="Enter here" formControlName="part_of_body_injured_occured">
-                </ion-input>
+                </ion-input> -->
               </div>
 
               <div>
@@ -594,7 +624,7 @@
               </div>
 
             </div>
-            <img class="img-responsive" src="./assets/person.jpg">
+            <!-- <img class="img-responsive" src="./assets/person.jpg"> -->
           </ion-card>
         </div>
       </div>
@@ -642,31 +672,32 @@
           </p>
           <ion-input placeholder="Enter here" formControlName="chemical_name"></ion-input>
           <ion-list>
+
             <ion-item class="ra ion-no-padding" lines="none">
               <ion-label>Insert Photo</ion-label>
-              <!-- <ion-checkbox slot="start" [checked]='insertPhotoCheckBox' [value]="insertPhotoCheckBox"
-                formControlName="insertPhotoCheckBox" (ionChange)="onChemicalCheckBox($event)">
-              </ion-checkbox> -->
-              <ion-checkbox slot="start" [value]="insertPhotoCheckBox" formControlName="insertPhotoCheckBox">
+              <ion-checkbox slot="start" [value]="insertPhotoCheckBox" formControlName="insertPhotoCheckBox"
+                (ionChange)="onInsertImageSelect($event)">
               </ion-checkbox>
             </ion-item>
           </ion-list>
-          <div *ngIf="platformCheck==='cordova'">
-            <div *ngIf="enviornmentForm.value['chemical_details'].insertPhotoCheckBox">
-              <ion-button class="camera" expand="block" (click)="selectImage(3)">Upload
-                Image
-              </ion-button>
+
+          <div *ngIf="enviornmentForm.value['chemical_details'].insertPhotoCheckBox">
+            <div *ngIf="platformCheck==='cordova'">
+              <ion-button class="camera" expand="block" (click)="selectImage(3)">Upload Image</ion-button>
               <img src="" *ngIf="enviornmentForm.value['chemical_details'].insertPhotoCheckBox"
                 class="img-responsive" />
             </div>
-          </div>
-          <div *ngIf="platformCheck !== 'cordova'">
-            <input *ngIf="enviornmentForm.value['chemical_details'].insertPhotoCheckBox" type='file'
-              (change)="onSelectFile($event,3)">
-            <div class="ion-text-center">
-              <img [src]="" height="200" class="img-responsive" *ngIf=""> <br />
+
+            <div *ngIf="platformCheck === 'browser'">
+              <input type='file' value="chemical_photo" multiple (change)="onChemicalImageSelect($event)">
+              <div class="ion-text-center" *ngIf="chemicalImages.length > 0">
+                <div *ngFor="let chemicalImage of chemicalImages">
+                  <img [src]="chemicalImage" height="100" class="img-responsive"> <br />
+                </div>
+              </div>
             </div>
           </div>
+
           <p class="question">
             Approximate quantity of chemical spilled
           </p>
@@ -693,7 +724,15 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
+        <div *ngIf="enviornmentForm.value['emergency_spill_kit_used'] == 'Yes'">
+          <p class=" question">
+            What was used out of the chemical spill kit?
+          </p>
+          <ion-input placeholder="Enter here" formControlName="out_of_split_kit"></ion-input>
+        </div>
       </div>
+
+
       <!-------------------------------------------------Environmental------------------------------------------------>
 
       <!-------------------------------------------------Reputation--------------------------------------------------->
@@ -732,7 +771,7 @@
           <ion-input placeholder="Enter here" formControlName="company_damage_value"></ion-input>
         </div>
 
-        <ion-radio-group formControlName="reutation_negative_effect">
+        <ion-radio-group formControlName="reputation_negative_effect">
           <ion-item class="ra" lines="none">
             <ion-label>Was the negative effect internal or external</ion-label>
           </ion-item>
@@ -759,7 +798,7 @@
         </ion-radio-group>
 
         <ion-radio-group formControlName="effected_department"
-          *ngIf="(reputationDesForm.value['reutation_negative_effect'] == 'Internal') || (reputationDesForm.value['reutation_negative_effect'] == 'Both') ">
+          *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'Internal') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
           <ion-item class="ra" lines="none">
             <ion-label>What Department was effected?</ion-label>
           </ion-item>
@@ -792,7 +831,7 @@
         </ion-radio-group>
 
         <div
-          *ngIf="(reputationDesForm.value['reutation_negative_effect'] == 'External') || (reputationDesForm.value['reutation_negative_effect'] == 'Both') ">
+          *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'External') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
           <p class="question">
             Who is the external party?
           </p>
@@ -948,19 +987,24 @@
           Extent of Damage
         </p>
         <ion-input placeholder="Extent of Damage" formControlName="extent_of_damage"></ion-input>
-        <p class="question">
-          Upload photo of damage
-        </p>
-        <div *ngIf="platformCheck === 'cordova'">
-          <ion-button class="camera" expand="block" (click)="selectImage(5)">Upload Image</ion-button>
-          <img src="{{imagePath5}}" *ngIf="imagePath5!==''" class="img-responsive" />
+
+        <div *ngIf="platformCheck==='cordova'">
+          <ion-button class="camera" expand="block" (click)="selectImage(3)">Upload photo of damage</ion-button>
+          <img src="" *ngIf="enviornmentForm.value['chemical_details'].insertPhotoCheckBox" class="img-responsive" />
         </div>
-        <div *ngIf="platformCheck !== 'cordova'">
-          <input type='file' (change)="onSelectFile($event,5)">
-          <div class="ion-text-center">
-            <img [src]="imagePath5" height="200" class="img-responsive" *ngIf="imagePath5!==''"> <br />
+
+        <div *ngIf="platformCheck === 'browser'">
+          <p class="question">
+            Upload photo of damage
+          </p>
+          <input type='file' value="extent_damage_image" multiple (change)="onSelectDamageImage($event)">
+          <div class="ion-text-center" *ngIf="damageImages.length > 0">
+            <div *ngFor="let damageImage of damageImages">
+              <img [src]="damageImage" height="100" class="img-responsive"> <br />
+            </div>
           </div>
         </div>
+
       </div>
       <!-------------------------------------------------Asset-------------------------------------------------------->
 

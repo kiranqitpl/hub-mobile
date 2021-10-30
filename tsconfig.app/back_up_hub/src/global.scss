@@ -1,0 +1,136 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@font-face {
+    font-family: 'mon-black';
+    src: url("./fonts/Montserrat-Black_0.ttf");
+}
+@font-face {
+    font-family: 'mon-black-italic';
+    src: url("./fonts/Montserrat-BlackItalic_0.ttf");
+}
+@font-face {
+    font-family: 'mon-bold';
+    src: url("./fonts/Montserrat-Bold_0.ttf");
+}
+@font-face {
+    font-family: 'mon-bold-italic';
+    src: url('./fonts/Montserrat-BoldItalic_0.ttf');
+}
+@font-face {
+    font-family: 'mon-extrabold';
+    src: url("./fonts/Montserrat-ExtraBold_0.ttf");
+}
+@font-face {
+    font-family: 'mon-extra-bold-talic';
+    src: url("./fonts/Montserrat-ExtraBoldItalic_0.ttf");
+}
+@font-face {
+    font-family: 'mon-extra-light';
+    src: url('./fonts/Montserrat-ExtraLight_0.ttf');
+}
+@font-face{
+    font-family: "mon-extra-light-italic";
+    src: url('./fonts/Montserrat-ExtraLightItalic_0.ttf');
+}
+@font-face {
+    font-family: 'mon-italic';
+    src:url('./fonts/Montserrat-Italic_0.ttf')
+}
+@font-face {
+    font-family: 'mon-light';
+    src: url('./fonts/Montserrat-Light_0.ttf');
+}
+@font-face{
+    font-family:'mon-light-italic';
+    src:url('./fonts/Montserrat-LightItalic_0.ttf')
+}
+@font-face{
+    font-family:'mon-medium';
+    src: url('./fonts/Montserrat-Medium_0.ttf');
+}
+@font-face {
+    font-family: 'mon-medium-italic';
+    src: url('./fonts/Montserrat-MediumItalic_0.ttf')
+}
+@font-face {
+    font-family: 'mon-regular';
+    src: url('./fonts/Montserrat-Regular_0.ttf');
+}
+@font-face {
+    font-family: 'mon-bold';
+    src: url('./fonts/Montserrat-SemiBold_0.ttf');
+}
+@font-face {
+    font-family: 'mon-semi-bold-italic';
+    src: url('./fonts/Montserrat-SemiBoldItalic_0.ttf');
+}
+@font-face {
+    font-family: 'mon-thin';
+    src: url('./fonts/Montserrat-Thin_0.ttf');
+}
+@font-face {
+    font-family: 'mon-thin-italic';
+    src: url('./fonts/Montserrat-ThinItalic_0.ttf');
+}
+
+.managers{
+        --min-height: 350px;
+    --max-height: 400px;
+    padding-top: calc(100vh - 397px);
+}
+.action-sheet-button{
+    font-family: mon-medium !important;
+}
+
+.alertBtn{
+    font-family: mon-medium !important;
+}
+.datatable-header{
+    font-family: mon-bold ;
+}
+.datatable-body-cell-label{
+    font-family: mon-medium;
+}
+.ngx-datatable.material{
+    border-radius: 11px;
+}
+.datatable-pager{
+    font-family: mon-medium;
+}
+
+
+.datatable-pager{
+    font-family: mon-medium;
+}
+.action-sheet-button{
+    font-family: mon-medium;
+    text-transform: capitalize;
+}

@@ -74,5 +74,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-advanced-http": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-advanced-http@^3.2.2"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }
