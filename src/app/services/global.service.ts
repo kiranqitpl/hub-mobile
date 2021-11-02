@@ -1,6 +1,7 @@
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -63,37 +64,33 @@ export class GlobalService {
     await this.loadingController.dismiss();
   }
 
+  // setHeader() {
+  //   let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
+  //   header.set("Access-Control-Allow-Origin", "*");
+  //   header.set("Content-Type", "application/json");
+  //   header.set("Access-Control-Allow-Headers", "*")
+  //   header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+  //   header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  //   if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
+  //     header.set("token", localStorage.getItem("token"));
+  //   }
+  //   return header;
+  // }
+
   setHeader() {
-    let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-    header.set("Access-Control-Allow-Origin", "*");
-    header.set("Content-Type", "application/json");
-    header.set("Access-Control-Allow-Headers", "*")
-    header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-    header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    let header = new HttpHeaders()
+      .set('apikey', 'as*37486a*()HGY')
+      .set("Access-Control-Allow-Origin", "*")
+      // .set("Content-Type", "application/json")
+      .set("Access-Control-Allow-Headers", "*")
+      .set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
+      .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
 
     if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
       header.set("token", localStorage.getItem("token"));
     }
     return header;
   }
-
-
-  // setHeaders() {
-  //   let token = ""
-  //   if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
-  //     token = localStorage.getItem("token")
-     
-  //   }
-  //   let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' })
-  //     .set("Access-Control-Allow-Origin", "*")
-  //     // .set("Content-Type", "application/json")
-  //     .set("Access-Control-Allow-Headers", "*")
-  //     .set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-  //     .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
-  //     .set("token", token)
-
-  //   return header;
-  // }
 
   getData(url) {
     let headers = this.setHeader();
@@ -102,7 +99,6 @@ export class GlobalService {
 
   postData(url, data) {
     let headers = this.setHeader();
-
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
@@ -116,9 +112,7 @@ export class GlobalService {
     return this.http.get(this.baseUrl + url, { headers: headers });
   }
 
-
-
-
+  // -------------------------------------------------------------New Services -----------------------------------------------------//
 
   postData1(url, data) {
     let headers = this.setHeader();
@@ -128,8 +122,6 @@ export class GlobalService {
   getData1(url) {
     let headers = this.setHeader();
     return this.http.get(this.baseUrl1 + url, { headers: headers });
-
-
     // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
     //   map((response) => {
     //     console.log('response', response);
@@ -142,7 +134,4 @@ export class GlobalService {
     // );
   }
 }
-
-
-
-
+// -------------------------------------------------------------New Services -----------------------------------------------------//

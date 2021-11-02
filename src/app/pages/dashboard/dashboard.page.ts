@@ -2,7 +2,6 @@ import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 import { environment } from 'src/environments/environment';
-
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class DashboardPage implements OnInit {
   userId: string;
   roleId: string;
   type: any = environment.allType;
-  // notViewNotiCount: number = 0;
+  pName :String = 'Dashboard';
 
   _menu = [
     {
@@ -30,7 +29,8 @@ export class DashboardPage implements OnInit {
       menuName: "Incident", route: "/incident-form"
     },
     {
-      menuName: "Hazard Report", route: "/add-form"
+      menuName: "Hazard Report", route: ""
+      // menuName: "Hazard Report", route: "/add-form"
     },
     {
       menuName: "SBO", route: "#"
@@ -58,8 +58,6 @@ export class DashboardPage implements OnInit {
     this.role = localStorage.getItem("role");
     if (this.role == this.userRole) {
       this.data = ["Previous Form", "Notification"]
-      // } else if (this.role == this.gmRole) {
-      //   this.data = ["Submitted Form", "Notification"]
     } else {
       this.data = ["Submitted Form", "Notification"]
     }
@@ -68,10 +66,6 @@ export class DashboardPage implements OnInit {
   next() {
     this.nav.navigateForward("incident-type")
   }
-
-  // pendingForm() {
-  //   this.nav.navigateForward("form-list")
-  // }
 
   navGo(item) {
     if (item === 'Previous Form' || item == 'Submitted Form') {
@@ -90,10 +84,6 @@ export class DashboardPage implements OnInit {
     let formData = new FormData();
     formData.append("type", this.type);
     formData.append("user_id", this.userId);
-
-    // this.sharedService.notificationLoad(formData);
-
-
     let url = "";
     if (this.roleId == this.global.investigator) {
       url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
@@ -101,7 +91,6 @@ export class DashboardPage implements OnInit {
       url = 'api/notification/getGMNotificationByGmID';
     }
     if (url != "") {
-      // this.global.presentLoading();
       this.global.postData(url, formData).subscribe(result => {
         if (result['status']) {
           let count: number = 0;
@@ -111,18 +100,13 @@ export class DashboardPage implements OnInit {
             }
           });
           this.sharedService.notViewNotiCount = count
-          // this.notViewNotiCount = count;
         } else {
           console.log('error');
         }
-        // this.global.dismissLoading();
       }), error => {
-        // this.global.dismissLoading();
         console.log('error', error);
       }
-
     } else {
-      // this.global.dismissLoading();
       console.log("error");
     }
   }

@@ -4,11 +4,6 @@ import { GlobalService } from 'src/app/services/global.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as moment from 'moment';
 
-// import { ManagersPage } from 'src/app/modals/managers/managers.page';
-// import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-// import { File } from '@ionic-native/file/ngx';
-// import { Base64 } from '@ionic-native/base64/ngx';
-
 @Component({
   selector: 'app-view',
   templateUrl: './view.page.html',
@@ -399,9 +394,9 @@ export class ViewPage implements OnInit {
   returnToAlternateDuties: any = "";
   returnToDutiesImage: any = "";
 
+
+  incidentDetails = '';
   constructor(
-    // private modal: ModalController,
-    // private camera: Camera,
     private nav: NavController,
     public actionSheetController: ActionSheetController,
     private global: GlobalService,
@@ -414,12 +409,12 @@ export class ViewPage implements OnInit {
 
   loadData() {
     // let data = JSON.parse(localStorage.getItem('singleView'));
-    // this.global.presentLoading();
+    this.global.presentLoading();
     let data = "";
     this.activatedRoute.params.subscribe(
       (params: Params) => {
         this.global.getData('api/add_form/getIncidentFormByID/' + params['form_id']).subscribe(result => {
-          // this.global.dismissLoading();
+          this.incidentDetails = result['data'][0]
           data = result['data'][0];
           if (data != "") {
             this.what_has_been_stolen_item = data['what_has_been_stolen_item']
@@ -836,8 +831,9 @@ export class ViewPage implements OnInit {
           } else {
             console.log("error");
           }
+          this.global.dismissLoading();
         }), error => {
-          // this.global.dismissLoading();
+          this.global.dismissLoading();
           console.log(error);
         }
       }

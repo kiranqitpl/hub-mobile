@@ -78,13 +78,12 @@ export class NotificationPage implements OnInit {
       console.log("error");
     }
 
-
-
   }
 
   //----------------------------------- Load Notification Data ---------------------------------------------------------//
 
   //----------------------------------- Delete Notification ---------------------------------------------------------//
+  
   filterArrayData(rowId) {
     let data = [];
     data['result'] = false;
@@ -150,6 +149,4 @@ export class NotificationPage implements OnInit {
   }
 
   //----------------------------------- Re-direct on detail page --------------------------------------------------------//
-
-
 }

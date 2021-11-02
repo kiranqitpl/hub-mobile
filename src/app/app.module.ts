@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Base64 } from '@ionic-native/base64/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+
+import { HeaderComponent } from './shared-component/header/header.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     Camera,
     File,
     Base64,
-
+    HeaderComponent
   ],
   bootstrap: [AppComponent],
 })

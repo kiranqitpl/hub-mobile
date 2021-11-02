@@ -55,7 +55,7 @@ export class FormListPage implements OnInit {
   }
 
   ionViewWillEnter() {
- 
+    // this.global.presentLoading()
     this.role = localStorage.getItem("role");
     this.userRole = this.global.user;
     this.gmRole = this.global.gm;
@@ -70,7 +70,6 @@ export class FormListPage implements OnInit {
 
     if (this.role == this.investigatorRole) {
       this.global.postData("api/Add_form/get", { investigator_id: this.gm_id }).subscribe((res: any) => {
-        // this.global.presentLoading()
         if (res) {
           let data = [];
           res?.data?.forEach((el: any, index) => {
@@ -94,9 +93,10 @@ export class FormListPage implements OnInit {
         }
         // this.global.dismissLoading();
       }, err => {
-        // this.global.dismissLoading()
+        // this.global.dismissLoading();
         console.log("Err response", err)
       });
+
     } else {
       this.global.postData("api/add_form/get", {}).subscribe((res: any) => {
         // this.global.presentLoading()
@@ -144,7 +144,6 @@ export class FormListPage implements OnInit {
         // this.global.dismissLoading();
       })
     }
-
     this.global.postData("api/add_form/get", {}).subscribe((res: any) => {
       // this.global.presentLoading()
       if (res) {
@@ -193,9 +192,8 @@ export class FormListPage implements OnInit {
       console.log(error);
       // this.global.dismissLoading();
     })
+    // this.global.dismissLoading();
   }
-
-
 
   goBack() {
     this.nav.back();
@@ -208,7 +206,7 @@ export class FormListPage implements OnInit {
   }
 
   singleView() {
-    this.nav.navigateRoot("view/" + this.getRowData.id);
+    this.nav.navigateRoot("/incident-details/" + this.getRowData.id);
   }
 
   editClick() {

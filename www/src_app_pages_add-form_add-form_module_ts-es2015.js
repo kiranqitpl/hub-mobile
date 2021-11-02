@@ -976,7 +976,7 @@ let AddFormPage = class AddFormPage {
         if (this.companyChecked) {
             fd.append("company_damage_value", this.companyReputatonDamaged);
         }
-        fd.append("incident_description_photo", this.imagePath2);
+        fd.append("incident_description_photo", this.imagePath2); // Alcohal Test  images
         fd.append("reutation_negative_effect", this.nagativeEffetct);
         fd.append("name_of_witness", this.nameOfAnyWitness);
         fd.append("contact_of_witness", this.contactOfAnyWitness);

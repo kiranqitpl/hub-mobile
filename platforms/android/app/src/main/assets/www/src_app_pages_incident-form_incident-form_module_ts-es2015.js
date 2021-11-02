@@ -119,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let IncidentFormPage = class IncidentFormPage {
-    constructor(globalService, sharedService, modal, actionSheetController, camera, fb, nav) {
+    constructor(globalService, sharedService, modal, actionSheetController, camera, fb, nav, platform) {
         this.globalService = globalService;
         this.sharedService = sharedService;
         this.modal = modal;
@@ -127,6 +127,7 @@ let IncidentFormPage = class IncidentFormPage {
         this.camera = camera;
         this.fb = fb;
         this.nav = nav;
+        this.platform = platform;
         this.imagePath = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.imageUrl;
         this.pName = 'Add Form';
         this.witnessList = [];
@@ -137,6 +138,22 @@ let IncidentFormPage = class IncidentFormPage {
         this.selectedTabList = [];
         this.itemsArray = [1];
         this.reputationWitnessList = [];
+        this.platformCheck = '';
+        //-------------------------------------- Image variables ----------------------------------------------------//
+        this.photoGraphy = [];
+        this.photoGraphyObject = {};
+        this.alcohalImages = [];
+        this.alcohalImagesObject = {};
+        this.drugTestImages = [];
+        this.drugTestImagesObject = {};
+        this.alterDutyImages = [];
+        this.alterDutyImagesObject = {};
+        this.chemicalImages = [];
+        this.chemicalImagesObject = {};
+        this.damageImages = [];
+        this.damageImagesObject = {};
+        //-------------------------------------- Image variables ----------------------------------------------------//
+        this.base64Image = "";
         //-------------------------------------- Forms ----------------------------------------------------//
         //-------------------------------------- Tab ----------------------------------------------------//
         this.tabList = [
@@ -213,12 +230,7 @@ let IncidentFormPage = class IncidentFormPage {
                 isChecked: false,
             },
         ];
-        this.injuryList = 
-        // [
-        // {
-        //   id: '',
-        //   list: 
-        [
+        this.injuryList = [
             {
                 val: 'FAI',
                 isChecked: false,
@@ -264,9 +276,70 @@ let IncidentFormPage = class IncidentFormPage {
             // ]
             // }
         ];
+        this.bodyParts = [
+            {
+                val: 'Cranium (holds the brain)',
+            },
+            {
+                val: 'Mandibles (lower jaw)',
+            },
+            {
+                val: 'Maxilla (upper jaw)',
+            },
+            {
+                val: 'Nasal bone',
+            },
+            {
+                val: 'Eyes',
+            },
+            {
+                val: 'Nose',
+            },
+            {
+                val: 'Ears',
+            },
+            {
+                val: 'Tongue',
+            },
+            {
+                val: 'Teeth',
+            },
+            {
+                val: 'Cheeks',
+            },
+            {
+                val: 'Chin',
+            },
+            {
+                val: 'Trachea',
+            },
+            {
+                val: 'Esophagus',
+            },
+            {
+                val: 'Cervical vertebrae',
+            },
+            {
+                val: 'Chest',
+            },
+            {
+                val: 'Pectoralis (upper chest)',
+            },
+            {
+                val: 'Lungs',
+            },
+            {
+                val: 'Heart',
+            },
+        ];
     }
     ngOnInit() {
-        console.log('cordovaPlateform', this.globalService.cordovaPlateform);
+        if (!this.platform.is('cordova')) {
+            this.platformCheck = 'browser';
+        }
+        else {
+            this.platformCheck = 'cordova';
+        }
         this.loadWitness();
         this.loadShift();
         this.loadSuperwiser();
@@ -278,7 +351,7 @@ let IncidentFormPage = class IncidentFormPage {
             incident_near_miss_other: [''],
         });
         this.photoGraphyForm = this.fb.group({
-            photography_image: ['']
+            photography_image: [''], // photography image
         });
         this.incidentDesForm = this.fb.group({
             incident_description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required],
@@ -288,9 +361,11 @@ let IncidentFormPage = class IncidentFormPage {
             incident_description_alcohol_test: [''],
             // alcohol_test_completed: [''],
             incident_description_photo: [''],
+            alcohol_test_image: [''],
             drug_test_completed: [''],
+            drug_test_image: [''],
             return_to_alternate_duties: [''],
-            return_to_alternate_duties_image: ['']
+            return_to_alternate_duties_image: [''] //return to alternate duties image
         });
         this.classificationForm = this.fb.group({
             classification_value: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormArray([]),
@@ -323,13 +398,13 @@ let IncidentFormPage = class IncidentFormPage {
             }),
             //chemical photo insert checkbox
             emergency_spill_kit_used: [''],
+            out_of_split_kit: ['']
         });
         this.reputationDesForm = this.fb.group({
             reputation_option: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormArray([]),
             individual_damage_value: [''],
             company_damage_value: [''],
-            reputation_damage_image: [''],
-            reutation_negative_effect: [''],
+            reputation_negative_effect: [''],
             effected_department: [''],
             external_party: [''],
             name_of_witness: [''],
@@ -352,7 +427,7 @@ let IncidentFormPage = class IncidentFormPage {
             asset_has_number: [''],
             asset_number: [''],
             extent_of_damage: [''],
-            extent_damage_image: ['']
+            extent_damage_image: [''] // extent damage image
         });
         this.reportForm = this.fb.group({
             report: ['']
@@ -411,9 +486,7 @@ let IncidentFormPage = class IncidentFormPage {
         });
     }
     onSelectTabItem(i) {
-        // console.log('onSelectTabItem', i);
         this.selectedTabItem = i;
-        // console.log('  this.selectedTabItem', this.selectedTabItem);
     }
     onDeSelectTabItem(i) {
         this.selectedTabItem = '';
@@ -421,21 +494,22 @@ let IncidentFormPage = class IncidentFormPage {
             this.selectedTabList = this.selectedTabList;
         }
     }
-    selectImage(e) {
+    mobileUploadImages() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
+            let images;
             const actionSheet = yield this.actionSheetController.create({
                 header: 'Select Image source',
                 buttons: [
                     {
                         text: 'Load from Library',
                         handler: () => {
-                            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, e);
+                            return images = this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
                         },
                     },
                     {
                         text: 'Use Camera',
                         handler: () => {
-                            this.pickImage(this.camera.PictureSourceType.CAMERA, e);
+                            return images = this.pickImage(this.camera.PictureSourceType.CAMERA);
                         },
                     },
                     {
@@ -447,7 +521,8 @@ let IncidentFormPage = class IncidentFormPage {
             yield actionSheet.present();
         });
     }
-    pickImage(sourceType, e) {
+    pickImage(sourceType) {
+        console.log('sourceType', sourceType);
         const options = {
             quality: 100,
             sourceType: sourceType,
@@ -456,41 +531,153 @@ let IncidentFormPage = class IncidentFormPage {
             mediaType: this.camera.MediaType.PICTURE,
         };
         this.camera.getPicture(options).then((imageData) => {
+            console.log('imageData', imageData);
             // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
             let image = 'data:image/jpeg;base64,' + imageData;
-            // if (e == 1) {
-            //   this.imagePath = image;
-            //   // let t = this.DataURIToBlob(image);
-            //   // let realData = this.imagePath.split(",")[1];
-            //   this.imageUri = imageData;
-            // }
-            // if (e == 2) {
-            //   this.imagePath2 = image;
-            //   let t = this.DataURIToBlob(image);
-            //   this.image2Uri = imageData;
-            // }
-            // if (e == 3) {
-            //   this.imagePath3 = image;
-            //   this.image3Uri = imageData
-            // }
-            // if (e == 4) {
-            //   this.imagePath4 = image;
-            //   this.image4Uri = imageData
-            // }
-            // if (e == 5) {
-            //   this.imagePath5 = image;
-            //   this.image5Uri = imageData
-            // }
-            // if (e == 6) {
-            //   this.drugImage = image;
-            //   this.drugTestImageUri = imageData
-            // }
-            // if (e == 7) {
-            //   this.returnToDutiesImage = image;
-            // }
+            return image;
         }, (err) => {
             console.log("errOf Image ", err);
         });
+    }
+    // fileToBase64 = (file) => {
+    //   let image: any;
+    //   let reader = new FileReader();
+    //   reader.onload = (function (file) {
+    //     return function (e) {
+    //       image = e.target.result;
+    //       this.base64Image = e.target.result;
+    //     };
+    //   })(file);
+    //   reader.readAsDataURL(file);
+    // };
+    // convertDataURIToBinary(dataURI) {
+    //   var BASE64_MARKER = ';base64,';
+    //   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    //   var base64 = dataURI.substring(base64Index);
+    //   var raw = window.atob(base64);
+    //   var rawLength = raw.length;
+    //   var array = new Uint8Array(new ArrayBuffer(rawLength));
+    //   for (let i = 0; i < rawLength; i++) {
+    //     array[i] = raw.charCodeAt(i);
+    //   }
+    //   return array;
+    // }
+    getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+    onMobileUpload() {
+    }
+    onPhotoGraphy(event, type) {
+        this.photoGraphy = [];
+        this.photoGraphyObject = {};
+        if (type == 1) {
+            let data = this.mobileUploadImages();
+            console.log('data', data);
+        }
+        else {
+            for (let i = 0; i < event.target.files.length; i++) {
+                this.getBase64(event.target.files[i]).then(data => {
+                    // this.convertDataURIToBinary(data);
+                    this.photoGraphyObject[i] = data;
+                    this.photoGraphy.push(data);
+                }).catch(error => {
+                    console.log('error', error);
+                });
+            }
+        }
+    }
+    onAlochaolImage(event) {
+        this.alcohalImages = [];
+        this.alcohalImagesObject = {};
+        for (let i = 0; i < event.target.files.length; i++) {
+            this.getBase64(event.target.files[i]).then(data => {
+                this.alcohalImagesObject[i] = data;
+                this.alcohalImages.push(data);
+            }).catch(error => {
+                console.log('error', error);
+            });
+        }
+    }
+    onAlcohalTestSelect(event) {
+        if (event.target.value != 'Yes') {
+            this.alcohalImages = [];
+            this.alcohalImagesObject = {};
+        }
+    }
+    onDrugTestImage(event) {
+        this.drugTestImages = [];
+        this.drugTestImagesObject = {};
+        for (let i = 0; i < event.target.files.length; i++) {
+            this.getBase64(event.target.files[i]).then(data => {
+                // let blobImage = this.convertDataURIToBinary(data);
+                this.drugTestImagesObject[i] = data;
+                this.drugTestImages.push(data);
+            }).catch(error => {
+                console.log('error', error);
+            });
+        }
+    }
+    onDrugTestSelect(event) {
+        if (event.target.value != 'Yes') {
+            this.drugTestImages = [];
+            this.drugTestImagesObject = {};
+        }
+    }
+    onReturnToDutyImage(event) {
+        this.alterDutyImagesObject = {};
+        this.alterDutyImages = [];
+        for (let i = 0; i < event.target.files.length; i++) {
+            this.getBase64(event.target.files[i]).then(data => {
+                this.alterDutyImagesObject[i] = data;
+                this.alterDutyImages.push(data);
+            }).catch(error => {
+                console.log('error', error);
+            });
+        }
+    }
+    onReturnToDutySelect(event) {
+        if (event.target.value != 'Yes') {
+            this.alterDutyImages = [];
+            this.alterDutyImagesObject = {};
+        }
+    }
+    onChemicalImageSelect(event) {
+        this.chemicalImages = [];
+        this.chemicalImagesObject = {};
+        for (let i = 0; i < event.target.files.length; i++) {
+            this.getBase64(event.target.files[i]).then(data => {
+                this.chemicalImagesObject[i] = data;
+                this.chemicalImages.push(data);
+            }).catch(error => {
+                console.log('error', error);
+            });
+        }
+        this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
+        // console.log('chemical_photo', this.enviornmentForm.controls['chemical_details']);
+        // console.log('kkk', this.enviornmentForm.controls['chemical_details'].value.chemical_photo);
+    }
+    onInsertImageSelect(event) {
+        if (!event.detail.checked) {
+            this.chemicalImages = [];
+            this.chemicalImagesObject = {};
+        }
+    }
+    onSelectDamageImage(event) {
+        this.damageImages = [];
+        this.damageImagesObject = {};
+        for (let i = 0; i < event.target.files.length; i++) {
+            this.getBase64(event.target.files[i]).then(data => {
+                this.damageImagesObject[i] = data;
+                this.damageImages.push(data);
+            }).catch(error => {
+                console.log('error', error);
+            });
+        }
     }
     onOpenModal() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
@@ -508,6 +695,10 @@ let IncidentFormPage = class IncidentFormPage {
             return yield modal.present();
         });
     }
+    // onSelectedBodyPart(event) {
+    //   console.log('event',event);
+    //   console.log(this.injuryForm);
+    // }
     validation() {
         let enviornmental = false;
         let reputation = false;
@@ -589,6 +780,7 @@ let IncidentFormPage = class IncidentFormPage {
     }
     onSubmit(val) {
         // console.log('incidentForm', this.incidentForm.value);
+        // console.log('incidentForm', this.photoGraphyForm.value);
         // console.log('incidentDesForm', this.incidentDesForm.value);
         // console.log('classificationForm', this.classificationForm.value);
         // console.log('injuryForm', this.injuryForm.value);
@@ -604,27 +796,28 @@ let IncidentFormPage = class IncidentFormPage {
         }
         if ((val == 'submit' && validation) || (val == 'incomplete_submit' && validation == false)) {
             let fd = new FormData();
-            //----------------------------------- Incident -----------------------------------// 
+            //----------------------------------------------- Incident ---------------------------------------------------------------// 
             fd.append("incident_value", this.incidentForm.value['incident_value']); // required
             fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss']);
             fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other']);
-            //----------------------------------- Incident -----------------------------------// 
-            //----------------------------------- photography -----------------------------------//
-            fd.append("photography_image", this.imagePath);
-            //----------------------------------- photography -----------------------------------//
-            //----------------------------------- Incident Description -----------------------------------//
+            //----------------------------------------------- Incident ---------------------------------------------------------------// 
+            //---------------------------------------------- photography -------------------------------------------------------------//
+            fd.append("photography_image", JSON.stringify(this.photoGraphyObject));
+            //---------------------------------------------- photography --------------------------------------------------------------//
+            //--------------------------------------------- Incident Description ------------------------------------------------------//
             fd.append("incident_description", this.incidentDesForm.value['incident_description']); //required
             fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action']); //incident photo pending from postman and here also  // required
             fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test']);
             fd.append("alcohol_test_completed", this.incidentDesForm.value['incident_description_alcohol_test']);
-            fd.append("incident_description_photo", this.incidentDesForm.value['incident_description_photo']); // alcohal test image
             fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed']);
             fd.append("seen_differently", this.incidentDesForm.value['seen_differently']);
             fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
             fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
-            fd.append("return_to_alternate_duties_image", this.incidentDesForm.value['return_to_alternate_duties_image']);
-            //----------------------------------- Incident Description -----------------------------------//
-            //----------------------------------- Classification -----------------------------------//
+            fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject)); // alcohal test image
+            fd.append("drug_test_image", JSON.stringify(this.drugTestImagesObject)); // drug_test_image
+            fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject)); // return_to_alternate_duties_image       
+            //----------------------------------------------- Incident Description -----------------------------------------------------//
+            //----------------------------------------------- Classification -----------------------------------------------------------//
             fd.append("classification_value", this.classificationForm.value['classification_value'].join(','));
             fd.append("date_of_incident", this.classificationForm.value['date_of_incident']);
             fd.append("time_of_incident", this.classificationForm.value['time_of_incident']);
@@ -640,31 +833,31 @@ let IncidentFormPage = class IncidentFormPage {
             fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type']);
             fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
             fd.append("classification_manager", this.classificationForm.value['classification_manager']); // required
-            //----------------------------------- Classification -----------------------------------//
-            //-------------------------------------------Injury ----------------------------------//
-            fd.append("injury_persons", this.injuryForm.value['injury_persons']); //form value
+            //--------------------------------------------------- Classification ---------------------------------------------------------//
+            //----------------------------------------------------- Injury ---------------------------------------------------------------//
+            fd.append("injury_persons", this.injuryForm.value['injury_persons']); // form value
             fd.append("person_details", JSON.stringify(this.injuryForm.value['person_details']));
-            // fd.append("part_of_body_injured_occured", this.injuryForm.value['part_of_body_injured_occured']);
-            //-------------------------------------------Injury ----------------------------------//
-            //-------------------------------------------Enviornment ----------------------------------//
+            //------------------------------------------------------ Injury ---------------------------------------------------------------//
+            //------------------------------------------------------ Enviornment ----------------------------------------------------------//
             fd.append("environmental_description", this.enviornmentForm.value['environmental_description']); // required
-            fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split']); //checmical split value inner side query
-            fd.append("chemical_details", JSON.stringify(this.enviornmentForm.value['chemical_details']));
+            fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split']); // chemical split value inner side query
+            fd.append("chemical_details", JSON.stringify(this.enviornmentForm.value['chemical_details'])); // data with image
             fd.append("emergency_spill_kit_used", this.enviornmentForm.value['emergency_spill_kit_used']);
-            //-------------------------------------------Enviornment ----------------------------------//
-            //-------------------------------------------Reputation ----------------------------------// 
+            fd.append("out_of_split_kit", this.enviornmentForm.value['out_of_split_kit']);
+            //------------------------------------------------------ Enviornment -----------------------------------------------------------//
+            //------------------------------------------------------ Reputation -------------------------------------------------------------// 
             fd.append("reputation_option", this.reputationDesForm.value['reputation_option']);
             fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value']);
             fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value']);
-            fd.append("reputation_damage_image", '');
-            fd.append("reutation_negative_effect", this.reputationDesForm.value['reutation_negative_effect']);
+            // fd.append("reputation_damage_image", '');
+            fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect']);
             fd.append("effected_department", this.reputationDesForm.value['effected_department']);
             fd.append("external_party", this.reputationDesForm.value['external_party']);
             fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
             fd.append("other_witness_details", JSON.stringify(this.reputationDesForm.value['other_witness_details']));
             fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident']); // required
-            //-------------------------------------------Reputation ----------------------------------//
-            //----------------------------------- Security-----------------------------------/
+            //--------------------------------------------------------- Reputation -----------------------------------------------------------//
+            //--------------------------------------------------------- Security -------------------------------------------------------------//
             fd.append("security_option", this.securityForm.value['security_option']);
             if (this.securityForm.value['security_option'] == 'IT') {
                 fd.append("it_option_value", this.securityForm.value['it_option_value'].join(',')); // chexkbox and inner value
@@ -672,25 +865,23 @@ let IncidentFormPage = class IncidentFormPage {
             fd.append("what_has_been_stolen_item", this.securityForm.value['what_has_been_stolen_item']);
             fd.append("approximate_value_of_stolen", this.securityForm.value['approximate_value_of_stolen']);
             fd.append("what_is_the_specific_securities_incident", this.securityForm.value['what_is_the_specific_securities_incident']);
-            //----------------------------------- Security-----------------------------------//
-            //-------------------------------------------Asset ----------------------------------//
+            //---------------------------------------------------------- Security--------------------------------------------------------------//
+            //---------------------------------------------------------- Asset ----------------------------------------------------------------//
             fd.append("asset_description", this.assetDescriptionForm.value['asset_description']); // required
             fd.append("asset_has_number", this.assetDescriptionForm.value['asset_has_number']);
             if (this.assetDescriptionForm.value['asset_has_number'] == 'Yes') {
                 fd.append("asset_number", this.assetDescriptionForm.value['asset_number']);
             }
             fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage']); // required
-            fd.append("extent_damage_image", this.assetDescriptionForm.value['extent_damage_image']);
-            //-------------------------------------------Asset ----------------------------------//
-            //-------------------------------------------Report ----------------------------------//
+            fd.append("extent_damage_image", JSON.stringify(this.damageImagesObject)); // extent_damage_image
+            //---------------------------------------------------------- Asset -----------------------------------------------------------------//
+            //--------------------------------------------------------  Report -----------------------------------------------------------------//
             fd.append("report", this.reportForm.value['report']);
-            //-------------------------------------------Report ----------------------------------//
-            // fd.append("contact_of_witness", this.contactOfAnyWitness);
+            //--------------------------------------------------------- Report ------------------------------------------------------------------//
             fd.append('user_id', localStorage.getItem('id'));
             let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
             this.globalService.postData1(url, fd).subscribe((res) => {
                 // this.globalService.presentLoading();
-                // console.log("part of data", res)
                 if (res.status) {
                     this.globalService.presentToast(res.message);
                     this.nav.navigateRoot("form-list");
@@ -701,7 +892,7 @@ let IncidentFormPage = class IncidentFormPage {
                 // this.globalService.dismissLoading();
             }, err => {
                 console.log("err", err);
-                this.globalService.dismissLoading();
+                // this.globalService.dismissLoading();
             });
         }
     }
@@ -731,25 +922,6 @@ let IncidentFormPage = class IncidentFormPage {
             });
         }
         this.selectedTabList = formArray.value;
-        // console.log('formArray.value', this.selectedTabList);
-    }
-    onInitialInjuryChange(event, personalDetailIndex, injueyListIndex) {
-        // for (var j = 0; j <= this.injuryForm.value['person_details'].length; j++) {
-        //   if (event.target.checked) {
-        //     if (j == personalDetailIndex) {
-        //       this.injuryForm.value['person_details'][personalDetailIndex]['initital_injury'].push(event.target.value);
-        //     }
-        //   } else {
-        //     if (j == personalDetailIndex) {
-        //       this.injuryForm.value['person_details'][personalDetailIndex]['initital_injury'].forEach((ele, k) => {
-        //         if (ele == event.target.value) {
-        //           this.injuryForm.value['person_details'][personalDetailIndex]['initital_injury'].splice(k, 1);
-        //           return;
-        //         }
-        //       });
-        //     }
-        //   }
-        // }
     }
     onSecurityItOption(event) {
         const formArray = this.securityForm.get('it_option_value');
@@ -876,8 +1048,6 @@ let IncidentFormPage = class IncidentFormPage {
                 this.injuryForm.value["person_details"].pop();
             }
         }
-        // console.log(this.injuryPersonDetails);
-        // console.log('person_details2', this.injuryForm.value["person_details"]);
     }
 };
 IncidentFormPage.ctorParameters = () => [
@@ -887,7 +1057,8 @@ IncidentFormPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ActionSheetController },
     { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormBuilder },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.NavController }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.NavController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.Platform }
 ];
 IncidentFormPage = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
@@ -897,6 +1068,156 @@ IncidentFormPage = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
     })
 ], IncidentFormPage);
 
+
+
+/***/ }),
+
+/***/ 97465:
+/*!********************************************!*\
+  !*** ./src/app/services/global.service.ts ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GlobalService": function() { return /* binding */ GlobalService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 91841);
+
+
+
+
+let GlobalService = class GlobalService {
+    constructor(toastController, http, loadingController) {
+        this.toastController = toastController;
+        this.http = http;
+        this.loadingController = loadingController;
+        this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
+        // https://mforms-api-devel.horts.com.au/
+        this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/';
+        //Role 
+        this.user = "31";
+        this.gm = "32";
+        this.investigator = "33";
+        this.manager = "34";
+        this.supervisior = "35";
+        this.formType_user = 1;
+        this.formType_investigator = 2;
+    }
+    presentToast(msg) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 2000,
+                mode: "ios",
+                color: "dark"
+            });
+            toast.present();
+        });
+    }
+    toast(msg, type) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 2000,
+                // mode: "ios",
+                color: type,
+                animated: true,
+            });
+            toast.present();
+        });
+    }
+    presentLoading() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const loading = yield this.loadingController.create({
+                cssClass: 'my-custom-class',
+                message: 'Please wait...'
+            });
+            yield loading.present();
+        });
+    }
+    dismissLoading() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            yield this.loadingController.dismiss();
+        });
+    }
+    // setHeader() {
+    //   let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
+    //   header.set("Access-Control-Allow-Origin", "*");
+    //   header.set("Content-Type", "application/json");
+    //   header.set("Access-Control-Allow-Headers", "*")
+    //   header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+    //   header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    //   if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
+    //     header.set("token", localStorage.getItem("token"));
+    //   }
+    //   return header;
+    // }
+    setHeader() {
+        let header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders()
+            .set('apikey', 'as*37486a*()HGY')
+            .set("Access-Control-Allow-Origin", "*")
+            // .set("Content-Type", "application/json")
+            .set("Access-Control-Allow-Headers", "*")
+            .set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
+            .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
+            header.set("token", localStorage.getItem("token"));
+        }
+        return header;
+    }
+    getData(url) {
+        let headers = this.setHeader();
+        return this.http.get(this.baseUrl + url, { headers: headers });
+    }
+    postData(url, data) {
+        let headers = this.setHeader();
+        return this.http.post(this.baseUrl + url, data, { headers: headers });
+    }
+    postDataWithId(url, data) {
+        let headers = this.setHeader();
+        return this.http.post(this.baseUrl + url, data, { headers: headers });
+    }
+    getDataWithId(url) {
+        let headers = this.setHeader();
+        return this.http.get(this.baseUrl + url, { headers: headers });
+    }
+    // -------------------------------------------------------------New Services -----------------------------------------------------//
+    postData1(url, data) {
+        let headers = this.setHeader();
+        return this.http.post(this.baseUrl1 + url, data, { headers: headers });
+    }
+    getData1(url) {
+        let headers = this.setHeader();
+        return this.http.get(this.baseUrl1 + url, { headers: headers });
+        // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+        //   map((response) => {
+        //     console.log('response', response);
+        //     if (!response['status']) {
+        //       throw new Error('Value expected!');
+        //     }
+        //     response;
+        //   }),
+        //   catchError(() => of())
+        // );
+    }
+};
+GlobalService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ToastController },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.LoadingController }
+];
+GlobalService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+        providedIn: 'root'
+    })
+], GlobalService);
+
+// -------------------------------------------------------------New Services -----------------------------------------------------//
 
 
 /***/ }),
@@ -921,7 +1242,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header class=\"ion-no-border\">\n  <ion-toolbar>\n    <div class=\"toolbar\">\n      <ion-text>ADD FORM</ion-text>\n      <ion-buttons class=\"back\">\n        <ion-button (click)=\"nav.back()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n      <ion-buttons class='saveBtn' (click)=\"onSubmit('incomplete_submit')\">\n        <ion-button>\n          <ion-icon slot=\"icon-only\" name=\"save-outline\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </div>\n    <div class=\"headerStyle\"></div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <!-- <app-header [pageName]=pName></app-header> -->\n  <div class=\"container\">\n    <p>ReacIncident report</p>\n  </div>\n\n  <div class=\"ion-padding-start ion-padding-end\">\n    <div *ngFor=\"let tabItem of tabList\">\n      <ion-button class=\"inci\" *ngIf=\"selectedTabItem != tabItem.val\" (click)=\"onSelectTabItem(tabItem.val)\"\n        [disabled]=\"tabItem.tabDisable\">\n        <p>{{tabItem.val}} </p>\n        <img class=\"plus\" src=\"{{imagePath+'add.png'}}\" />\n      </ion-button>\n\n      <!-------------------------------------------------Incident---------------------------------------------->\n      <div *ngIf=\"selectedTabItem==tabItem.val && selectedTabItem =='Incident'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val}}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <div [formGroup]=\"incidentForm\">\n          <ion-radio-group formControlName=\"incident_value\" (ionChange)=\"onInput('Incident')\">\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Actual</ion-label>\n                  <ion-radio slot=\"start\" value=\"Actual\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Near Miss</ion-label>\n                  <ion-radio slot=\"start\" value=\"Near Miss\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"12\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Serious potential incident (SPI)</ion-label>\n                  <ion-radio slot=\"start\" value=\"Serious potential incident (SPI)\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n          <!-- <div> -->\n          <div *ngIf=\"incidentForm.value['incident_value'] == 'Near Miss'\">\n            <p class=\"question\">Who witnessed the near miss?</p>\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-select placeholder=\"Select One\" formControlName=\"incident_near_miss\">\n                <ion-select-option value=\"{{witnesskeys?.name_of_witness}}\" *ngFor=\"let witnesskeys of witnessList\">\n                  {{witnesskeys?.name_of_witness}}</ion-select-option>\n              </ion-select>\n            </ion-item>\n            <p class=\"question\">\n              Possible consequence under different circumstances\n            </p>\n            <ion-input placeholder=\"Enter here\" formControlName=\"incident_near_miss_other\"></ion-input>\n          </div>\n        </div>\n      </div>\n      <!-------------------------------------------------Incident---------------------------------------------->\n\n      <!-------------------------------------------------Photography------------------------------------------------->\n      <div *ngIf=\"selectedTabItem==tabItem.val  && selectedTabItem=='Photography'\" class=\"activeBackground\"\n        [formGroup]=\"photoGraphyForm\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val }}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val )\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <div *ngIf=\"globalService.cordovaPlateform\">\n          <ion-button class=\"camera\" expand=\"block\" (click)=\"selectImage(1)\">Upload Image</ion-button>\n          <!-- <img src=\"{{imagePath}}\" class=\"img-responsive\" *ngIf=\"imagePath!==''\" /> -->\n        </div>\n        <div *ngIf=\"!globalService.cordovaPlateform\">\n          <input type='file' (change)=\"onSelectFile($event,1)\" formControlName=\"photography_image\">\n          <div class=\"ion-text-center\">\n            <!-- <img [src]=\"imagePath\" height=\"200\" class=\"img-responsive\" *ngIf=\"imagePath!==''\"> <br /> -->\n          </div>\n        </div>\n      </div>\n      <!-------------------------------------------------Photography-------------------------------------------------->\n\n\n      <!-------------------------------------------------Incident Description----------------------------------------->\n\n      <div *ngIf=\"selectedTabItem==tabItem.val  && selectedTabItem=='Incident Description'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val }}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val )\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <div [formGroup]=\"incidentDesForm\">\n          <p class=\"question\">\n            Description of incident ( note : You must not use any personal details or names)\n          </p>\n          <ion-input placeholder=\"Description of incident\" formControlName=\"incident_description\"\n            (ionChange)=\"onInput('Incident Description')\"></ion-input>\n\n\n          <p class=\"question\">Immediate action taken</p>\n          <ion-input placeholder=\"Immediate action taken\" formControlName=\"incident_description_action\"\n            (ionChange)=\"onInput('Incident Description')\"></ion-input>\n\n          <p class=\"question\">What could have been done differently?</p>\n          <ion-input placeholder=\"What could have been done differently?\" formControlName=\"seen_differently\">\n          </ion-input>\n\n          <p class=\"question\">Was there any Witnesses of the incident</p>\n          <ion-input placeholder=\"Witnesses of the incident\" formControlName=\"was_there_any_witness_of_the_incident\">\n          </ion-input>\n\n          <!----------------------------------------------- Alcohal Test -------------------------------------------------------->\n          <ion-radio-group formControlName=\"incident_description_alcohol_test\">\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-label>Alcohol test completed</ion-label>\n            </ion-item>\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Yes</ion-label>\n                  <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>No</ion-label>\n                  <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Not Required</ion-label>\n                  <ion-radio slot=\"start\" value=\"Not Required\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n\n          <div *ngIf=\"platformCheck === 'cordova'\">\n            <ion-button *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\" class=\"camera\"\n              expand=\"block\" (click)=\"selectImage(2)\">Upload Image\n            </ion-button>\n            <img src=\"\" *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\"\n              class=\"img-responsive\" />\n          </div>\n\n          <div *ngIf=\"platformCheck !== 'cordova'\">\n            <input *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\" type='file'\n              (change)=\"onSelectFile($event,2)\">\n            <div class=\"ion-text-center\">\n              <img [src]=\"\" height=\"200\" class=\"img-responsive\"\n                *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\">\n              <br />\n            </div>\n          </div>\n          <!----------------------------------------------- Alcohal Test -------------------------------------------------------->\n\n\n          <!----------------------------------------------- Drug Test -------------------------------------------------------->\n\n          <ion-radio-group formControlName=\"drug_test_completed\">\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-label>Drug test completed</ion-label>\n            </ion-item>\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Yes</ion-label>\n                  <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>No</ion-label>\n                  <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Not Required</ion-label>\n                  <ion-radio slot=\"start\" value=\"Not Required\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n\n          <div *ngIf=\"platformCheck === 'cordova'\">\n            <ion-button *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\" class=\"camera\" expand=\"block\"\n              (click)=\"selectImage(6)\">Upload Image\n            </ion-button>\n            <img src=\"\" *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\" class=\"img-responsive\" />\n          </div>\n\n          <div *ngIf=\"platformCheck !== 'cordova'\">\n            <input *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\" type='file'\n              (change)=\"onSelectFile($event,6)\">\n            <div class=\"ion-text-center\">\n              <img [src]=\"\" height=\"200\" class=\"img-responsive\"\n                *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\">\n              <br />\n            </div>\n          </div>\n\n          <!----------------------------------------------- Drug Test -------------------------------------------------------->\n\n\n          <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->\n\n          <ion-radio-group formControlName=\"return_to_alternate_duties\">\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-label>Return to Alternate Duties</ion-label>\n            </ion-item>\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Yes</ion-label>\n                  <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>No</ion-label>\n                  <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Not Required</ion-label>\n                  <ion-radio slot=\"start\" value=\"Not Required\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n\n            <ion-text class=\"mandatoryField\">* If selected yes please take a photo or upload the Certificate of Capacity\n              COC.</ion-text>\n          </ion-radio-group>\n          <div *ngIf=\"platformCheck === 'cordova'\">\n            <ion-button *ngIf=\"returnToAlternateDuties=='Yes'\" class=\"camera\" expand=\"block\" (click)=\"selectImage(7)\">\n              Upload Image\n            </ion-button>\n            <img src=\"\" *ngIf=\"incidentDesForm.value['return_to_alternate_duties']=='Yes'\" class=\"img-responsive\" />\n          </div>\n\n          <div *ngIf=\"platformCheck !== 'cordova'\">\n            <input *ngIf=\"incidentDesForm.value['return_to_alternate_duties']=='Yes'\" type='file'\n              (change)=\"onSelectFile($event,7)\">\n            <div class=\"ion-text-center\" *ngIf=\" incidentDesForm.value['return_to_alternate_duties']=='Yes' \">\n              <img [src]=\"\" height=\"200\" class=\"img-responsive\"> <br />\n            </div>\n          </div>\n          <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->\n        </div>\n      </div>\n\n      <!-------------------------------------------------Incident Description----------------------------------------->\n\n\n      <!-------------------------------------------------Classification---------------------------------------------->\n\n      <div *ngIf=\"selectedTabItem==tabItem.val  && selectedTabItem =='Classification'\" [formGroup]='classificationForm'\n        class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val }}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val )\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-list class=\"ion-no-padding\">\n          <ion-row class='ion-no-padding'>\n            <ion-col size=\"6\" *ngFor=\"let classificationValue of classificationList; let i=index\">\n              <ion-item lines=\"none\" class=\"ion-no-padding\">\n                <ion-label>{{classificationValue.val}}</ion-label>\n                <ion-checkbox slot=\"start\" [value]=\"classificationValue.val\" [checked]=\"classificationValue.isChecked\"\n                  (ionChange)=\"onClassificationChange($event)\"></ion-checkbox>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-list>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Date of Incident</ion-label>\n          <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" formControlName=\"date_of_incident\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Time of Incident</ion-label>\n          <ion-datetime displayFormat=\"hh:mm A\" placeholder=\"Select Time\" formControlName=\"time_of_incident\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Date Reported</ion-label>\n          <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" formControlName=\"date_reported\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Time Reported</ion-label>\n          <ion-datetime displayFormat=\"hh:mm A\" placeholder=\"Select Time\" formControlName=\"time_reported\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-radio-group formControlName=\"classification_location_option\">\n          <ion-row>\n            <ion-col size=\"12\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Add Location</ion-label>\n                <ion-radio slot=\"start\" value=\"Add Location\">\n                </ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Choose Location</ion-label>\n                <ion-radio slot=\"start\" value=\"Choose Location\">\n                </ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div *ngIf=\"classificationForm.value['classification_location_option'] =='Add Location'\">\n          <p class=\"question\">Add Location</p>\n          <ion-input placeholder=\"Please add the location\" formControlName=\"classification_location_value\"></ion-input>\n        </div>\n\n        <div *ngIf=\"classificationForm.value['classification_location_option'] == 'Choose Location'\">\n          <p class=\"question\">Choose Location</p>\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-select placeholder=\"Select Location\" interface=\"action-sheet\"\n              formControlName=\"classification_location_value1\">\n              <ion-select-option value=\"{{locationListItem?.location_name}}\"\n                *ngFor=\"let locationListItem of locationList\">\n                {{locationListItem?.location_name}}</ion-select-option>\n            </ion-select>\n          </ion-item>\n        </div>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-select placeholder=\"Shift Type\" interface=\"action-sheet\" formControlName=\"classification_shift_type\">\n            <ion-select-option value=\"{{shiftItem?.shift_type}}\" *ngFor=\"let shiftItem of shiftTypeList\">\n              {{shiftItem?.shift_type}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-select placeholder=\"Supervisor\" interface=\"action-sheet\" formControlName=\"classification_supervisor\">\n            <ion-select-option value=\"{{superVisorItem?.full_name}}\" *ngFor=\"let superVisorItem of superVisorList\">\n              {{superVisorItem?.full_name}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label class=\"labelCustomDropDown\">{{managerList}}</ion-label>\n          <ion-buttons slot=\"end\" class=\"ion-no-padding ion-no-margin\">\n            <ion-button class=\"ion-no-padding ion-no-margin\" (click)=\"onOpenModal()\">\n              <ion-icon name=\"chevron-down\" slot=\"icon-only\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n        </ion-item>\n      </div>\n\n      <!-------------------------------------------------Classification---------------------------------------------->\n    </div>\n\n    <!-------------------------------------------------Classification Sub Tab---------------------------------------------->\n\n    <div *ngFor=\"let classification of selectedTabList; let i = index\">\n      <ion-button class=\"inci\" *ngIf=\"selectedTabItem != classification\" (click)=\"onSelectTabItem(classification)\">\n        <p>{{classification}} </p>\n        <img class=\"plus\" src=\"{{imagePath+'add.png'}}\" />\n      </ion-button>\n\n      <!-------------------------------------------------Injury------------------------------------------------------->\n      <!-- <div *ngIf=\"selectedTabItem==tabItem && selectedTabItem=='Injury'\" class=\"activeBackground\"> -->\n      <div *ngIf=\"selectedTabItem == classification && classification =='Injury'\" class=\"activeBackground\"\n        [formGroup]=\"injuryForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-radio-group formControlName=\"injury_persons\" (ionChange)=\"onAddMultiplePersonDetails()\">\n          <ion-row>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>1</ion-label>\n                <ion-radio slot=\"start\" value=\"1\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>2</ion-label>\n                <ion-radio slot=\"start\" value=\"2\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>3</ion-label>\n                <ion-radio slot=\"start\" value=\"3\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>4</ion-label>\n                <ion-radio slot=\"start\" value=\"4\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div formArrayName=\"person_details\" *ngFor=\"let personDetails of injuryPersonDetails.controls; let j = index \">\n          <ion-card>\n            <div class=\"headerTitle\">\n              <p class=\"questionHead\">Person {{(j+1)}} Details</p>\n            </div>\n            <div [formGroupName]=\"j\">\n              <p class=\"question\">Full Name of Injured Person</p>\n              <ion-item class=\"ra\">\n                <ion-select placeholder=\"Select One\" interface=\"action-sheet\" formControlName=\"injured_person_option\">\n                  <ion-select-option value=\"{{witnessName?.name_of_witness}}\" *ngFor=\"let witnessName of witnessList\">\n                    {{witnessName?.name_of_witness}}\n                  </ion-select-option>\n                </ion-select>\n              </ion-item>\n\n              <div *ngIf='injuryForm.value[\"person_details\"][j].injured_person_option==\"Other\"'>\n                <p class=\"question\">Full name of Injured Person</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"injured_person_option_value\">\n                </ion-input>\n              </div>\n\n              <ion-item class=\"ra\">\n                <ion-label>Gender</ion-label>\n                <ion-select placeholder=\"Select One\" interface=\"action-sheet\" formControlName=\"gender\">\n                  <ion-select-option value=\"Male\">Male</ion-select-option>\n                  <ion-select-option value=\"Female\">Female</ion-select-option>\n                  <ion-select-option value=\"Other\">Other</ion-select-option>\n                </ion-select>\n              </ion-item>\n\n              <ion-item class=\"ion-no-padding ra\" mode=\"ios\">\n                <ion-label>Date of Birth</ion-label>\n                <ion-datetime displayFormat=\"MM/DD/YYYY\" formControlName=\"date_of_birth\">\n                </ion-datetime>\n              </ion-item>\n\n              <ion-radio-group formControlName=\"normal_duties\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Return to Normal Duties</ion-label>\n                </ion-item>\n                <ion-row class=\"ion-no-padding\">\n                  <ion-col size=\"6\">\n                    <ion-item class=\"ra\" lines=\"none\">\n                      <ion-label>Yes</ion-label>\n                      <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"6\">\n                    <ion-item class=\"ra\" lines=\"none\">\n                      <ion-label>No</ion-label>\n                      <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-radio-group>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].normal_duties == 'No'\">\n                <p class=\"question\">Explanation:</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"normal_duties_explanation\"> </ion-input>\n              </div>\n\n              <div>\n                <ion-radio-group formControlName=\"alternate_duties\">\n                  <ion-row>\n                    <ion-col size=\"12\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Return to Alternate Duties</ion-label>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Yes</ion-label>\n                        <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>No</ion-label>\n                        <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                  </ion-row>\n                </ion-radio-group>\n              </div>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].alternate_duties ==='No'\">\n                <p class=\"question\">Explanation:</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"duties_explanation\"></ion-input>\n              </div>\n\n              <ion-item class=\"ra\">\n                <ion-label>Initial Injury / IIIness Classification</ion-label>\n              </ion-item>\n\n\n\n              <ion-radio-group formControlName=\"initital_injury\">\n                <ion-row>\n                  <ion-col size=\"6\" *ngFor=\"let injuryKeys of injuryList;\">\n                    <ion-item class=\"ra\" lines=\"none\">\n                      <ion-label>{{injuryKeys.val}}</ion-label>\n                      <ion-radio slot=\"start\" value=\"{{injuryKeys.val}}\">\n                      </ion-radio>\n                    </ion-item>\n                    <ion-text class=\"mandatoryField\"\n                      *ngIf=\"injuryKeys.val  == injuryForm.value['person_details'][j].initital_injury\">\n                      {{injuryKeys.desc}}</ion-text>\n                  </ion-col>\n                </ion-row>\n              </ion-radio-group>\n              <div>\n                <p class=\"question\">Part of body injured:</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"part_of_body_injured_occured\">\n                </ion-input>\n              </div>\n\n              <div>\n                <ion-radio-group formControlName=\"was_immediate_treatment\">\n                  <ion-row>\n                    <ion-col size=\"12\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Was immediate treatment given;</ion-label>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Yes</ion-label>\n                        <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>No</ion-label>\n                        <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                  </ion-row>\n                </ion-radio-group>\n              </div>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].was_immediate_treatment == 'Yes'\">\n                <p class=\"question\">What treatment was given?</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"immediate_treatment_given_explanation\">\n                </ion-input>\n              </div>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].was_immediate_treatment == 'Yes'\">\n                <p class=\"question\">Who administered treatment : </p>\n                <div>\n                  <p class=\"question\">Person Name</p>\n                  <ion-input placeholder=\"Person Name\" formControlName=\"immediate_treatment_person_name\">\n                  </ion-input>\n                </div>\n\n                <div>\n                  <p class=\"question\">Contact Details</p>\n                  <ion-input placeholder=\"Please enter mobile no or email id\" type=\"tel\"\n                    formControlName=\"immediate_treatment_person_number\">\n                  </ion-input>\n                </div>\n              </div>\n\n            </div>\n            <img class=\"img-responsive\" src=\"./assets/person.jpg\">\n          </ion-card>\n        </div>\n      </div>\n\n      <!-------------------------------------------------Injury------------------------------------------------------->\n\n      <!-------------------------------------------------Environmental------------------------------------------------>\n\n      <div *ngIf=\"selectedTabItem == classification && classification =='Environmental'\" class=\"activeBackground\"\n        [formGroup]=\"enviornmentForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n\n        <p class=\"question\">\n          Immediate action taken to minimize Environmental impact\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName='environmental_description'></ion-input>\n\n        <ion-radio-group formControlName=\"was_a_chemical_split\">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Was a chemical split?</ion-label>\n          </ion-item>\n          <ion-row>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div *ngIf=\"enviornmentForm.value['was_a_chemical_split']==='Yes'\" formGroupName=\"chemical_details\">\n          <p class=\"question\">\n            Name of chemical\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"chemical_name\"></ion-input>\n          <ion-list>\n            <ion-item class=\"ra ion-no-padding\" lines=\"none\">\n              <ion-label>Insert Photo</ion-label>\n              <!-- <ion-checkbox slot=\"start\" [checked]='insertPhotoCheckBox' [value]=\"insertPhotoCheckBox\"\n                formControlName=\"insertPhotoCheckBox\" (ionChange)=\"onChemicalCheckBox($event)\">\n              </ion-checkbox> -->\n              <ion-checkbox slot=\"start\" [value]=\"insertPhotoCheckBox\" formControlName=\"insertPhotoCheckBox\">\n              </ion-checkbox>\n            </ion-item>\n          </ion-list>\n          <div *ngIf=\"platformCheck==='cordova'\">\n            <div *ngIf=\"enviornmentForm.value['chemical_details'].insertPhotoCheckBox\">\n              <ion-button class=\"camera\" expand=\"block\" (click)=\"selectImage(3)\">Upload\n                Image\n              </ion-button>\n              <img src=\"\" *ngIf=\"enviornmentForm.value['chemical_details'].insertPhotoCheckBox\"\n                class=\"img-responsive\" />\n            </div>\n          </div>\n          <div *ngIf=\"platformCheck !== 'cordova'\">\n            <input *ngIf=\"enviornmentForm.value['chemical_details'].insertPhotoCheckBox\" type='file'\n              (change)=\"onSelectFile($event,3)\">\n            <div class=\"ion-text-center\">\n              <img [src]=\"\" height=\"200\" class=\"img-responsive\" *ngIf=\"\"> <br />\n            </div>\n          </div>\n          <p class=\"question\">\n            Approximate quantity of chemical spilled\n          </p>\n          <ion-input placeholder=\"Enter here\" type=\"tel\" formControlName=\"approximate_quantity\">\n          </ion-input>\n        </div>\n\n        <ion-radio-group formControlName='emergency_spill_kit_used'>\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Was the emergency spill kit used?</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n      </div>\n      <!-------------------------------------------------Environmental------------------------------------------------>\n\n      <!-------------------------------------------------Reputation--------------------------------------------------->\n\n      <div *ngIf=\"selectedTabItem == classification && classification =='Reputation'\" class=\"activeBackground\"\n        [formGroup]=\"reputationDesForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label>Was the reputation damages an individual or Company ?\n          </ion-label>\n        </ion-item>\n        <ion-list class=\"ion-no-padding\">\n          <ion-item *ngFor=\"let reputationCheckBoxItem of reputationCheckBox\" lines=\"none\" class=\"ion-no-padding\">\n            <ion-label>{{reputationCheckBoxItem.val}}</ion-label>\n            <ion-checkbox slot=\"end\" (ionChange)=\"onReputationDamagesCheckBox($event)\"\n              [value]=\"reputationCheckBoxItem.val\" [checked]=\"reputationCheckBoxItem.isChecked\">\n            </ion-checkbox>\n          </ion-item>\n        </ion-list>\n        <div\n          *ngIf=\"reputationDesForm.value['reputation_option'][0] == 'Individual' || reputationDesForm.value['reputation_option'][1] == 'Individual'\">\n          <p class=\"question\">\n            How has the Individual's reputation been damaged?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"individual_damage_value\"></ion-input>\n        </div>\n        <div\n          *ngIf=\"reputationDesForm.value['reputation_option'][0] == 'Company' || reputationDesForm.value['reputation_option'][1] =='Company'\">\n          <p class=\"question\">\n            How has the Company's reputation been damaged?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"company_damage_value\"></ion-input>\n        </div>\n\n        <ion-radio-group formControlName=\"reutation_negative_effect\">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Was the negative effect internal or external</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Internal</ion-label>\n                <ion-radio slot=\"start\" value=\"Internal\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>External</ion-label>\n                <ion-radio slot=\"start\" value=\"External\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Both</ion-label>\n                <ion-radio slot=\"start\" value=\"Both\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <ion-radio-group formControlName=\"effected_department\"\n          *ngIf=\"(reputationDesForm.value['reutation_negative_effect'] == 'Internal') || (reputationDesForm.value['reutation_negative_effect'] == 'Both') \">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>What Department was effected?</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Orange Division</ion-label>\n                <ion-radio slot=\"start\" value=\"Orange Division\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Project Services</ion-label>\n                <ion-radio slot=\"start\" value=\"Project Services\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Mudgee Division</ion-label>\n                <ion-radio slot=\"start\" value=\"Mudgee Division\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>West Wyalong Division</ion-label>\n                <ion-radio slot=\"start\" value=\"West Wyalong Division\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div\n          *ngIf=\"(reputationDesForm.value['reutation_negative_effect'] == 'External') || (reputationDesForm.value['reutation_negative_effect'] == 'Both') \">\n          <p class=\"question\">\n            Who is the external party?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"external_party\"></ion-input>\n        </div>\n\n        <p class=\"question\">\n          Name of any witness\n        </p>\n        <!-- <ion-input placeholder=\"Enter here\" formControlName=\"name_of_witness\"></ion-input> -->\n        <ion-select placeholder=\"Select One\" interface=\"action-sheet\" formControlName=\"name_of_witness\">\n          <ion-select-option value=\"{{reputationWitnessValue?.name_of_witness}}\"\n            *ngFor=\"let reputationWitnessValue of reputationWitnessList\">\n            {{reputationWitnessValue?.name_of_witness}}</ion-select-option>\n        </ion-select>\n\n        <div *ngIf=\"reputationDesForm.value['name_of_witness'] == 'Other'\" formGroupName='other_witness_details'>\n          <p class=\"other_witness\"> Other Witness Details </p>\n          <p class=\"question\">\n            Name\n          </p>\n          <ion-input placeholder=\"Enter Other Witness Name\" formControlName=\"other_witness_name\"></ion-input>\n          <p class=\"question\">\n            Mobile No\n          </p>\n          <ion-input type=\"tel\" placeholder=\"Enter Other Witness Mobile No \" formControlName=\"other_witness_mobile_no\">\n          </ion-input>\n\n          <p class=\"question\">\n            Email id\n          </p>\n          <ion-input type=\"email\" placeholder=\"Enter Other Witness Email\" formControlName=\"other_witness_email\">\n          </ion-input>\n        </div>\n\n        <p class=\"question\">\n          What is the possible outcome of this incident?\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName=\"possible_outcome_incident\"></ion-input>\n\n      </div>\n      <!-------------------------------------------------Reputation--------------------------------------------------->\n\n      <!-------------------------------------------------Security----------------------------------------------------->\n\n      <div *ngIf=\"selectedTabItem == classification && classification =='Security'\" class=\"activeBackground\"\n        [formGroup]=\"securityForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n\n        <ion-radio-group formControlName=\"security_option\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>IT</ion-label>\n                <ion-radio slot=\"start\" value=\"IT\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Theft</ion-label>\n                <ion-radio slot=\"start\" value=\"Theft\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Other</ion-label>\n                <ion-radio slot=\"start\" value=\"Other\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div *ngIf=\"securityForm.value['security_option']=='IT'\">\n          <ion-list class=\"ion-no-padding\">\n            <ion-item class=\"ion-no-padding\" lines=\"none\">\n              <ion-label>What kind of IT Security Incident ?</ion-label>\n            </ion-item>\n            <ion-row class=\"ion-no-padding\">\n              <ion-col size=\"6\" class=\"ion-no-padding\" *ngFor=\"let itSecurityItem of itSecurityList\">\n                <ion-item lines=\"none\" class=\"ion-no-padding\">\n                  <ion-label>{{itSecurityItem.val}}</ion-label>\n                  <ion-checkbox slot=\"start\" [value]=\"itSecurityItem.val\" [checked]=\"itSecurityItem.isChecked\"\n                    (ionChange)=\"onSecurityItOption($event)\"></ion-checkbox>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-list>\n        </div>\n        <div *ngIf=\"securityForm.value['security_option']=='Theft'\">\n          <p class=\"question\">\n            What has been stolen ?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"what_has_been_stolen_item\"></ion-input>\n          <p class=\"question\">\n            Approximate value of stolen item ?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"approximate_value_of_stolen\"></ion-input>\n        </div>\n\n        <div *ngIf=\"securityForm.value['security_option']=='Other'\">\n          <p class=\"question\">\n            What is the Security incident ?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"what_is_the_specific_securities_incident\"></ion-input>\n        </div>\n      </div>\n      <!-------------------------------------------------Security----------------------------------------------------->\n\n\n      <!-------------------------------------------------Asset-------------------------------------------------------->\n      <!-- <div *ngIf=\"selectedTabItem==tabItem && selectedTabItem=='Asset'\" class=\"activeBackground\"> -->\n      <div *ngIf=\" selectedTabItem == classification && classification =='Asset'\" class=\"activeBackground\"\n        [formGroup]=\"assetDescriptionForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Asset description\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName=\"asset_description\"></ion-input>\n        <ion-radio-group formControlName=\"asset_has_number\">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Does Asset have a number</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n        <div *ngIf=\"assetDescriptionForm.value['asset_has_number']=='Yes'\">\n          <p class=\"question\">\n            Asset Number\n          </p>\n          <ion-input placeholder=\"Enter here\" type=\"tel\" formControlName=\"asset_number\"></ion-input>\n        </div>\n        <p class=\"question\">\n          Extent of Damage\n        </p>\n        <ion-input placeholder=\"Extent of Damage\" formControlName=\"extent_of_damage\"></ion-input>\n        <p class=\"question\">\n          Upload photo of damage\n        </p>\n        <div *ngIf=\"platformCheck === 'cordova'\">\n          <ion-button class=\"camera\" expand=\"block\" (click)=\"selectImage(5)\">Upload Image</ion-button>\n          <img src=\"{{imagePath5}}\" *ngIf=\"imagePath5!==''\" class=\"img-responsive\" />\n        </div>\n        <div *ngIf=\"platformCheck !== 'cordova'\">\n          <input type='file' (change)=\"onSelectFile($event,5)\">\n          <div class=\"ion-text-center\">\n            <img [src]=\"imagePath5\" height=\"200\" class=\"img-responsive\" *ngIf=\"imagePath5!==''\"> <br />\n          </div>\n        </div>\n      </div>\n      <!-------------------------------------------------Asset-------------------------------------------------------->\n\n      <!-------------------------------------------------Report------------------------------------------------------->\n      <!-- <div *ngIf=\"selectedTabItem==tabItem && selectedTabItem=='Report'\" class=\"activeBackground\"> -->\n      <div *ngIf=\" selectedTabItem == classification && classification =='Report'\" class=\"activeBackground\"\n        [formGroup]=\"reportForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          What could have done differently?\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName='report'></ion-input>\n      </div>\n      <!-------------------------------------------------Report------------------------------------------------------->\n\n    </div>\n\n    <!-------------------------------------------------Classification Sub Tab---------------------------------------------->\n  </div>\n\n  <ion-button (click)=\"onSubmit('submit')\" expand=\"full\" class=\"btnSubmit\">SUBMIT</ion-button>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header class=\"ion-no-border\">\n  <ion-toolbar>\n    <div class=\"toolbar\">\n      <ion-text>ADD FORM</ion-text>\n      <ion-buttons class=\"back\">\n        <ion-button (click)=\"nav.back()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n      <ion-buttons class='saveBtn' (click)=\"onSubmit('incomplete_submit')\">\n        <ion-button>\n          <ion-icon slot=\"icon-only\" name=\"save-outline\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </div>\n    <div class=\"headerStyle\"></div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <!-- <app-header [pageName]=pName></app-header> -->\n  <div class=\"container\">\n    <p>ReacIncident report</p>\n  </div>\n\n  <div class=\"ion-padding-start ion-padding-end\">\n    <div *ngFor=\"let tabItem of tabList\">\n      <ion-button class=\"inci\" *ngIf=\"selectedTabItem != tabItem.val\" (click)=\"onSelectTabItem(tabItem.val)\"\n        [disabled]=\"tabItem.tabDisable\">\n        <p>{{tabItem.val}} </p>\n        <img class=\"plus\" src=\"{{imagePath+'add.png'}}\" />\n      </ion-button>\n\n      <!-------------------------------------------------Incident---------------------------------------------->\n      <div *ngIf=\"selectedTabItem==tabItem.val && selectedTabItem =='Incident'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val}}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <div [formGroup]=\"incidentForm\">\n          <ion-radio-group formControlName=\"incident_value\" (ionChange)=\"onInput('Incident')\">\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Actual</ion-label>\n                  <ion-radio slot=\"start\" value=\"Actual\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Near Miss</ion-label>\n                  <ion-radio slot=\"start\" value=\"Near Miss\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"12\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Serious potential incident (SPI)</ion-label>\n                  <ion-radio slot=\"start\" value=\"Serious potential incident (SPI)\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n          <!-- <div> -->\n          <div *ngIf=\"incidentForm.value['incident_value'] == 'Near Miss'\">\n            <p class=\"question\">Who witnessed the near miss?</p>\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-select placeholder=\"Select One\" formControlName=\"incident_near_miss\">\n                <ion-select-option value=\"{{witnesskeys?.name_of_witness}}\" *ngFor=\"let witnesskeys of witnessList\">\n                  {{witnesskeys?.name_of_witness}}</ion-select-option>\n              </ion-select>\n            </ion-item>\n            <p class=\"question\">\n              Possible consequence under different circumstances\n            </p>\n            <ion-input placeholder=\"Enter here\" formControlName=\"incident_near_miss_other\"></ion-input>\n          </div>\n        </div>\n      </div>\n      <!-------------------------------------------------Incident---------------------------------------------->\n\n      <!-------------------------------------------------Photography------------------------------------------------->\n      <div *ngIf=\"selectedTabItem==tabItem.val  && selectedTabItem=='Photography'\" class=\"activeBackground\"\n        [formGroup]=\"photoGraphyForm\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val }}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val )\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <div *ngIf=\"platformCheck === 'cordova'\">\n          <ion-button class=\"camera\" expand=\"block\" (click)=\"onPhotoGraphy($event, 1)\">Upload Image</ion-button>\n          <!-- <img src=\"{{imagePath}}\" class=\"img-responsive\" *ngIf=\"imagePath!==''\" /> -->\n        </div>\n        <div *ngIf=\"platformCheck === 'browser'\">\n          <input type='file' value=\"photography_image\" multiple (change)=\"onPhotoGraphy($event, 2)\">\n\n          <div class=\"ion-text-center\" *ngIf=\"photoGraphy.length > 0\">\n            <div *ngFor=\"let photographyImages of photoGraphy\">\n              <img [src]=\"photographyImages\" height=\"100\" class=\"img-responsive\"> <br />\n            </div>\n          </div>\n        </div>\n      </div>\n      <!-------------------------------------------------Photography-------------------------------------------------->\n\n\n      <!-------------------------------------------------Incident Description----------------------------------------->\n\n      <div *ngIf=\"selectedTabItem==tabItem.val  && selectedTabItem=='Incident Description'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val }}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val )\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <div [formGroup]=\"incidentDesForm\">\n          <p class=\"question\">\n            Description of incident ( note : You must not use any personal details or names)\n          </p>\n          <ion-input placeholder=\"Description of incident\" formControlName=\"incident_description\"\n            (ionChange)=\"onInput('Incident Description')\"></ion-input>\n\n\n          <p class=\"question\">Immediate action taken</p>\n          <ion-input placeholder=\"Immediate action taken\" formControlName=\"incident_description_action\"\n            (ionChange)=\"onInput('Incident Description')\"></ion-input>\n\n          <p class=\"question\">What could have been done differently?</p>\n          <ion-input placeholder=\"What could have been done differently?\" formControlName=\"seen_differently\">\n          </ion-input>\n\n          <p class=\"question\">Was there any Witnesses of the incident</p>\n          <ion-input placeholder=\"Witnesses of the incident\" formControlName=\"was_there_any_witness_of_the_incident\">\n          </ion-input>\n\n          <!----------------------------------------------- Alcohal Test -------------------------------------------------------->\n          <ion-radio-group formControlName=\"incident_description_alcohol_test\"\n            (ionChange)=\"onAlcohalTestSelect($event)\">\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-label>Alcohol test completed</ion-label>\n            </ion-item>\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Yes</ion-label>\n                  <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>No</ion-label>\n                  <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Not Required</ion-label>\n                  <ion-radio slot=\"start\" value=\"Not Required\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n\n          <div *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\">\n            <div *ngIf=\"platformCheck === 'cordova'\">\n              <ion-button *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\" class=\"camera\"\n                expand=\"block\" (click)=\"selectImage(2)\">Upload Image\n              </ion-button>\n              <img src=\"\" *ngIf=\"incidentDesForm.value['incident_description_alcohol_test']=='Yes'\"\n                class=\"img-responsive\" />\n            </div>\n\n            <div *ngIf=\"platformCheck === 'browser'\">\n              <input type='file' value=\"incident_description_photo\" multiple (change)=\"onAlochaolImage($event)\">\n              <div class=\"ion-text-center\" *ngIf=\"alcohalImages.length > 0\">\n                <div *ngFor=\"let alcohalImage of alcohalImages\">\n                  <img [src]=\"alcohalImage\" height=\"100\" class=\"img-responsive\"> <br />\n                </div>\n              </div>\n            </div>\n          </div>\n          <!----------------------------------------------- Alcohal Test -------------------------------------------------------->\n\n\n          <!----------------------------------------------- Drug Test -------------------------------------------------------->\n\n          <ion-radio-group formControlName=\"drug_test_completed\" (ionChange)=\"onDrugTestSelect($event)\">\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-label>Drug test completed</ion-label>\n            </ion-item>\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Yes</ion-label>\n                  <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>No</ion-label>\n                  <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Not Required</ion-label>\n                  <ion-radio slot=\"start\" value=\"Not Required\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n\n          <div *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\">\n            <div *ngIf=\"platformCheck === 'cordova'\">\n              <ion-button *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\" class=\"camera\" expand=\"block\"\n                (click)=\"selectImage(6)\">Upload Image\n              </ion-button>\n              <img src=\"\" *ngIf=\"incidentDesForm.value['drug_test_completed']=='Yes'\" class=\"img-responsive\" />\n            </div>\n\n            <div *ngIf=\"platformCheck === 'browser'\">\n              <input type='file' value=\"drug_test_image\" multiple (change)=\"onDrugTestImage($event)\">\n              <div class=\"ion-text-center\" *ngIf=\"drugTestImages.length > 0\">\n                <div *ngFor=\"let drugTestImage of drugTestImages\">\n                  <img [src]=\"drugTestImage\" height=\"100\" class=\"img-responsive\"> <br />\n                </div>\n              </div>\n            </div>\n          </div>\n\n          <!----------------------------------------------- Drug Test -------------------------------------------------------->\n\n\n          <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->\n\n          <ion-radio-group formControlName=\"return_to_alternate_duties\" (ionChange)=\"onReturnToDutySelect($event)\">\n            <ion-item class=\"ra\" lines=\"none\">\n              <ion-label>Return to Alternate Duties</ion-label>\n            </ion-item>\n            <ion-row>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Yes</ion-label>\n                  <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>No</ion-label>\n                  <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"6\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Not Required</ion-label>\n                  <ion-radio slot=\"start\" value=\"Not Required\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n\n            <ion-text class=\"mandatoryField\">* If selected yes please take a photo or upload the Certificate of\n              Capacity\n              COC.</ion-text>\n          </ion-radio-group>\n          <div *ngIf=\"incidentDesForm.value['return_to_alternate_duties']=='Yes'\">\n            <div *ngIf=\" platformCheck==='cordova'\">\n              <ion-button *ngIf=\" returnToAlternateDuties=='Yes'\" class=\" camera\" expand=\"block\"\n                (click)=\"selectImage(7)\">\n                Upload Image\n              </ion-button>\n              <img src=\"\" *ngIf=\"incidentDesForm.value['return_to_alternate_duties']=='Yes'\" class=\"img-responsive\" />\n            </div>\n\n            <div *ngIf=\"platformCheck === 'browser'\">\n              <input type='file' value=\"return_to_alternate_duties_image\" multiple\n                (change)=\"onReturnToDutyImage($event)\">\n              <div class=\"ion-text-center\" *ngIf=\"alterDutyImages.length > 0\">\n                <div *ngFor=\"let returnToAlterDutyImage of alterDutyImages\">\n                  <img [src]=\"returnToAlterDutyImage\" height=\"100\" class=\"img-responsive\"> <br />\n                </div>\n              </div>\n            </div>\n\n          </div>\n          <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->\n        </div>\n      </div>\n\n      <!-------------------------------------------------Incident Description----------------------------------------->\n\n\n      <!-------------------------------------------------Classification---------------------------------------------->\n\n      <div *ngIf=\"selectedTabItem==tabItem.val  && selectedTabItem =='Classification'\" [formGroup]='classificationForm'\n        class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{tabItem.val }}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem.val )\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-list class=\"ion-no-padding\">\n          <ion-row class='ion-no-padding'>\n            <ion-col size=\"6\" *ngFor=\"let classificationValue of classificationList; let i=index\">\n              <ion-item lines=\"none\" class=\"ion-no-padding\">\n                <ion-label>{{classificationValue.val}}</ion-label>\n                <ion-checkbox slot=\"start\" [value]=\"classificationValue.val\" [checked]=\"classificationValue.isChecked\"\n                  (ionChange)=\"onClassificationChange($event)\"></ion-checkbox>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-list>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Date of Incident</ion-label>\n          <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" formControlName=\"date_of_incident\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Time of Incident</ion-label>\n          <ion-datetime displayFormat=\"hh:mm A\" placeholder=\"Select Time\" formControlName=\"time_of_incident\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Date Reported</ion-label>\n          <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" formControlName=\"date_reported\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label position=\"floating\">Time Reported</ion-label>\n          <ion-datetime displayFormat=\"hh:mm A\" placeholder=\"Select Time\" formControlName=\"time_reported\">\n          </ion-datetime>\n        </ion-item>\n\n        <ion-radio-group formControlName=\"classification_location_option\">\n          <ion-row>\n            <ion-col size=\"12\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Add Location</ion-label>\n                <ion-radio slot=\"start\" value=\"Add Location\">\n                </ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Choose Location</ion-label>\n                <ion-radio slot=\"start\" value=\"Choose Location\">\n                </ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div *ngIf=\"classificationForm.value['classification_location_option'] =='Add Location'\">\n          <p class=\"question\">Add Location</p>\n          <ion-input placeholder=\"Please add the location\" formControlName=\"classification_location_value\">\n          </ion-input>\n        </div>\n\n        <div *ngIf=\"classificationForm.value['classification_location_option'] == 'Choose Location'\">\n          <p class=\"question\">Choose Location</p>\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-select placeholder=\"Select Location\" interface=\"action-sheet\"\n              formControlName=\"classification_location_value1\">\n              <ion-select-option value=\"{{locationListItem?.location_name}}\"\n                *ngFor=\"let locationListItem of locationList\">\n                {{locationListItem?.location_name}}</ion-select-option>\n            </ion-select>\n          </ion-item>\n        </div>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-select placeholder=\"Shift Type\" interface=\"action-sheet\" formControlName=\"classification_shift_type\">\n            <ion-select-option value=\"{{shiftItem?.shift_type}}\" *ngFor=\"let shiftItem of shiftTypeList\">\n              {{shiftItem?.shift_type}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-select placeholder=\"Supervisor\" interface=\"action-sheet\" formControlName=\"classification_supervisor\">\n            <ion-select-option value=\"{{superVisorItem?.full_name}}\" *ngFor=\"let superVisorItem of superVisorList\">\n              {{superVisorItem?.full_name}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label class=\"labelCustomDropDown\">{{managerList}}</ion-label>\n          <ion-buttons slot=\"end\" class=\"ion-no-padding ion-no-margin\">\n            <ion-button class=\"ion-no-padding ion-no-margin\" (click)=\"onOpenModal()\">\n              <ion-icon name=\"chevron-down\" slot=\"icon-only\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n        </ion-item>\n      </div>\n\n      <!-------------------------------------------------Classification---------------------------------------------->\n    </div>\n\n    <!-------------------------------------------------Classification Sub Tab---------------------------------------------->\n\n    <div *ngFor=\"let classification of selectedTabList; let i = index\">\n      <ion-button class=\"inci\" *ngIf=\"selectedTabItem != classification\" (click)=\"onSelectTabItem(classification)\">\n        <p>{{classification}} </p>\n        <img class=\"plus\" src=\"{{imagePath+'add.png'}}\" />\n      </ion-button>\n\n      <!-------------------------------------------------Injury------------------------------------------------------->\n      <!-- <div *ngIf=\"selectedTabItem==tabItem && selectedTabItem=='Injury'\" class=\"activeBackground\"> -->\n      <div *ngIf=\"selectedTabItem == classification && classification =='Injury'\" class=\"activeBackground\"\n        [formGroup]=\"injuryForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(tabItem)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-radio-group formControlName=\"injury_persons\" (ionChange)=\"onAddMultiplePersonDetails()\">\n          <ion-row>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>1</ion-label>\n                <ion-radio slot=\"start\" value=\"1\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>2</ion-label>\n                <ion-radio slot=\"start\" value=\"2\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>3</ion-label>\n                <ion-radio slot=\"start\" value=\"3\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"3\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>4</ion-label>\n                <ion-radio slot=\"start\" value=\"4\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div formArrayName=\"person_details\" *ngFor=\"let personDetails of injuryPersonDetails.controls; let j = index \">\n          <ion-card>\n            <div class=\"headerTitle\">\n              <p class=\"questionHead\">Person {{(j+1)}} Details</p>\n            </div>\n            <div [formGroupName]=\"j\">\n              <p class=\"question\">Full Name of Injured Person</p>\n              <ion-item class=\"ra\">\n                <ion-select placeholder=\"Select One\" interface=\"action-sheet\" formControlName=\"injured_person_option\">\n                  <ion-select-option value=\"{{witnessName?.name_of_witness}}\" *ngFor=\"let witnessName of witnessList\">\n                    {{witnessName?.name_of_witness}}\n                  </ion-select-option>\n                </ion-select>\n              </ion-item>\n\n              <div *ngIf='injuryForm.value[\"person_details\"][j].injured_person_option==\"Other\"'>\n                <p class=\"question\">Full name of Injured Person</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"injured_person_option_value\">\n                </ion-input>\n              </div>\n\n              <ion-item class=\"ra\">\n                <ion-label>Gender</ion-label>\n                <ion-select placeholder=\"Select One\" interface=\"action-sheet\" formControlName=\"gender\">\n                  <ion-select-option value=\"Male\">Male</ion-select-option>\n                  <ion-select-option value=\"Female\">Female</ion-select-option>\n                  <ion-select-option value=\"Other\">Other</ion-select-option>\n                </ion-select>\n              </ion-item>\n\n              <ion-item class=\"ion-no-padding ra\" mode=\"ios\">\n                <ion-label>Date of Birth</ion-label>\n                <ion-datetime displayFormat=\"MM/DD/YYYY\" formControlName=\"date_of_birth\">\n                </ion-datetime>\n              </ion-item>\n\n              <ion-radio-group formControlName=\"normal_duties\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Return to Normal Duties</ion-label>\n                </ion-item>\n                <ion-row class=\"ion-no-padding\">\n                  <ion-col size=\"6\">\n                    <ion-item class=\"ra\" lines=\"none\">\n                      <ion-label>Yes</ion-label>\n                      <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                    </ion-item>\n                  </ion-col>\n                  <ion-col size=\"6\">\n                    <ion-item class=\"ra\" lines=\"none\">\n                      <ion-label>No</ion-label>\n                      <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                    </ion-item>\n                  </ion-col>\n                </ion-row>\n              </ion-radio-group>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].normal_duties == 'No'\">\n                <p class=\"question\">Explanation:</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"normal_duties_explanation\"> </ion-input>\n              </div>\n\n              <div>\n                <ion-radio-group formControlName=\"alternate_duties\">\n                  <ion-row>\n                    <ion-col size=\"12\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Return to Alternate Duties</ion-label>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Yes</ion-label>\n                        <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>No</ion-label>\n                        <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                  </ion-row>\n                </ion-radio-group>\n              </div>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].alternate_duties ==='No'\">\n                <p class=\"question\">Explanation:</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"duties_explanation\"></ion-input>\n              </div>\n\n              <ion-item class=\"ra\">\n                <ion-label>Initial Injury / IIIness Classification</ion-label>\n              </ion-item>\n\n              <ion-radio-group formControlName=\"initital_injury\">\n                <ion-row>\n                  <ion-col size=\"6\" *ngFor=\"let injuryKeys of injuryList;\">\n                    <ion-item class=\"ra\" lines=\"none\">\n                      <ion-label>{{injuryKeys.val}}</ion-label>\n                      <ion-radio slot=\"start\" value=\"{{injuryKeys.val}}\">\n                      </ion-radio>\n                    </ion-item>\n                    <ion-text class=\"mandatoryField\"\n                      *ngIf=\"injuryKeys.val  == injuryForm.value['person_details'][j].initital_injury\">\n                      {{injuryKeys.desc}}</ion-text>\n                  </ion-col>\n                </ion-row>\n              </ion-radio-group>\n\n\n              <img *ngIf=\"injuryForm.value['person_details'][j].gender ==='Male'\" class=\"img-responsive\"\n                src=\"{{imagePath+'Male_Silhouette.png'}}\">\n              <img *ngIf=\"injuryForm.value['person_details'][j].gender ==='Female'\" class=\"img-responsive\"\n                src=\"{{imagePath+'Female_Silhouette.png'}}\">\n\n              <div>\n\n                <ion-item>\n                  <ion-label>Part of body injured:</ion-label>\n                  <ion-select multiple=\"true\" cancelText=\"Cancel\" okText=\"Ok\"\n                    formControlName=\"part_of_body_injured_occured\">\n                    <!-- <ion-select multiple=\"true\" cancelText=\"Cancel\" okText=\"Ok\" (ionChange)=\"onSelectedBodyPart($event)\"\n                    formControlName=\"part_of_body_injured_occured\"> -->\n                    <ion-select-option value=\"{{bodyPartsVal.val}}\" *ngFor=\"let bodyPartsVal of bodyParts\">\n                      {{bodyPartsVal.val}}</ion-select-option>\n                  </ion-select>\n                </ion-item>\n\n                <!-- <p class=\"question\">Part of body injured:</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"part_of_body_injured_occured\">\n                </ion-input> -->\n              </div>\n\n              <div>\n                <ion-radio-group formControlName=\"was_immediate_treatment\">\n                  <ion-row>\n                    <ion-col size=\"12\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Was immediate treatment given;</ion-label>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>Yes</ion-label>\n                        <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                    <ion-col size=\"6\">\n                      <ion-item class=\"ra\" lines=\"none\">\n                        <ion-label>No</ion-label>\n                        <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n                      </ion-item>\n                    </ion-col>\n                  </ion-row>\n                </ion-radio-group>\n              </div>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].was_immediate_treatment == 'Yes'\">\n                <p class=\"question\">What treatment was given?</p>\n                <ion-input placeholder=\"Enter here\" formControlName=\"immediate_treatment_given_explanation\">\n                </ion-input>\n              </div>\n\n              <div *ngIf=\"injuryForm.value['person_details'][j].was_immediate_treatment == 'Yes'\">\n                <p class=\"question\">Who administered treatment : </p>\n                <div>\n                  <p class=\"question\">Person Name</p>\n                  <ion-input placeholder=\"Person Name\" formControlName=\"immediate_treatment_person_name\">\n                  </ion-input>\n                </div>\n\n                <div>\n                  <p class=\"question\">Contact Details</p>\n                  <ion-input placeholder=\"Please enter mobile no or email id\" type=\"tel\"\n                    formControlName=\"immediate_treatment_person_number\">\n                  </ion-input>\n                </div>\n              </div>\n\n            </div>\n            <!-- <img class=\"img-responsive\" src=\"./assets/person.jpg\"> -->\n          </ion-card>\n        </div>\n      </div>\n\n      <!-------------------------------------------------Injury------------------------------------------------------->\n\n      <!-------------------------------------------------Environmental------------------------------------------------>\n\n      <div *ngIf=\"selectedTabItem == classification && classification =='Environmental'\" class=\"activeBackground\"\n        [formGroup]=\"enviornmentForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n\n        <p class=\"question\">\n          Immediate action taken to minimize Environmental impact\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName='environmental_description'></ion-input>\n\n        <ion-radio-group formControlName=\"was_a_chemical_split\">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Was a chemical split?</ion-label>\n          </ion-item>\n          <ion-row>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div *ngIf=\"enviornmentForm.value['was_a_chemical_split']==='Yes'\" formGroupName=\"chemical_details\">\n          <p class=\"question\">\n            Name of chemical\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"chemical_name\"></ion-input>\n          <ion-list>\n\n            <ion-item class=\"ra ion-no-padding\" lines=\"none\">\n              <ion-label>Insert Photo</ion-label>\n              <ion-checkbox slot=\"start\" [value]=\"insertPhotoCheckBox\" formControlName=\"insertPhotoCheckBox\"\n                (ionChange)=\"onInsertImageSelect($event)\">\n              </ion-checkbox>\n            </ion-item>\n          </ion-list>\n\n          <div *ngIf=\"enviornmentForm.value['chemical_details'].insertPhotoCheckBox\">\n            <div *ngIf=\"platformCheck==='cordova'\">\n              <ion-button class=\"camera\" expand=\"block\" (click)=\"selectImage(3)\">Upload Image</ion-button>\n              <img src=\"\" *ngIf=\"enviornmentForm.value['chemical_details'].insertPhotoCheckBox\"\n                class=\"img-responsive\" />\n            </div>\n\n            <div *ngIf=\"platformCheck === 'browser'\">\n              <input type='file' value=\"chemical_photo\" multiple (change)=\"onChemicalImageSelect($event)\">\n              <div class=\"ion-text-center\" *ngIf=\"chemicalImages.length > 0\">\n                <div *ngFor=\"let chemicalImage of chemicalImages\">\n                  <img [src]=\"chemicalImage\" height=\"100\" class=\"img-responsive\"> <br />\n                </div>\n              </div>\n            </div>\n          </div>\n\n          <p class=\"question\">\n            Approximate quantity of chemical spilled\n          </p>\n          <ion-input placeholder=\"Enter here\" type=\"tel\" formControlName=\"approximate_quantity\">\n          </ion-input>\n        </div>\n\n        <ion-radio-group formControlName='emergency_spill_kit_used'>\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Was the emergency spill kit used?</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n        <div *ngIf=\"enviornmentForm.value['emergency_spill_kit_used'] == 'Yes'\">\n          <p class=\" question\">\n            What was used out of the chemical spill kit?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"out_of_split_kit\"></ion-input>\n        </div>\n      </div>\n\n\n      <!-------------------------------------------------Environmental------------------------------------------------>\n\n      <!-------------------------------------------------Reputation--------------------------------------------------->\n\n      <div *ngIf=\"selectedTabItem == classification && classification =='Reputation'\" class=\"activeBackground\"\n        [formGroup]=\"reputationDesForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-label>Was the reputation damages an individual or Company ?\n          </ion-label>\n        </ion-item>\n        <ion-list class=\"ion-no-padding\">\n          <ion-item *ngFor=\"let reputationCheckBoxItem of reputationCheckBox\" lines=\"none\" class=\"ion-no-padding\">\n            <ion-label>{{reputationCheckBoxItem.val}}</ion-label>\n            <ion-checkbox slot=\"end\" (ionChange)=\"onReputationDamagesCheckBox($event)\"\n              [value]=\"reputationCheckBoxItem.val\" [checked]=\"reputationCheckBoxItem.isChecked\">\n            </ion-checkbox>\n          </ion-item>\n        </ion-list>\n        <div\n          *ngIf=\"reputationDesForm.value['reputation_option'][0] == 'Individual' || reputationDesForm.value['reputation_option'][1] == 'Individual'\">\n          <p class=\"question\">\n            How has the Individual's reputation been damaged?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"individual_damage_value\"></ion-input>\n        </div>\n        <div\n          *ngIf=\"reputationDesForm.value['reputation_option'][0] == 'Company' || reputationDesForm.value['reputation_option'][1] =='Company'\">\n          <p class=\"question\">\n            How has the Company's reputation been damaged?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"company_damage_value\"></ion-input>\n        </div>\n\n        <ion-radio-group formControlName=\"reputation_negative_effect\">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Was the negative effect internal or external</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Internal</ion-label>\n                <ion-radio slot=\"start\" value=\"Internal\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>External</ion-label>\n                <ion-radio slot=\"start\" value=\"External\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Both</ion-label>\n                <ion-radio slot=\"start\" value=\"Both\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <ion-radio-group formControlName=\"effected_department\"\n          *ngIf=\"(reputationDesForm.value['reputation_negative_effect'] == 'Internal') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') \">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>What Department was effected?</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Orange Division</ion-label>\n                <ion-radio slot=\"start\" value=\"Orange Division\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Project Services</ion-label>\n                <ion-radio slot=\"start\" value=\"Project Services\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Mudgee Division</ion-label>\n                <ion-radio slot=\"start\" value=\"Mudgee Division\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>West Wyalong Division</ion-label>\n                <ion-radio slot=\"start\" value=\"West Wyalong Division\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div\n          *ngIf=\"(reputationDesForm.value['reputation_negative_effect'] == 'External') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') \">\n          <p class=\"question\">\n            Who is the external party?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"external_party\"></ion-input>\n        </div>\n\n        <p class=\"question\">\n          Name of any witness\n        </p>\n        <!-- <ion-input placeholder=\"Enter here\" formControlName=\"name_of_witness\"></ion-input> -->\n        <ion-select placeholder=\"Select One\" interface=\"action-sheet\" formControlName=\"name_of_witness\">\n          <ion-select-option value=\"{{reputationWitnessValue?.name_of_witness}}\"\n            *ngFor=\"let reputationWitnessValue of reputationWitnessList\">\n            {{reputationWitnessValue?.name_of_witness}}</ion-select-option>\n        </ion-select>\n\n        <div *ngIf=\"reputationDesForm.value['name_of_witness'] == 'Other'\" formGroupName='other_witness_details'>\n          <p class=\"other_witness\"> Other Witness Details </p>\n          <p class=\"question\">\n            Name\n          </p>\n          <ion-input placeholder=\"Enter Other Witness Name\" formControlName=\"other_witness_name\"></ion-input>\n          <p class=\"question\">\n            Mobile No\n          </p>\n          <ion-input type=\"tel\" placeholder=\"Enter Other Witness Mobile No \" formControlName=\"other_witness_mobile_no\">\n          </ion-input>\n\n          <p class=\"question\">\n            Email id\n          </p>\n          <ion-input type=\"email\" placeholder=\"Enter Other Witness Email\" formControlName=\"other_witness_email\">\n          </ion-input>\n        </div>\n\n        <p class=\"question\">\n          What is the possible outcome of this incident?\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName=\"possible_outcome_incident\"></ion-input>\n\n      </div>\n      <!-------------------------------------------------Reputation--------------------------------------------------->\n\n      <!-------------------------------------------------Security----------------------------------------------------->\n\n      <div *ngIf=\"selectedTabItem == classification && classification =='Security'\" class=\"activeBackground\"\n        [formGroup]=\"securityForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n\n        <ion-radio-group formControlName=\"security_option\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>IT</ion-label>\n                <ion-radio slot=\"start\" value=\"IT\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Theft</ion-label>\n                <ion-radio slot=\"start\" value=\"Theft\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Other</ion-label>\n                <ion-radio slot=\"start\" value=\"Other\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <div *ngIf=\"securityForm.value['security_option']=='IT'\">\n          <ion-list class=\"ion-no-padding\">\n            <ion-item class=\"ion-no-padding\" lines=\"none\">\n              <ion-label>What kind of IT Security Incident ?</ion-label>\n            </ion-item>\n            <ion-row class=\"ion-no-padding\">\n              <ion-col size=\"6\" class=\"ion-no-padding\" *ngFor=\"let itSecurityItem of itSecurityList\">\n                <ion-item lines=\"none\" class=\"ion-no-padding\">\n                  <ion-label>{{itSecurityItem.val}}</ion-label>\n                  <ion-checkbox slot=\"start\" [value]=\"itSecurityItem.val\" [checked]=\"itSecurityItem.isChecked\"\n                    (ionChange)=\"onSecurityItOption($event)\"></ion-checkbox>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-list>\n        </div>\n        <div *ngIf=\"securityForm.value['security_option']=='Theft'\">\n          <p class=\"question\">\n            What has been stolen ?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"what_has_been_stolen_item\"></ion-input>\n          <p class=\"question\">\n            Approximate value of stolen item ?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"approximate_value_of_stolen\"></ion-input>\n        </div>\n\n        <div *ngIf=\"securityForm.value['security_option']=='Other'\">\n          <p class=\"question\">\n            What is the Security incident ?\n          </p>\n          <ion-input placeholder=\"Enter here\" formControlName=\"what_is_the_specific_securities_incident\"></ion-input>\n        </div>\n      </div>\n      <!-------------------------------------------------Security----------------------------------------------------->\n\n\n      <!-------------------------------------------------Asset-------------------------------------------------------->\n      <!-- <div *ngIf=\"selectedTabItem==tabItem && selectedTabItem=='Asset'\" class=\"activeBackground\"> -->\n      <div *ngIf=\" selectedTabItem == classification && classification =='Asset'\" class=\"activeBackground\"\n        [formGroup]=\"assetDescriptionForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Asset description\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName=\"asset_description\"></ion-input>\n        <ion-radio-group formControlName=\"asset_has_number\">\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-label>Does Asset have a number</ion-label>\n          </ion-item>\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n        <div *ngIf=\"assetDescriptionForm.value['asset_has_number']=='Yes'\">\n          <p class=\"question\">\n            Asset Number\n          </p>\n          <ion-input placeholder=\"Enter here\" type=\"tel\" formControlName=\"asset_number\"></ion-input>\n        </div>\n        <p class=\"question\">\n          Extent of Damage\n        </p>\n        <ion-input placeholder=\"Extent of Damage\" formControlName=\"extent_of_damage\"></ion-input>\n\n        <div *ngIf=\"platformCheck==='cordova'\">\n          <ion-button class=\"camera\" expand=\"block\" (click)=\"selectImage(3)\">Upload photo of damage</ion-button>\n          <img src=\"\" *ngIf=\"enviornmentForm.value['chemical_details'].insertPhotoCheckBox\" class=\"img-responsive\" />\n        </div>\n\n        <div *ngIf=\"platformCheck === 'browser'\">\n          <p class=\"question\">\n            Upload photo of damage\n          </p>\n          <input type='file' value=\"extent_damage_image\" multiple (change)=\"onSelectDamageImage($event)\">\n          <div class=\"ion-text-center\" *ngIf=\"damageImages.length > 0\">\n            <div *ngFor=\"let damageImage of damageImages\">\n              <img [src]=\"damageImage\" height=\"100\" class=\"img-responsive\"> <br />\n            </div>\n          </div>\n        </div>\n\n      </div>\n      <!-------------------------------------------------Asset-------------------------------------------------------->\n\n      <!-------------------------------------------------Report------------------------------------------------------->\n      <!-- <div *ngIf=\"selectedTabItem==tabItem && selectedTabItem=='Report'\" class=\"activeBackground\"> -->\n      <div *ngIf=\" selectedTabItem == classification && classification =='Report'\" class=\"activeBackground\"\n        [formGroup]=\"reportForm\">\n        <div class=\"headerTitle\">\n          <p>{{classification}}</p>\n          <img (click)=\"onDeSelectTabItem(classification)\" class=\"plus\" src=\"{{imagePath+'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          What could have done differently?\n        </p>\n        <ion-input placeholder=\"Enter here\" formControlName='report'></ion-input>\n      </div>\n      <!-------------------------------------------------Report------------------------------------------------------->\n\n    </div>\n\n    <!-------------------------------------------------Classification Sub Tab---------------------------------------------->\n  </div>\n\n  <ion-button (click)=\"onSubmit('submit')\" expand=\"full\" class=\"btnSubmit\">SUBMIT</ion-button>\n</ion-content>");
 
 /***/ })
 

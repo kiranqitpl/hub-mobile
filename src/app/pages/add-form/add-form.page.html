@@ -402,13 +402,14 @@
           </div>
           <p class="question">Full Name of Injured Person</p>
           <ion-item class="ra">
+
             <ion-select placeholder="Select One" interface="action-sheet"
               [(ngModel)]="person_one_details.fullNameOfInjuredPerson">
               <ion-select-option value="{{item?.name_of_witness}}" *ngFor="let item of witnessList">
                 {{item?.name_of_witness}}
               </ion-select-option>
-
             </ion-select>
+            
           </ion-item>
           <div *ngIf='person_one_details.fullNameOfInjuredPerson=="Other"'>
             <p class="question">Full name of Injured Person</p>

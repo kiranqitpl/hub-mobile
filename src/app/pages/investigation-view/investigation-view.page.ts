@@ -12,7 +12,6 @@ export class InvestigationViewPage implements OnInit {
 
   data: any;
 
-
   constructor(private nav: NavController,
     private activatedRoute: ActivatedRoute,
     private globalService: GlobalService) { }
@@ -20,7 +19,6 @@ export class InvestigationViewPage implements OnInit {
   ngOnInit() {
     this.loadData()
   }
-
 
   loadData() {
     this.globalService.presentLoading();
@@ -39,8 +37,6 @@ export class InvestigationViewPage implements OnInit {
         }
       })
   }
-
-
 
   goBack() {
     this.nav.back();
