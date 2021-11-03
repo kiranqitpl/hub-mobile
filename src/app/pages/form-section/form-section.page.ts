@@ -1,6 +1,6 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 
 @Component({
   selector: 'app-form-section',

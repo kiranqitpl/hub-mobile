@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service'
 
 @Component({
   selector: 'app-managers',

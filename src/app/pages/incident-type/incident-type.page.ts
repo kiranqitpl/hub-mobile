@@ -1,4 +1,4 @@
-import { GlobalService } from './../../services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 

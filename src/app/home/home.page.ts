@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { GlobalService } from '../services/global.service';
+import { GlobalService } from '../services/global-service/global.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
       // if (localStorage.getItem('role') != this.globalService.gm) {
       //   this.nav.navigateForward("safety-menu");
       // } else {
-        this.nav.navigateForward("dashboard")
+      this.nav.navigateForward("dashboard")
       // }
     }
   }

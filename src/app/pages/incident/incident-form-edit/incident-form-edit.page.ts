@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 
 import moment from 'moment';
@@ -16,11 +18,11 @@ import IncidentJson from '../incident-form.json';
 
 
 @Component({
-  selector: 'app-incident-form',
-  templateUrl: './incident-form.page.html',
-  styleUrls: ['./incident-form.page.scss'],
+  selector: 'app-incident-form-edit',
+  templateUrl: './incident-form-edit.page.html',
+  styleUrls: ['./incident-form-edit.page.scss'],
 })
-export class IncidentFormPage implements OnInit {
+export class IncidentFormEditPage implements OnInit {
 
   imagePath = environment.imageUrl;
   pName: string = 'Add Form';
@@ -36,6 +38,7 @@ export class IncidentFormPage implements OnInit {
   disabledTab: boolean;
   reputationWitnessList: any = [];
   platformCheck: any = '';
+  incidentDetails: any = [];
 
   //----------------------------------------------------- Image variables ----------------------------------------------------//
   photoGraphy = [];
@@ -150,6 +153,7 @@ export class IncidentFormPage implements OnInit {
   ];
   injuryList = IncidentJson[0].injuryList;
 
+
   //-------------------------------------------------------- JSON DATA -------------------------------------------------------//
 
   constructor(
@@ -160,11 +164,11 @@ export class IncidentFormPage implements OnInit {
     private camera: Camera,
     private fb: FormBuilder,
     private nav: NavController,
-    private platform: Platform
+    private platform: Platform,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    // console.log('IncidentJson', IncidentJson);
     if (!this.platform.is('cordova')) {
       this.platformCheck = 'browser'
     } else {
@@ -177,6 +181,7 @@ export class IncidentFormPage implements OnInit {
     this.loadLocation();
     this.findValueInWitness();
     this.loadBodyPart();
+    this.loadIncidentDetails();
 
     this.incidentForm = this.fb.group({
       incident_value: [''],                // required field
@@ -352,6 +357,151 @@ export class IncidentFormPage implements OnInit {
     }, err => {
       console.log("Eror", err)
     })
+  }
+
+  loadIncidentDetails() {
+    this.activatedRoute.params.subscribe(
+      (params: Params) => {
+        this.globalService.getData1('add_form/getIncidentFormByID/' + params['investigation_id']).subscribe(result => {
+          console.log('result', result);
+          if (result && result['data'] && result['data'][0]) {
+            this.incidentDetails = result['data'][0];
+
+            //------------------------------------------------------- incidentForm ----------------------------------------------------------//
+            this.incidentForm.patchValue(this.incidentDetails);
+            this.onInput('', 'Incident');
+            //------------------------------------------------------- incidentForm ----------------------------------------------------------//
+            //------------------------------------------------------- PhotographyForm ----------------------------------------------------------//
+
+            this.photoGraphyObject = this.photoGraphy = this.incidentDetails.photography_image;
+            //------------------------------------------------------- PhotographyForm ----------------------------------------------------------//
+            //------------------------------------------------------- incidentDesForm ----------------------------------------------------------//
+
+            this.incidentDesForm.patchValue(this.incidentDetails);
+            this.alcohalImagesObject = this.alcohalImages = this.incidentDetails.alcohol_test_image;
+            this.drugTestImagesObject = this.drugTestImages = this.incidentDetails.drug_test_image;
+            this.alterDutyImagesObject = this.alterDutyImages = this.incidentDetails.return_to_alternate_duties_image;
+            this.onInput('', 'Incident Description');
+            //------------------------------------------------------- incidentDesForm ----------------------------------------------------------//
+
+            //------------------------------------------------------- classificationForm ----------------------------------------------------------//
+            let classificationValue: FormArray = this.classificationForm.get('classification_value') as FormArray;
+            this.selectedTabList = this.incidentDetails['classification_value'].split(',');
+            this.selectedTabList.sort();
+            this.classificationList.forEach((ele, index) => {
+              if (this.selectedTabList[index] == ele.val) {
+                classificationValue.push(new FormControl(ele.val));
+                ele.isChecked = true
+              }
+            });
+            this.managerList = this.incidentDetails.classification_manager;
+            this.classificationForm.controls['date_of_incident'].setValue(this.incidentDetails.date_of_incident);
+            this.classificationForm.controls['time_of_incident'].setValue(this.incidentDetails.time_of_incident);
+            this.classificationForm.controls['date_reported'].setValue(this.incidentDetails.date_reported);
+            this.classificationForm.controls['time_reported'].setValue(this.incidentDetails.time_reported);
+            this.classificationForm.controls['classification_location_option'].setValue(this.incidentDetails.classification_location_option);
+            if (this.incidentDetails.classification_location_option == 'Add Location')
+              this.classificationForm.controls['classification_location_value'].setValue(this.incidentDetails.classification_location_value);
+            if (this.incidentDetails.classification_location_option == 'Choose Location')
+              this.classificationForm.controls['classification_location_value1'].setValue(this.incidentDetails.classification_location_value);
+            this.classificationForm.controls['classification_shift_type'].setValue(this.incidentDetails.classification_shift_type);
+            this.classificationForm.controls['classification_supervisor'].setValue(this.incidentDetails.classification_supervisor);
+            this.classificationForm.controls['classification_manager'].setValue(this.incidentDetails.classification_manager);
+            //------------------------------------------------------- classificationForm ----------------------------------------------------------//
+            //------------------------------------------------------- assetDescriptionForm ----------------------------------------------------------//
+            this.assetDescriptionForm.patchValue(this.incidentDetails);
+            this.damageImagesObject = this.damageImages = this.incidentDetails.extent_damage_image
+            //------------------------------------------------------- assetDescriptionForm ----------------------------------------------------------//
+            //------------------------------------------------------- enviornmentForm ----------------------------------------------------------//
+            this.enviornmentForm.patchValue(this.incidentDetails);
+            if (this.incidentDetails.chemical_details.chemical_photo.length > 0) {
+              this.enviornmentForm.controls.chemical_details.value.insertPhotoCheckBox.setValue(true);
+            }
+            this.chemicalImages = this.chemicalImagesObject = this.incidentDetails.chemical_details.chemical_photo;
+            //------------------------------------------------------- enviornmentForm ----------------------------------------------------------//
+            //------------------------------------------------------- injuryForm ----------------------------------------------------------//
+
+            this.injuryForm.controls.injury_persons.setValue(this.incidentDetails.injury_persons);
+            this.injuryForm.setControl('person_details', this.setPersonDetails(this.incidentDetails.person_details));
+            //------------------------------------------------------- injuryForm ----------------------------------------------------------//
+
+            //------------------------------------------------------- reportForm ----------------------------------------------------------//
+            this.reportForm.patchValue(this.incidentDetails);
+            //------------------------------------------------------- reportForm ----------------------------------------------------------//
+            //------------------------------------------------------- reputationDesForm ----------------------------------------------------------//
+
+            let reputation_option = this.incidentDetails['reputation_option'].split(',');
+            reputation_option.sort();
+            let reputationOption: FormArray = this.reputationDesForm.get('reputation_option') as FormArray;
+            this.reputationCheckBox.forEach((ele, index) => {
+              if (reputation_option[index] == ele.val) {
+                reputationOption.push(new FormControl(reputation_option[index]));
+                ele.isChecked = true
+              }
+            });
+
+            this.reputationDesForm.controls['individual_damage_value'].setValue(this.incidentDetails.individual_damage_value);
+            this.reputationDesForm.controls['company_damage_value'].setValue(this.incidentDetails.company_damage_value);
+            this.reputationDesForm.controls['reputation_negative_effect'].setValue(this.incidentDetails.reputation_negative_effect);
+            this.reputationDesForm.controls['effected_department'].setValue(this.incidentDetails.effected_department);
+            this.reputationDesForm.controls['external_party'].setValue(this.incidentDetails.external_party);
+            this.reputationDesForm.controls['name_of_witness'].setValue(this.incidentDetails.name_of_witness);
+            this.reputationDesForm.controls['other_witness_details'].setValue(this.incidentDetails.other_witness_details);
+            this.reputationDesForm.controls['possible_outcome_incident'].setValue(this.incidentDetails.possible_outcome_incident);
+            //------------------------------------------------------- reputationDesForm ----------------------------------------------------------//
+            //------------------------------------------------------- securityForm ----------------------------------------------------------//
+
+            this.securityForm.controls['security_option'].setValue(this.incidentDetails.security_option);
+            // this.securityForm.controls['it_option_value'].setValue(this.incidentDetails.it_option_value);
+            this.securityForm.controls['what_has_been_stolen_item'].setValue(this.incidentDetails.what_has_been_stolen_item);
+            this.securityForm.controls['approximate_value_of_stolen'].setValue(this.incidentDetails.approximate_value_of_stolen);
+            this.securityForm.controls['what_is_the_specific_securities_incident'].setValue(this.incidentDetails.what_is_the_specific_securities_incident);
+
+
+            let itOptionValue: FormArray = this.securityForm.get('it_option_value') as FormArray;
+            let it_option_value = this.incidentDetails.it_option_value.split(',');
+            it_option_value.sort();
+            this.itSecurityList.forEach((ele, index) => {
+              if (it_option_value[index] == ele.val) {
+                itOptionValue.push(new FormControl(it_option_value[index]));
+                ele.isChecked = true
+              }
+            });
+
+            //------------------------------------------------------- securityForm ----------------------------------------------------------//
+          }
+        }), error => {
+          console.log(error);
+        }
+      }
+    ), error => {
+      console.log('param error', error)
+    }
+  }
+
+  setPersonDetails(person_details): FormArray {
+    const formArray = new FormArray([]);
+    person_details.forEach(element => {
+      formArray.push(
+        this.fb.group({
+          injured_person_option: [element.injured_person_option],   //  seletced person name
+          injured_person_option_value: [element.injured_person_option_value],   // other person name
+          gender: [element.gender],
+          date_of_birth: [element.date_of_birth],
+          normal_duties: [element.normal_duties],
+          normal_duties_explanation: [element.normal_duties_explanation],
+          alternate_duties: [element.alternate_duties],
+          duties_explanation: [element.duties_explanation],
+          initital_injury: [element.initital_injury],
+          part_of_body_injured_occured: [element.part_of_body_injured_occured],
+          was_immediate_treatment: [element.was_immediate_treatment],
+          immediate_treatment_given_explanation: [element.immediate_treatment_given_explanation],
+          immediate_treatment_person_name: [element.immediate_treatment_person_name],
+          immediate_treatment_person_number: [element.immediate_treatment_person_number],
+        })
+      )
+    });
+    return formArray;
   }
 
   onSelectTabItem(i) {
@@ -589,7 +739,7 @@ export class IncidentFormPage implements OnInit {
     // console.log('incidentForm', this.incidentForm.value);
     // console.log('incidentForm', this.photoGraphyForm.value);
     // console.log('incidentDesForm', this.incidentDesForm.value);
-    console.log('classificationForm', this.classificationForm.value);
+    // console.log('classificationForm', this.classificationForm.value);
     // console.log('injuryForm', this.injuryForm.value);
     // console.log('enviornmentForm', this.enviornmentForm.value);
     // console.log('reputationDesForm', this.reputationDesForm.value);
@@ -635,15 +785,11 @@ export class IncidentFormPage implements OnInit {
 
       //----------------------------------------------- Classification -----------------------------------------------------------//
 
-      console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
-
-      console.log('time_reported', this.classificationForm.value['time_reported']);
-
       fd.append("classification_value", this.classificationForm.value['classification_value'].join(','));
       fd.append("date_of_incident", this.classificationForm.value['date_of_incident']);
-      fd.append("time_of_incident", this.classificationForm.value['time_of_incident'] != '' ? moment(this.classificationForm.value['time_of_incident']).format('HH:mm:ss') : '');
+      fd.append("time_of_incident", moment(this.classificationForm.value['time_of_incident']).format('HH:mm:ss'));
       fd.append("date_reported", this.classificationForm.value['date_reported']);
-      fd.append("time_reported", this.classificationForm.value['time_reported'] != '' ? moment(this.classificationForm.value['time_reported']).format('HH:mm:ss') : '');
+      fd.append("time_reported", moment(this.classificationForm.value['time_reported']).format('HH:mm:ss'));
       fd.append("classification_location_option", this.classificationForm.value['classification_location_option']);
       if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
         fd.append("classification_location_value", this.classificationForm.value['classification_location_value'])
@@ -715,6 +861,8 @@ export class IncidentFormPage implements OnInit {
       //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
       fd.append('user_id', localStorage.getItem('id'));
+      fd.append('id', this.incidentDetails.id);
+
       let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
       this.globalService.postData1(url, fd).subscribe((res: any) => {
@@ -758,6 +906,7 @@ export class IncidentFormPage implements OnInit {
       })
     }
     this.selectedTabList = formArray.value;
+    console.log('  this.selectedTabList ', this.selectedTabList);
   }
 
   onSecurityOption(evt) {
@@ -781,6 +930,7 @@ export class IncidentFormPage implements OnInit {
   }
 
   onSecurityItOption(event) {
+    console.log('event', event);
     const formArray: FormArray = this.securityForm.get('it_option_value') as FormArray;
     if (event.target.checked) {
       formArray.push(new FormControl(event.target.value));
@@ -804,6 +954,8 @@ export class IncidentFormPage implements OnInit {
         }
       })
     }
+    console.log('itSecurityList', this.itSecurityList);
+    console.log('securityForm', this.securityForm);
   }
 
   onReputationDamagesCheckBox(event) {

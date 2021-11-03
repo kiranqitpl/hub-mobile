@@ -1,7 +1,7 @@
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'app-actions',
@@ -10,12 +10,12 @@ import * as moment from 'moment';
 })
 export class ActionsPage implements OnInit {
 
-  description_of_required_action: any='';
+  description_of_required_action: any = '';
   user_id: any;
   user_name: any;
-  priority: any='';
-  expected_completion: any='';
-  id:any;
+  priority: any = '';
+  expected_completion: any = '';
+  id: any;
   incident_id: any;
   constructor(private nav: NavController, private global: GlobalService) { }
   data: any = [];
@@ -50,12 +50,12 @@ export class ActionsPage implements OnInit {
       console.log(err)
     })
   }
-  isFrom:any;
+  isFrom: any;
   ionViewWillEnter() {
 
     let isOpenFrom = localStorage.getItem("isActionsForm");
-    this.isFrom=isOpenFrom;
-    if(isOpenFrom =='edit'){
+    this.isFrom = isOpenFrom;
+    if (isOpenFrom == 'edit') {
       let d = JSON.parse(localStorage.getItem("singleView"));
       this.incident_id = d.id;
       this.global.presentLoading();
@@ -68,9 +68,9 @@ export class ActionsPage implements OnInit {
               this.user_id = el.user_id;
               this.priority = el.priority;
               this.expected_completion = el.expected_completion;
-              this.id=el.id
+              this.id = el.id
               this.global.dismissLoading();
-            }else{
+            } else {
               this.global.dismissLoading();
             }
           })
@@ -79,7 +79,7 @@ export class ActionsPage implements OnInit {
         console.log("res", err)
         this.global.dismissLoading();
       });
-    }else{
+    } else {
 
     }
   }
@@ -114,8 +114,8 @@ export class ActionsPage implements OnInit {
     } else {
       this.global.presentLoading();
       const fd = new FormData();
-      if(this.isFrom=='edit')
-      fd.append("id",this.id)
+      if (this.isFrom == 'edit')
+        fd.append("id", this.id)
       fd.append("incident_id", this.incident_id);
       fd.append('user_id', this.user_id);
       fd.append("user_name", this.user_name);
@@ -124,11 +124,11 @@ export class ActionsPage implements OnInit {
       fd.append("description_of_required_action", this.description_of_required_action);
       fd.append("investigator_id", localStorage.getItem("id"));
       this.global.postData("api/Investigator/InvestigationAction", fd).subscribe((res: any) => {
-        if(res.status){
+        if (res.status) {
           this.global.presentToast(res.message)
           this.global.dismissLoading();
           this.nav.back();
-        }else{
+        } else {
           this.global.dismissLoading();
         }
       }, err => {

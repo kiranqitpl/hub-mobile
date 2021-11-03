@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ModalController, IonSlides } from '@ionic/angular';
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../../services/global-service/global.service';
 import * as moment from 'moment';
 
 @Component({

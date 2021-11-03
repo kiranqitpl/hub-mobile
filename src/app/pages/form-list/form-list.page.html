@@ -70,7 +70,7 @@
             <ion-icon class="view" slot="icon-only" name="create-outline" (click)="editClick()"></ion-icon>
           </ng-template>
         </ngx-datatable-column>
-
+        
         <ngx-datatable-column [minWidth]="50" [resizeable]="true" *ngIf="role==userRole" name="cStatus">
           <ng-template let-column="column" ngx-datatable-header-template>
             Status

@@ -1,6 +1,6 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 import { environment } from 'src/environments/environment';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 

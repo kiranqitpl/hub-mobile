@@ -1,0 +1,36 @@
+[
+    {
+        "injuryList": [
+            {
+                "val": "FAI",
+                "isChecked": false,
+                "desc": "FAI: First Aid injury, an injury that requires a single first aid treatment and a follow-up visit for subsequent observation involving on minor injuries which do not ordinarily require medical care, and for which the person would typically return immediately to their normal activities"
+            },
+            {
+                "val": "MTI",
+                "isChecked": false,
+                "desc": "MTI: Medical Treatment Injury, an injury or disease that resulted in a certain level of treatment (not first aid treatment) given by a physician or medical personnel under standing orders of a physician."
+            },
+            {
+                "val": "ADI",
+                "isChecked": false,
+                "desc": "ADI: Alternative Duties Injury, temporary duties , identified as in Hort Enterprises Alternative Duties Within the Workplace HE-WHS-FRM-0036, that are required when an injured worker is unable to return to their normal duties."
+            },
+            {
+                "val": "LTL",
+                "isChecked": false,
+                "desc": "LTI: Lost Time Injury, an injury that results in a day or more lost from work."
+            },
+            {
+                "val": "PII",
+                "isChecked": false,
+                "desc": "PII: Permanent Impairment Injury, the permanent impact an injury has on a person's functioning."
+            },
+            {
+                "val": "Fatality",
+                "isChecked": false,
+                "desc": "Fatality: Fatality, a person who dies as a result from an injury."
+            }
+        ]
+    }
+]

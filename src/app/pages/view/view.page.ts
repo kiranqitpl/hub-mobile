@@ -1,6 +1,6 @@
 import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as moment from 'moment';
 

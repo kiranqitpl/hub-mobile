@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 import { ManagersPage } from 'src/app/modals/managers/managers.page';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 import { Base64 } from '@ionic-native/base64/ngx';
-import * as moment from 'moment';
+import  moment from 'moment';
 @Component({
   selector: 'app-add-form',
   templateUrl: './add-form.page.html',

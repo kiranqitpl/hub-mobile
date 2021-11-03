@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import * as moment from 'moment';
-import { GlobalService } from 'src/app/services/global.service';
+import moment from 'moment';
+import { GlobalService } from '../../services/global-service/global.service';
 
 @Component({
   selector: 'app-investigation',
@@ -177,7 +177,7 @@ export class InvestigationPage implements OnInit {
       this.type = investigatorDetails.type;
       if (investigatorDetails.what_systems_personal_factors_caused_or_could_cause_the_incident !== undefined && investigatorDetails.what_systems_personal_factors_caused_or_could_cause_the_incident !== 'undefined') {
         this.what_systems_personal_factors_caused_or_could_cause_the_incident = investigatorDetails.what_systems_personal_factors_caused_or_could_cause_the_incident;
-      }      
+      }
     }
   }
 

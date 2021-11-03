@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import * as moment from 'moment';
+import moment from 'moment';
 
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from '../../services/global-service/global.service';
 
 @Component({
   selector: 'app-form-list',
@@ -210,8 +210,9 @@ export class FormListPage implements OnInit {
   }
 
   editClick() {
-    this.nav.navigateRoot("edit")
+    this.nav.navigateRoot("/incident-form-edit/" + this.getRowData.id)
   }
+
 
   investigation() {
     let data = JSON.parse(localStorage.getItem("singleView"))

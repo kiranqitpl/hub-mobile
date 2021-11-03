@@ -13,10 +13,12 @@
         <p class="value">{{incidentDetails?.incident_value}}</p>
         <ion-item *ngIf="incidentDetails?.incident_value == 'Near Miss'">
           <ion-row>
-            <p class="question">Who witnessed the near miss ? :</p>
-            <p class="value">{{incidentDetails?.incident_near_miss}}</p>
-            <p class="question">Possible consequence under different circumstances :</p>
-            <p class="value">{{incidentDetails?.incident_near_miss_other}}</p>
+            <ion-col>
+              <p class="question">Who witnessed the near miss ? :</p>
+              <p class="value">{{incidentDetails?.incident_near_miss}}</p>
+              <p class="question">Possible consequence under different circumstances :</p>
+              <p class="value">{{incidentDetails?.incident_near_miss_other}}</p>
+            </ion-col>
           </ion-row>
         </ion-item>
       </ion-card-content>
@@ -32,11 +34,6 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <!-- <ion-row>
-          <ion-col size="3" *ngFor="let photography_image of incidentDetails['photography_image']">
-            <img [src]="photography_image" class="ion-padding" width="100%">
-          </ion-col>
-        </ion-row> -->
         <ion-slides [options]="sliderOpts" class="preview-slides">
           <ion-slide *ngFor="let photography_image of incidentDetails['photography_image']">
             <img [src]="photography_image" tappable (click)="onOpenPreview(photography_image)">
@@ -67,30 +64,17 @@
         <div *ngIf="incidentDetails?.incident_description_alcohol_test != '' ">
           <p class="question">Alcohol test completed :</p>
           <p class="value">{{incidentDetails?.incident_description_alcohol_test}}</p>
-
-          <!-- <ion-row *ngIf="incidentDetails['alcohol_test_image'] && incidentDetails['alcohol_test_image'].length > 0">
-            <ion-col size="3" *ngFor="let alcohol_test_image of incidentDetails['alcohol_test_image']">
-              <img [src]="alcohol_test_image" class="ion-padding" width="100%">
-            </ion-col>
-          </ion-row> -->
           <ion-slides [options]="sliderOpts" class="preview-slides"
             *ngIf="incidentDetails['alcohol_test_image'] && incidentDetails['alcohol_test_image'].length > 0">
             <ion-slide *ngFor="let alcohol_test_image of incidentDetails['alcohol_test_image']">
               <img [src]="alcohol_test_image" tappable (click)="onOpenPreview(alcohol_test_image)">
             </ion-slide>
           </ion-slides>
-
         </div>
 
         <div *ngIf="incidentDetails?.drug_test_completed !='' ">
           <p class="question">Drug test completed :</p>
           <p class="value">{{incidentDetails?.drug_test_completed}}</p>
-
-          <!-- <ion-row *ngIf="incidentDetails['drug_test_image'] && incidentDetails['drug_test_image'].length > 0">
-            <ion-col size="3" *ngFor="let drug_test_image of incidentDetails['drug_test_image']">
-              <img [src]="drug_test_image" class="ion-padding" width="100%">
-            </ion-col>
-          </ion-row> -->
           <ion-slides [options]="sliderOpts" class="preview-slides"
             *ngIf="incidentDetails['drug_test_image'] && incidentDetails['drug_test_image'].length > 0">
             <ion-slide *ngFor="let drug_test_image of incidentDetails['drug_test_image']">
@@ -102,23 +86,19 @@
         <div *ngIf="incidentDetails?.return_to_alternate_duties!==''">
           <p class="question">Return to Alternate Duties :</p>
           <p class="value">{{incidentDetails?.return_to_alternate_duties}}</p>
-          <!-- <ion-row
-            *ngIf="incidentDetails['return_to_alternate_duties_image'] && incidentDetails['return_to_alternate_duties_image'].length > 0">
-            <ion-col size="3"
-              *ngFor="let return_to_alternate_duties_image of incidentDetails['return_to_alternate_duties_image']">
-              <img [src]="return_to_alternate_duties_image" class="ion-padding" width="100%">
-            </ion-col>
-          </ion-row> -->
           <ion-slides [options]="sliderOpts" class="preview-slides"
-          *ngIf="incidentDetails['return_to_alternate_duties_image'] && incidentDetails['return_to_alternate_duties_image'].length > 0">
-          <ion-slide *ngFor="let return_to_alternate_duties_image of incidentDetails['return_to_alternate_duties_image']">
-            <img [src]="return_to_alternate_duties_image" tappable (click)="onOpenPreview(return_to_alternate_duties_image)">
-          </ion-slide>
-        </ion-slides>
+            *ngIf="incidentDetails['return_to_alternate_duties_image'] && incidentDetails['return_to_alternate_duties_image'].length > 0">
+            <ion-slide
+              *ngFor="let return_to_alternate_duties_image of incidentDetails['return_to_alternate_duties_image']">
+              <img [src]="return_to_alternate_duties_image" tappable
+                (click)="onOpenPreview(return_to_alternate_duties_image)">
+            </ion-slide>
+          </ion-slides>
         </div>
       </ion-card-content>
     </ion-card>
     <!----------------------------------------------------------- Incident Description ------------------------------------------------>
+
     <!------------------------------------------------------------- Classification ---------------------------------------------------->
     <ion-card>
       <ion-card-header>
@@ -150,10 +130,12 @@
         <p class="question">Location Type :</p>
         <p class="value">{{incidentDetails['classification_location_option'] }}</p>
 
-        <ion-text *ngIf="incidentDetails['classification_location_option']  == 'Add Location'" class="regularTexrt">
+        <p class="value">{{incidentDetails['classification_location_value'] }}</p>
+
+        <!-- <ion-text *ngIf="incidentDetails['classification_location_option']  == 'Add Location'" class="regularTexrt">
           {{incidentDetails['classification_location_value']}}</ion-text>
         <ion-text *ngIf="incidentDetails['classification_location_option']  == 'Choose Location'" class="regularTexrt">
-          {{incidentDetails['classification_location_value']}}</ion-text>
+          {{incidentDetails['classification_location_value']}}</ion-text> -->
 
         <p class="question">Shift Type :</p>
         <p class="value">{{incidentDetails['classification_shift_type'] }}</p>
@@ -263,26 +245,22 @@
 
           <ion-item *ngIf="incidentDetails['was_a_chemical_split']==='Yes'">
             <ion-row>
-              <p class="question"> Name of chemical :</p>
-              <p class="value">{{incidentDetails['chemical_details'].chemical_name}}</p>
+              <ion-col>
+                <p class="question"> Name of chemical :</p>
+                <p class="value">{{incidentDetails['chemical_details'].chemical_name}}</p>
 
-              <p class="question">Insert Photo :</p>
-              <!-- <ion-row
-                *ngIf="incidentDetails['chemical_details'] && incidentDetails['chemical_details'].chemical_photo && incidentDetails['chemical_details'].chemical_photo.length > 0">
-                <ion-col size="3" *ngFor="let chemical_photo of incidentDetails['chemical_details'].chemical_photo">
-                  <img [src]="chemical_photo" class="ion-padding" width="100%">
-                </ion-col>
-              </ion-row> -->
+                <p class="question">Insert Photo :</p>
 
-              <ion-slides [options]="sliderOpts" class="preview-slides"
-                *ngIf="incidentDetails['chemical_details'] && incidentDetails['chemical_details'].chemical_photo && incidentDetails['chemical_details'].chemical_photo.length > 0">
-                <ion-slide *ngFor="let chemical_photo of incidentDetails['chemical_details'].chemical_photo">
-                  <img [src]="chemical_photo" tappable (click)="onOpenPreview(photography_image)">
-                </ion-slide>
-              </ion-slides>
+                <ion-slides [options]="sliderOpts" class="preview-slides"
+                  *ngIf="incidentDetails['chemical_details'] && incidentDetails['chemical_details'].chemical_photo && incidentDetails['chemical_details'].chemical_photo.length > 0">
+                  <ion-slide *ngFor="let chemical_photo of incidentDetails['chemical_details'].chemical_photo">
+                    <img [src]="chemical_photo" tappable (click)="onOpenPreview(chemical_photo)">
+                  </ion-slide>
+                </ion-slides>
 
-              <p class="question">Approximate quantity of chemical spilled :</p>
-              <p class="value">{{incidentDetails['chemical_details'].approximate_quantity}}</p>
+                <p class="question">Approximate quantity of chemical spilled :</p>
+                <p class="value">{{incidentDetails['chemical_details'].approximate_quantity}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -291,8 +269,10 @@
 
           <ion-item *ngIf="incidentDetails['emergency_spill_kit_used']==='Yes'">
             <ion-row>
-              <p class=" question"> What was used out of the chemical spill kit ? :</p>
-              <p class="value">{{incidentDetails['out_of_split_kit']}}</p>
+              <ion-col>
+                <p class=" question"> What was used out of the chemical spill kit ? :</p>
+                <p class="value">{{incidentDetails['out_of_split_kit']}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -317,13 +297,15 @@
 
             <p class="question"> Reputation damages type : </p>
             <ion-row>
-              <p class="question" *ngIf="incidentDetails['individual_damage_value'] == 'Individual' ">How has the
-                Individual's reputation been damaged ? :</p>
-              <p class="value">{{incidentDetails['individual_damage_value']}}</p>
+              <ion-col>
+                <p class="question" *ngIf="incidentDetails['individual_damage_value'] == 'Individual' ">How has the
+                  Individual's reputation been damaged ? :</p>
+                <p class="value">{{incidentDetails['individual_damage_value']}}</p>
 
-              <p class="question" *ngIf="incidentDetails['company_damage_value'] == 'Company' ">How has the Company's
-                reputation been damaged ? :</p>
-              <p class="value">{{incidentDetails['company_damage_value']}}</p>
+                <p class="question" *ngIf="incidentDetails['company_damage_value'] == 'Company' ">How has the Company's
+                  reputation been damaged ? :</p>
+                <p class="value">{{incidentDetails['company_damage_value']}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -332,14 +314,16 @@
 
           <ion-item *ngIf="incidentDetails['effected_department'] != '' || incidentDetails['external_party'] != ''">
             <ion-row>
-              <div *ngIf="incidentDetails['effected_department'] != ''">
-                <p class="question">What Department was effected ? :</p>
-                <p class="value">{{incidentDetails['effected_department']}}</p>
-              </div>
-              <div *ngIf="incidentDetails['external_party'] != ''">
-                <p class="question">Who is the external party ? :</p>
-                <p class="value">{{incidentDetails['external_party']}}</p>
-              </div>
+              <ion-col>
+                <div *ngIf="incidentDetails['effected_department'] != ''">
+                  <p class="question">What Department was effected ? :</p>
+                  <p class="value">{{incidentDetails['effected_department']}}</p>
+                </div>
+                <div *ngIf="incidentDetails['external_party'] != ''">
+                  <p class="question">Who is the external party ? :</p>
+                  <p class="value">{{incidentDetails['external_party']}}</p>
+                </div>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -348,18 +332,20 @@
 
           <ion-item *ngIf="incidentDetails['name_of_witness'] == 'Other'">
             <ion-row>
-              <div>
-                <p class="question">Name :</p>
-                <p class="value">{{incidentDetails['other_witness_details'].other_witness_name}}</p>
-              </div>
-              <div>
-                <p class="question">Mobile No :</p>
-                <p class="value">{{incidentDetails['other_witness_details'].other_witness_mobile_no}}</p>
-              </div>
-              <div>
-                <p class="question">Email id :</p>
-                <p class="value">{{incidentDetails['other_witness_details'].other_witness_email}}</p>
-              </div>
+              <ion-col>
+                <div>
+                  <p class="question">Name :</p>
+                  <p class="value">{{incidentDetails['other_witness_details'].other_witness_name}}</p>
+                </div>
+                <div>
+                  <p class="question">Mobile No :</p>
+                  <p class="value">{{incidentDetails['other_witness_details'].other_witness_mobile_no}}</p>
+                </div>
+                <div>
+                  <p class="question">Email id :</p>
+                  <p class="value">{{incidentDetails['other_witness_details'].other_witness_email}}</p>
+                </div>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -382,26 +368,34 @@
 
           <ion-item *ngIf="incidentDetails['security_option'] == 'IT'">
             <ion-row>
-              <p class="question">What kind of IT Security Incident ? :</p>
-              <p class="value">{{incidentDetails['it_option_value']}}</p>
+              <ion-col>
+                <p class="question">What kind of IT Security Incident ? :</p>
+                <p class="value">{{incidentDetails['it_option_value']}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
           <ion-item *ngIf="incidentDetails['security_option'] == 'Theft'">
             <ion-row>
-              <p class="question"> What has been stolen ? :</p>
-              <p class="value">{{incidentDetails['what_has_been_stolen_item']}}</p>
+              <ion-col>
+                <p class="question"> What has been stolen ? :</p>
+                <p class="value">{{incidentDetails['what_has_been_stolen_item']}}</p>
+              </ion-col>
             </ion-row>
             <ion-row>
-              <p class="question">Approximate value of stolen item ? :</p>
-              <p class="value">{{incidentDetails['approximate_value_of_stolen']}}</p>
+              <ion-col>
+                <p class="question">Approximate value of stolen item ? :</p>
+                <p class="value">{{incidentDetails['approximate_value_of_stolen']}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
           <ion-item *ngIf="incidentDetails['security_option'] == 'Other'">
             <ion-row>
-              <p class="question"> What is the Security incident ? :</p>
-              <p class="value">{{incidentDetails['what_is_the_specific_securities_incident']}}</p>
+              <ion-col>
+                <p class="question"> What is the Security incident ? :</p>
+                <p class="value">{{incidentDetails['what_is_the_specific_securities_incident']}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -425,8 +419,10 @@
 
           <ion-item *ngIf="incidentDetails['asset_has_number']=='Yes'">
             <ion-row>
-              <p class="question"> Asset Number :</p>
-              <p class="value">{{incidentDetails['asset_number']}}</p>
+              <ion-col>
+                <p class="question"> Asset Number :</p>
+                <p class="value">{{incidentDetails['asset_number']}}</p>
+              </ion-col>
             </ion-row>
           </ion-item>
 
@@ -435,12 +431,6 @@
 
           <div *ngIf="incidentDetails['extent_damage_image'] && incidentDetails['extent_damage_image'].length > 0">
             <p class="question">Upload photo of damage :</p>
-            <!-- <ion-row>
-              <ion-col size="3" *ngFor="let extent_damage_image of incidentDetails['extent_damage_image']">
-                <img [src]="extent_damage_image" class="ion-padding" width="100%">
-              </ion-col>
-            </ion-row> -->
-
             <ion-slides [options]="sliderOpts" class="preview-slides">
               <ion-slide *ngFor="let extent_damage_image of incidentDetails['extent_damage_image']">
                 <img [src]="extent_damage_image" tappable (click)="onOpenPreview(extent_damage_image)">

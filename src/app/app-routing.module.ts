@@ -94,6 +94,10 @@ const routes: Routes = [
     path: 'image-modal',
     loadChildren: () => import('./modals/image-modal/image-modal.module').then( m => m.ImageModalPageModule)
   },
+  {
+    path: 'incident-form-edit/:investigation_id',
+    loadChildren: () => import('./pages/incident/incident-form-edit/incident-form-edit.module').then( m => m.IncidentFormEditPageModule)
+  },
   //---------------------------------------------------------- New Routes -------------------------------------------------------------//
 
 ];
