@@ -72,20 +72,20 @@ export class IncidentFormPage implements OnInit {
 
   tabList = [
     {
-      "val": "Incident",
-      "tabDisable": false
+      val: "Incident",
+      tabDisable: false
     },
     {
-      "val": "Photography",
-      "tabDisable": true
+      val: "Photography",
+      tabDisable: true
     },
     {
-      "val": "Incident Description",
-      "tabDisable": true
+      val: "Incident Description",
+      tabDisable: true
     },
     {
-      "val": "Classification",
-      "tabDisable": true
+      val: "Classification",
+      tabDisable: true
     }
   ];
   selectedTabItem: string = 'Incident';
@@ -96,56 +96,79 @@ export class IncidentFormPage implements OnInit {
 
   classificationList = [
     {
-      "val": "Asset",
-      "isChecked": false
+      val: "Asset",
+      isChecked: false
     },
     {
-      "val": "Environmental",
-      "isChecked": false
+      val: "Environmental",
+      isChecked: false
     },
     {
-      "val": "Injury",
-      "isChecked": false
+      val: "Injury",
+      isChecked: false
     },
     {
-      "val": "Report",
-      "isChecked": false
+      val: "Report",
+      isChecked: false
     },
     {
-      "val": "Reputation",
-      "isChecked": false
+      val: "Reputation",
+      isChecked: false
     },
     {
-      "val": "Security",
-      "isChecked": false
+      val: "Security",
+      isChecked: false
     }
   ];
   itSecurityList = [
     {
-      "val": "Intrusion",
-      "isChecked": false
+      val: "Intrusion",
+      isChecked: false
     },
     {
-      "val": "Privacy breach",
-      "isChecked": false
+      val: "Privacy breach",
+      isChecked: false
     },
     {
-      "val": "Ransom ware",
-      "isChecked": false
+      val: "Ransom ware",
+      isChecked: false
     },
     {
-      "val": "Security",
-      "isChecked": false
+      val: "Security",
+      isChecked: false
     }
   ];
   reputationCheckBox = [
     {
-      "val": "Company",
-      "isChecked": false
+      val: "Company",
+      isChecked: false
     },
     {
-      "val": "Individual",
-      "isChecked": false
+      val: "Individual",
+      isChecked: false
+    }
+  ];
+
+  departmentEffect = [
+    {
+      val: "Dubbo Division",
+      isChecked: false
+    },
+    {
+      val: "Mudgee Division",
+      isChecked: false
+    },
+    {
+      val: "Orange Division",
+      isChecked: false
+    },
+    {
+      val: "Project Services",
+      isChecked: false
+    },
+    {
+      val: "West Wyalong Division",
+      isChecked: false
     }
   ];
   injuryList = IncidentJson[0].injuryList;
@@ -246,7 +269,7 @@ export class IncidentFormPage implements OnInit {
       individual_damage_value: [''],
       company_damage_value: [''],
       reputation_negative_effect: [''],
-      effected_department: [''],
+      effected_department: new FormArray([]),
       external_party: [''],
       name_of_witness: [''],                                   // required field
       other_witness_details:
@@ -606,25 +629,25 @@ export class IncidentFormPage implements OnInit {
       let fd = new FormData();
       //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
-      fd.append("incident_value", this.incidentForm.value['incident_value']);                             // required
-      fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss']);
-      fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other']);
+      fd.append("incident_value", this.incidentForm.value['incident_value'] ? this.incidentForm.value['incident_value'] : '');                             // required
+      fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : '');
+      fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : '');
 
       //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
       //---------------------------------------------- photography -------------------------------------------------------------//
 
-      fd.append("photography_image", JSON.stringify(this.photoGraphyObject));
+      fd.append("photography_image", this.photoGraphyObject ? JSON.stringify(this.photoGraphyObject) : '');
 
       //---------------------------------------------- photography --------------------------------------------------------------//
 
       //--------------------------------------------- Incident Description ------------------------------------------------------//
-      fd.append("incident_description", this.incidentDesForm.value['incident_description']);              //required
-      fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action']); //incident photo pending from postman and here also  // required
-      fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test']);
-      fd.append("alcohol_test_completed", this.incidentDesForm.value['incident_description_alcohol_test']);
-      fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed']);
-      fd.append("seen_differently", this.incidentDesForm.value['seen_differently']);
+      fd.append("incident_description", this.incidentDesForm.value['incident_description'] ? this.incidentDesForm.value['incident_description'] : '');              //required
+      fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action'] ? this.incidentDesForm.value['incident_description_action'] : ''); //incident photo pending from postman and here also  // required
+      fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test'] ? this.incidentDesForm.value['incident_description_alcohol_test'] : '');
+      fd.append("alcohol_test_completed", this.incidentDesForm.value['incident_description_alcohol_test'] ? this.incidentDesForm.value['incident_description_alcohol_test'] : '');
+      fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed'] ? this.incidentDesForm.value['drug_test_completed'] : '');
+      fd.append("seen_differently", this.incidentDesForm.value['seen_differently'] ? this.incidentDesForm.value['seen_differently'] : '');
       fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
       fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
 
@@ -674,9 +697,8 @@ export class IncidentFormPage implements OnInit {
 
       //------------------------------------------------------ Reputation -------------------------------------------------------------// 
       fd.append("reputation_option", this.reputationDesForm.value['reputation_option']);
-      fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value'])
-      fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value'])
-      // fd.append("reputation_damage_image", '');
+      fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value']);
+      fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value']);
       fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect']);
       fd.append("effected_department", this.reputationDesForm.value['effected_department']);
       fd.append("external_party", this.reputationDesForm.value['external_party']);
@@ -808,28 +830,60 @@ export class IncidentFormPage implements OnInit {
 
   onReputationDamagesCheckBox(event) {
     const formArray: FormArray = this.reputationDesForm.get('reputation_option') as FormArray;
-    if (event.target.checked) {
-      formArray.push(new FormControl(event.target.value));
+    if (event.detail.checked) {
+      formArray.push(new FormControl(event.detail.value));
       this.reputationCheckBox.find(ele => {
-        if (ele.val == event.target.value) {
-          ele.isChecked = true
+        if (ele.val == event.detail.value) {
+          ele.isChecked = event.detail.checked;
         }
       })
     } else {
       let i: number = 0;
       formArray.controls.forEach((ctrl: FormControl) => {
-        if (ctrl.value == event.target.value) {
+        if (ctrl.value == event.detail.value) {
           formArray.removeAt(i);
           return;
         }
         i++;
       });
       this.reputationCheckBox.find(ele => {
-        if (ele.val == event.target.value) {
+        if (ele.val == event.detail.value) {
           ele.isChecked = false
         }
       })
     }
+    // console.log('this.reputationCheckBox', this.reputationCheckBox);
+    // console.log('this.reputationDesForm', this.reputationDesForm);
+  }
+
+  onDepartmentEffectCheckBox(event) {
+    const formArray: FormArray = this.reputationDesForm.get('effected_department') as FormArray;
+    if (event.detail.checked) {
+      formArray.push(new FormControl(event.detail.value));
+      this.departmentEffect.find(ele => {
+        console.log('departmentEffect ele', ele);
+        if (ele.val == event.detail.value) {
+          console.log('here1');
+          ele.isChecked = event.detail.checked;
+        }
+      })
+    } else {
+      let i: number = 0;
+      formArray.controls.forEach((ctrl: FormControl) => {
+        if (ctrl.value == event.detail.value) {
+          formArray.removeAt(i);
+          return;
+        }
+        i++;
+      })
+      this.departmentEffect.find(ele => {
+        if (ele.val == event.detail.value) {
+          ele.isChecked = false;
+        }
+      })
+    }
+    console.log('this.departmentEffect', this.departmentEffect);
+    console.log('this.reputationDesForm', this.reputationDesForm);
   }
 
   onInput(evt, val) {
@@ -884,7 +938,9 @@ export class IncidentFormPage implements OnInit {
     })
   }
 
-  onAddMultiplePersonDetails() {
+  onAddMultiplePersonDetails(event) {
+    console.log('onAddMultiplePersonDetails', event);
+    console.log('injury_persons',this.injuryForm.value['injury_persons']);
     let no = 0;
     if (this.injuryForm.value["person_details"].length != 0) {
       no = (this.injuryForm.value['injury_persons'] - this.injuryForm.value["person_details"].length);

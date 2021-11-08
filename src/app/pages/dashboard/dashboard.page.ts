@@ -21,9 +21,13 @@ export class DashboardPage implements OnInit {
   userId: string;
   roleId: string;
   type: any = environment.allType;
-  pName :String = 'Dashboard';
+  pName: String = 'Dashboard';
 
   _menu = [
+    // {
+    //   // menuName: "Incident", route: "/add-form"
+    //   menuName: "Prestarts", route: "/incident-form"
+    // },
     {
       // menuName: "Incident", route: "/add-form"
       menuName: "Incident", route: "/incident-form"

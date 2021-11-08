@@ -111,7 +111,7 @@
         <hr />
         <div [formGroup]="incidentDesForm">
           <p class="question"> Description of incident : </p>
-          <ion-text class="mandatoryField">( note : You must not use any personal details or names)</ion-text>
+          <ion-text class="mandatoryField">( Note : You must not use any personal details or names)</ion-text>
           <ion-input placeholder="Description of incident" formControlName="incident_description"
             (ionChange)="onInput($event,'Incident Description')"></ion-input>
           <p class="question">Immediate action taken :</p>
@@ -261,12 +261,10 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-
-            <ion-text class="mandatoryField">* If selected yes please take a photo or upload the Certificate of
-              Capacity
-              COC.</ion-text>
           </ion-radio-group>
           <div *ngIf="incidentDesForm.value['return_to_alternate_duties']=='Yes'">
+            <ion-text class="mandatoryField">* Please take a photo or upload the Cerificate of Copacity (COC).
+            </ion-text>
             <div *ngIf=" platformCheck==='cordova'">
               <ion-button *ngIf=" returnToAlternateDuties=='Yes'" class=" camera" expand="block"
                 (click)="selectImage(7)">
@@ -276,7 +274,7 @@
             </div>
 
             <div *ngIf="platformCheck === 'browser'">
-              <input type='file' value="return_to_alternate_duties_image" multiple
+              <input type='file' value="return_to_alternate_duties_image" multiple class="uploadFile"
                 (change)="onReturnToDutyImage($event)">
 
               <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="alterDutyImages.length > 0">
@@ -284,11 +282,6 @@
                   <img [src]="returnToAlterDutyImage" tappable (click)="onOpenPreview(returnToAlterDutyImage)">
                 </ion-slide>
               </ion-slides>
-              <!-- <div class="ion-text-center" *ngIf="alterDutyImages.length > 0">
-                <div *ngFor="let returnToAlterDutyImage of alterDutyImages">
-                  <img [src]="returnToAlterDutyImage" height="100" class="img-responsive"> <br />
-                </div>
-              </div> -->
             </div>
 
           </div>
@@ -328,7 +321,7 @@
 
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Time of Incident :</ion-label>
-          <ion-datetime displayFormat="HH:mm:s" placeholder="Select Time" formControlName="time_of_incident">
+          <ion-datetime displayFormat="HH:mm:ss" placeholder="Select Time" formControlName="time_of_incident">
           </ion-datetime>
         </ion-item>
 
@@ -340,7 +333,7 @@
 
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Time Reported :</ion-label>
-          <ion-datetime displayFormat="HH:mm:s" placeholder="Select Time" formControlName="time_reported">
+          <ion-datetime displayFormat="HH:mm:ss" placeholder="Select Time" formControlName="time_reported">
           </ion-datetime>
         </ion-item>
 
@@ -427,7 +420,19 @@
           <img (click)="onDeSelectTabItem(tabItem)" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
-        <ion-radio-group formControlName="injury_persons" (ionChange)="onAddMultiplePersonDetails()">
+
+        <ion-item class="ra" lines="none">
+          <ion-label>Injured Person</ion-label>
+          <ion-select placeholder="Select Injured Person" interface="action-sheet" formControlName="injury_persons"
+            (ionChange)="onAddMultiplePersonDetails($event)">
+            <ion-select-option value="1">1</ion-select-option>
+            <ion-select-option value="2">2</ion-select-option>
+            <ion-select-option value="3">3</ion-select-option>
+            <ion-select-option value="4">4</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <!-- <ion-radio-group formControlName="injury_persons" (ionChange)="onAddMultiplePersonDetails()">
           <ion-row>
             <ion-col size="3">
               <ion-item class="ra" lines="none">
@@ -454,7 +459,7 @@
               </ion-item>
             </ion-col>
           </ion-row>
-        </ion-radio-group>
+        </ion-radio-group> -->
 
         <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index ">
           <ion-card>
@@ -803,7 +808,23 @@
           </ion-row>
         </ion-radio-group>
 
-        <ion-radio-group formControlName="effected_department"
+        <div
+          *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'Internal') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
+          <ion-item class="ra" lines="none">
+            <ion-label>What Department was effected ? :</ion-label>
+          </ion-item>
+
+          <ion-list class="ion-no-padding">
+            <ion-item *ngFor="let departmentEffectVal of departmentEffect" lines="none" class="ion-no-padding">
+              <ion-label>{{departmentEffectVal.val}}</ion-label>
+              <ion-checkbox slot="end" (ionChange)="onDepartmentEffectCheckBox($event)"
+                [value]="departmentEffectVal.val" [checked]="departmentEffectVal.isChecked">
+              </ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <!-- <ion-radio-group formControlName="effected_department"
           *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'Internal') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
           <ion-item class="ra" lines="none">
             <ion-label>What Department was effected ? :</ion-label>
@@ -823,6 +844,12 @@
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
+                <ion-label>Dubbo Division</ion-label>
+                <ion-radio slot="start" value="Dubbo Division"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
                 <ion-label>Mudgee Division</ion-label>
                 <ion-radio slot="start" value="Mudgee Division"></ion-radio>
               </ion-item>
@@ -834,7 +861,7 @@
               </ion-item>
             </ion-col>
           </ion-row>
-        </ion-radio-group>
+        </ion-radio-group> -->
 
         <div
           *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'External') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">

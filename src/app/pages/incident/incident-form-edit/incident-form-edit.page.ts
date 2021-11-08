@@ -17,6 +17,7 @@ import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 import IncidentJson from '../incident-form.json';
 
 
+
 @Component({
   selector: 'app-incident-form-edit',
   templateUrl: './incident-form-edit.page.html',
@@ -123,6 +124,7 @@ export class IncidentFormEditPage implements OnInit {
       "isChecked": false
     }
   ];
+
   itSecurityList = [
     {
       "val": "Intrusion",
@@ -141,6 +143,7 @@ export class IncidentFormEditPage implements OnInit {
       "isChecked": false
     }
   ];
+
   reputationCheckBox = [
     {
       "val": "Company",
@@ -151,6 +154,30 @@ export class IncidentFormEditPage implements OnInit {
       "isChecked": false
     }
   ];
+
+  departmentEffect = [
+    {
+      val: "Dubbo Division",
+      isChecked: false
+    },
+    {
+      val: "Mudgee Division",
+      isChecked: false
+    },
+    {
+      val: "Orange Division",
+      isChecked: false
+    },
+    {
+      val: "Project Services",
+      isChecked: false
+    },
+    {
+      val: "West Wyalong Division",
+      isChecked: false
+    }
+  ];
+
   injuryList = IncidentJson[0].injuryList;
 
 
@@ -251,7 +278,7 @@ export class IncidentFormEditPage implements OnInit {
       individual_damage_value: [''],
       company_damage_value: [''],
       reputation_negative_effect: [''],
-      effected_department: [''],
+      effected_department: new FormArray([]),
       external_party: [''],
       name_of_witness: [''],                                   // required field
       other_witness_details:
@@ -387,13 +414,15 @@ export class IncidentFormEditPage implements OnInit {
             //------------------------------------------------------- classificationForm ----------------------------------------------------------//
             let classificationValue: FormArray = this.classificationForm.get('classification_value') as FormArray;
             this.selectedTabList = this.incidentDetails['classification_value'].split(',');
-            this.selectedTabList.sort();
-            this.classificationList.forEach((ele, index) => {
-              if (this.selectedTabList[index] == ele.val) {
-                classificationValue.push(new FormControl(ele.val));
-                ele.isChecked = true
-              }
+            this.classificationList.forEach((element) => {
+              this.selectedTabList.find(ele => {
+                if (element.val == ele) {
+                  classificationValue.push(new FormControl(ele));
+                  element.isChecked = true
+                }
+              });
             });
+
             this.managerList = this.incidentDetails.classification_manager;
             this.classificationForm.controls['date_of_incident'].setValue(this.incidentDetails.date_of_incident);
             this.classificationForm.controls['time_of_incident'].setValue(this.incidentDetails.time_of_incident);
@@ -422,7 +451,9 @@ export class IncidentFormEditPage implements OnInit {
             //------------------------------------------------------- injuryForm ----------------------------------------------------------//
 
             this.injuryForm.controls.injury_persons.setValue(this.incidentDetails.injury_persons);
-            this.injuryForm.setControl('person_details', this.setPersonDetails(this.incidentDetails.person_details));
+            if (this.incidentDetails.person_details.length > 0) {
+              this.injuryForm.setControl('person_details', this.setPersonDetails(this.incidentDetails.person_details));
+            }
             //------------------------------------------------------- injuryForm ----------------------------------------------------------//
 
             //------------------------------------------------------- reportForm ----------------------------------------------------------//
@@ -431,19 +462,33 @@ export class IncidentFormEditPage implements OnInit {
             //------------------------------------------------------- reputationDesForm ----------------------------------------------------------//
 
             let reputation_option = this.incidentDetails['reputation_option'].split(',');
-            reputation_option.sort();
             let reputationOption: FormArray = this.reputationDesForm.get('reputation_option') as FormArray;
-            this.reputationCheckBox.forEach((ele, index) => {
-              if (reputation_option[index] == ele.val) {
-                reputationOption.push(new FormControl(reputation_option[index]));
-                ele.isChecked = true
-              }
+
+            this.reputationCheckBox.forEach((element) => {
+              reputation_option.find(ele => {
+                if (element.val == ele) {
+                  reputationOption.push(new FormControl(ele));
+                  element.isChecked = true
+                }
+              });
             });
 
             this.reputationDesForm.controls['individual_damage_value'].setValue(this.incidentDetails.individual_damage_value);
             this.reputationDesForm.controls['company_damage_value'].setValue(this.incidentDetails.company_damage_value);
             this.reputationDesForm.controls['reputation_negative_effect'].setValue(this.incidentDetails.reputation_negative_effect);
-            this.reputationDesForm.controls['effected_department'].setValue(this.incidentDetails.effected_department);
+
+            let effected_department = this.incidentDetails['effected_department'].split(',');
+            let effectedDepartment: FormArray = this.reputationDesForm.get('effected_department') as FormArray;
+
+            this.departmentEffect.forEach((element) => {
+              effected_department.find(ele => {
+                if (element.val == ele) {
+                  effectedDepartment.push(new FormControl(ele));
+                  element.isChecked = true
+                }
+              });
+            });
+
             this.reputationDesForm.controls['external_party'].setValue(this.incidentDetails.external_party);
             this.reputationDesForm.controls['name_of_witness'].setValue(this.incidentDetails.name_of_witness);
             this.reputationDesForm.controls['other_witness_details'].setValue(this.incidentDetails.other_witness_details);
@@ -457,17 +502,16 @@ export class IncidentFormEditPage implements OnInit {
             this.securityForm.controls['approximate_value_of_stolen'].setValue(this.incidentDetails.approximate_value_of_stolen);
             this.securityForm.controls['what_is_the_specific_securities_incident'].setValue(this.incidentDetails.what_is_the_specific_securities_incident);
 
-
-            let itOptionValue: FormArray = this.securityForm.get('it_option_value') as FormArray;
             let it_option_value = this.incidentDetails.it_option_value.split(',');
-            it_option_value.sort();
-            this.itSecurityList.forEach((ele, index) => {
-              if (it_option_value[index] == ele.val) {
-                itOptionValue.push(new FormControl(it_option_value[index]));
-                ele.isChecked = true
-              }
+            let itOptionValue: FormArray = this.securityForm.get('it_option_value') as FormArray;
+            this.itSecurityList.forEach((ele) => {
+              it_option_value.find(element => {
+                if (ele.val == element) {
+                  itOptionValue.push(new FormControl(element));
+                  ele.isChecked = true;
+                }
+              })
             });
-
             //------------------------------------------------------- securityForm ----------------------------------------------------------//
           }
         }), error => {
@@ -1061,5 +1105,35 @@ export class IncidentFormEditPage implements OnInit {
     } else if (evt.detail.value == "External") {
       this.reputationDesForm.controls['effected_department'].setValue('');
     }
+  }
+
+  onDepartmentEffectCheckBox(event) {
+    const formArray: FormArray = this.reputationDesForm.get('effected_department') as FormArray;
+    if (event.detail.checked) {
+      formArray.push(new FormControl(event.detail.value));
+      this.departmentEffect.find(ele => {
+        console.log('departmentEffect ele', ele);
+        if (ele.val == event.detail.value) {
+          console.log('here1');
+          ele.isChecked = event.detail.checked;
+        }
+      })
+    } else {
+      let i: number = 0;
+      formArray.controls.forEach((ctrl: FormControl) => {
+        if (ctrl.value == event.detail.value) {
+          formArray.removeAt(i);
+          return;
+        }
+        i++;
+      })
+      this.departmentEffect.find(ele => {
+        if (ele.val == event.detail.value) {
+          ele.isChecked = false;
+        }
+      })
+    }
+    console.log('this.departmentEffect', this.departmentEffect);
+    console.log('this.reputationDesForm', this.reputationDesForm);
   }
 }

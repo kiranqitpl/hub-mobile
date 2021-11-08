@@ -17,7 +17,7 @@
                 "desc": "ADI: Alternative Duties Injury, temporary duties , identified as in Hort Enterprises Alternative Duties Within the Workplace HE-WHS-FRM-0036, that are required when an injured worker is unable to return to their normal duties."
             },
             {
-                "val": "LTL",
+                "val": "LTI",
                 "isChecked": false,
                 "desc": "LTI: Lost Time Injury, an injury that results in a day or more lost from work."
             },
