@@ -11,8 +11,6 @@ import { catchError, map } from 'rxjs/operators';
 export class GlobalService {
 
   baseUrl: string = 'https://mforms-api-devel.horts.com.au/';
-  // https://mforms-api-devel.horts.com.au/
-
   baseUrl1: string = 'https://mforms-api-devel.horts.com.au/api/';
 
   //Role 
@@ -40,7 +38,6 @@ export class GlobalService {
     toast.present();
   }
 
-
   async toast(msg, type) {
     const toast = await this.toastController.create({
       message: msg,
@@ -64,31 +61,15 @@ export class GlobalService {
     await this.loadingController.dismiss();
   }
 
-  // setHeader() {
-  //   let header = new HttpHeaders({ 'apikey': 'as*37486a*()HGY' });
-  //   header.set("Access-Control-Allow-Origin", "*");
-  //   header.set("Content-Type", "application/json");
-  //   header.set("Access-Control-Allow-Headers", "*")
-  //   header.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-  //   header.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-  //   if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
-  //     header.set("token", localStorage.getItem("token"));
-  //   }
-  //   return header;
-  // }
-
   setHeader() {
     let header = new HttpHeaders()
       .set('apikey', 'as*37486a*()HGY')
       .set("Access-Control-Allow-Origin", "*")
-      // .set("Content-Type", "application/json")
       .set("Access-Control-Allow-Headers", "*")
       .set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-      .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
-
-    if (localStorage.getItem("token") && localStorage.getItem("token") != "") {
-      header.set("token", localStorage.getItem("token"));
-    }
+      .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    // if (localStorage.getItem("token") && localStorage.getItem("token") != "")
+    //   header.append("token", localStorage.getItem("token"));
     return header;
   }
 
@@ -102,17 +83,7 @@ export class GlobalService {
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
-  postDataWithId(url, data) {
-    let headers = this.setHeader();
-    return this.http.post(this.baseUrl + url, data, { headers: headers });
-  }
-
-  getDataWithId(url) {
-    let headers = this.setHeader();
-    return this.http.get(this.baseUrl + url, { headers: headers });
-  }
-
-  // -------------------------------------------------------------New Services -----------------------------------------------------//
+  // --------------------------------------------------New Services ---------------------------------------------//
 
   postData1(url, data) {
     let headers = this.setHeader();
@@ -134,4 +105,4 @@ export class GlobalService {
     // );
   }
 }
-// -------------------------------------------------------------New Services -----------------------------------------------------//
+// ---------------------------------------------  New Services --------------------------------------------------//

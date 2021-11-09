@@ -93,14 +93,17 @@ ion-content {
     font-size: 20px;
     margin-top: 10px;
   }
+
   .btnView {
     margin-top: 100px;
   }
+
   .plus {
     height: 18px;
     width: 18px;
     object-fit: contain;
   }
+
   .inci {
     width: 100%;
     margin: 0;
@@ -130,9 +133,11 @@ ion-content {
       right: 0;
     }
   }
+
   .questionHead {
     font-family: mon-black;
   }
+
   .activeBackground {
     border-radius: 20px;
     margin-bottom: 22px;
@@ -157,6 +162,7 @@ ion-content {
       }
     }
   }
+
   .ra {
     --background: transparent;
     padding: 0;
@@ -175,32 +181,40 @@ ion-content {
       color: var(--black-color);
     }
   }
+
   ion-radio {
     margin-right: 7px;
   }
+
   ion-checkbox {
     --border-color: var(--theme-blue-color);
   }
+
   ion-col {
     padding: 0;
   }
+
   hr {
     height: 1px;
     background: #cccccc;
     margin-top: 0px;
     margin-bottom: 0px;
   }
+
   ion-radio {
     --color: var(--theme-blue-color);
   }
+
   .question {
     font-size: 14px !important;
   }
+
   .other_witness {
     margin-top: 20px;
     margin-bottom: 10px;
     font-size: 18px !important;
   }
+
   ion-list {
     --background: transparent !important;
     background: transparent !important;
@@ -223,6 +237,7 @@ ion-content {
     color: var(--black-color);
     --padding-end: 15px;
   }
+
   ion-input {
     background: var(--ion-color-primary-contrast);
     border-radius: 20px;
@@ -231,22 +246,27 @@ ion-content {
     --padding-end: 10px;
     --padding-top: 10px;
   }
+
   .labelCustomDropDown {
     margin-left: 12px;
   }
+
   .camera {
     font-family: mon-medium;
     margin-top: 16px;
   }
+
   ion-datetime {
     font-family: "mon-medium";
   }
+
   ion-card {
     margin: 0;
     padding: 16px;
     border-radius: 19px;
     margin-bottom: 15px;
   }
+
   .btnSubmit {
     margin: 0;
     height: 44px;
@@ -255,12 +275,14 @@ ion-content {
     font-size: 16px;
   }
 }
+
 .img-responsive {
   height: 200px;
   width: 250px;
   object-fit: contain;
   border-radius: 10px;
 }
+
 ion-select-option {
   text-transform: capitalize;
   font-family: pop-medium;

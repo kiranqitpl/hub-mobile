@@ -304,6 +304,7 @@ export class IncidentFormPage implements OnInit {
 
   loadWitness() {
     this.globalService.getData1("Witness/getWitnessList").subscribe((res: any) => {
+      console.log('getWitnessList',res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.witnessList = res.data;
         this.reputationWitnessList = this.witnessList;
@@ -939,8 +940,8 @@ export class IncidentFormPage implements OnInit {
   }
 
   onAddMultiplePersonDetails(event) {
-    console.log('onAddMultiplePersonDetails', event);
-    console.log('injury_persons',this.injuryForm.value['injury_persons']);
+    // console.log('onAddMultiplePersonDetails', event);
+    // console.log('injury_persons',this.injuryForm.value['injury_persons']);
     let no = 0;
     if (this.injuryForm.value["person_details"].length != 0) {
       no = (this.injuryForm.value['injury_persons'] - this.injuryForm.value["person_details"].length);

@@ -15,7 +15,7 @@ export class ManagersPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.global.getDataWithId("api/Manager/getManagerList").subscribe((res: any) => {
+    this.global.getData1("Manager/getManagerList").subscribe((res: any) => {
       console.log('res', res);
       if (res) {
         this.data = res.data;

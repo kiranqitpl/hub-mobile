@@ -2,16 +2,18 @@
   <app-header [pageName]="pName"></app-header>
   <div class="container">
     <div *ngIf="roleId != gmRole">
-      <ion-button class="login-btn" *ngFor="let item of _menu" [routerLink]="item.route">
+      <ion-button class="login-btn" *ngFor="let item of menu" [routerLink]="item.route">
         {{item.menuName}}
       </ion-button>
     </div>
-    <ion-button class="login-btn" *ngFor="let item of data" (click)="navGo(item)">
-      {{item}}
-      <ion-badge class="badge"
-        *ngIf="item == 'Notification' && sharedService.notViewNotiCount != 0 && roleId != userRole " color="danger">
-        {{sharedService.notViewNotiCount}}</ion-badge>
-    </ion-button>
+    <div *ngFor="let tabVal of data">
+      <ion-button class="login-btn" (click)="navGo(tabVal)">
+        {{tabVal}}
+        <ion-badge class="badge"
+          *ngIf="tabVal == 'Notification' && sharedService.notViewNotiCount != 0 && roleId != userRole " color="danger">
+          {{sharedService.notViewNotiCount}}</ion-badge>
+      </ion-button>
+    </div>
     <ion-button class="login-btn logouts" (click)="logOut()">
       Logout
     </ion-button>

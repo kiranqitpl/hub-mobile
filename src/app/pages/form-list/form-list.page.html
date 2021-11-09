@@ -18,7 +18,7 @@
     <div class="ion-margin-top ion-margin-bottom">
 
       <ngx-datatable [scrollbarH]="true" class="material" [limit]="10"
-        [rows]="role==investigatorRole ? investigatorData :rows" [rowHeight]="50" [columnMode]="'force'"
+        [rows]="role == investigatorRole ? investigatorData :rows" [rowHeight]="50" [columnMode]="'force'"
         [headerHeight]="50" [footerHeight]="50" (activate)="onActivate($event)">
 
         <ngx-datatable-column name="No" [width]="10" [resizeable]="true">

@@ -35,7 +35,6 @@ export class FormListPage implements OnInit {
   constructor(
     private nav: NavController,
     private global: GlobalService,
-    // private platform: Platform
   ) { }
 
   ngOnInit() {
@@ -46,7 +45,8 @@ export class FormListPage implements OnInit {
 
   getInvestigatorDetails() {
     this.global.getData("api/Investigator/getInvestigator").subscribe((res: any) => {
-      if (res) {
+      console.log('Investigator', res);
+      if (res.status) {
         this.listOfUsers = res.data;
       }
     }, err => {
@@ -69,7 +69,7 @@ export class FormListPage implements OnInit {
     // }
 
     if (this.role == this.investigatorRole) {
-      this.global.postData("api/Add_form/get", { investigator_id: this.gm_id }).subscribe((res: any) => {
+      this.global.postData1("Add_form/get", { investigator_id: this.gm_id }).subscribe((res: any) => {
         if (res) {
           let data = [];
           res?.data?.forEach((el: any, index) => {
@@ -91,15 +91,12 @@ export class FormListPage implements OnInit {
           this.rows = this.listData;
           this.investigatorData = data;
         }
-        // this.global.dismissLoading();
+        this.global.dismissLoading();
       }, err => {
-        // this.global.dismissLoading();
         console.log("Err response", err)
       });
-
     } else {
-      this.global.postData("api/add_form/get", {}).subscribe((res: any) => {
-        // this.global.presentLoading()
+      this.global.postData1("add_form/get", {}).subscribe((res: any) => {
         if (res) {
           if (this.role == this.gmRole) {
             let data = [];
@@ -135,17 +132,17 @@ export class FormListPage implements OnInit {
             this.listData = res.data;
             this.rows = this.listData;
           }
-          // this.global.dismissLoading();
+          this.global.dismissLoading();
         } else {
-          // this.global.dismissLoading();
+          this.global.dismissLoading();
         }
       }, error => {
         console.log(error);
-        // this.global.dismissLoading();
+        this.global.dismissLoading();
       })
     }
-    this.global.postData("api/add_form/get", {}).subscribe((res: any) => {
-      // this.global.presentLoading()
+
+    this.global.postData1("add_form/get", {}).subscribe((res: any) => {
       if (res) {
         if (this.role == this.gmRole) {
           let data = [];
@@ -184,15 +181,15 @@ export class FormListPage implements OnInit {
           this.rows = this.listData;
 
         }
-        // this.global.dismissLoading();
+        this.global.dismissLoading();
       } else {
-        // this.global.dismissLoading();
+        this.global.dismissLoading();
       }
     }, error => {
       console.log(error);
-      // this.global.dismissLoading();
+      this.global.dismissLoading();
     })
-    // this.global.dismissLoading();
+ 
   }
 
   goBack() {
@@ -200,7 +197,6 @@ export class FormListPage implements OnInit {
   }
 
   onActivate(e) {
-    ;
     this.getRowData = e.row;
     localStorage.setItem("singleView", JSON.stringify(e.row));
   }
@@ -286,7 +282,7 @@ export class FormListPage implements OnInit {
     // }
 
     this.global.presentLoading();
-    this.global.postDataWithId("api/GeneralManager/assignedInvestigator", fd).subscribe((res: any) => {
+    this.global.postData1("GeneralManager/assignedInvestigator", fd).subscribe((res: any) => {
       this.global.presentToast(res.message);
       // if (res.status) {
       //   this.global.presentToast(res.message);

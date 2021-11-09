@@ -23,18 +23,15 @@ export class DashboardPage implements OnInit {
   type: any = environment.allType;
   pName: String = 'Dashboard';
 
-  _menu = [
-    // {
-    //   // menuName: "Incident", route: "/add-form"
-    //   menuName: "Prestarts", route: "/incident-form"
-    // },
+  menu = [
     {
-      // menuName: "Incident", route: "/add-form"
+      menuName: "Prestart", route: "/prestart-dashboard"
+    },
+    {
       menuName: "Incident", route: "/incident-form"
     },
     {
-      menuName: "Hazard Report", route: ""
-      // menuName: "Hazard Report", route: "/add-form"
+      menuName: "Hazard Report", route: "#"
     },
     {
       menuName: "SBO", route: "#"
@@ -67,14 +64,10 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  next() {
-    this.nav.navigateForward("incident-type")
-  }
-
   navGo(item) {
     if (item === 'Previous Form' || item == 'Submitted Form') {
       this.nav.navigateForward("form-list");
-    } else if ((localStorage.getItem("role") != this.userRole) && (item === 'Notification')) {
+    } else if ((localStorage.getItem("role") != this.userRole) && (item === 'Notification') && this.sharedService.notViewNotiCount != 0) {
       this.nav.navigateForward("notification");
     }
   }
@@ -96,6 +89,7 @@ export class DashboardPage implements OnInit {
     }
     if (url != "") {
       this.global.postData(url, formData).subscribe(result => {
+        console.log('onNotificationLoad', result);
         if (result['status']) {
           let count: number = 0;
           result['data'].forEach(element => {
@@ -105,6 +99,7 @@ export class DashboardPage implements OnInit {
           });
           this.sharedService.notViewNotiCount = count
         } else {
+          this.sharedService.notViewNotiCount = 0
           console.log('error');
         }
       }), error => {
@@ -114,4 +109,8 @@ export class DashboardPage implements OnInit {
       console.log("error");
     }
   }
+
+  // next() {
+  //   this.nav.navigateForward("incident-type")
+  // }
 }

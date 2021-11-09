@@ -16,17 +16,16 @@ export class AppComponent {
     private _location: Location,
   ) {
     let token = localStorage.getItem("email") ? localStorage.getItem("email") : '';
+    console.log('token',token);
     if (token == '') {
-      nav.navigateRoot("login");
+      this.nav.navigateRoot("login");
     } else {
-      nav.navigateRoot("home");
-      // nav.navigateRoot("dashboard");
+      this.nav.navigateRoot("home");
     }
     this.initializeApp();
   }
 
   initializeApp() {
-
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       if (this._location.isCurrentPathEqualTo('/login')) {
         this.showExitConfirm();
