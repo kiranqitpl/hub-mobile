@@ -21,22 +21,7 @@ export class DashboardPage implements OnInit {
   userId: string;
   roleId: string;
   type: any = environment.allType;
-  pName: String = 'Dashboard';
-
-  menu = [
-    {
-      menuName: "Prestart", route: "/prestart-dashboard"
-    },
-    {
-      menuName: "Incident", route: "/incident-form"
-    },
-    {
-      menuName: "Hazard Report", route: "#"
-    },
-    {
-      menuName: "SBO", route: "#"
-    },
-  ];
+  imageUrl = environment.imageUrl;
 
   constructor(
     private nav: NavController,
@@ -64,15 +49,15 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  navGo(item) {
+  onNavGo(item) {
     if (item === 'Previous Form' || item == 'Submitted Form') {
-      this.nav.navigateForward("form-list");
+      this.nav.navigateForward("/incident-form-list");
     } else if ((localStorage.getItem("role") != this.userRole) && (item === 'Notification') && this.sharedService.notViewNotiCount != 0) {
-      this.nav.navigateForward("notification");
+      this.nav.navigateForward("/notification");
     }
   }
 
-  logOut() {
+  onLogOut() {
     localStorage.clear();
     this.nav.navigateRoot("login")
   }
@@ -110,7 +95,7 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  // next() {
-  //   this.nav.navigateForward("incident-type")
-  // }
+  onAddForm() {
+    this.nav.navigateForward("home")
+  }
 }

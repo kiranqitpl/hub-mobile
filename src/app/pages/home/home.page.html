@@ -1,0 +1,10 @@
+<ion-content>
+  <app-header [pageName]="pName"></app-header>
+  <div class="container">
+    <div class="btnView">
+      <ion-button class="btn" *ngFor="let tabVal of menu" [routerLink]="tabVal.route">
+        {{tabVal.menuName}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

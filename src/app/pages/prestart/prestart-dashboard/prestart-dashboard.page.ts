@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrestartDashboardPage implements OnInit {
 
-  pName: String = 'Prestart Dashbaord';
+  pName: String = 'Prestart';
   menu = [
     {
       menuName: 'LV Prestart', route: '#'

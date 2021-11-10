@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { NavController } from '@ionic/angular'
 import { GlobalService } from '../../services/global-service/global.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { ToastService } from 'src/app/services/toast-service/toast.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
-  ionicForm: FormGroup
-  isSubmitted = false
+  
+  ionicForm: FormGroup;
+  isSubmitted = false;
+  imageUrl = environment.imageUrl;
+
 
   constructor(
     private nav: NavController,
     private global: GlobalService,
-    public formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
+    private toastService: ToastService
   ) { }
 
   get errorControl() {
@@ -37,18 +42,16 @@ export class LoginPage implements OnInit {
       const fd = new FormData();
       fd.append("email", this.ionicForm.value.email);
       fd.append("password", this.ionicForm.value.password);
-
       this.global.postData1("user/login", fd).subscribe((res: any) => {
-        console.log('login', res);
         if (res.status) {
           localStorage.setItem("email", res.data.email);
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res?.data?.id);
           localStorage.setItem("name", res?.data?.full_name);
-          this.nav.navigateRoot('home')
-          this.global.presentToast(res.message);
+          this.nav.navigateRoot('dashboard')
+          this.toastService.toast(res.message, 'success');
         } else {
-          this.global.presentToast(res.message);
+          this.toastService.toast(res.message, 'danger');
         }
         this.global.dismissLoading();
       }, err => {

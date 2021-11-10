@@ -1,20 +1,27 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
-  <div class="container">
-    <div *ngIf="roleId != gmRole">
-      <ion-button class="login-btn" *ngFor="let item of menu" [routerLink]="item.route">
-        {{item.menuName}}
+  <div class="toolbar">
+    <ion-text>Dashboard</ion-text>
+    <ion-buttons class='logout' slot="end">
+      <ion-button (click)="onLogOut()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
+    </ion-buttons>
+  </div>
+
+  <div class="container">
+    <div class="addForm" (click)="onAddForm()" *ngIf="roleId != gmRole">
+      <img src="{{imageUrl + 'form.png'}}" />
+      <p class=" addF">ADD FORM</p>
     </div>
     <div *ngFor="let tabVal of data">
-      <ion-button class="login-btn" (click)="navGo(tabVal)">
+      <ion-button class="btn" (click)="onNavGo(tabVal)">
         {{tabVal}}
         <ion-badge class="badge"
           *ngIf="tabVal == 'Notification' && sharedService.notViewNotiCount != 0 && roleId != userRole " color="danger">
           {{sharedService.notViewNotiCount}}</ion-badge>
       </ion-button>
     </div>
-    <ion-button class="login-btn logouts" (click)="logOut()">
+    <ion-button class="btn logouts" (click)="onLogOut()">
       Logout
     </ion-button>
   </div>

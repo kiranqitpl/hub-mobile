@@ -2,7 +2,7 @@
   <app-header [pageName]="pName"></app-header>
   <div class="container">
     <div class="btnView">
-      <ion-button class="login-btn" *ngFor="let item of _menu" [routerLink]="item.route">
+      <ion-button class="btn" *ngFor="let item of menu" [routerLink]="item.route">
         {{item.menuName}}
       </ion-button>
     </div>

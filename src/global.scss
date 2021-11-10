@@ -135,11 +135,13 @@
 }
 
 ion-content {
+    // font-family: pop-medium;
+    font-family: "mon-bold";
     .toolbar {
         background-color: var(--theme-blue-color);
         align-items: center;
         align-content: center;
-        color: white;
+        // color: white;
         text-align: center;
         justify-content: center;
         align-self: center;
@@ -149,24 +151,26 @@ ion-content {
         text-transform: uppercase;
     }
     .container {
-        background-color: white;
+        // background-color: white;
+        background-color: black;
         border-top-left-radius: 32px;
         padding: 20px;
         border-top-right-radius: 32px;
         margin-top: -25px;
-        .logo {
-            padding-top: 80px;
-        }
+        color: white;
+        // .logo {
+        //     padding-top: 20px;
+        // }
         ion-item {
             --inner-padding-end: 0px;
             ion-label {
                 font-family: "mon-medium";
                 color: var(--black-color);
+                color: var(--white-color);
                 font-size: 21px;
             }
             ion-input {
                 font-family: "mon-medium";
-                color: var(--black-color);
                 font-size: 16px;
                 border: 1px solid #c3c3c3;
                 border-radius: 20px;
@@ -177,7 +181,7 @@ ion-content {
                 --padding-end: 12px;
             }
         }
-        .login-btn {
+        .btn {
             width: 100%;
             border-radius: 23px;
             --border-radius: 23px;
@@ -215,6 +219,12 @@ ion-content {
     }
 }
 
+.error {
+    font-family: "mon-medium";
+    color: red;
+    font-size: 15px;
+}
+
 .mandatoryField {
     color: red;
     font-size: 12px;
@@ -230,5 +240,4 @@ ion-content {
 .uploadFile {
     margin-top: 10px;
 }
-
 

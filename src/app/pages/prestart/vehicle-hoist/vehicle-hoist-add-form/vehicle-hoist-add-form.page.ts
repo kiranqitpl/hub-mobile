@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-// import { AlertService } from 'src/app/services/alert-service/alert.service';
 import { AlertController, NavController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GlobalService } from 'src/app/services/global-service/global.service';
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
+import { ToastService } from 'src/app/services/toast-service/toast.service';
 import moment from 'moment';
 
 
@@ -18,6 +19,8 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
+    private loadingService: LoadingService,
+    private toastService: ToastService,
     private navCtrl: NavController,
     private fb: FormBuilder,
     private globalService: GlobalService
@@ -71,19 +74,25 @@ export class VehicleHoistAddFormPage implements OnInit {
   }
 
   onSubmit() {
-    console.log('vehicleHoistForm', this.vehicleHoistForm.value);
+    this.loadingService.presentLoading();
     let logedInUserName = localStorage.getItem('name');
     let formData = {};
     formData = this.vehicleHoistForm.value;
     formData['user_name'] = logedInUserName;
     formData['date'] = moment().format('YYYY-MM-DD');
     formData['time'] = moment().format('HH:mm:ss')
-    console.log('formData', formData);
-    // this.globalService.postData1('', formData).subscribe(result => {
-    //   console.log('result', result);
-    // }, error => {
-    //   console.log('error', error);
-    // })
+    this.globalService.postData1('prestart_vehicle/add_prestart_vehicle', formData).subscribe(result => {
+      if (result && result['status']) {
+        this.navCtrl.back();
+        this.toastService.toast(result['message'], 'success');
+      } else {
+        this.toastService.toast(result['message'], 'danger');
+      }
+      this.loadingService.dismissLoading();
+    }, error => {
+      this.loadingService.dismissLoading();
+      console.log('error', error);
+    })
   }
 
 }

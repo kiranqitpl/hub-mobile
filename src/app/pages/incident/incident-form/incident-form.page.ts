@@ -310,7 +310,7 @@ export class IncidentFormPage implements OnInit {
         this.reputationWitnessList = this.witnessList;
         let data: boolean = this.findValueInWitness();
         if (data) {
-          this.reputationWitnessList.push({ contact_of_witness: "", name_of_witness: "Other" });
+          this.reputationWitnessList.push({  name_of_witness: "Other",contact_of_witness: "" });
         }
       } else {
         this.witnessList = [];
@@ -356,6 +356,7 @@ export class IncidentFormPage implements OnInit {
 
   loadLocation() {
     this.globalService.getData1("location/getLocation").subscribe((res: any) => {
+      console.log('getLocation',res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.locationList = res.data;
       } else {

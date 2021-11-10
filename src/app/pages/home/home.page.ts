@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 
 export class HomePage implements OnInit {
   // data = ["Admin", "Company", "Projects", "Workshops", "Safety"];
-
+  pName: String = 'Home';
   menu = [
     {
       menuName: "Admin", route: "#"
@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
       menuName: "Workshops", route: "#"
     },
     {
-      menuName: "Safety", route: "/dashboard"
+      menuName: "Safety", route: "/safety-menu"
     },
   ];
 

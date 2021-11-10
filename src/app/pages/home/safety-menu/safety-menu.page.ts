@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from '../../services/global-service/global.service';
+import { GlobalService } from '../../../services/global-service/global.service';
 
 @Component({
   selector: 'app-safety-menu',
@@ -8,9 +8,12 @@ import { GlobalService } from '../../services/global-service/global.service';
 })
 export class SafetyMenuPage implements OnInit {
 
-  _menu = [
+  menu = [
     {
-      menuName: "Incident", route: "/add-form"
+      menuName: "Prestart", route: "/prestart-dashboard"
+    },
+    {
+      menuName: "Incident", route: "/incident-form"
     },
     {
       menuName: "Hazard Report", route: "#"
@@ -18,12 +21,6 @@ export class SafetyMenuPage implements OnInit {
     {
       menuName: "SBO", route: "#"
     },
-    // {
-    //   menuName: "Previous Form", route: "/form-list"
-    // },
-    // {
-    //   menuName: "Notification", route: "#"
-    // },
   ];
 
   pName: String = "Safety";

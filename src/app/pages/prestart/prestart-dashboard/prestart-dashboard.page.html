@@ -1,7 +1,7 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
   <div class="container">
-    <ion-button class="login-btn" *ngFor="let tabVal of menu" [routerLink]="tabVal.route">
+    <ion-button class="btn" *ngFor="let tabVal of menu" [routerLink]="tabVal.route">
       {{tabVal.menuName}}
     </ion-button>
   </div>

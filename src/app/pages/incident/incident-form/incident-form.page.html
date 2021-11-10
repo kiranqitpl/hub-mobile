@@ -1,30 +1,25 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <div class="toolbar">
-      <ion-text>Incident Form</ion-text>
-      <ion-buttons class="back">
-        <ion-button (click)="nav.back()">
-          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-buttons class='saveBtn' (click)="onSubmit('incomplete_submit')">
-        <ion-button>
-          <ion-icon slot="icon-only" name="save-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </div>
-    <div class="headerStyle"></div>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div class="toolbar">
+    <ion-text>Incident Form</ion-text>
+    <ion-buttons class="back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit('incomplete_submit')">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
   <div class="container">
     <p>ReacIncident report</p>
   </div>
 
   <div class="ion-padding-start ion-padding-end">
     <div *ngFor="let tabItem of tabList">
-      <ion-button class="inci" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
+      <ion-button class="incident" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
         [disabled]="tabItem.tabDisable">
         <p>{{tabItem.val}} </p>
         <img class="plus" src="{{imagePath+'add.png'}}" />
@@ -60,14 +55,17 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
+          
           <div *ngIf="incidentForm.value['incident_value'] == 'Near Miss'">
             <p class="question">Who witnessed the near miss?</p>
+
             <ion-item class="ra" lines="none">
-              <ion-select placeholder="Select One" formControlName="incident_near_miss">
+              <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="incident_near_miss">
                 <ion-select-option value="{{witnesskeys?.name_of_witness}}" *ngFor="let witnesskeys of witnessList">
                   {{witnesskeys?.name_of_witness}}</ion-select-option>
               </ion-select>
             </ion-item>
+
             <p class="question">
               Possible consequence under different circumstances
             </p>
@@ -116,8 +114,9 @@
         <hr />
         <div [formGroup]="incidentDesForm">
           <p class="question">
-            Description of incident ( Note : You must not use any personal details or names)
+            Description of incident :
           </p>
+          <ion-text class="mandatoryField">( Note : You must not use any personal details or names)</ion-text>
           <ion-input placeholder="Description of incident" formControlName="incident_description"
             (ionChange)="onInput($event,'Incident Description')"></ion-input>
           <p class="question">Immediate action taken</p>
@@ -171,11 +170,6 @@
 
             <div *ngIf="platformCheck === 'browser'">
               <input type='file' value="incident_description_photo" multiple (change)="onAlochaolImage($event)">
-              <!-- <div class="ion-text-center" *ngIf="alcohalImages.length > 0">
-                <div *ngFor="let alcohalImage of alcohalImages">
-                  <img [src]="alcohalImage" height="100" class="img-responsive"> <br />
-                </div>
-              </div> -->
               <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="alcohalImages.length > 0">
                 <ion-slide *ngFor="let alcohalImage of alcohalImages">
                   <img [src]="alcohalImage" tappable (click)="onOpenPreview(alcohalImage)">
@@ -230,11 +224,6 @@
                   <img [src]="drugTestImage" tappable (click)="onOpenPreview(drugTestImage)">
                 </ion-slide>
               </ion-slides>
-              <!-- <div class="ion-text-center" *ngIf="drugTestImages.length > 0">
-                <div *ngFor="let drugTestImage of drugTestImages">
-                  <img [src]="drugTestImage" height="100" class="img-responsive"> <br />
-                </div>
-              </div> -->
             </div>
           </div>
 
@@ -305,7 +294,7 @@
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
-        <ion-list class="ion-no-padding">
+        <!-- <ion-list class="ion-no-padding"> -->
           <ion-row class='ion-no-padding'>
             <ion-col size="6" *ngFor="let classificationValue of classificationList; let i=index">
               <ion-item lines="none" class="ion-no-padding">
@@ -315,7 +304,7 @@
               </ion-item>
             </ion-col>
           </ion-row>
-        </ion-list>
+        <!-- </ion-list> -->
 
         <ion-item class="ra" lines="none">
           <ion-label position="floating">Date of Incident</ion-label>
@@ -394,14 +383,15 @@
           </ion-select>
         </ion-item>
 
-        <ion-item class="ra" lines="none">
+        <ion-item class="ra" lines="none" (click)="onOpenModal()">
           <ion-label class="labelCustomDropDown">{{managerList}}</ion-label>
           <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
-            <ion-button class="ion-no-padding ion-no-margin" (click)="onOpenModal()">
+            <ion-button class="ion-no-padding ion-no-margin">
               <ion-icon name="chevron-down" slot="icon-only"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-item>
+
       </div>
 
       <!----------------------------------------------------- Classification ----------------------------------------------------------------->
@@ -410,7 +400,7 @@
     <!---------------------------------------------------- Classification Sub Tab ------------------------------------------------------------>
 
     <div *ngFor="let classification of selectedTabList; let i = index">
-      <ion-button class="inci" *ngIf="selectedTabItem != classification" (click)="onSelectTabItem(classification)">
+      <ion-button class="incident" *ngIf="selectedTabItem != classification" (click)="onSelectTabItem(classification)">
         <p>{{classification}} </p>
         <img class="plus" src="{{imagePath+'add.png'}}" />
       </ion-button>
@@ -425,35 +415,6 @@
         </div>
         <hr />
 
-        <!-- <ion-radio-group formControlName="injury_persons" (ionChange)="onAddMultiplePersonDetails()">
-          <ion-row>
-            <ion-col size="3">
-              <ion-item class="ra" lines="none">
-                <ion-label>1</ion-label>
-                <ion-radio slot="start" value="1"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="3">
-              <ion-item class="ra" lines="none">
-                <ion-label>2</ion-label>
-                <ion-radio slot="start" value="2"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="3">
-              <ion-item class="ra" lines="none">
-                <ion-label>3</ion-label>
-                <ion-radio slot="start" value="3"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="3">
-              <ion-item class="ra" lines="none">
-                <ion-label>4</ion-label>
-                <ion-radio slot="start" value="4"></ion-radio>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-radio-group> -->
-
         <ion-item class="ra" lines="none">
           <ion-label>Injured Person</ion-label>
           <ion-select placeholder="Select Injured Person" interface="action-sheet" formControlName="injury_persons"
@@ -467,12 +428,15 @@
 
         <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index ">
           <ion-card>
-            <div class="headerTitle">
+            <!-- <div class="headerTitle">
               <p class="questionHead">Person {{(j+1)}} Details</p>
-            </div>
+            </div> -->
+
+            <p class="questionHead">Person {{(j+1)}} Details</p>
+
             <div [formGroupName]="j">
-              <p class="question">Full Name of Injured Person</p>
-              <ion-item class="ra">
+              <ion-item class="ra" lines="none">
+                <ion-label>Select Injured Person Name</ion-label>
                 <ion-select placeholder="Select One" interface="action-sheet" formControlName="injured_person_option">
                   <ion-select-option value="{{witnessName?.name_of_witness}}" *ngFor="let witnessName of witnessList">
                     {{witnessName?.name_of_witness}}
@@ -481,12 +445,12 @@
               </ion-item>
 
               <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
-                <p class="question">Full name of Injured Person</p>
+                <p class="question">Full Name of Injured Person</p>
                 <ion-input placeholder="Enter here" formControlName="injured_person_option_value">
                 </ion-input>
               </div>
 
-              <ion-item class="ra">
+              <ion-item class="ra" lines="none">
                 <ion-label>Gender</ion-label>
                 <ion-select placeholder="Select One" interface="action-sheet" formControlName="gender">
                   <ion-select-option value="Male">Male</ion-select-option>
@@ -495,7 +459,7 @@
                 </ion-select>
               </ion-item>
 
-              <ion-item class="ion-no-padding ra" mode="ios">
+              <ion-item class="ion-no-padding ra" lines="none" mode="ios">
                 <ion-label>Date of Birth</ion-label>
                 <ion-datetime displayFormat="MM/DD/YYYY" formControlName="date_of_birth">
                 </ion-datetime>
@@ -555,7 +519,7 @@
                 <ion-input placeholder="Enter here" formControlName="duties_explanation"></ion-input>
               </div>
 
-              <ion-item class="ra">
+              <ion-item class="ra" lines="none">
                 <ion-label>Initial Injury / IIIness Classification</ion-label>
               </ion-item>
 
@@ -606,10 +570,6 @@
                       {{bodyPartsVal.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
-
-                <!-- <p class="question">Part of body injured:</p>
-                <ion-input placeholder="Enter here" formControlName="part_of_body_injured_occured">
-                </ion-input> -->
               </div>
 
               <div>
@@ -841,52 +801,6 @@
           </ion-list>
         </div>
 
-        <!--  <ion-list class="ion-no-padding"
-          *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'Internal') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
-          <ion-item class="ra" lines="none">
-            <ion-label>What Department was effected ? :</ion-label>
-          </ion-item>
-        </ion-list>
-
-       <ion-radio-group formControlName="effected_department"
-          *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'Internal') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
-          <ion-item class="ra" lines="none">
-            <ion-label>What Department was effected ? :</ion-label>
-          </ion-item>
-          <ion-row class="ion-no-padding">
-            <ion-col size="6">
-              <ion-item class="ra" lines="none">
-                <ion-label>Orange Division</ion-label>
-                <ion-radio slot="start" value="Orange Division"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="ra" lines="none">
-                <ion-label>Project Services</ion-label>
-                <ion-radio slot="start" value="Project Services"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="ra" lines="none">
-                <ion-label>Dubbo Division</ion-label>
-                <ion-radio slot="start" value="Dubbo Division"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="ra" lines="none">
-                <ion-label>Mudgee Division</ion-label>
-                <ion-radio slot="start" value="Mudgee Division"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="ra" lines="none">
-                <ion-label>West Wyalong Division</ion-label>
-                <ion-radio slot="start" value="West Wyalong Division"></ion-radio>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-radio-group> -->
-
         <div
           *ngIf="(reputationDesForm.value['reputation_negative_effect'] == 'External') || (reputationDesForm.value['reputation_negative_effect'] == 'Both') ">
           <p class="question">
@@ -1087,5 +1001,8 @@
     <!----------------------------------------------------- Classification Sub Tab ----------------------------------------------------------->
   </div>
 
-  <ion-button (click)="onSubmit('submit')" expand="full" class="btnSubmit">SUBMIT</ion-button>
+  <div class="container">
+    <ion-button (click)="onSubmit('submit')" class="btn">SUBMIT</ion-button>
+  </div>
+
 </ion-content>

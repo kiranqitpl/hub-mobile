@@ -8,25 +8,25 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardPageModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  },
-  {
     path: 'managers',
     loadChildren: () => import('./modals/managers/managers.module').then(m => m.ManagersPageModule)
   },
-  {
-    path: 'form-list',
-    loadChildren: () => import('./pages/form-list/form-list.module').then(m => m.FormListPageModule)
-  },
+  // {
+  //   path: 'form-list',
+  //   loadChildren: () => import('./pages/form-list/form-list.module').then(m => m.FormListPageModule)
+  // },
   // {
   //   path: 'add-form',
   //   loadChildren: () => import('./pages/add-form/add-form.module').then(m => m.AddFormPageModule)
@@ -80,11 +80,15 @@ const routes: Routes = [
   },
   {
     path: 'safety-menu',
-    loadChildren: () => import('./pages/safety-menu/safety-menu.module').then(m => m.SafetyMenuPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/safety-menu.module').then(m => m.SafetyMenuPageModule)
   },
   {
     path: 'incident-form',
     loadChildren: () => import('./pages/incident/incident-form/incident-form.module').then(m => m.IncidentFormPageModule)
+  },
+  {
+    path: 'incident-form-list',
+    loadChildren: () => import('./pages/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
   },
   {
     path: 'incident-details/:investigation_id',
@@ -106,6 +110,7 @@ const routes: Routes = [
     path: 'vehicle-hoist-add-form',
     loadChildren: () => import('./pages/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
   },
+
 
   //------------------------------------------------------------- New Routes -----------------------------------------------------------------//
 

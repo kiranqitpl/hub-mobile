@@ -14,7 +14,7 @@ export class ToastService {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
-      mode: "ios",
+      // mode: "ios",
       color: "dark"
     });
     toast.present();
@@ -24,7 +24,6 @@ export class ToastService {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
-      // mode: "ios",
       color: type,
       animated: true,
     });
