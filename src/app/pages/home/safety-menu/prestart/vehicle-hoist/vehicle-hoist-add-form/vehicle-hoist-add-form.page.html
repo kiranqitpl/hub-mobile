@@ -1,0 +1,390 @@
+<ion-content>
+
+  <app-header [pageName]="pName"></app-header>
+
+  <div class="container" [formGroup]="vehicleHoistForm">
+
+    <ion-card>
+      <ion-card-content>
+        <ion-radio-group formControlName="vehicle_host_no">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Vehicle Hoist number :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                VH01<ion-radio slot="start" value="VH01"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                VH02<ion-radio slot="start" value="VH02"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group (ionChange)="onTrainedHoist($event)" formControlName="trained"
+          *ngIf="vehicleHoistForm.value['vehicle_host_no'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Are you trained and competent to operate the vehicle hoist ? :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Yes<ion-radio slot="start" value="Yes"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                No<ion-radio slot="start" value="No"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="inspection_certificate" *ngIf="vehicleHoistForm.value['trained'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Certificate of inspection (Current) :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="maintenance_instructions"
+          *ngIf="vehicleHoistForm.value['inspection_certificate'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Operating and Maintenance instructions, SWI (with hoist HE-WHS-SWI-008) :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="data_plate" *ngIf="vehicleHoistForm.value['maintenance_instructions'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">Data plate, decals (attached/ readable) :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="safty_devices" *ngIf="vehicleHoistForm.value['data_plate'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Safety devices are operational (including E-stop) :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="locks_latches" *ngIf="vehicleHoistForm.value['safty_devices'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Locks, latches (move freely. Fully engage) :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="rubber_pad" *ngIf="vehicleHoistForm.value['locks_latches'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Rubber pads (attached, good condition on all load points) :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="safty_gaurds" *ngIf="vehicleHoistForm.value['rubber_pad'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">
+                Safety guards (fitted, secure and operational) :
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="hydraulic_connections" *ngIf="vehicleHoistForm.value['safty_gaurds'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">  Hydraulic connections, hoses (secure, no leaks) :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="chain_cable_connection"
+          *ngIf="vehicleHoistForm.value['hydraulic_connections'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none"> Chain and cable connections (Bends, cracks, lose links or looseness) :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="frayed_cables" *ngIf="vehicleHoistForm.value['chain_cable_connection'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">    Check for frayed cables (raised and lowered position) :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="snap_rings" *ngIf="vehicleHoistForm.value['frayed_cables'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">  Check snap rings at all rollers and sheaves : </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="bolts_nuts" *ngIf="vehicleHoistForm.value['snap_rings'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">  Check bolts, nuts, screws : </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK<ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="electrical_switch" *ngIf="vehicleHoistForm.value['bolts_nuts'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none"> Check wiring and electrical switches for damage :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK
+                <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty
+                <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="hoist_work_area" *ngIf="vehicleHoistForm.value['electrical_switch'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">  Hoist and work area is free from grease, oil, corrosive substances, slip and trip hazards :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK
+                <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty
+                <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="anchor_bolts" *ngIf="vehicleHoistForm.value['hoist_work_area'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">  Check floor for stress cracks near anchor bolts :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK
+                <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty
+                <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="swing_arm" *ngIf="vehicleHoistForm.value['anchor_bolts'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none"> Check swing arm restraints :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK
+                <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty
+                <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <ion-radio-group formControlName="hoist_controls" *ngIf="vehicleHoistForm.value['swing_arm'] != ''">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item class="ra" lines="none">   Test all hoist controls and functions :</ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                OK
+                <ion-radio slot="start" value="OK"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item class="ra" lines="none">
+                Faulty
+                <ion-radio slot="start" value="Faulty"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+
+        <p class="mandatoryField">By clicking the submit button below you are stating that you have done the safety
+          check on the Vehicle Hoist to the best of your ability and that all details in this inspection are true and
+          correct at the time of the inspection.</p>
+
+        <ion-button expand="full" class="btn" (click)="onSubmit()" [disabled]="vehicleHoistForm.invalid">SUBMIT
+        </ion-button>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

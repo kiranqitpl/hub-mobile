@@ -1,0 +1,29 @@
+ion-content {
+  ion-card {
+    margin: 0;
+    padding: 16px;
+    border-radius: 19px;
+    margin: 15px;
+    background: white;
+    font-family: "mon-bold";
+    font-size: 18px !important;
+    color: black;
+    ion-card-header ion-card-title {
+      color: black;
+    }
+
+    ion-item {
+      --background: transparent;
+      --color: black;
+    }
+    .question {
+      font-size: 16px !important;
+      font-family: "mon-bold";
+      // font-family: "mon-medium";
+    }
+    .value {
+      font-family: "mon-medium";
+      font-size: 14px !important;
+    }
+  }
+}

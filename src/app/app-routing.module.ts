@@ -23,53 +23,22 @@ const routes: Routes = [
     path: 'managers',
     loadChildren: () => import('./modals/managers/managers.module').then(m => m.ManagersPageModule)
   },
-  // {
-  //   path: 'form-list',
-  //   loadChildren: () => import('./pages/form-list/form-list.module').then(m => m.FormListPageModule)
-  // },
-  // {
-  //   path: 'add-form',
-  //   loadChildren: () => import('./pages/add-form/add-form.module').then(m => m.AddFormPageModule)
-  // },
-  // {
-  //   path: 'view',
-  //   loadChildren: () => import('./pages/view/view.module').then( m => m.ViewPageModule)
-  // },
-  // {
-  //   path: 'view/:form_id',
-  //   loadChildren: () => import('./pages/view/view.module').then(m => m.ViewPageModule)
-  // },
-  // {
-  //   path: 'edit',
-  //   loadChildren: () => import('./pages/edit/edit.module').then(m => m.EditPageModule)
-  // },
-  // {
-  //   path: 'investigation-view',
-  //   loadChildren: () => import('./pages/investigation-view/investigation-view.module').then( m => m.InvestigationViewPageModule)
-  // },
-  // {
-  //   path: 'form-section',
-  //   loadChildren: () => import('./pages/form-section/form-section.module').then(m => m.FormSectionPageModule)
-  // },
-  // {
-  //   path: 'incident-type',
-  //   loadChildren: () => import('./pages/incident-type/incident-type.module').then(m => m.IncidentTypePageModule)
-  // },
   {
     path: 'investigation',
-    loadChildren: () => import('./pages/investigation/investigation.module').then(m => m.InvestigationPageModule)
+    loadChildren: () => import('./pages/investigator/investigation/investigation.module').then(m => m.InvestigationPageModule)
   },
   {
     path: 'actions',
-    loadChildren: () => import('./pages/actions/actions.module').then(m => m.ActionsPageModule)
+    loadChildren: () => import('./pages/investigator/actions/actions.module').then(m => m.ActionsPageModule)
   },
   {
-    path: 'investigation-view/:investigation_id',
-    loadChildren: () => import('./pages/investigation-view/investigation-view.module').then(m => m.InvestigationViewPageModule)
+    path: 'investigation-view',
+    // path: 'investigation-view/:investigation_id',
+    loadChildren: () => import('./pages/investigator/investigation-view/investigation-view.module').then(m => m.InvestigationViewPageModule)
   },
   {
     path: 'actions-view',
-    loadChildren: () => import('./pages/actions-view/actions-view.module').then(m => m.ActionsViewPageModule)
+    loadChildren: () => import('./pages/investigator/actions-view/actions-view.module').then(m => m.ActionsViewPageModule)
   },
 
   //----------------------------------------------------------- New Routes -----------------------------------------------------------------//
@@ -84,15 +53,15 @@ const routes: Routes = [
   },
   {
     path: 'incident-form',
-    loadChildren: () => import('./pages/incident/incident-form/incident-form.module').then(m => m.IncidentFormPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/incident/incident-form/incident-form.module').then(m => m.IncidentFormPageModule)
   },
   {
     path: 'incident-form-list',
-    loadChildren: () => import('./pages/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
   },
   {
     path: 'incident-details/:investigation_id',
-    loadChildren: () => import('./pages/incident/incident-details/incident-details.module').then(m => m.IncidentDetailsPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/incident/incident-details/incident-details.module').then(m => m.IncidentDetailsPageModule)
   },
   {
     path: 'image-modal',
@@ -100,15 +69,15 @@ const routes: Routes = [
   },
   {
     path: 'incident-form-edit/:investigation_id',
-    loadChildren: () => import('./pages/incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
   },
   {
     path: 'prestart-dashboard',
-    loadChildren: () => import('./pages/prestart/prestart-dashboard/prestart-dashboard.module').then(m => m.PrestartDashboardPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/prestart/prestart-dashboard/prestart-dashboard.module').then(m => m.PrestartDashboardPageModule)
   },
   {
     path: 'vehicle-hoist-add-form',
-    loadChildren: () => import('./pages/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
+    loadChildren: () => import('./pages/home/safety-menu/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
   },
 
 

@@ -11,9 +11,9 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
 })
 export class NotificationPage implements OnInit {
 
+  pName: String = "Notifications";
   userId: any;
   type: any = environment.allType;
-  // notificationData: Array<[]>;
   roleId: any;
   notificationId = [];
   notificationData: any = '';
@@ -23,15 +23,6 @@ export class NotificationPage implements OnInit {
     private globalService: GlobalService,
     private sharedService: SharedService
   ) { }
-
-  goBack() {
-    this.nav.back();
-  }
-
-  logOut() {
-    localStorage.clear();
-    this.nav.navigateRoot("login")
-  }
 
   ngOnInit() {
     this.getUserData();
@@ -83,7 +74,7 @@ export class NotificationPage implements OnInit {
   //----------------------------------- Load Notification Data ---------------------------------------------------------//
 
   //----------------------------------- Delete Notification ---------------------------------------------------------//
-  
+
   filterArrayData(rowId) {
     let data = [];
     data['result'] = false;

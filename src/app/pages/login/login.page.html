@@ -6,9 +6,9 @@
     <div class="ion-text-center logo">
       <img src="{{imageUrl + 'login.png'}}" />
     </div>
+
     <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
       <div class="ion-margin-top ion-margin-bottom ">
-
         <ion-item class="ion-no-padding" lines="none">
           <ion-label position="stacked">Mail Id</ion-label>
           <ion-input placeholder="Enter Mail Id" formControlName="email" required type="email"> </ion-input>

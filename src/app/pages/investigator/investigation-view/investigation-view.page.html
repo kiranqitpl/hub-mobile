@@ -1,0 +1,109 @@
+<ion-content>
+  <app-header [pageName]="pName"></app-header>
+  <!-- <div class="toolbar">
+    <ion-text>Investigation</ion-text>
+    <ion-buttons class="back">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div> -->
+  <div class="container">
+    <!-- <div class="activeBackground"> -->
+    <ion-card>
+      <ion-card-content>
+        <div class="ion-padding-start ion-padding-end ">
+
+          <div class="headerTitle">
+           Investigation team members
+          </div>
+          <p class="question">Name</p>
+          <p class="value">{{data?.investigator_name}}</p>
+
+          <p class="question">Date Investigation Commenced</p>
+          <p class="value">{{data?.date_investigation_commenced}}</p>
+          <p class="question">Reportable Incident - Statutory Body</p>
+          <p class="value">{{data?.reportable_incident}}</p>
+          <hr />
+          <div class="headerTitle">
+            Sequence of events
+          </div>
+          <p class="question">Pre Incident Contributing Events</p>
+          <p class="value">{{data?.pre_incident_contributing_events}}</p>
+
+          <p class="question">Post Incident Events</p>
+          <p class="value">{{data?.post_incident_events}}</p>
+
+          <p class="question">Other Contributing Event Factors</p>
+          <p class="value">{{data?.other_contributing_event_factors}}</p>
+
+          <p class="question">Critical Controls Applicable For Task</p>
+          <p class="value">{{data?.critical_controls_applicable_for_task}}</p>
+
+          <hr />
+          <div class="headerTitle">
+            Investigators Initial Findings (Event Factors)
+          </div>
+
+          <p class="question">Workplace Conditions</p>
+          <p class="value">{{data?.workplace_conditions}}</p>
+
+          <p class="question">Work and People Practices</p>
+          <p class="value">{{data?.work_and_people_practices}}</p>
+
+          <p class="question">Employee Competence</p>
+          <p class="value">{{data?.employee_competence}}</p>
+
+          <p class="question">Experience</p>
+          <p class="value">{{data?.experience}}</p>
+
+          <p class="question">Plant, Equipment Or Tooling Involve In Incident</p>
+          <p class="value">{{data?.plant_equipment_or_tooling_involve_in_incident}}</p>
+
+          <p class="question">Relevant Documentation</p>
+          <p class="value">{{data?.relevant_documentation}}</p>
+
+          <p class="question">Environmental Related Factors</p>
+          <p class="value">{{data?.environmental_related_factors}}</p>
+
+          <p class="question">Critical control Defence Failure / Absent / Non-Compliance</p>
+          <p class="value">{{data?.critical_control_defence_failure_absent_non_compliance}}</p>
+          <hr />
+
+          <div class="headerTitle">
+            Immediate Cause Analysis
+          </div>
+          <p class="question">What Substandard Acts / Practices And Conditions Caused or Could Cause the Incident</p>
+          <p class="value">{{data?.what_substandard_acts_practices_and_conditions_caused_or_could}}</p>
+          <p class="question">What Systems / Personal Factors Caused or Could Cause The Incident</p>
+          <p class="value">{{data?.what_systems_personal_factors_caused_or_could_cause_the_incident}} </p>
+          <hr />
+          <div class="headerTitle">
+            Investigation Team Conclusion of Incident Causes
+          </div>
+          <p class="question">Root Cause</p>
+          <p class="value">{{data?.root_cause}}</p>
+          <p class="question">Key Learnings</p>
+          <p class="value">{{data?.key_earnings}}</p>
+
+          <p class="question">Comments</p>
+          <p class="value">{{data?.comments}}</p>
+
+          <p class="question">Is a Safety, Environmental or Quality Alert Required?</p>
+          <p class="value">{{data?.is_a_safety_environmental_or_quality_alert_required}}</p>
+
+          <hr />
+          <div class="headerTitle">
+            Additional Investigation
+          </div>
+          <p class="question">Additional Investigation Required</p>
+          <p class="value">{{data?.additional_investigation_required}}</p>
+
+          <p class="question">Type</p>
+          <p class="value">{{data?.type}}</p>
+          <hr />
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

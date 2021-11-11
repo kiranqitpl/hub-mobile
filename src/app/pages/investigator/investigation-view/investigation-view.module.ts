@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { NotificationPageRoutingModule } from './notification-routing.module';
+import { InvestigationViewPageRoutingModule } from './investigation-view-routing.module';
 
-import { NotificationPage } from './notification.page';
+import { InvestigationViewPage } from './investigation-view.page';
 import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
 @NgModule({
@@ -14,11 +14,11 @@ import { HeaderComponent } from 'src/app/shared-component/header/header.componen
     CommonModule,
     FormsModule,
     IonicModule,
-    NotificationPageRoutingModule
+    InvestigationViewPageRoutingModule
   ],
   declarations: [
-    NotificationPage,
+    InvestigationViewPage,
     HeaderComponent
   ]
 })
-export class NotificationPageModule { }
+export class InvestigationViewPageModule { }

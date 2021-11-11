@@ -141,7 +141,7 @@ ion-content {
         background-color: var(--theme-blue-color);
         align-items: center;
         align-content: center;
-        // color: white;
+        color: white;
         text-align: center;
         justify-content: center;
         align-self: center;
@@ -152,15 +152,14 @@ ion-content {
     }
     .container {
         // background-color: white;
-        background-color: black;
+        background-color: #121212;
+        color: white;
+        // color: #121212;
         border-top-left-radius: 32px;
         padding: 20px;
         border-top-right-radius: 32px;
         margin-top: -25px;
-        color: white;
-        // .logo {
-        //     padding-top: 20px;
-        // }
+
         ion-item {
             --inner-padding-end: 0px;
             ion-label {
@@ -186,7 +185,8 @@ ion-content {
             border-radius: 23px;
             --border-radius: 23px;
             font-family: "mon-bold";
-            color: white;
+            // color: white;
+            color: var(--ion-color-primary-contrast);
             --background: var(--theme-blue-color);
             height: 50px;
             overflow: hidden;
@@ -200,7 +200,6 @@ ion-content {
         }
         .badge {
             margin-bottom: 30px;
-            // margin-left: 50px;
         }
     }
     .back {
@@ -216,6 +215,61 @@ ion-content {
         top: 29px;
         font-family: "mon-bold";
         font-size: 29px;
+    }
+
+    ion-card {
+        margin: 0;
+        padding: 16px;
+        border-radius: 19px;
+        // margin-bottom: 15px;
+        // background: white;
+    }
+
+    ion-radio {
+        --color: var(--theme-blue-color);
+    }
+
+    ion-checkbox {
+        --color: var(--theme-blue-color) !important;
+        --background-checked: var(--ion-color-primary, #3880ff) !important;
+    }
+
+    ion-select {
+        color: black;
+        // text-transform: capitalize;
+        width: 100%;
+        // background: var(--ion-color-primary-contrast);
+        border-radius: 20px;
+        --padding-start: 15px;
+        --padding-end: 15px;
+    }
+
+    ion-input {
+        color: black !important;
+    }
+
+    ion-datetime {
+        color: black;
+    }
+}
+
+.ra {
+    --background: transparent;
+    padding: 0;
+    margin: 0;
+    --padding-top: 0px;
+    --inner-padding-top: 0;
+    --inner-padding-end: 0;
+    --inner-padding-bottom: 0;
+    --inner-padding-start: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --color: black;
+    ion-label {
+        font-family: "mon-medium";
+        font-size: 17px;
+        color: var(--black-color);
     }
 }
 
@@ -240,4 +294,3 @@ ion-content {
 .uploadFile {
     margin-top: 10px;
 }
-
