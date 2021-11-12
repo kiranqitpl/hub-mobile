@@ -1,25 +1,20 @@
 <ion-content>
-  <div class="toolbar">
-    <ion-text>Actions</ion-text>
-    <ion-buttons class="back">
-      <ion-button (click)="goBack()">
-        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </div>
+  <app-header [pageName]="pName"></app-header>
   <div class="container">
-    <div class="activeBackground">
-     <p class="question">Description of Required Action</p>
-     <p class="value">{{data?.description_of_required_action}}</p>
+    <ion-card>
+      <ion-card-content>
+        <p class="question">Description of Required Action</p>
+        <p class="value">{{data?.description_of_required_action}}</p>
 
-     <p class="question">Allocated To</p>
-     <p class="value">{{data?.user_name}}</p>
+        <p class="question">Allocated To</p>
+        <p class="value">{{data?.user_name}}</p>
 
-     <p class="question">Priority</p>
-     <p class="value">{{data?.priority}}</p>
+        <p class="question">Priority</p>
+        <p class="value">{{data?.priority}}</p>
 
-     <p class="question">Expected completion</p>
-     <p class="value">{{data?.expected_completion}}</p>
-    </div>
+        <p class="question">Expected completion</p>
+        <p class="value">{{data?.expected_completion}}</p>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

@@ -28,7 +28,8 @@ export class IncidentFormPage implements OnInit {
   shiftTypeList: any = [];
   superVisorList: any = [];
   locationList: any = [];
-  bodyPartList; any = [];
+  bodyPartList: any = [];
+  employeeList: any = [];
   managerList: any = 'Name of Manager';
   individualChecked: any;
   companyChecked: any;
@@ -193,12 +194,12 @@ export class IncidentFormPage implements OnInit {
     } else {
       this.platformCheck = 'cordova'
     }
-
+    this.loadEmployee();
     this.loadWitness();
     this.loadShift();
     this.loadSuperwiser();
     this.loadLocation();
-    this.findValueInWitness();
+    // this.findValueInWitness();
     this.loadBodyPart();
 
     this.incidentForm = this.fb.group({
@@ -274,6 +275,7 @@ export class IncidentFormPage implements OnInit {
       name_of_witness: [''],                                   // required field
       other_witness_details:
         this.fb.group({
+          employee_id: [''],
           other_witness_name: [''],
           other_witness_mobile_no: [''],
           other_witness_email: ['']
@@ -302,16 +304,24 @@ export class IncidentFormPage implements OnInit {
     });
   }
 
+  loadEmployee() {
+    this.globalService.getData1("user/getallemployee").subscribe((res: any) => {
+      if (res && res.data && res.data.length > 0) {
+        this.employeeList = res.data;
+        this.employeeList.push({ full_name: "Other" });
+      } else {
+        this.employeeList = [];
+      }
+    }, err => {
+      console.log(err);
+    })
+  }
+
   loadWitness() {
     this.globalService.getData1("Witness/getWitnessList").subscribe((res: any) => {
-      console.log('getWitnessList',res);
-      if (res && res.status && res.data && res.data.length > 0) {
+      if (res && res.data && res.data.length > 0) {
         this.witnessList = res.data;
-        this.reputationWitnessList = this.witnessList;
-        let data: boolean = this.findValueInWitness();
-        if (data) {
-          this.reputationWitnessList.push({  name_of_witness: "Other",contact_of_witness: "" });
-        }
+        this.witnessList.push({ full_name: "Other", employee_id: '0' });
       } else {
         this.witnessList = [];
       }
@@ -320,15 +330,15 @@ export class IncidentFormPage implements OnInit {
     })
   }
 
-  findValueInWitness() {
-    let val: boolean = false;
-    this.reputationWitnessList.find(ele => {
-      if (ele.name_of_witness != "Other") {
-        val = true;
-      }
-    })
-    return val;
-  }
+  // findValueInWitness() {
+  //   let val: boolean = false;
+  //   this.reputationWitnessList.find(ele => {
+  //     if (ele.name_of_witness != "Other") {
+  //       val = true;
+  //     }
+  //   })
+  //   return val;
+  // }
 
   loadShift() {
     this.globalService.getData1("Shift/get_shift_typelist").subscribe((res: any) => {
@@ -356,7 +366,7 @@ export class IncidentFormPage implements OnInit {
 
   loadLocation() {
     this.globalService.getData1("location/getLocation").subscribe((res: any) => {
-      console.log('getLocation',res);
+      console.log('getLocation', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.locationList = res.data;
       } else {
@@ -617,7 +627,7 @@ export class IncidentFormPage implements OnInit {
     console.log('classificationForm', this.classificationForm.value);
     // console.log('injuryForm', this.injuryForm.value);
     // console.log('enviornmentForm', this.enviornmentForm.value);
-    // console.log('reputationDesForm', this.reputationDesForm.value);
+    console.log('reputationDesForm', this.reputationDesForm.value);
     // console.log('securityForm', this.securityForm.value);
     // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
     // console.log('reportForm', this.reportForm.value);
@@ -854,8 +864,6 @@ export class IncidentFormPage implements OnInit {
         }
       })
     }
-    // console.log('this.reputationCheckBox', this.reputationCheckBox);
-    // console.log('this.reputationDesForm', this.reputationDesForm);
   }
 
   onDepartmentEffectCheckBox(event) {
@@ -863,9 +871,7 @@ export class IncidentFormPage implements OnInit {
     if (event.detail.checked) {
       formArray.push(new FormControl(event.detail.value));
       this.departmentEffect.find(ele => {
-        console.log('departmentEffect ele', ele);
         if (ele.val == event.detail.value) {
-          console.log('here1');
           ele.isChecked = event.detail.checked;
         }
       })
@@ -884,8 +890,6 @@ export class IncidentFormPage implements OnInit {
         }
       })
     }
-    console.log('this.departmentEffect', this.departmentEffect);
-    console.log('this.reputationDesForm', this.reputationDesForm);
   }
 
   onInput(evt, val) {
@@ -940,8 +944,6 @@ export class IncidentFormPage implements OnInit {
   }
 
   onAddMultiplePersonDetails(event) {
-    // console.log('onAddMultiplePersonDetails', event);
-    // console.log('injury_persons',this.injuryForm.value['injury_persons']);
     let no = 0;
     if (this.injuryForm.value["person_details"].length != 0) {
       no = (this.injuryForm.value['injury_persons'] - this.injuryForm.value["person_details"].length);
@@ -967,4 +969,45 @@ export class IncidentFormPage implements OnInit {
       this.reputationDesForm.controls['effected_department'].setValue('');
     }
   }
+
+  onWitnessChange(event) {
+    if (event.detail.value != 'Other') {
+      this.reputationDesForm.controls['other_witness_details'].reset();
+    } else {
+
+      this.reputationDesForm.value['other_witness_details'].employee_id = 0;
+    }
+  }
+
+  selected: any;
+  onImageClick(event) {
+
+    console.log('event', event)
+    // console.log(document.getElementById("pointer_div").offsetLeft);
+    // console.log(document.getElementById("pointer_div").offsetTop);
+    let pos_x = event.offsetX ? (event.offsetX) : event.pageX - document.getElementById("pointer_div").offsetLeft;
+    let pos_y = event.offsetY ? (event.offsetY) : event.pageY - document.getElementById("pointer_div").offsetTop;
+
+
+    console.log('pos_x', pos_x);
+    console.log('pos_y', pos_y);
+
+    this.selected = [pos_x, pos_y];
+
+    console.log(JSON.stringify(this.selected));
+
+    // console.log(typeof(JSON.parse(this.selected) ));
+
+    // $('.map').maphilight();
+
+    console.log('  this.selected ', this.selected)
+  }
+
+  isActive(val) {
+    console.log('isActive', val);
+    return JSON.stringify(this.selected) == val;
+  }
+
+
+
 }

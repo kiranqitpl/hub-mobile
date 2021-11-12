@@ -16,6 +16,9 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   pName: String = 'Vehicle Hoist'
   vehicleHoistForm: FormGroup;
+  logedInUserName: String = '';
+  showMsg: boolean = false;
+
 
   constructor(
     private alertCtrl: AlertController,
@@ -27,6 +30,7 @@ export class VehicleHoistAddFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.logedInUserName = localStorage.getItem('name');
     this.vehicleHoistForm = this.fb.group({
       vehicle_host_no: ['', Validators.required],
       trained: ['', Validators.required],
@@ -52,7 +56,7 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   async alert() {
     const alert = await this.alertCtrl.create({
-      cssClass: 'alert',
+      cssClass: 'alert-msg',
       header: 'Alert Message',
       backdropDismiss: false,
       message: 'STOP you can cannot conduct a prestart on this piece of equipment until you have been trained and deemed competent, you must see your supervisor.',
@@ -75,12 +79,11 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   onSubmit() {
     this.loadingService.presentLoading();
-    let logedInUserName = localStorage.getItem('name');
     let formData = {};
     formData = this.vehicleHoistForm.value;
-    formData['user_name'] = logedInUserName;
+    formData['user_name'] = this.logedInUserName;
     formData['date'] = moment().format('YYYY-MM-DD');
-    formData['time'] = moment().format('HH:mm:ss')
+    formData['time'] = moment().format('HH:mm:ss');
     this.globalService.postData1('prestart_vehicle/add_prestart_vehicle', formData).subscribe(result => {
       if (result && result['status']) {
         this.navCtrl.back();
@@ -93,6 +96,23 @@ export class VehicleHoistAddFormPage implements OnInit {
       this.loadingService.dismissLoading();
       console.log('error', error);
     })
+  }
+
+  onHoistControlChange() {
+    let count: number = 0;
+    Object.values(this.vehicleHoistForm.value).forEach(key => {
+      if (key == 'Faulty') {
+        count++;
+      }
+    });
+
+    if (count > 0) {
+      this.showMsg = true;
+    } else {
+      this.showMsg = false;
+    }
+
+    console.log('count', count);
   }
 
 }

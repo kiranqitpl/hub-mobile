@@ -62,8 +62,8 @@
             <ion-item class="ra" lines="none">
               <ion-select placeholder="Please select who witnessed the near miss" interface="action-sheet"
                 formControlName="incident_near_miss">
-                <ion-select-option value="{{witnesskeys?.name_of_witness}}" *ngFor="let witnesskeys of witnessList">
-                  {{witnesskeys?.name_of_witness}}</ion-select-option>
+                <ion-select-option value="{{witnesskeys?.full_name}}" *ngFor="let witnesskeys of witnessList">
+                  {{witnesskeys?.full_name}}</ion-select-option>
               </ion-select>
             </ion-item>
 
@@ -590,31 +590,28 @@
         </div>
         <hr />
 
-        <ion-item class="ra" lines="none">
-          <ion-label>Number of Injured Person's :</ion-label>
-          <ion-select placeholder="Please select Injured Person" interface="action-sheet"
-            formControlName="injury_persons" (ionChange)="onAddMultiplePersonDetails($event)">
-            <ion-select-option value="1">1</ion-select-option>
-            <ion-select-option value="2">2</ion-select-option>
-            <ion-select-option value="3">3</ion-select-option>
-            <ion-select-option value="4">4</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <p class="question">Number of Injured Person's :</p>
+        <ion-select placeholder="Please select Injured Person" interface="action-sheet" formControlName="injury_persons"
+          (ionChange)="onAddMultiplePersonDetails($event)">
+          <ion-select-option value="1">1</ion-select-option>
+          <ion-select-option value="2">2</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+          <ion-select-option value="4">4</ion-select-option>
+        </ion-select>
 
         <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index ">
           <ion-card>
             <p class="questionHead">Person {{(j+1)}} Details</p>
 
             <div [formGroupName]="j">
-              <ion-item class="ra" lines="none">
-                <ion-label>Select Injured Person Name :</ion-label>
-                <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
-                  formControlName="injured_person_option">
-                  <ion-select-option value="{{witnessName?.name_of_witness}}" *ngFor="let witnessName of witnessList">
-                    {{witnessName?.name_of_witness}}
-                  </ion-select-option>
-                </ion-select>
-              </ion-item>
+              <p class="question">Injured Person Name :</p>
+              <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
+                formControlName="injured_person_option">
+                <ion-select-option value="{{witnessName?.full_name}}" *ngFor="let witnessName of witnessList">
+                  {{witnessName?.full_name}}
+                </ion-select-option>
+              </ion-select>
+              <!-- </ion-item> -->
 
               <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
                 <p class="question">Full Name of Injured Person :</p>
@@ -623,21 +620,21 @@
                 </ion-input>
               </div>
 
-              <ion-item class="ra" lines="none">
-                <ion-label>Gender :</ion-label>
-                <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">
-                  <ion-select-option value="Male">Male</ion-select-option>
-                  <ion-select-option value="Female">Female</ion-select-option>
-                  <ion-select-option value="Other">Other</ion-select-option>
-                </ion-select>
-              </ion-item>
+              <!-- <ion-item class="ra" lines="none"> -->
+              <p class="question">Gender :</p>
+              <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">
+                <ion-select-option value="Male">Male</ion-select-option>
+                <ion-select-option value="Female">Female</ion-select-option>
+                <ion-select-option value="Other">Other</ion-select-option>
+              </ion-select>
+              <!-- </ion-item> -->
 
-              <ion-item class="ion-no-padding ra" lines="none">
-                <ion-label>Date of Birth :</ion-label>
-                <ion-datetime placeholder="Please select date of birth" displayFormat="DD/MM/YYYY"
-                  formControlName="date_of_birth">
-                </ion-datetime>
-              </ion-item>
+              <!-- <ion-item class="ion-no-padding ra" lines="none"> -->
+              <p class="question">Date of Birth :</p>
+              <ion-datetime placeholder="Please select date of birth" displayFormat="DD/MM/YYYY"
+                formControlName="date_of_birth">
+              </ion-datetime>
+              <!-- </ion-item> -->
 
               <ion-radio-group formControlName="normal_duties">
                 <ion-item class="ra" lines="none">
@@ -713,37 +710,32 @@
                 </ion-row>
               </ion-radio-group>
 
-              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Male'" class="img-responsive"
-                src="{{imagePath+'Male_Silhouette.png'}}" usemap="#map_example">
-              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Female'" class="img-responsive"
-                src="{{imagePath+'Female_Silhouette.png'}}" usemap="#map_example">
+              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Male'" class="map"
+                src="{{imagePath+'Male_Silhouette.png'}}" usemap="#image-map" (click)="onImageClick($event)" id="pointer_div">
+              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Female'" class="map"
+                src="{{imagePath+'Female_Silhouette.png'}}" usemap="#image-map" (click)="onImageClick($event)" id="pointer_div">
 
 
-              <!-- <div id="image_map">
 
-               <map name="map_example"> <area href="https://facebook.com" alt="Facebook" target="_blank" shape=poly
-                   coords="30,100, 140,50, 290,220, 180,280">
+              <map name="image-map">
+                <area alt="Head" title="Head" coords="325,15" shape="poly" [ngClass]="{active: isActive('325,15')}">
+                <!-- <area alt="Head" title="Head" coords="166,210" shape="poly"> -->
+                <area alt="Face" title="Face" coords="166,236" shape="circle">
+                <area alt="Left_Hand" title="Left_Hand" coords="110,361" shape="circle">
+                <area alt="Right_Hand" title="Right_Hand" coords="224,355" shape="circle">
+                <area alt="Stomach" title="Stomach" coords="164,361" shape="circle">
+                <area alt="Left_Leg" title="Left_Leg" coords="151,449" shape="circle">
+                <area alt="Right_Leg" title="Right_Leg" coords="185,453" shape="circle">
+              </map>
 
-                 <area href="https://en.wikipedia.org/wiki/Social_media" target="_blank"
-                   alt="Wikipedia Social Media Article" shape=poly coords="190,75, 200,60, 495,60, 495,165, 275,165">
 
-               </map>
+              <p class="question">Part of body injured :</p>
+              <ion-select multiple="true" cancelText="Cancel" okText="Ok" formControlName="part_of_body_injured_occured"
+                placeholder="Select Part of body injured">
+                <ion-select-option value="{{bodyPartsVal.name}}" *ngFor="let bodyPartsVal of bodyPartList">
+                  {{bodyPartsVal.name}}</ion-select-option>
+              </ion-select>
 
-               <img src="../../wp-content/uploads/image_map_example_shapes.png" alt="image map example" width=500
-                 height=332 usemap="#map_example">
-
-             </div> -->
-
-              <div>
-                <ion-item class="ra" lines="none">
-                  <ion-label>Part of body injured :</ion-label>
-                  <ion-select multiple="true" cancelText="Cancel" okText="Ok"
-                    formControlName="part_of_body_injured_occured" placeholder="Select Part of body injured">
-                    <ion-select-option value="{{bodyPartsVal.name}}" *ngFor="let bodyPartsVal of bodyPartList">
-                      {{bodyPartsVal.name}}</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </div>
 
               <div>
                 <ion-radio-group formControlName="was_immediate_treatment">
@@ -896,13 +888,13 @@
         </div>
 
         <p class="question">
-          Name of any witness :
+          Name of witness :
         </p>
 
-        <ion-select placeholder="Select One" interface="action-sheet" formControlName="name_of_witness">
-          <ion-select-option value="{{reputationWitnessValue?.name_of_witness}}"
-            *ngFor="let reputationWitnessValue of reputationWitnessList">
-            {{reputationWitnessValue?.name_of_witness}}</ion-select-option>
+        <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="name_of_witness"
+          (ionChange)="onWitnessChange($event)">
+          <ion-select-option value="{{employeeListValue?.full_name}}" *ngFor="let employeeListValue of employeeList">
+            {{employeeListValue?.full_name}}</ion-select-option>
         </ion-select>
 
         <div *ngIf="reputationDesForm.value['name_of_witness'] == 'Other'" formGroupName='other_witness_details'>

@@ -32,6 +32,7 @@ export class IncidentFormEditPage implements OnInit {
   superVisorList: any = [];
   locationList: any = [];
   bodyPartList; any = [];
+  employeeList: any = [];
   managerList: any = 'Name of Manager';
   individualChecked: any;
   companyChecked: any;
@@ -202,11 +203,12 @@ export class IncidentFormEditPage implements OnInit {
       this.platformCheck = 'cordova'
     }
 
+    this.loadEmployee();
     this.loadWitness();
     this.loadShift();
     this.loadSuperwiser();
     this.loadLocation();
-    this.findValueInWitness();
+    // this.findValueInWitness();
     this.loadBodyPart();
     this.loadIncidentDetails();
 
@@ -311,15 +313,24 @@ export class IncidentFormEditPage implements OnInit {
     });
   }
 
+  loadEmployee() {
+    this.globalService.getData1("user/getallemployee").subscribe((res: any) => {
+      if (res && res.data && res.data.length > 0) {
+        this.employeeList = res.data;
+        this.employeeList.push({ full_name: "Other" });
+      } else {
+        this.employeeList = [];
+      }
+    }, err => {
+      console.log(err);
+    })
+  }
+
   loadWitness() {
     this.globalService.getData1("Witness/getWitnessList").subscribe((res: any) => {
-      if (res && res.status && res.data && res.data.length > 0) {
+      if (res && res.data && res.data.length > 0) {
         this.witnessList = res.data;
-        this.reputationWitnessList = this.witnessList;
-        let data: boolean = this.findValueInWitness();
-        if (data) {
-          this.reputationWitnessList.push({ contact_of_witness: "", name_of_witness: "Other" });
-        }
+        this.witnessList.push({ full_name: "Other", employee_id: '0' });
       } else {
         this.witnessList = [];
       }
@@ -328,15 +339,15 @@ export class IncidentFormEditPage implements OnInit {
     })
   }
 
-  findValueInWitness() {
-    let val: boolean = false;
-    this.reputationWitnessList.find(ele => {
-      if (ele.name_of_witness != "Other") {
-        val = true;
-      }
-    })
-    return val;
-  }
+  // findValueInWitness() {
+  //   let val: boolean = false;
+  //   this.reputationWitnessList.find(ele => {
+  //     if (ele.name_of_witness != "Other") {
+  //       val = true;
+  //     }
+  //   })
+  //   return val;
+  // }
 
   loadShift() {
     this.globalService.getData1("Shift/get_shift_typelist").subscribe((res: any) => {
@@ -389,7 +400,7 @@ export class IncidentFormEditPage implements OnInit {
   loadIncidentDetails() {
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        this.globalService.getData1('add_form/getIncidentFormByID/' + params['investigation_id']).subscribe(result => {
+        this.globalService.getData1('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
           console.log('result', result);
           if (result && result['data'] && result['data'][0]) {
             this.incidentDetails = result['data'][0];
@@ -1135,5 +1146,14 @@ export class IncidentFormEditPage implements OnInit {
     }
     console.log('this.departmentEffect', this.departmentEffect);
     console.log('this.reputationDesForm', this.reputationDesForm);
+  }
+
+  onWitnessChange(event) {
+    if (event.detail.value != 'Other') {
+      this.reputationDesForm.controls['other_witness_details'].reset();
+    } else {
+
+      this.reputationDesForm.value['other_witness_details'].employee_id = 0;
+    }
   }
 }

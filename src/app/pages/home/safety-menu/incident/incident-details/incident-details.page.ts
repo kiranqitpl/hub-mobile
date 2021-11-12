@@ -38,7 +38,7 @@ export class IncidentDetailsPage implements OnInit {
     this.global.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        this.global.getData('api/add_form/getIncidentFormByID/' + params['investigation_id']).subscribe(result => {
+        this.global.getData1('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
           console.log('result', result);
           if (result && result['data'] && result['data'][0]) {
             this.incidentDetails = result['data'][0];

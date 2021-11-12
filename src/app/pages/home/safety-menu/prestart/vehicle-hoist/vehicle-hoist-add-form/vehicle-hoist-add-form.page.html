@@ -189,7 +189,7 @@
         <ion-radio-group formControlName="hydraulic_connections" *ngIf="vehicleHoistForm.value['safty_gaurds'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">  Hydraulic connections, hoses (secure, no leaks) :</ion-item>
+              <ion-item class="ra" lines="none"> Hydraulic connections, hoses (secure, no leaks) :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -208,7 +208,8 @@
           *ngIf="vehicleHoistForm.value['hydraulic_connections'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Chain and cable connections (Bends, cracks, lose links or looseness) :</ion-item>
+              <ion-item class="ra" lines="none"> Chain and cable connections (Bends, cracks, lose links or looseness) :
+              </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -226,7 +227,7 @@
         <ion-radio-group formControlName="frayed_cables" *ngIf="vehicleHoistForm.value['chain_cable_connection'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">    Check for frayed cables (raised and lowered position) :</ion-item>
+              <ion-item class="ra" lines="none"> Check for frayed cables (raised and lowered position) :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -244,7 +245,7 @@
         <ion-radio-group formControlName="snap_rings" *ngIf="vehicleHoistForm.value['frayed_cables'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">  Check snap rings at all rollers and sheaves : </ion-item>
+              <ion-item class="ra" lines="none"> Check snap rings at all rollers and sheaves : </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -262,7 +263,7 @@
         <ion-radio-group formControlName="bolts_nuts" *ngIf="vehicleHoistForm.value['snap_rings'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">  Check bolts, nuts, screws : </ion-item>
+              <ion-item class="ra" lines="none"> Check bolts, nuts, screws : </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -300,7 +301,8 @@
         <ion-radio-group formControlName="hoist_work_area" *ngIf="vehicleHoistForm.value['electrical_switch'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">  Hoist and work area is free from grease, oil, corrosive substances, slip and trip hazards :</ion-item>
+              <ion-item class="ra" lines="none"> Hoist and work area is free from grease, oil, corrosive substances,
+                slip and trip hazards :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -320,7 +322,7 @@
         <ion-radio-group formControlName="anchor_bolts" *ngIf="vehicleHoistForm.value['hoist_work_area'] != ''">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">  Check floor for stress cracks near anchor bolts :</ion-item>
+              <ion-item class="ra" lines="none"> Check floor for stress cracks near anchor bolts :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -357,10 +359,11 @@
           </ion-row>
         </ion-radio-group>
 
-        <ion-radio-group formControlName="hoist_controls" *ngIf="vehicleHoistForm.value['swing_arm'] != ''">
+        <ion-radio-group formControlName="hoist_controls" *ngIf="vehicleHoistForm.value['swing_arm'] != ''"
+          (ionChange)="onHoistControlChange()">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">   Test all hoist controls and functions :</ion-item>
+              <ion-item class="ra" lines="none"> Test all hoist controls and functions :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -377,11 +380,20 @@
           </ion-row>
         </ion-radio-group>
 
-        <p class="mandatoryField">By clicking the submit button below you are stating that you have done the safety
-          check on the Vehicle Hoist to the best of your ability and that all details in this inspection are true and
-          correct at the time of the inspection.</p>
+        <div *ngIf="showMsg">
+          <p>
+            <ion-text color="danger">By clicking the submit button
+              below you are stating that you have done
+              the safety check on the fork truck to the best of you ability and that all details in this inspection are
+              true and correct at the time of the inspection.</ion-text>
+          </p>
+          <p>
+            <ion-text color="tertiary"> Your name, date and the time the inspection is submitted will also be added to
+              this report.</ion-text>
+          </p>
+        </div>
 
-        <ion-button expand="full" class="btn" (click)="onSubmit()" [disabled]="vehicleHoistForm.invalid">SUBMIT
+        <ion-button class="btn" (click)="onSubmit()" [disabled]="vehicleHoistForm.invalid">SUBMIT
         </ion-button>
 
       </ion-card-content>

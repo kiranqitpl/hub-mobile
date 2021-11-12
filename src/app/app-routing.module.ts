@@ -32,8 +32,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/investigator/actions/actions.module').then(m => m.ActionsPageModule)
   },
   {
-    path: 'investigation-view',
-    // path: 'investigation-view/:investigation_id',
+    // path: 'investigation-view',
+    path: 'investigation-view/:investigation_id',
     loadChildren: () => import('./pages/investigator/investigation-view/investigation-view.module').then(m => m.InvestigationViewPageModule)
   },
   {
@@ -60,7 +60,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
   },
   {
-    path: 'incident-details/:investigation_id',
+    path: 'incident-details/:incident_id',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-details/incident-details.module').then(m => m.IncidentDetailsPageModule)
   },
   {
@@ -68,7 +68,7 @@ const routes: Routes = [
     loadChildren: () => import('./modals/image-modal/image-modal.module').then(m => m.ImageModalPageModule)
   },
   {
-    path: 'incident-form-edit/:investigation_id',
+    path: 'incident-form-edit/:incident_id',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
   },
   {
