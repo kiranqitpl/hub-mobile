@@ -574,8 +574,8 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   onPhotoGraphy(event, type) {
-    this.photoGraphy = []
-    this.photoGraphyObject = {}
+    // this.photoGraphy = []
+    // this.photoGraphyObject = {}
     if (type == 1) {
       // let data = this.mobileUploadImages();
       // console.log('data', data);
@@ -585,8 +585,13 @@ export class IncidentFormEditPage implements OnInit {
           data => {
             console.log('onPhotoGraphy', data)
             // this.convertDataURIToBinary(data);
-            this.photoGraphyObject[i] = data
-            this.photoGraphy.push(data);
+            // this.photoGraphyObject[i] = data
+            // this.photoGraphy.push(data);
+            if (this.photoGraphy.length <= 0) {
+              this.photoGraphy.push(data);
+            } else {
+              this.photoGraphy.unshift(data);
+            }
           }).catch(error => {
             console.log('error', error);
           });
@@ -595,13 +600,18 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   onAlochaolImage(event) {
-    this.alcohalImages = [];
-    this.alcohalImagesObject = {};
+    // this.alcohalImages = [];
+    // this.alcohalImagesObject = {};
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.alcohalImagesObject[i] = data
-          this.alcohalImages.push(data);
+          // this.alcohalImagesObject[i] = data
+          // this.alcohalImages.push(data);
+          if (this.alcohalImages.length <= 0) {
+            this.alcohalImages.push(data);
+          } else {
+            this.alcohalImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -611,19 +621,26 @@ export class IncidentFormEditPage implements OnInit {
   onAlcohalTestSelect(event) {
     if (event.target.value != 'Yes') {
       this.alcohalImages = [];
-      this.alcohalImagesObject = {};
+      // this.alcohalImagesObject = {};
     }
   }
 
   onDrugTestImage(event) {
-    this.drugTestImages = [];
-    this.drugTestImagesObject = {};
+    // this.drugTestImages = [];
+    // this.drugTestImagesObject = {};
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
           // let blobImage = this.convertDataURIToBinary(data);
-          this.drugTestImagesObject[i] = data
-          this.drugTestImages.push(data);
+
+          // this.drugTestImagesObject[i] = data
+          // this.drugTestImages.push(data);
+
+          if (this.drugTestImages.length <= 0) {
+            this.drugTestImages.push(data);
+          } else {
+            this.drugTestImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -633,18 +650,23 @@ export class IncidentFormEditPage implements OnInit {
   onDrugTestSelect(event) {
     if (event.target.value != 'Yes') {
       this.drugTestImages = [];
-      this.drugTestImagesObject = {};
+      // this.drugTestImagesObject = {};
     }
   }
 
   onReturnToDutyImage(event) {
-    this.alterDutyImagesObject = {};
-    this.alterDutyImages = [];
+    // this.alterDutyImagesObject = {};
+    // this.alterDutyImages = [];
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.alterDutyImagesObject[i] = data
-          this.alterDutyImages.push(data);
+          // this.alterDutyImagesObject[i] = data
+          // this.alterDutyImages.push(data);
+          if (this.alterDutyImages.length <= 0) {
+            this.alterDutyImages.push(data);
+          } else {
+            this.alterDutyImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -654,18 +676,42 @@ export class IncidentFormEditPage implements OnInit {
   onReturnToDutySelect(event) {
     if (event.target.value != 'Yes') {
       this.alterDutyImages = [];
-      this.alterDutyImagesObject = {};
+      // this.alterDutyImagesObject = {};
+    }
+  }
+
+  onSelectDamageImage(event) {
+    // this.damageImages = [];
+    // this.damageImagesObject = {};
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.sharedService.getBase64(event.target.files[i]).then(
+        data => {
+          // this.damageImagesObject[i] = data
+          // this.damageImages.push(data);
+          if (this.damageImages.length <= 0) {
+            this.damageImages.push(data);
+          } else {
+            this.damageImages.unshift(data);
+          }
+        }).catch(error => {
+          console.log('error', error);
+        });
     }
   }
 
   onChemicalImageSelect(event) {
-    this.chemicalImages = [];
-    this.chemicalImagesObject = {};
+    // this.chemicalImages = [];
+    // this.chemicalImagesObject = {};
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.chemicalImagesObject[i] = data
-          this.chemicalImages.push(data);
+          // this.chemicalImagesObject[i] = data
+          // this.chemicalImages.push(data);
+          if (this.chemicalImages.length <= 0) {
+            this.chemicalImages.push(data);
+          } else {
+            this.chemicalImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -676,21 +722,37 @@ export class IncidentFormEditPage implements OnInit {
   onInsertImageSelect(event) {
     if (!event.detail.checked) {
       this.chemicalImages = [];
-      this.chemicalImagesObject = {};
+      // this.chemicalImagesObject = {};
     }
   }
 
-  onSelectDamageImage(event) {
-    this.damageImages = [];
-    this.damageImagesObject = {};
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[i]).then(
-        data => {
-          this.damageImagesObject[i] = data
-          this.damageImages.push(data);
-        }).catch(error => {
-          console.log('error', error);
-        });
+  onImageDelete(index, tabName) {
+
+    console.log('index', index);
+    console.log('tabName', tabName);
+
+    if (tabName == 'Photography') {
+      this.photoGraphy.splice(index, 1);
+    }
+
+    if (tabName == 'Alcohal Test') {
+      this.alcohalImages.splice(index, 1);
+    }
+
+    if (tabName == 'Drug Test') {
+      this.drugTestImages.splice(index, 1);
+    }
+
+    if (tabName == 'Return to Alternate Duties') {
+      this.alterDutyImages.splice(index, 1);
+    }
+
+    if (tabName == 'Asset') {
+      this.damageImages.splice(index, 1);
+    }
+
+    if (tabName == 'Chemical Image') {
+      this.chemicalImages.splice(index, 1);
     }
   }
 
@@ -705,7 +767,6 @@ export class IncidentFormEditPage implements OnInit {
         this.classificationForm.controls.classification_manager.setValue(res.data.full_name);
       }
     });
-
     return await modal.present();
   }
 
@@ -802,6 +863,31 @@ export class IncidentFormEditPage implements OnInit {
     // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
     // console.log('reportForm', this.reportForm.value);
     // console.log('injuryForm', this.injuryForm.value);
+
+
+    if (this.photoGraphy.length > 0) {
+      this.photoGraphyObject = { ...this.photoGraphy };
+    }
+
+    if (this.alcohalImages.length > 0) {
+      this.alcohalImagesObject = { ...this.alcohalImages }
+    }
+
+    if (this.drugTestImages.length > 0) {
+      this.drugTestImagesObject = { ...this.drugTestImages }
+    }
+
+    if (this.alterDutyImages.length > 0) {
+      this.alterDutyImagesObject = { ...this.alterDutyImages }
+    }
+
+    if (this.damageImages.length > 0) {
+      this.damageImagesObject = { ...this.damageImages }
+    }
+
+    if (this.chemicalImages.length > 0) {
+      this.chemicalImagesObject = { ...this.chemicalImages }
+    }
 
     let validation: boolean = false;
     if (val == 'submit') {

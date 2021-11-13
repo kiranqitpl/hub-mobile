@@ -440,262 +440,60 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
-/***/ 58127:
-/*!**************************************************!*\
-  !*** ./src/app/modals/managers/managers.page.ts ***!
-  \**************************************************/
+/***/ 45311:
+/*!*********************************************************!*\
+  !*** ./src/app/services/toast-service/toast.service.ts ***!
+  \*********************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ManagersPage": function() { return /* binding */ ManagersPage; }
+/* harmony export */   "ToastService": function() { return /* binding */ ToastService; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./managers.page.html */ 72329);
-/* harmony import */ var _managers_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./managers.page.scss */ 80248);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/global.service */ 97465);
-
-
-
-
-
-
-let ManagersPage = class ManagersPage {
-    constructor(modal, global) {
-        this.modal = modal;
-        this.global = global;
-    }
-    ionViewWillEnter() {
-        this.global.getDataWithId("api/Manager/getManagerList").subscribe((res) => {
-            console.log('res', res);
-            if (res) {
-                this.data = res.data;
-            }
-        }, err => {
-            console.log(err);
-        });
-    }
-    ngOnInit() {
-    }
-    close(item) {
-        this.modal.dismiss(item);
-    }
-};
-ManagersPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ModalController },
-    { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService }
-];
-ManagersPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
-        selector: 'app-managers',
-        template: _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
-        styles: [_managers_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
-    })
-], ManagersPage);
-
-
-
-/***/ }),
-
-/***/ 49481:
-/*!***********************************************************!*\
-  !*** ./src/app/services/shared-service/shared.service.ts ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SharedService": function() { return /* binding */ SharedService; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../global.service */ 97465);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ 80476);
 
 
 
-let SharedService = class SharedService {
-    constructor(globalService) {
-        this.globalService = globalService;
+let ToastService = class ToastService {
+    constructor(toastController) {
+        this.toastController = toastController;
     }
-    notificationLoad(formData) {
-        let roleId = localStorage.getItem('role');
-        let url = "";
-        if (roleId) {
-            if (roleId == this.globalService.investigator) {
-                url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-            }
-            else if (roleId == this.globalService.gm) {
-                url = 'api/notification/getGMNotificationByGmID';
-            }
-        }
-        if (url != "") {
-            new Promise((resolve, reject) => {
-                this.globalService.postData(url, formData).subscribe(result => {
-                    console.log('notificationLoad', result);
-                    if (result['status']) {
-                        let count = 0;
-                        result['data'].forEach(element => {
-                            if (element.is_seen == 0) {
-                                count = count + 1;
-                            }
-                        });
-                        this.notViewNotiCount = count;
-                        return result['data'];
-                    }
-                    else {
-                        console.log('error');
-                    }
-                    setTimeout(function () {
-                        resolve("Success!");
-                    });
-                });
+    presentToast(msg) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 2000,
+                // mode: "ios",
+                color: "dark"
             });
-        }
-        // this.globalService.postData(url, formData).subscribe(result => {
-        //   console.log('notificationLoad', result);
-        //   if (result['status']) {
-        //     let count: number = 0;
-        //     result['data'].forEach(element => {
-        //       if (element.is_seen == 0) {
-        //         count = count + 1;
-        //       }
-        //     });
-        //     this.notViewNotiCount = count;
-        //     return result['data'];
-        //   } else {
-        //     console.log('error');
-        //   }
-        // }), error => {
-        //   console.log('error', error);
-        // }
+            toast.present();
+        });
     }
-    getWitness() {
-        let data;
-        this.globalService.getData1("Witness/getWitnessList").subscribe((res) => {
-            console.log('getWitness', res);
-            console.log('getWitness', res.status);
-            if (res.status) {
-                data = res.data;
-            }
-        }, err => {
-            console.log(err);
+    toast(msg, type) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 2000,
+                color: type,
+                animated: true,
+            });
+            toast.present();
         });
     }
 };
-SharedService.ctorParameters = () => [
-    { type: _global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService }
+ToastService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.ToastController }
 ];
-SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+ToastService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
         providedIn: 'root'
     })
-], SharedService);
+], ToastService);
 
 
-
-/***/ }),
-
-/***/ 13998:
-/*!*************************************************************!*\
-  !*** ./src/app/shared-component/header/header.component.ts ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "HeaderComponent": function() { return /* binding */ HeaderComponent; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _raw_loader_header_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./header.component.html */ 62377);
-/* harmony import */ var _header_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.component.scss */ 41789);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 80476);
-
-
-
-
-
-let HeaderComponent = class HeaderComponent {
-    constructor(nav) {
-        this.nav = nav;
-    }
-    ngOnInit() { }
-    onGoBack() {
-        this.nav.back();
-    }
-    onLogOut() {
-        localStorage.clear();
-        this.nav.navigateRoot("login");
-    }
-};
-HeaderComponent.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.NavController }
-];
-HeaderComponent.propDecorators = {
-    pageName: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
-};
-HeaderComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
-        selector: 'app-header',
-        template: _raw_loader_header_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
-        styles: [_header_component_scss__WEBPACK_IMPORTED_MODULE_1__.default]
-    })
-], HeaderComponent);
-
-
-
-/***/ }),
-
-/***/ 80248:
-/*!****************************************************!*\
-  !*** ./src/app/modals/managers/managers.page.scss ***!
-  \****************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("ion-header ion-title {\n  font-family: mon-bold;\n}\n\nion-content ion-item {\n  border-bottom: 1px solid #cccccc;\n}\n\nion-content ion-item ion-label {\n  font-family: \"mon-medium\";\n  text-transform: capitalize;\n}\n\nion-content ion-input {\n  background: var(--theme-white-color);\n  border-radius: 15px;\n  font-family: \"mon-medium\";\n  height: 52px;\n  margin-top: 18px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hbmFnZXJzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDRTtFQUNFLHFCQUFBO0FBQUo7O0FBSUU7RUFDRSxnQ0FBQTtBQURKOztBQUVJO0VBQ0UseUJBQUE7RUFDQSwwQkFBQTtBQUFOOztBQUdFO0VBRUUsb0NBQUE7RUFDQSxtQkFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FBRkoiLCJmaWxlIjoibWFuYWdlcnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWhlYWRlciB7XG4gIGlvbi10aXRsZSB7XG4gICAgZm9udC1mYW1pbHk6IG1vbi1ib2xkO1xuICB9XG59XG5pb24tY29udGVudCB7XG4gIGlvbi1pdGVtIHtcbiAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI2NjY2NjYztcbiAgICBpb24tbGFiZWwge1xuICAgICAgZm9udC1mYW1pbHk6ICdtb24tbWVkaXVtJztcbiAgICAgIHRleHQtdHJhbnNmb3JtOiBjYXBpdGFsaXplO1xuICAgIH1cbiAgfVxuICBpb24taW5wdXR7XG5cbiAgICBiYWNrZ3JvdW5kOiB2YXIoLS10aGVtZS13aGl0ZS1jb2xvcik7XG4gICAgYm9yZGVyLXJhZGl1czogMTVweDtcbiAgICBmb250LWZhbWlseTogJ21vbi1tZWRpdW0nO1xuICAgIGhlaWdodDogNTJweDtcbiAgICBtYXJnaW4tdG9wOiAxOHB4O1xuXG4gIH1cbn1cbiJdfQ== */");
-
-/***/ }),
-
-/***/ 41789:
-/*!***************************************************************!*\
-  !*** ./src/app/shared-component/header/header.component.scss ***!
-  \***************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJoZWFkZXIuY29tcG9uZW50LnNjc3MifQ== */");
-
-/***/ }),
-
-/***/ 72329:
-/*!******************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modals/managers/managers.page.html ***!
-  \******************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>Name of the Managers</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"close()\">\n        <ion-icon name=\"close\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ion-input placeholder=\"Search manager\" [(ngModel)]=\"term\"></ion-input>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list>\n    <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"close(item)\" *ngFor=\"let item of data|filter:term\">\n      <ion-label>{{item?.full_name}}</ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>\n");
-
-/***/ }),
-
-/***/ 62377:
-/*!*****************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/shared-component/header/header.component.html ***!
-  \*****************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"toolbar\">\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back'>\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>");
 
 /***/ })
 

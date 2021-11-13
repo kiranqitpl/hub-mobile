@@ -15,6 +15,7 @@ import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 import IncidentJson from '../incident-form.json';
 
 
+
 @Component({
   selector: 'app-incident-form',
   templateUrl: './incident-form.page.html',
@@ -39,7 +40,7 @@ export class IncidentFormPage implements OnInit {
   platformCheck: any = '';
 
   //----------------------------------------------------- Image variables ----------------------------------------------------//
-  photoGraphy = [];
+  photoGraphy = new Array();
   photoGraphyObject: any = {};
   alcohalImages = [];
   alcohalImagesObject: any = {};
@@ -401,11 +402,11 @@ export class IncidentFormPage implements OnInit {
   }
 
   onMobileUpload() {
+
   }
 
   onPhotoGraphy(event, type) {
-    this.photoGraphy = []
-    this.photoGraphyObject = {}
+    console.log('onPhotoGraphy', event);
     if (type == 1) {
       // let data = this.mobileUploadImages();
       // console.log('data', data);
@@ -413,10 +414,12 @@ export class IncidentFormPage implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            console.log('onPhotoGraphy', data)
-            // this.convertDataURIToBinary(data);
             this.photoGraphyObject[i] = data
-            this.photoGraphy.push(data);
+            if (this.photoGraphy.length <= 0) {
+              this.photoGraphy.push(data);
+            } else {
+              this.photoGraphy.unshift(data);
+            }
           }).catch(error => {
             console.log('error', error);
           });
@@ -425,13 +428,15 @@ export class IncidentFormPage implements OnInit {
   }
 
   onAlochaolImage(event) {
-    this.alcohalImages = [];
-    this.alcohalImagesObject = {};
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.alcohalImagesObject[i] = data
-          this.alcohalImages.push(data);
+          // this.alcohalImagesObject[i] = data
+          if (this.alcohalImages.length <= 0) {
+            this.alcohalImages.push(data);
+          } else {
+            this.alcohalImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -441,19 +446,22 @@ export class IncidentFormPage implements OnInit {
   onAlcohalTestSelect(event) {
     if (event.target.value != 'Yes') {
       this.alcohalImages = [];
-      this.alcohalImagesObject = {};
     }
   }
 
   onDrugTestImage(event) {
-    this.drugTestImages = [];
-    this.drugTestImagesObject = {};
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
           // let blobImage = this.convertDataURIToBinary(data);
-          this.drugTestImagesObject[i] = data
-          this.drugTestImages.push(data);
+          // this.drugTestImagesObject[i] = data
+          // this.drugTestImages.push(data);
+
+          if (this.drugTestImages.length <= 0) {
+            this.drugTestImages.push(data);
+          } else {
+            this.drugTestImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -463,18 +471,20 @@ export class IncidentFormPage implements OnInit {
   onDrugTestSelect(event) {
     if (event.target.value != 'Yes') {
       this.drugTestImages = [];
-      this.drugTestImagesObject = {};
     }
   }
 
   onReturnToDutyImage(event) {
-    this.alterDutyImagesObject = {};
-    this.alterDutyImages = [];
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.alterDutyImagesObject[i] = data
-          this.alterDutyImages.push(data);
+          // this.alterDutyImagesObject[i] = data
+          // this.alterDutyImages.push(data);
+          if (this.alterDutyImages.length <= 0) {
+            this.alterDutyImages.push(data);
+          } else {
+            this.alterDutyImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -484,18 +494,20 @@ export class IncidentFormPage implements OnInit {
   onReturnToDutySelect(event) {
     if (event.target.value != 'Yes') {
       this.alterDutyImages = [];
-      this.alterDutyImagesObject = {};
     }
   }
 
   onChemicalImageSelect(event) {
-    this.chemicalImages = [];
-    this.chemicalImagesObject = {};
+    console.log('onChemicalImageSelect 1', event);
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.chemicalImagesObject[i] = data
-          this.chemicalImages.push(data);
+          console.log('onChemicalImageSelect 2', data);
+          if (this.chemicalImages.length <= 0) {
+            this.chemicalImages.push(data);
+          } else {
+            this.chemicalImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -506,18 +518,22 @@ export class IncidentFormPage implements OnInit {
   onInsertImageSelect(event) {
     if (!event.detail.checked) {
       this.chemicalImages = [];
-      this.chemicalImagesObject = {};
     }
   }
 
   onSelectDamageImage(event) {
-    this.damageImages = [];
-    this.damageImagesObject = {};
+    // this.damageImages = [];
+    // this.damageImagesObject = {};
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          this.damageImagesObject[i] = data
-          this.damageImages.push(data);
+          // this.damageImagesObject[i] = data
+          // this.damageImages.push(data);
+          if (this.damageImages.length <= 0) {
+            this.damageImages.push(data);
+          } else {
+            this.damageImages.unshift(data);
+          }
         }).catch(error => {
           console.log('error', error);
         });
@@ -632,6 +648,30 @@ export class IncidentFormPage implements OnInit {
     // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
     // console.log('reportForm', this.reportForm.value);
     // console.log('injuryForm', this.injuryForm.value);
+
+    if (this.photoGraphy.length > 0) {
+      this.photoGraphyObject = { ...this.photoGraphy };
+    }
+
+    if (this.alcohalImages.length > 0) {
+      this.alcohalImagesObject = { ...this.alcohalImages }
+    }
+
+    if (this.drugTestImages.length > 0) {
+      this.drugTestImagesObject = { ...this.drugTestImages }
+    }
+
+    if (this.alterDutyImages.length > 0) {
+      this.alterDutyImagesObject = { ...this.alterDutyImages }
+    }
+
+    if (this.damageImages.length > 0) {
+      this.damageImagesObject = { ...this.damageImages }
+    }
+
+    if (this.chemicalImages.length > 0) {
+      this.chemicalImagesObject = { ...this.chemicalImages }
+    }
 
     let validation: boolean = false;
     if (val == 'submit') {
@@ -979,15 +1019,47 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
+  onImageDelete(index, tabName) {
+
+    console.log('index', index);
+    console.log('tabName', tabName);
+
+    if (tabName == 'Photography') {
+      this.photoGraphy.splice(index, 1);
+    }
+
+    if (tabName == 'Alcohal Test') {
+      this.alcohalImages.splice(index, 1);
+    }
+
+    if (tabName == 'Drug Test') {
+      this.drugTestImages.splice(index, 1);
+    }
+
+    if (tabName == 'Return to Alternate Duties') {
+      this.alterDutyImages.splice(index, 1);
+    }
+
+    if (tabName == 'Asset') {
+      this.damageImages.splice(index, 1);
+    }
+
+    if (tabName == 'Chemical Image') {
+      this.chemicalImages.splice(index, 1);
+    }
+  }
+
+
   selected: any;
   onImageClick(event) {
-
-    console.log('event', event)
+    console.log('event', event);
     // console.log(document.getElementById("pointer_div").offsetLeft);
-    // console.log(document.getElementById("pointer_div").offsetTop);
-    let pos_x = event.offsetX ? (event.offsetX) : event.pageX - document.getElementById("pointer_div").offsetLeft;
-    let pos_y = event.offsetY ? (event.offsetY) : event.pageY - document.getElementById("pointer_div").offsetTop;
+    // // console.log(document.getElementById("pointer_div").offsetTop);
+    // let pos_x = event.offsetX ? (event.offsetX) : event.pageX - document.getElementById("pointer_div").offsetLeft;
+    // let pos_y = event.offsetY ? (event.offsetY) : event.pageY - document.getElementById("pointer_div").offsetTop;
 
+    let pos_x = event.pageX;
+    let pos_y = event.pageY;
 
     console.log('pos_x', pos_x);
     console.log('pos_y', pos_y);
