@@ -236,10 +236,11 @@
           this.nav = nav;
           this.global = global;
           this.pName = "Actions";
+          this.data = []; //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
+
           this.description_of_required_action = '';
           this.priority = '';
           this.expected_completion = '';
-          this.data = [];
         }
 
         _createClass(ActionsPage, [{
@@ -247,12 +248,7 @@
           value: function ngOnInit() {
             var _this = this;
 
-            this.userRole = this.global.user;
             this.gmRole = this.global.gm;
-            this.investigatorRole = this.global.investigator;
-            this.managerRole = this.global.manager;
-            this.supervisorRole = this.global.supervisior;
-            this.role = localStorage.getItem("role");
             var ar = [];
             var d = JSON.parse(localStorage.getItem("singleView"));
             this.incident_id = d.id;
@@ -334,6 +330,8 @@
           value: function onSubmit() {
             var _this4 = this;
 
+            var userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
             if (this.description_of_required_action == '') {
               this.global.presentToast("Please enter description of required action");
             } else if (this.user_id == '' || this.user_id == undefined) {
@@ -352,7 +350,7 @@
               fd.append("priority", this.priority);
               fd.append("expected_completion", this.expected_completion);
               fd.append("description_of_required_action", this.description_of_required_action);
-              fd.append("investigator_id", localStorage.getItem("id"));
+              fd.append("investigator_id", userDetails.id);
               this.global.postData("api/Investigator/InvestigationAction", fd).subscribe(function (res) {
                 if (res.status) {
                   _this4.global.presentToast(res.message);

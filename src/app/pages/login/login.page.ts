@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
-  
+
   ionicForm: FormGroup;
   isSubmitted = false;
   imageUrl = environment.imageUrl;
@@ -38,27 +38,34 @@ export class LoginPage implements OnInit {
   submitForm() {
     this.isSubmitted = true
     if (this.ionicForm.valid) {
-      this.global.presentLoading();
+      // this.global.presentLoading();
       const fd = new FormData();
       fd.append("email", this.ionicForm.value.email);
       fd.append("password", this.ionicForm.value.password);
       this.global.postData1("user/login", fd).subscribe((res: any) => {
-        if (res.status) {
+        console.log('login',res);
+        if (res && res.status) {
+          localStorage.setItem("userDetails", JSON.stringify(res.data));
+
           localStorage.setItem("email", res.data.email);
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res?.data?.id);
           localStorage.setItem("name", res?.data?.full_name);
+
           this.nav.navigateRoot('dashboard')
+          // this.global.dismissLoading();
           this.toastService.toast(res.message, 'success');
         } else {
+          // this.global.dismissLoading();
           this.toastService.toast(res.message, 'danger');
         }
-        this.global.dismissLoading();
+
       }, err => {
-        this.global.dismissLoading();
+        // this.global.dismissLoading();
         console.log("errs", err)
       })
     } else {
+      console.log("here")
       return false
     }
   }

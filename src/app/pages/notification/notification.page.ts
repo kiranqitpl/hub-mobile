@@ -25,28 +25,21 @@ export class NotificationPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserData();
+    this.getLoggedInUserDetails();
     this.onNotificationLoad();
   }
 
-
-  getUserData() {
+  getLoggedInUserDetails() {
     this.userId = localStorage.getItem('id');
     this.roleId = localStorage.getItem('role');
   }
 
   //----------------------------------- Load Notification Data ---------------------------------------------------------// 
 
-
   async onNotificationLoad() {
     let formData = new FormData();
     formData.append("type", this.type);
     formData.append("user_id", this.userId);
-
-    // this.notificationData = await this.sharedService.notificationLoad(formData);
-
-    // console.log("this.notificationData ", this.notificationData);
-
     let url = "";
     if (this.roleId == this.globalService.investigator) {
       url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
@@ -68,7 +61,6 @@ export class NotificationPage implements OnInit {
       // this.globalService.dismissLoading();
       console.log("error");
     }
-
   }
 
   //----------------------------------- Load Notification Data ---------------------------------------------------------//

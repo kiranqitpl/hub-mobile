@@ -11,7 +11,10 @@ export class ActionsViewPage implements OnInit {
   pName: String = 'Actions';
   incident_id: any;
   data: any;
-  constructor(private nav: NavController, private global: GlobalService) { }
+  constructor(
+    private nav: NavController,
+    private global: GlobalService
+  ) { }
 
   ngOnInit() {
     let d = JSON.parse(localStorage.getItem("singleView"));

@@ -11,17 +11,27 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
 })
 export class DashboardPage implements OnInit {
 
-  data: any = [];
   role: any;
   userRole: any;
   gmRole: any;
   investigatorRole: any;
   managerRole: any;
   supervisorRole: any;
-  userId: string;
   roleId: string;
+
+  menu: any = [
+    {
+      menuName: "Submitted Form", route: "/incident-form-list"
+    },
+    {
+      menuName: "Notification", route: "/notification"
+    },
+  ];
+
   type: any = environment.allType;
   imageUrl = environment.imageUrl;
+
+  loggedInUserDetails: any;
 
   constructor(
     private nav: NavController,
@@ -30,31 +40,8 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userId = localStorage.getItem('id');
-    this.roleId = localStorage.getItem('role');
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.onNotificationLoad();
-  }
-
-  ionViewWillEnter() {
-    this.userRole = this.global.user;
-    this.gmRole = this.global.gm;
-    this.investigatorRole = this.global.investigator;
-    this.managerRole = this.global.manager;
-    this.supervisorRole = this.global.supervisior
-    this.role = localStorage.getItem("role");
-    if (this.role == this.userRole) {
-      this.data = ["Previous Form", "Notification"]
-    } else {
-      this.data = ["Submitted Form", "Notification"]
-    }
-  }
-
-  onNavGo(item) {
-    if (item === 'Previous Form' || item == 'Submitted Form') {
-      this.nav.navigateForward("/incident-form-list");
-    } else if ((localStorage.getItem("role") != this.userRole) && (item === 'Notification') && this.sharedService.notViewNotiCount != 0) {
-      this.nav.navigateForward("/notification");
-    }
   }
 
   onLogOut() {
@@ -65,34 +52,33 @@ export class DashboardPage implements OnInit {
   onNotificationLoad() {
     let formData = new FormData();
     formData.append("type", this.type);
-    formData.append("user_id", this.userId);
+    formData.append("user_id", this.loggedInUserDetails.id);
     let url = "";
-    if (this.roleId == this.global.investigator) {
-      url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-    } else if (this.roleId == this.global.gm) {
-      url = 'api/notification/getGMNotificationByGmID';
-    }
-    if (url != "") {
-      this.global.postData(url, formData).subscribe(result => {
-        console.log('onNotificationLoad', result);
-        if (result['status']) {
-          let count: number = 0;
-          result['data'].forEach(element => {
-            if (element.is_seen == 0) {
-              count = count + 1;
-            }
-          });
-          this.sharedService.notViewNotiCount = count
-        } else {
-          this.sharedService.notViewNotiCount = 0
-          console.log('error');
-        }
-      }), error => {
-        console.log('error', error);
-      }
-    } else {
-      console.log("error");
-    }
+    // if (this.roleId == this.global.investigator) {
+    //   url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
+    // } else if (this.roleId == this.global.gm) {
+    //   url = 'api/notification/getGMNotificationByGmID';
+    // }
+    // if (url != "") {
+    //   this.global.postData(url, formData).subscribe(result => {
+    //     if (result['status']) {
+    //       let count: number = 0;
+    //       result['data'].forEach(element => {
+    //         if (element.is_seen == 0) {
+    //           count = count + 1;
+    //         }
+    //       });
+    //       this.sharedService.notViewNotiCount = count
+    //     } else {
+    //       this.sharedService.notViewNotiCount = 0
+    //       console.log('error');
+    //     }
+    //   }), error => {
+    //     console.log('error', error);
+    //   }
+    // } else {
+    //   console.log("error");
+    // }
   }
 
   onAddForm() {

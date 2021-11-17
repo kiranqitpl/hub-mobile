@@ -31,7 +31,7 @@
         <ion-item class="ra" lines="none" *ngIf="isFrom=='edit'">
           <ion-select placeholder="{{selectedName ? selectedName : 'Select One'}}" interface="action-sheet"
             (ionChange)="selectedValue($event)" value={{selectedName}}>
-            <ion-select-option value="{{item.full_name}}" *ngFor="let item of listOfUsers">
+            <ion-select-option value="{{item.employee_id}}" *ngFor="let item of listOfUsers">
               {{item.full_name}} {{item.email}}
             </ion-select-option>
           </ion-select>
@@ -39,7 +39,7 @@
         <ion-item class="ra" lines="none" *ngIf="isFrom!=='edit'">
           <ion-select placeholder="Select One" interface="action-sheet" (ionChange)="selectedValue($event)"
             value={{selectedName}}>
-            <ion-select-option value="{{item.full_name}}" *ngFor="let item of listOfUsers">
+            <ion-select-option value="{{item.employee_id}}" *ngFor="let item of listOfUsers">
               {{item.full_name}} {{item.email}}
             </ion-select-option>
           </ion-select>
@@ -294,7 +294,6 @@
         </ion-radio-group>
       </div>
     </div>
-
 
     <ion-button (click)="onSubmit()" class="btn" *ngIf="isFrom=='edit'">UPDATE</ion-button>
     <ion-button (click)="onSubmit()" class="btn" *ngIf="isFrom=='add'">ADD</ion-button>

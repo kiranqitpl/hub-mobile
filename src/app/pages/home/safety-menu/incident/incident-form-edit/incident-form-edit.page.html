@@ -62,7 +62,7 @@
             <ion-item class="ra" lines="none">
               <ion-select placeholder="Please select who witnessed the near miss" interface="action-sheet"
                 formControlName="incident_near_miss">
-                <ion-select-option value="{{witnesskeys?.full_name}}" *ngFor="let witnesskeys of witnessList">
+                <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
                   {{witnesskeys?.full_name}}</ion-select-option>
               </ion-select>
             </ion-item>
@@ -605,7 +605,7 @@
               <p class="question">Injured Person Name :</p>
               <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
                 formControlName="injured_person_option">
-                <ion-select-option value="{{witnessName?.full_name}}" *ngFor="let witnessName of witnessList">
+                <ion-select-option value="{{witnessName?.employee_id}}" *ngFor="let witnessName of witnessList">
                   {{witnessName?.full_name}}
                 </ion-select-option>
               </ion-select>
@@ -770,8 +770,14 @@
                 <p class="question">Who administered treatment ? : </p>
 
                 <p class="question">Person Name :</p>
-                <ion-input placeholder="Please enter Person Name" formControlName="immediate_treatment_person_name">
-                </ion-input>
+                <ion-select placeholder="Select Person Name" interface="action-sheet"
+                  formControlName="immediate_treatment_person_name" (ionChange)="onAdministeredPerson($event, j)">
+                  <ion-select-option value="{{employeeListValue?.employee_id}}"
+                    *ngFor="let employeeListValue of employeeList">
+                    {{employeeListValue?.full_name}}</ion-select-option>
+                </ion-select>
+                <!-- <ion-input placeholder="Please enter Person Name" formControlName="immediate_treatment_person_name">
+                </ion-input> -->
 
                 <p class="question">Contact Details :</p>
                 <ion-input placeholder="Please enter mobile no or email id" type="tel"
@@ -895,11 +901,13 @@
 
         <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="name_of_witness"
           (ionChange)="onWitnessChange($event)">
-          <ion-select-option value="{{employeeListValue?.full_name}}" *ngFor="let employeeListValue of employeeList">
-            {{employeeListValue?.full_name}}</ion-select-option>
+          <!-- <ion-select-option value="{{employeeListValue?.full_name}}" *ngFor="let employeeListValue of employeeList">
+            {{employeeListValue?.full_name}}</ion-select-option> -->
+          <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
+            {{witnesskeys?.full_name}}</ion-select-option>
         </ion-select>
 
-        <div *ngIf="reputationDesForm.value['name_of_witness'] == 'Other'" formGroupName='other_witness_details'>
+        <div *ngIf="reputationDesForm.value['name_of_witness'] == '0'" formGroupName='other_witness_details'>
           <p class="other_witness"> Other Witness Details </p>
           <p class="question">
             Name :

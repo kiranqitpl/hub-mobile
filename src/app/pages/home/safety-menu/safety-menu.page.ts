@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from '../../../services/global-service/global.service';
 
 @Component({
   selector: 'app-safety-menu',
@@ -24,18 +23,10 @@ export class SafetyMenuPage implements OnInit {
   ];
 
   pName: String = "Safety";
-  loginUserRole: string;
 
-  constructor(
-    private globalService: GlobalService
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.loginUserRole = localStorage.getItem('role');
-  }
+  ngOnInit() { }
 
-  onGoTo() {
-
-  }
 
 }

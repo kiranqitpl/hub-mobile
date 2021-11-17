@@ -110,7 +110,6 @@ __webpack_require__.r(__webpack_exports__);
 let HomePage = class HomePage {
     constructor(nav) {
         this.nav = nav;
-        // data = ["Admin", "Company", "Projects", "Workshops", "Safety"];
         this.pName = 'Home';
         this.menu = [
             {
@@ -135,9 +134,7 @@ let HomePage = class HomePage {
         localStorage.clear();
         this.nav.navigateRoot("login");
     }
-    ngOnInit() {
-        // this.getRout()
-    }
+    ngOnInit() { }
 };
 HomePage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.NavController }

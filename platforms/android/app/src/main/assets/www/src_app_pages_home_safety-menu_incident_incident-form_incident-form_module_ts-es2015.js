@@ -459,6 +459,7 @@ let IncidentFormPage = class IncidentFormPage {
     onMobileUpload() {
     }
     onPhotoGraphy(event, type) {
+        console.log('onPhotoGraphy', event);
         if (type == 1) {
             // let data = this.mobileUploadImages();
             // console.log('data', data);
@@ -719,6 +720,7 @@ let IncidentFormPage = class IncidentFormPage {
         if (this.chemicalImages.length > 0) {
             this.chemicalImagesObject = Object.assign({}, this.chemicalImages);
         }
+        let userDetails = JSON.parse(localStorage.getItem('userDetails'));
         let validation = false;
         if (val == 'submit') {
             validation = this.validation();
@@ -808,7 +810,7 @@ let IncidentFormPage = class IncidentFormPage {
             //--------------------------------------------------------  Report -----------------------------------------------------------------//
             fd.append("report", this.reportForm.value['report']);
             //--------------------------------------------------------- Report ------------------------------------------------------------------//
-            fd.append('user_id', localStorage.getItem('id'));
+            fd.append('user_id', userDetails.id);
             let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
             this.globalService.postData1(url, fd).subscribe((res) => {
                 // this.globalService.presentLoading();

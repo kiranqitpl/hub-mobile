@@ -1178,6 +1178,7 @@
               this.chemicalImagesObject = Object.assign({}, this.chemicalImages);
             }
 
+            var userDetails = JSON.parse(localStorage.getItem('userDetails'));
             var validation = false;
 
             if (val == 'submit') {
@@ -1290,7 +1291,7 @@
 
               fd.append("report", this.reportForm.value['report']); //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
-              fd.append('user_id', localStorage.getItem('id'));
+              fd.append('user_id', userDetails.id);
               fd.append('id', this.incidentDetails.id);
               var url = val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete';
               this.globalService.postData1(url, fd).subscribe(function (res) {

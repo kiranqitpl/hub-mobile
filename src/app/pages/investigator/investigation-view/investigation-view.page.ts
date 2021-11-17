@@ -45,9 +45,4 @@ export class InvestigationViewPage implements OnInit {
     this.nav.back();
   }
 
-  ionViewWillEnter() {
-    // let d = JSON.parse(localStorage.getItem("singleView"));
-    // this.data = d.investigation_details;
-  }
-
 }

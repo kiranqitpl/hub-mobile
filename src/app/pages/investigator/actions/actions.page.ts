@@ -11,77 +11,76 @@ import moment from 'moment';
 export class ActionsPage implements OnInit {
 
   pName: String = "Actions";
+  data: any = [];
+
+
+  //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
+
   description_of_required_action: any = '';
-  user_id: any;
   user_name: any;
   priority: any = '';
   expected_completion: any = '';
+  isFrom: any;
+  user_id: any;
   id: any;
   incident_id: any;
-  constructor(private nav: NavController, private global: GlobalService) { }
-  data: any = [];
 
-  role: any;
-  userRole: any;
+  //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
+
   gmRole: any;
-  investigatorRole: any;
-  managerRole: any;
-  supervisorRole: any;
+
+  constructor(private nav: NavController, private global: GlobalService) { }
+
+
   ngOnInit() {
-    this.userRole = this.global.user;
     this.gmRole = this.global.gm;
-    this.investigatorRole = this.global.investigator;
-    this.managerRole = this.global.manager;
-    this.supervisorRole = this.global.supervisior
-    this.role = localStorage.getItem("role");
     let ar = [];
     let d = JSON.parse(localStorage.getItem("singleView"));
+
     this.incident_id = d.id;
-    this.global.getData("api/user/getAllUser").subscribe((success: any) => {
-      if (success) {
-        success.data.forEach((user) => {
-          if (user.role == this.gmRole) {
-            ar.push(user)
-            console.log(ar)
-            this.data = ar
-          }
-        })
+
+    this.global.getData("api/user/getAllUser").subscribe((result: any) => {
+      if (result && result.data) {
+        this.data = result.data;
       }
+      console.log('this.data ', this.data);
     }, err => {
       console.log(err)
     })
   }
-  isFrom: any;
-  ionViewWillEnter() {
 
+  ionViewWillEnter() {
     let isOpenFrom = localStorage.getItem("isActionsForm");
     this.isFrom = isOpenFrom;
     if (isOpenFrom == 'edit') {
       let d = JSON.parse(localStorage.getItem("singleView"));
       this.incident_id = d.id;
-      this.global.presentLoading();
+
+      // this.global.presentLoading();
       this.global.getData("api/Investigator/getInvestigationAction").subscribe((res: any) => {
+
+        console.log('res', res);
         if (res) {
           res?.data?.forEach((el) => {
+
             if (el.incident_id == this.incident_id) {
+
+              console.log(' this.incident_id', this.incident_id);
+
               this.description_of_required_action = el.description_of_required_action;
               this.user_name = el.user_name;
               this.user_id = el.user_id;
               this.priority = el.priority;
               this.expected_completion = el.expected_completion;
               this.id = el.id
-              this.global.dismissLoading();
-            } else {
-              this.global.dismissLoading();
+              // this.global.dismissLoading();
             }
           })
         }
       }, err => {
         console.log("res", err)
-        this.global.dismissLoading();
+        // this.global.dismissLoading();
       });
-    } else {
-
     }
   }
 
@@ -91,10 +90,11 @@ export class ActionsPage implements OnInit {
 
   selectUser(e) {
     this.data.forEach((el) => {
-      if (el.full_name == e.detail.value) {
-        this.user_id = el.id
+      if (el.employee_id == e.detail.value) {
+        this.user_id = el.employee_id
       }
     })
+    console.log('  this.user_id', this.user_id);
   }
 
   dateSelect(e) {
@@ -102,6 +102,9 @@ export class ActionsPage implements OnInit {
   }
 
   onSubmit() {
+
+    let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
     if (this.description_of_required_action == '') {
       this.global.presentToast("Please enter description of required action")
     }
@@ -123,7 +126,7 @@ export class ActionsPage implements OnInit {
       fd.append("priority", this.priority);
       fd.append("expected_completion", this.expected_completion);
       fd.append("description_of_required_action", this.description_of_required_action);
-      fd.append("investigator_id", localStorage.getItem("id"));
+      fd.append("investigator_id", userDetails.id);
       this.global.postData("api/Investigator/InvestigationAction", fd).subscribe((res: any) => {
         if (res.status) {
           this.global.presentToast(res.message)
@@ -138,6 +141,4 @@ export class ActionsPage implements OnInit {
       })
     }
   }
-
-
 }

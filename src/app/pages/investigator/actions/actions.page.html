@@ -15,7 +15,7 @@
           <ion-item class="ra ion-no-margin ion-no-padding" lines="none">
             <ion-select placeholder="Select One" interface="action-sheet" [(ngModel)]="user_name"
               (ionChange)="selectUser($event)">
-              <ion-select-option value="{{item?.full_name}}" *ngFor="let item of data">
+              <ion-select-option value="{{item?.employee_id}}" *ngFor="let item of data">
                 <p>{{item?.full_name}}</p>
               </ion-select-option>
             </ion-select>

@@ -238,7 +238,13 @@
           this.nav = nav;
           this.global = global;
           this.sharedService = sharedService;
-          this.data = [];
+          this.menu = [{
+            menuName: "Submitted Form",
+            route: "/incident-form-list"
+          }, {
+            menuName: "Notification",
+            route: "/notification"
+          }];
           this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
           this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.imageUrl;
         }
@@ -246,34 +252,8 @@
         _createClass(DashboardPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            this.userId = localStorage.getItem('id');
-            this.roleId = localStorage.getItem('role');
+            this.loggedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
             this.onNotificationLoad();
-          }
-        }, {
-          key: "ionViewWillEnter",
-          value: function ionViewWillEnter() {
-            this.userRole = this.global.user;
-            this.gmRole = this.global.gm;
-            this.investigatorRole = this.global.investigator;
-            this.managerRole = this.global.manager;
-            this.supervisorRole = this.global.supervisior;
-            this.role = localStorage.getItem("role");
-
-            if (this.role == this.userRole) {
-              this.data = ["Previous Form", "Notification"];
-            } else {
-              this.data = ["Submitted Form", "Notification"];
-            }
-          }
-        }, {
-          key: "onNavGo",
-          value: function onNavGo(item) {
-            if (item === 'Previous Form' || item == 'Submitted Form') {
-              this.nav.navigateForward("/incident-form-list");
-            } else if (localStorage.getItem("role") != this.userRole && item === 'Notification' && this.sharedService.notViewNotiCount != 0) {
-              this.nav.navigateForward("/notification");
-            }
           }
         }, {
           key: "onLogOut",
@@ -288,19 +268,15 @@
 
             var formData = new FormData();
             formData.append("type", this.type);
-            formData.append("user_id", this.userId);
-            var url = "";
-
-            if (this.roleId == this.global.investigator) {
-              url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-            } else if (this.roleId == this.global.gm) {
-              url = 'api/notification/getGMNotificationByGmID';
-            }
+            formData.append("user_id", this.loggedInUserDetails.id);
+            var url = ""; // if (this.roleId == this.global.investigator) {
+            //   url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
+            // } else if (this.roleId == this.global.gm) {
+            //   url = 'api/notification/getGMNotificationByGmID';
+            // }
 
             if (url != "") {
               this.global.postData(url, formData).subscribe(function (result) {
-                console.log('onNotificationLoad', result);
-
                 if (result['status']) {
                   var count = 0;
                   result['data'].forEach(function (element) {
@@ -345,253 +321,6 @@
         template: _raw_loader_dashboard_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_dashboard_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
       })], _DashboardPage);
-      /***/
-    },
-
-    /***/
-    89985:
-    /*!***********************************************************!*\
-      !*** ./src/app/services/global-service/global.service.ts ***!
-      \***********************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "GlobalService": function GlobalService() {
-          return (
-            /* binding */
-            _GlobalService
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! tslib */
-      64762);
-      /* harmony import */
-
-
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @ionic/angular */
-      80476);
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! @angular/core */
-      37716);
-      /* harmony import */
-
-
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @angular/common/http */
-      91841);
-
-      var _GlobalService = /*#__PURE__*/function () {
-        function GlobalService(toastController, http, loadingController) {
-          _classCallCheck(this, GlobalService);
-
-          this.toastController = toastController;
-          this.http = http;
-          this.loadingController = loadingController;
-          this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
-          this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
-
-          this.user = "31";
-          this.gm = "32";
-          this.investigator = "33";
-          this.manager = "34";
-          this.supervisior = "35";
-          this.formType_user = 1;
-          this.formType_investigator = 2;
-        }
-
-        _createClass(GlobalService, [{
-          key: "presentToast",
-          value: function presentToast(msg) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var toast;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      _context.next = 2;
-                      return this.toastController.create({
-                        message: msg,
-                        duration: 2000,
-                        mode: "ios",
-                        color: "dark"
-                      });
-
-                    case 2:
-                      toast = _context.sent;
-                      toast.present();
-
-                    case 4:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
-          }
-        }, {
-          key: "toast",
-          value: function toast(msg, type) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-              var toast;
-              return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                while (1) {
-                  switch (_context2.prev = _context2.next) {
-                    case 0:
-                      _context2.next = 2;
-                      return this.toastController.create({
-                        message: msg,
-                        duration: 2000,
-                        // mode: "ios",
-                        color: type,
-                        animated: true
-                      });
-
-                    case 2:
-                      toast = _context2.sent;
-                      toast.present();
-
-                    case 4:
-                    case "end":
-                      return _context2.stop();
-                  }
-                }
-              }, _callee2, this);
-            }));
-          }
-        }, {
-          key: "presentLoading",
-          value: function presentLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var loading;
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                while (1) {
-                  switch (_context3.prev = _context3.next) {
-                    case 0:
-                      _context3.next = 2;
-                      return this.loadingController.create({
-                        cssClass: 'my-custom-class',
-                        message: 'Please wait...'
-                      });
-
-                    case 2:
-                      loading = _context3.sent;
-                      _context3.next = 5;
-                      return loading.present();
-
-                    case 5:
-                    case "end":
-                      return _context3.stop();
-                  }
-                }
-              }, _callee3, this);
-            }));
-          }
-        }, {
-          key: "dismissLoading",
-          value: function dismissLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-              return regeneratorRuntime.wrap(function _callee4$(_context4) {
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      _context4.next = 2;
-                      return this.loadingController.dismiss();
-
-                    case 2:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }
-              }, _callee4, this);
-            }));
-          }
-        }, {
-          key: "setHeader",
-          value: function setHeader() {
-            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders().set('apikey', 'as*37486a*()HGY').set("Access-Control-Allow-Origin", "*").set("Access-Control-Allow-Headers", "*").set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS").set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // if (localStorage.getItem("token") && localStorage.getItem("token") != "")
-            //   header.append("token", localStorage.getItem("token"));
-
-            return header;
-          }
-        }, {
-          key: "getData",
-          value: function getData(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl + url, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "postData",
-          value: function postData(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl + url, data, {
-              headers: headers
-            });
-          } // --------------------------------------------------New Services ---------------------------------------------//
-
-        }, {
-          key: "postData1",
-          value: function postData1(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl1 + url, data, {
-              headers: headers
-            });
-          }
-        }, {
-          key: "getData1",
-          value: function getData1(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl1 + url, {
-              headers: headers
-            }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
-            //   map((response) => {
-            //     console.log('response', response);
-            //     if (!response['status']) {
-            //       throw new Error('Value expected!');
-            //     }
-            //     response;
-            //   }),
-            //   catchError(() => of())
-            // );
-          }
-        }]);
-
-        return GlobalService;
-      }();
-
-      _GlobalService.ctorParameters = function () {
-        return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ToastController
-        }, {
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient
-        }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.LoadingController
-        }];
-      };
-
-      _GlobalService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
-        providedIn: 'root'
-      })], _GlobalService); // ---------------------------------------------  New Services --------------------------------------------------//
-
       /***/
     },
 
@@ -659,40 +388,7 @@
           this.actionSheetController = actionSheetController;
           this.camera = camera;
           this.notViewNotiCount = 0;
-        } // notificationLoad(formData) {
-        //   let roleId = localStorage.getItem('role');
-        //   let url = "";
-        //   if (roleId) {
-        //     if (roleId == this.globalService.investigator) {
-        //       url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-        //     } else if (roleId == this.globalService.gm) {
-        //       url = 'api/notification/getGMNotificationByGmID';
-        //     }
-        //   }
-        //   if (url != "") {
-        //     new Promise((resolve, reject) => {
-        //       this.globalService.postData(url, formData).subscribe(result => {
-        //         console.log('notificationLoad', result);
-        //         if (result['status']) {
-        //           let count: number = 0;
-        //           result['data'].forEach(element => {
-        //             if (element.is_seen == 0) {
-        //               count = count + 1;
-        //             }
-        //           });
-        //           this.notViewNotiCount = count;
-        //           return result['data'];
-        //         } else {
-        //           console.log('error');
-        //         }
-        //         setTimeout(function () {
-        //           resolve("Success!");
-        //         });
-        //       });
-        //     });
-        //   }
-        // }
-
+        }
 
         _createClass(SharedService, [{
           key: "getBase64",
@@ -736,15 +432,15 @@
         }, {
           key: "mobileUploadImages",
           value: function mobileUploadImages() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               var _this2 = this;
 
               var images, actionSheet;
-              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+              return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
-                  switch (_context5.prev = _context5.next) {
+                  switch (_context.prev = _context.next) {
                     case 0:
-                      _context5.next = 2;
+                      _context.next = 2;
                       return this.actionSheetController.create({
                         header: 'Select Image source',
                         buttons: [{
@@ -764,16 +460,16 @@
                       });
 
                     case 2:
-                      actionSheet = _context5.sent;
-                      _context5.next = 5;
+                      actionSheet = _context.sent;
+                      _context.next = 5;
                       return actionSheet.present();
 
                     case 5:
                     case "end":
-                      return _context5.stop();
+                      return _context.stop();
                   }
                 }
-              }, _callee5, this);
+              }, _callee, this);
             }));
           }
         }, {
@@ -849,7 +545,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\" *ngIf=\"roleId != gmRole\">\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of data\">\n      <ion-button class=\"btn\" (click)=\"onNavGo(tabVal)\">\n        {{tabVal}}\n        <ion-badge class=\"badge\"\n          *ngIf=\"tabVal == 'Notification' && sharedService.notViewNotiCount != 0 && roleId != userRole \" color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <!-- <div class=\"addForm\" (click)=\"onAddForm()\" *ngIf=\"roleId != gmRole\"> -->\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0 \"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

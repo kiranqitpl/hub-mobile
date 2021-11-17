@@ -162,6 +162,7 @@ let InvestigationPage = class InvestigationPage {
         ];
     }
     ngOnInit() {
+        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
         this.data = [
             'Investigation team members',
             'Sequence of events',
@@ -451,7 +452,7 @@ let InvestigationPage = class InvestigationPage {
         fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
         fd.append("additional_investigation_required", this.additional_investigation_required);
         fd.append("type", this.type);
-        fd.append("investigator_id", localStorage.getItem("id"));
+        fd.append("investigator_id", this.userDetails.id);
         console.log('onSubmit', fd);
         this.global.presentLoading();
         let addUrl = 'api/Investigator/submitInvestigation';
@@ -519,7 +520,7 @@ let InvestigationPage = class InvestigationPage {
         fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
         fd.append("additional_investigation_required", this.additional_investigation_required);
         fd.append("type", this.type);
-        fd.append("investigator_id", localStorage.getItem("id"));
+        fd.append("investigator_id", this.userDetails.id);
         console.log('saveItemOffline', fd);
         this.global.presentLoading();
         let addUrl = 'api/Investigator/submitInvestigation_incomplete';

@@ -128,11 +128,11 @@ let VehicleHoistAddFormPage = class VehicleHoistAddFormPage {
         this.fb = fb;
         this.globalService = globalService;
         this.pName = 'Vehicle Hoist';
-        this.logedInUserName = '';
+        this.logedInUserDetails = '';
         this.showMsg = false;
     }
     ngOnInit() {
-        this.logedInUserName = localStorage.getItem('name');
+        this.logedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
         this.vehicleHoistForm = this.fb.group({
             vehicle_host_no: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required],
             trained: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required],
@@ -182,7 +182,7 @@ let VehicleHoistAddFormPage = class VehicleHoistAddFormPage {
         this.loadingService.presentLoading();
         let formData = {};
         formData = this.vehicleHoistForm.value;
-        formData['user_name'] = this.logedInUserName;
+        formData['user_name'] = this.logedInUserDetails.name;
         formData['date'] = moment__WEBPACK_IMPORTED_MODULE_5___default()().format('YYYY-MM-DD');
         formData['time'] = moment__WEBPACK_IMPORTED_MODULE_5___default()().format('HH:mm:ss');
         this.globalService.postData1('prestart_vehicle/add_prestart_vehicle', formData).subscribe(result => {

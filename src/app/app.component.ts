@@ -1,6 +1,8 @@
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+import { GlobalService } from './services/global-service/global.service';
+
 
 @Component({
   selector: 'app-root',
@@ -14,8 +16,10 @@ export class AppComponent {
     private platform: Platform,
     public alertController: AlertController,
     private _location: Location,
+    private globalService: GlobalService
   ) {
-    let token = localStorage.getItem("email") ? localStorage.getItem("email") : '';
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    let token = userDetails && userDetails.email ? userDetails.email : '';
     if (token == '') {
       this.nav.navigateRoot("login");
     } else {

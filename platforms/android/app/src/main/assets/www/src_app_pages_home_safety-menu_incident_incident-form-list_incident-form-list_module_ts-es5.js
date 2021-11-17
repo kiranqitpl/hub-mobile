@@ -11697,7 +11697,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -11715,39 +11715,45 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
 
 
-      var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
+      89985);
+      /* harmony import */
+
+
+      var src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! src/app/services/toast-service/toast.service */
+      45311);
+      /* harmony import */
+
+
+      var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! moment */
       16738);
       /* harmony import */
 
 
-      var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-      /* harmony import */
-
-
-      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! src/app/services/global-service/global.service */
-      89985);
+      var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 
       var _IncidentFormListPage = /*#__PURE__*/function () {
-        function IncidentFormListPage(nav, global) {
+        function IncidentFormListPage(nav, global, toastService) {
           _classCallCheck(this, IncidentFormListPage);
 
           this.nav = nav;
-          this.global = global; // isApp: boolean;
-
+          this.global = global;
+          this.toastService = toastService;
           this.pName = 'Incidents List';
           this.listOfUsers = [];
           this.listData = [];
@@ -11758,6 +11764,12 @@
           value: function ngOnInit() {
             this.gm_id = localStorage.getItem("id");
             this.gm_name = localStorage.getItem("name");
+            this.role = localStorage.getItem("role");
+            this.userRole = this.global.user;
+            this.gmRole = this.global.gm;
+            this.investigatorRole = this.global.investigator;
+            this.managerRole = this.global.manager;
+            this.supervisorRole = this.global.supervisior;
             this.getInvestigatorDetails();
           }
         }, {
@@ -11765,11 +11777,9 @@
           value: function getInvestigatorDetails() {
             var _this28 = this;
 
-            this.global.getData("api/Investigator/getInvestigator").subscribe(function (res) {
-              console.log('Investigator', res);
-
-              if (res.status) {
-                _this28.listOfUsers = res.data;
+            this.global.getData1("Investigator/getInvestigator").subscribe(function (result) {
+              if (result && result.data && result.data.length > 0) {
+                _this28.listOfUsers = result.data;
               }
             }, function (err) {
               console.log(err);
@@ -11786,14 +11796,10 @@
             this.gmRole = this.global.gm;
             this.investigatorRole = this.global.investigator;
             this.managerRole = this.global.manager;
-            this.supervisorRole = this.global.supervisior; // if (this.platform.is('mobileweb')) {
-            //   this.isApp = false;
-            // } else {
-            //   this.isApp = true;
-            // }
+            this.supervisorRole = this.global.supervisior;
 
             if (this.role == this.investigatorRole) {
-              this.global.postData1("Add_form/get", {
+              this.global.postData("api/Add_form/get", {
                 investigator_id: this.gm_id
               }).subscribe(function (res) {
                 var _a;
@@ -11803,32 +11809,33 @@
                   (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (el, index) {
                     el.no = index + 1;
                     el.incident_type = el.incident_value;
-                    el.noc = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-                    el.time = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+                    el.noc = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
+                    el.time = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
                     el.manager = el.classification_manager;
                     el.inValue = el.incident_value;
                     el.role;
                     el.cStatus = el.complete_status;
-                  });
-                  _this29.listData = res.data;
+                  }); // this.listData = res.data;
 
                   _this29.listData.forEach(function (element) {
                     if (element.complete_status == 1) {
                       data.push(element);
                     }
-                  });
+                  }); // this.rows = this.listData;
 
-                  _this29.rows = _this29.listData;
+
                   _this29.investigatorData = data;
                 }
 
-                _this29.global.dismissLoading();
+                console.log('investigatorData', _this29.investigatorData); // this.global.dismissLoading();
               }, function (err) {
                 console.log("Err response", err);
               });
             } else {
-              this.global.postData1("add_form/get", {}).subscribe(function (res) {
+              this.global.postData("api/add_form/get", {}).subscribe(function (res) {
                 var _a, _b;
+
+                console.log('other', res);
 
                 if (res) {
                   if (_this29.role == _this29.gmRole) {
@@ -11836,104 +11843,91 @@
                     (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (el, index) {
                       el.no = index + 1;
                       el.incident_type = el.incident_value;
-                      el.noc = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-                      el.time = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+                      el.noc = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
+                      el.time = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
                       el.manager = el.classification_manager;
                       el.inValue = el.incident_value;
                       el.role;
                       el.cStatus = el.complete_status;
 
-                      if (el.inveinvestigators[0].name !== null) {
-                        el.ivalue = el.inveinvestigators[0].investigator_name;
+                      if (el.investigators && el.investigators[0].name !== null) {
+                        el.ivalue = el.investigators[0].investigator_name;
                       }
 
                       if (el.is_investigation_action) {
                         data.push(el);
                       }
                     });
-                    _this29.listData = data;
                     _this29.rows = data;
+                    console.log('gmRole', _this29.rows);
                   } else {
                     (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.forEach(function (el, index) {
                       el.no = index + 1;
                       el.incident_type = el.incident_value;
-                      el.noc = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-                      el.time = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+                      el.noc = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
+                      el.time = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
                       el.manager = el.classification_manager;
                       el.inValue = el.incident_value;
                       el.role;
                       el.cStatus = el.complete_status;
-                    });
-                    _this29.listData = res.data;
-                    _this29.rows = _this29.listData;
-                  }
+                    }); // this.listData = res.data;
 
-                  _this29.global.dismissLoading();
-                } else {
-                  _this29.global.dismissLoading();
+                    _this29.rows = res.data;
+                    console.log('userRole', _this29.rows);
+                  } // this.global.dismissLoading();
+
+                } else {// this.global.dismissLoading();
                 }
               }, function (error) {
-                console.log(error);
-
-                _this29.global.dismissLoading();
+                console.log(error); // this.global.dismissLoading();
               });
-            }
+            } // this.global.postData("api/add_form/get", {}).subscribe((res: any) => {
+            //   if (res) {
+            //     if (this.role == this.gmRole) {
+            //       let data = [];
+            //       res?.data?.forEach((el: any, index) => {
+            //         el.no = index + 1;
+            //         el.incident_type = el.incident_value;
+            //         el.noc = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY")
+            //         el.time = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+            //         el.manager = el.classification_manager;
+            //         el.inValue = el.incident_value;
+            //         el.role;
+            //         if (el?.investigation_details?.name != null) {
+            //           el.investigator = el?.investigation_details?.name[0]?.investigator_name
+            //         }
+            //         if (el.investigators !== null) {
+            //           el.ivalue = el.investigators[0].investigator_name
+            //         }
+            //         if (el.complete_status == 1) {
+            //           data.push(el)
+            //         }
+            //       });
+            //       this.listData = data;
+            //       this.rows = this.listData;
+            //     } else {
+            //       res?.data?.forEach((el: any, index) => {
+            //         el.no = index + 1;
+            //         el.incident_type = el.incident_value;
+            //         el.noc = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY")
+            //         el.time = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+            //         el.manager = el.classification_manager;
+            //         el.inValue = el.incident_value;
+            //         el.role;
+            //         el.cStatus = el.complete_status
+            //       });
+            //       this.listData = res.data;
+            //       this.rows = this.listData;
+            //     }
+            //     // this.global.dismissLoading();
+            //   } else {
+            //     // this.global.dismissLoading();
+            //   }
+            // }, error => {
+            //   console.log(error);
+            //   // this.global.dismissLoading();
+            // })
 
-            this.global.postData1("add_form/get", {}).subscribe(function (res) {
-              var _a, _b;
-
-              if (res) {
-                if (_this29.role == _this29.gmRole) {
-                  var data = [];
-                  (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (el, index) {
-                    var _a, _b, _c;
-
-                    el.no = index + 1;
-                    el.incident_type = el.incident_value;
-                    el.noc = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-                    el.time = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
-                    el.manager = el.classification_manager;
-                    el.inValue = el.incident_value;
-                    el.role;
-
-                    if (((_a = el === null || el === void 0 ? void 0 : el.investigation_details) === null || _a === void 0 ? void 0 : _a.name) != null) {
-                      el.investigator = (_c = (_b = el === null || el === void 0 ? void 0 : el.investigation_details) === null || _b === void 0 ? void 0 : _b.name[0]) === null || _c === void 0 ? void 0 : _c.investigator_name;
-                    }
-
-                    if (el.investigators !== null) {
-                      el.ivalue = el.investigators[0].investigator_name;
-                    }
-
-                    if (el.complete_status == 1) {
-                      data.push(el);
-                    }
-                  });
-                  _this29.listData = data;
-                  _this29.rows = _this29.listData;
-                } else {
-                  (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.forEach(function (el, index) {
-                    el.no = index + 1;
-                    el.incident_type = el.incident_value;
-                    el.noc = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-                    el.time = moment__WEBPACK_IMPORTED_MODULE_2___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
-                    el.manager = el.classification_manager;
-                    el.inValue = el.incident_value;
-                    el.role;
-                    el.cStatus = el.complete_status;
-                  });
-                  _this29.listData = res.data;
-                  _this29.rows = _this29.listData;
-                }
-
-                _this29.global.dismissLoading();
-              } else {
-                _this29.global.dismissLoading();
-              }
-            }, function (error) {
-              console.log(error);
-
-              _this29.global.dismissLoading();
-            });
           }
         }, {
           key: "onActivate",
@@ -11942,18 +11936,19 @@
             localStorage.setItem("singleView", JSON.stringify(e.row));
           }
         }, {
-          key: "singleView",
-          value: function singleView() {
+          key: "onGoToDetails",
+          value: function onGoToDetails() {
             this.nav.navigateRoot("/incident-details/" + this.getRowData.id);
           }
         }, {
-          key: "editClick",
-          value: function editClick() {
+          key: "onGoToEdit",
+          value: function onGoToEdit() {
             this.nav.navigateRoot("/incident-form-edit/" + this.getRowData.id);
           }
         }, {
-          key: "investigation",
-          value: function investigation() {
+          key: "onGoToInvestigation",
+          value: function onGoToInvestigation(event) {
+            console.log('event', event.detail.value);
             var data = JSON.parse(localStorage.getItem("singleView"));
 
             if (data.investigation_details !== null) {
@@ -11965,8 +11960,20 @@
             this.nav.navigateForward("investigation");
           }
         }, {
-          key: "actions",
-          value: function actions() {
+          key: "onViewInvestigation",
+          value: function onViewInvestigation() {
+            // let data = JSON.parse(localStorage.getItem("singleView"))
+            console.log('this.getRowData ', this.getRowData);
+
+            if (this.getRowData && this.getRowData.complete_status && this.getRowData.complete_status == 1) {
+              this.nav.navigateForward("investigation-view"); // this.nav.navigateForward("investigation-view/" + this.getRowData.investigation_details.id);
+            } else {
+              this.global.presentToast("You haven't Investigation created");
+            }
+          }
+        }, {
+          key: "onGoToActions",
+          value: function onGoToActions() {
             var data = JSON.parse(localStorage.getItem("singleView"));
 
             if (data.is_investigation_action == true) {
@@ -11978,42 +11985,15 @@
             this.nav.navigateForward("actions");
           }
         }, {
-          key: "viewActionForm",
-          value: function viewActionForm() {
-            var data = JSON.parse(localStorage.getItem("singleView")); // if (data.is_investigation_action == true) {
-
-            this.nav.navigateForward("actions-view"); // } else {
-            //   this.global.presentToast("You don't have any actions created");
-            // }
+          key: "onViewAction",
+          value: function onViewAction() {
+            this.nav.navigateForward("actions-view");
           }
         }, {
-          key: "viewInvestigation",
-          value: function viewInvestigation() {
-            // let data = JSON.parse(localStorage.getItem("singleView"))
-            console.log('this.getRowData ', this.getRowData);
-
-            if (this.getRowData && this.getRowData.complete_status && this.getRowData.complete_status == 1) {
-              this.nav.navigateForward("investigation-view"); // this.nav.navigateForward("investigation-view/" + this.getRowData.investigation_details.id);
-            } else {
-              this.global.presentToast("You haven't Investigation created");
-            }
-          }
-        }, {
-          key: "assignToinvestigator",
-          value: function assignToinvestigator() {
-            var fd = new FormData();
-            var data = JSON.parse(localStorage.getItem("singleView"));
-            fd.append("incident_id", data.id);
-            fd.append("gm_id", this.gm_id);
-            fd.append("gm_name", this.gm_name);
-          }
-        }, {
-          key: "selectInvestigator",
-          value: function selectInvestigator(e) {
+          key: "onAssignInvestigator",
+          value: function onAssignInvestigator(e) {
             var _this30 = this;
 
-            console.log('selectInvestigator', e);
-            this.investigator_name = e.detail.value;
             this.listOfUsers.forEach(function (user) {
               if (user.full_name == e.detail.value) {
                 _this30.investigator_id = user.id;
@@ -12025,22 +12005,16 @@
             fd.append("gm_id", this.gm_id);
             fd.append("gm_name", this.gm_name);
             fd.append("investigator_id", this.investigator_id);
-            fd.append("investigator_name", this.investigator_name); // let datas = {
-            //   incident_id: data.id,
-            //   gmL: this.gm_id,
-            //   gm_name: this.gm_name,
-            //   investigator_id: this.investigator_id,
-            //   investigator_name: this.investigator_name
-            // }
-
+            fd.append("investigator_name", this.investigator_name);
             this.global.presentLoading();
             this.global.postData1("GeneralManager/assignedInvestigator", fd).subscribe(function (res) {
-              _this30.global.presentToast(res.message); // if (res.status) {
-              //   this.global.presentToast(res.message);
-              // } else {
-              //   this.global.presentToast(res.message);
-              // }
+              console.log('assignedInvestigator', res);
 
+              if (res && res.status) {
+                _this30.toastService.toast(res.message, 'success');
+              } else {
+                _this30.toastService.toast(res.message, 'danger');
+              }
 
               _this30.global.dismissLoading();
             }, function (err) {
@@ -12056,13 +12030,15 @@
 
       _IncidentFormListPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController
         }, {
-          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+        }, {
+          type: src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__.ToastService
         }];
       };
 
-      _IncidentFormListPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+      _IncidentFormListPage = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-incident-form-list',
         template: _raw_loader_incident_form_list_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_incident_form_list_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -12102,7 +12078,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <div class=\"ion-margin-top ion-margin-bottom\">\n      <ngx-datatable [scrollbarH]=\"true\" class=\"material\" [limit]=\"10\"\n        [rows]=\"role == investigatorRole ? investigatorData :rows\" [rowHeight]=\"50\" [columnMode]=\"'force'\"\n        [headerHeight]=\"50\" [footerHeight]=\"50\" (activate)=\"onActivate($event)\">\n\n        <ngx-datatable-column name=\"No\" [width]=\"10\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            No\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"inValue\" [minWidth]=\"200\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Type\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"noc\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Date\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"time\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Incident Time\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"manager\" [minWidth]=\"200\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Manager Assigned\n          </ng-template>\n        </ngx-datatable-column>\n\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\">\n\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n\n          <ng-template let-value=\"id\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"singleView()\"></ion-icon>\n          </ng-template>\n\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" *ngIf=\"role==userRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Edit\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"editClick()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" *ngIf=\"role==userRole\" name=\"cStatus\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Status\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-text *ngIf=\"value=='0'\">Incomplete</ion-text>\n            <ion-text *ngIf=\"value=='1'\">Complete</ion-text>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"ivalue\" [minWidth]=\"300\" [resizeable]=\"true\" *ngIf=\"role==gmRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Assign Investigator\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <!-- {{value}}             -->\n            <ion-item class=\"ion-no-padding ion-no-margin dropDownStyle\" lines=\"none\">\n              <ion-select placeholder=\"Select Investigator\" value={{value}} (ionChange)=\"selectInvestigator($event)\">\n                <ion-select-option value=\"{{item?.full_name}}\" *ngFor=\"let item of listOfUsers\">{{item?.full_name}}\n                </ion-select-option>\n              </ion-select>\n            </ion-item>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Investigation\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"investigation()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            Actions\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"actions()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Investigation<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" (click)=\"viewInvestigation()\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"100\" [resizeable]=\"true\" *ngIf=\"role==investigatorRole\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Actions<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" (click)=\"viewActionForm()\" slot=\"icon-only\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n      </ngx-datatable>\n    </div>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <div class=\"ion-margin-top ion-margin-bottom\">\n\n      <ngx-datatable [scrollbarH]=\"true\" class=\"material\" [limit]=\"10\"\n        [rows]=\"role == investigatorRole ? investigatorData : rows\" [rowHeight]=\"50\" [columnMode]=\"'force'\"\n        [headerHeight]=\"50\" [footerHeight]=\"50\" (activate)=\"onActivate($event)\">\n\n        <ngx-datatable-column name=\"No\" [width]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>No</ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"inValue\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Incident Type</ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"noc\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Incident Date</ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"time\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Incident Time</ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"manager\" [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Manager Assigned</ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Status</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-text *ngIf=\"value == '0' \">Incomplete</ion-text>\n            <ion-text *ngIf=\"value == '1' \">Complete</ion-text>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Edit</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"onGoToEdit()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n          <ng-template let-value=\"id\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"onGoToDetails()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"ivalue\" [minWidth]=\"300\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Assign Investigator</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-item class=\"ion-no-padding ion-no-margin dropDownStyle\" lines=\"none\">\n              <ion-select placeholder=\"Select Investigator\" value={{value}} (ionChange)=\"onAssignInvestigator($event)\">\n                <ion-select-option value=\"{{item?.full_name}}\" *ngFor=\"let item of listOfUsers\">{{item?.full_name}}\n                </ion-select-option>\n              </ion-select>\n            </ion-item>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Investigation</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"onGoToInvestigation($event)\">\n            </ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View Investigation<ion-icon class=\"view\"\n              slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" (click)=\"onViewInvestigation()\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Actions</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"onGoToActions()\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>\n            View Actions<ion-icon class=\"view\" slot=\"icon-only\" name=\"view-outline\"></ion-icon>\n          </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" (click)=\"onViewAction()\" slot=\"icon-only\" name=\"eye-outline\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n      </ngx-datatable>\n\n    </div>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

@@ -902,6 +902,7 @@ let IncidentFormEditPage = class IncidentFormEditPage {
         if (this.chemicalImages.length > 0) {
             this.chemicalImagesObject = Object.assign({}, this.chemicalImages);
         }
+        let userDetails = JSON.parse(localStorage.getItem('userDetails'));
         let validation = false;
         if (val == 'submit') {
             validation = this.validation();
@@ -990,7 +991,7 @@ let IncidentFormEditPage = class IncidentFormEditPage {
             //--------------------------------------------------------  Report -----------------------------------------------------------------//
             fd.append("report", this.reportForm.value['report']);
             //--------------------------------------------------------- Report ------------------------------------------------------------------//
-            fd.append('user_id', localStorage.getItem('id'));
+            fd.append('user_id', userDetails.id);
             fd.append('id', this.incidentDetails.id);
             let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
             this.globalService.postData1(url, fd).subscribe((res) => {

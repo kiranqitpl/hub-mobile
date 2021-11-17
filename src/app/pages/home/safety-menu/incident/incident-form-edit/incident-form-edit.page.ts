@@ -339,6 +339,21 @@ export class IncidentFormEditPage implements OnInit {
     })
   }
 
+  loadManger(employee_id) {
+    this.globalService.getData1("Manager/getManagerList").subscribe((res: any) => {
+      console.log('res', res);
+      if (res) {
+        res.data.filter(ele => {
+          if (ele.employee_id == employee_id) {
+            this.managerList = ele.full_name;
+          }
+        })
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
   // findValueInWitness() {
   //   let val: boolean = false;
   //   this.reputationWitnessList.find(ele => {
@@ -405,6 +420,7 @@ export class IncidentFormEditPage implements OnInit {
           if (result && result['data'] && result['data'][0]) {
             this.incidentDetails = result['data'][0];
 
+            this.loadManger(this.incidentDetails.classification_manager);
             //------------------------------------------------------- incidentForm ----------------------------------------------------------//
             this.incidentForm.patchValue(this.incidentDetails);
             this.onInput('', 'Incident');
@@ -434,7 +450,7 @@ export class IncidentFormEditPage implements OnInit {
               });
             });
 
-            this.managerList = this.incidentDetails.classification_manager;
+            // this.managerList = this.incidentDetails.classification_manager;
             this.classificationForm.controls['date_of_incident'].setValue(this.incidentDetails.date_of_incident);
             this.classificationForm.controls['time_of_incident'].setValue(this.incidentDetails.time_of_incident);
             this.classificationForm.controls['date_reported'].setValue(this.incidentDetails.date_reported);
@@ -523,6 +539,18 @@ export class IncidentFormEditPage implements OnInit {
                 }
               })
             });
+
+
+            console.log('incidentForm', this.incidentForm.value);
+            console.log('photoGraphyForm', this.photoGraphyForm.value);
+            console.log('incidentDesForm', this.incidentDesForm.value);
+            console.log('classificationForm', this.classificationForm.value);
+            console.log('assetDescriptionForm', this.assetDescriptionForm.value)
+            console.log('enviornmentForm', this.enviornmentForm.value);
+            console.log('injuryForm', this.injuryForm.value);
+            console.log('reportForm', this.reportForm.value);
+            console.log('reputationDesForm', this.reputationDesForm.value);
+            console.log('securityForm', this.securityForm.value);
             //------------------------------------------------------- securityForm ----------------------------------------------------------//
           }
         }), error => {
@@ -553,6 +581,7 @@ export class IncidentFormEditPage implements OnInit {
           immediate_treatment_given_explanation: [element.immediate_treatment_given_explanation],
           immediate_treatment_person_name: [element.immediate_treatment_person_name],
           immediate_treatment_person_number: [element.immediate_treatment_person_number],
+          emp_id: [element.emp_id]
         })
       )
     });
@@ -764,7 +793,7 @@ export class IncidentFormEditPage implements OnInit {
     modal.onDidDismiss().then((res) => {
       if (res?.data?.full_name) {
         this.managerList = res.data.full_name;
-        this.classificationForm.controls.classification_manager.setValue(res.data.full_name);
+        this.classificationForm.controls.classification_manager.setValue(res.data.employee_id);
       }
     });
     return await modal.present();
@@ -889,6 +918,7 @@ export class IncidentFormEditPage implements OnInit {
       this.chemicalImagesObject = { ...this.chemicalImages }
     }
 
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
     let validation: boolean = false;
     if (val == 'submit') {
       validation = this.validation();
@@ -1001,7 +1031,7 @@ export class IncidentFormEditPage implements OnInit {
 
       //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
-      fd.append('user_id', localStorage.getItem('id'));
+      fd.append('user_id', userDetails.id);
       fd.append('id', this.incidentDetails.id);
 
       let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
@@ -1174,6 +1204,7 @@ export class IncidentFormEditPage implements OnInit {
       immediate_treatment_given_explanation: [''],
       immediate_treatment_person_name: [''],
       immediate_treatment_person_number: [''],
+      emp_id: ['']
     })
   }
 
@@ -1241,5 +1272,32 @@ export class IncidentFormEditPage implements OnInit {
 
       this.reputationDesForm.value['other_witness_details'].employee_id = 0;
     }
+  }
+
+  onEmpChange(event, index) {
+    console.log('event', event, index);
+    this.employeeList.filter(ele => {
+      if (ele.full_name == event.detail.value) {
+        console.log('ele', ele);
+        console.log('this.injuryForm', this.injuryForm.controls['person_details']);
+        // console.log('this.injuryForm 1', this.injuryForm.value['person_details'][index]['immediate_treatment_person_number'].setValue(ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email));
+        // this.injuryForm.value['person_details'][index].immediate_treatment_person_number = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
+        this.injuryForm.value['person_details'][index]['emp_id'] = ele.employee_id;
+        this.injuryForm.controls['person_details'][index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
+      }
+    })
+    console.log(' this.injuryForm.value', this.injuryForm.value['person_details'][index]);
+  }
+
+  onAdministeredPerson(event, index) {
+    this.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = '';
+    this.employeeList.filter(ele => {
+      if (ele.employee_id == event.detail.value) {
+        console.log('ele', ele);
+        this.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
+        // this.injuryForm.value['person_details'].controls[index]['immediate_treatment_person_number'].setValue(ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email);
+      }
+    })
+    console.log(' this.injuryForm.value', this.injuryForm.value['person_details']);
   }
 }

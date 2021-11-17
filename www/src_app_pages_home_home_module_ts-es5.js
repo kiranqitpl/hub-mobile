@@ -217,8 +217,7 @@
         function HomePage(nav) {
           _classCallCheck(this, HomePage);
 
-          this.nav = nav; // data = ["Admin", "Company", "Projects", "Workshops", "Safety"];
-
+          this.nav = nav;
           this.pName = 'Home';
           this.menu = [{
             menuName: "Admin",
@@ -249,8 +248,7 @@
           }
         }, {
           key: "ngOnInit",
-          value: function ngOnInit() {// this.getRout()
-          }
+          value: function ngOnInit() {}
         }]);
 
         return HomePage;

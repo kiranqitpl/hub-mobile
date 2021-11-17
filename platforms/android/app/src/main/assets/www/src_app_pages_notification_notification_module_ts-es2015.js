@@ -124,10 +124,10 @@ let NotificationPage = class NotificationPage {
         this.notificationData = '';
     }
     ngOnInit() {
-        this.getUserData();
+        this.getLoggedInUserDetails();
         this.onNotificationLoad();
     }
-    getUserData() {
+    getLoggedInUserDetails() {
         this.userId = localStorage.getItem('id');
         this.roleId = localStorage.getItem('role');
     }
@@ -137,8 +137,6 @@ let NotificationPage = class NotificationPage {
             let formData = new FormData();
             formData.append("type", this.type);
             formData.append("user_id", this.userId);
-            // this.notificationData = await this.sharedService.notificationLoad(formData);
-            // console.log("this.notificationData ", this.notificationData);
             let url = "";
             if (this.roleId == this.globalService.investigator) {
                 url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
@@ -243,133 +241,6 @@ NotificationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
 
 /***/ }),
 
-/***/ 89985:
-/*!***********************************************************!*\
-  !*** ./src/app/services/global-service/global.service.ts ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "GlobalService": function() { return /* binding */ GlobalService; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 91841);
-
-
-
-
-let GlobalService = class GlobalService {
-    constructor(toastController, http, loadingController) {
-        this.toastController = toastController;
-        this.http = http;
-        this.loadingController = loadingController;
-        this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
-        this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/';
-        //Role 
-        this.user = "31";
-        this.gm = "32";
-        this.investigator = "33";
-        this.manager = "34";
-        this.supervisior = "35";
-        this.formType_user = 1;
-        this.formType_investigator = 2;
-    }
-    presentToast(msg) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-            const toast = yield this.toastController.create({
-                message: msg,
-                duration: 2000,
-                mode: "ios",
-                color: "dark"
-            });
-            toast.present();
-        });
-    }
-    toast(msg, type) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-            const toast = yield this.toastController.create({
-                message: msg,
-                duration: 2000,
-                // mode: "ios",
-                color: type,
-                animated: true,
-            });
-            toast.present();
-        });
-    }
-    presentLoading() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-            const loading = yield this.loadingController.create({
-                cssClass: 'my-custom-class',
-                message: 'Please wait...'
-            });
-            yield loading.present();
-        });
-    }
-    dismissLoading() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
-            yield this.loadingController.dismiss();
-        });
-    }
-    setHeader() {
-        let header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders()
-            .set('apikey', 'as*37486a*()HGY')
-            .set("Access-Control-Allow-Origin", "*")
-            .set("Access-Control-Allow-Headers", "*")
-            .set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-            .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        // if (localStorage.getItem("token") && localStorage.getItem("token") != "")
-        //   header.append("token", localStorage.getItem("token"));
-        return header;
-    }
-    getData(url) {
-        let headers = this.setHeader();
-        return this.http.get(this.baseUrl + url, { headers: headers });
-    }
-    postData(url, data) {
-        let headers = this.setHeader();
-        return this.http.post(this.baseUrl + url, data, { headers: headers });
-    }
-    // --------------------------------------------------New Services ---------------------------------------------//
-    postData1(url, data) {
-        let headers = this.setHeader();
-        return this.http.post(this.baseUrl1 + url, data, { headers: headers });
-    }
-    getData1(url) {
-        let headers = this.setHeader();
-        return this.http.get(this.baseUrl1 + url, { headers: headers });
-        // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
-        //   map((response) => {
-        //     console.log('response', response);
-        //     if (!response['status']) {
-        //       throw new Error('Value expected!');
-        //     }
-        //     response;
-        //   }),
-        //   catchError(() => of())
-        // );
-    }
-};
-GlobalService.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ToastController },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.LoadingController }
-];
-GlobalService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
-        providedIn: 'root'
-    })
-], GlobalService);
-
-// ---------------------------------------------  New Services --------------------------------------------------//
-
-
-/***/ }),
-
 /***/ 49481:
 /*!***********************************************************!*\
   !*** ./src/app/services/shared-service/shared.service.ts ***!
@@ -398,39 +269,6 @@ let SharedService = class SharedService {
         this.camera = camera;
         this.notViewNotiCount = 0;
     }
-    // notificationLoad(formData) {
-    //   let roleId = localStorage.getItem('role');
-    //   let url = "";
-    //   if (roleId) {
-    //     if (roleId == this.globalService.investigator) {
-    //       url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-    //     } else if (roleId == this.globalService.gm) {
-    //       url = 'api/notification/getGMNotificationByGmID';
-    //     }
-    //   }
-    //   if (url != "") {
-    //     new Promise((resolve, reject) => {
-    //       this.globalService.postData(url, formData).subscribe(result => {
-    //         console.log('notificationLoad', result);
-    //         if (result['status']) {
-    //           let count: number = 0;
-    //           result['data'].forEach(element => {
-    //             if (element.is_seen == 0) {
-    //               count = count + 1;
-    //             }
-    //           });
-    //           this.notViewNotiCount = count;
-    //           return result['data'];
-    //         } else {
-    //           console.log('error');
-    //         }
-    //         setTimeout(function () {
-    //           resolve("Success!");
-    //         });
-    //       });
-    //     });
-    //   }
-    // }
     getBase64(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();

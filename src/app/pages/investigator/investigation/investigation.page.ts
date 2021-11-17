@@ -40,8 +40,11 @@ export class InvestigationPage implements OnInit {
   additional_investigation_required: any = "";
   type: any = "";
   investigatorId: any = "";
-  names: any = [];
+  // names: any = [];
+  names: any = "";
   listOfUsers: any = [];
+
+  loggedInUser: any;
 
   reputationCheckBox: any = [
     {
@@ -68,6 +71,7 @@ export class InvestigationPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     this.data = [
       'Investigation team members',
       'Sequence of events',
@@ -78,10 +82,9 @@ export class InvestigationPage implements OnInit {
     ];
   }
 
-  ionViewWillEnter() {
-    let d = JSON.parse(localStorage.getItem("singleView"));
-    this.incident_id = d.id;
+  loadInvestigator() {
     this.global.getData("api/Investigator/getInvestigator").subscribe((res: any) => {
+      console.log('loadInvestigator', res);
       if (res) {
         this.listOfUsers = res.data;
       } else {
@@ -90,11 +93,32 @@ export class InvestigationPage implements OnInit {
     }, err => {
       console.log(err)
     });
+  }
+
+  ionViewWillEnter() {
+
+    this.loadInvestigator();
+
     this.isFrom = localStorage.getItem("isInvestigationFrom");
+
+    let d = JSON.parse(localStorage.getItem("singleView"));
+
+    console.log('isInvestigationFrom', d);
+
+    this.incident_id = d.id;
+    console.log('  this.incident_id', this.incident_id);
     if (this.isFrom == 'edit') {
+
       this.investigatorId = d.investigation_details.id;
+
       let investigatorDetails = d.investigation_details;
+
+      console.log('investigatorDetails', investigatorDetails);
+
       this.selectedName = investigatorDetails.name;
+
+
+
       this.additional_investigation_required = investigatorDetails.additional_investigation_required;
       if (investigatorDetails.comments !== undefined && investigatorDetails.comments !== 'undefined') {
         this.comments = investigatorDetails.comments;
@@ -207,7 +231,7 @@ export class InvestigationPage implements OnInit {
         reputationCheckBox: this.reputationCheckBox,
         additional_investigation_required: this.additional_investigation_required,
         type: this.type,
-        id: this.incident_id
+        id: this.incident_id,
       }
       localStorage.setItem("investigationLocalStorage", JSON.stringify(localDataStore))
     }
@@ -288,16 +312,22 @@ export class InvestigationPage implements OnInit {
   }
 
   selectedValue(e) {
-    this.listOfUsers.forEach((ele) => {
-      if (ele.full_name == e.detail.value) {
-        let data = {
-          user_id: ele.id,
-          user_name: ele.full_name
-        };
-        this.selectedName = ele.full_name;
-        this.names.push(data)
-      }
-    })
+    this.name = e.detail.value;
+
+    console.log('jjjj', e);
+
+    // this.listOfUsers.forEach((ele) => {
+    //   if (ele.full_name == e.detail.value) {
+    //     let data = {
+    //       user_id: ele.id,
+    //       user_name: ele.full_name
+    //     };
+    //     this.selectedName = ele.full_name;
+    //     this.names.push(data)
+    //   }
+    // })
+
+
   }
 
   selectChekbox(e) {
@@ -333,27 +363,33 @@ export class InvestigationPage implements OnInit {
 
   onSubmit() {
     let ar = [];
+
     this.reputationCheckBox.forEach((e) => {
       if (e.isChecked) {
         ar.push(e.val)
       }
     })
-    this.listOfUsers.forEach((ele) => {
-      if (ele.full_name == this.selectedName) {
-        let data = {
-          user_id: ele.id,
-          user_name: ele.full_name
-        };
-        this.selectedName = ele.full_name;
-        this.names.push(data)
-      }
-    })
+
+    // this.listOfUsers.forEach((ele) => {
+    //   if (ele.full_name == this.selectedName) {
+    //     let data = {
+    //       user_id: ele.id,
+    //       user_name: ele.full_name
+    //     };
+    //     this.selectedName = ele.full_name;
+    //     this.names.push(data)
+    //   }
+    // })
+
     this.is_a_safety_environmental_or_quality_alert_required = ar
-    this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }]
+
+    // this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }]
+
     const fd = new FormData();
     if (this.isFrom == 'edit') {
       fd.append("id", this.investigatorId)
     }
+    console.log('this.names', this.names);
     fd.append("incident_id", this.incident_id);
     fd.append("name", JSON.stringify(this.names));
     fd.append("date_investigation_commenced", this.date_investigation_commenced);
@@ -378,9 +414,11 @@ export class InvestigationPage implements OnInit {
     fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
     fd.append("additional_investigation_required", this.additional_investigation_required);
     fd.append("type", this.type);
-    fd.append("investigator_id", localStorage.getItem("id"));
+
+    fd.append("investigator_id", this.loggedInUser.id);
 
     console.log('onSubmit', fd);
+
     this.global.presentLoading();
 
     let addUrl = 'api/Investigator/submitInvestigation';
@@ -391,7 +429,7 @@ export class InvestigationPage implements OnInit {
       if (res.status) {
         this.global.presentToast(res.message);
         localStorage.removeItem("investigationLocalStorage");
-        this.nav.navigateRoot("form-list");
+        this.nav.navigateRoot("incident-form-list");
       } else {
         this.global.presentToast("Something went wrong")
       }
@@ -413,23 +451,24 @@ export class InvestigationPage implements OnInit {
     this.is_a_safety_environmental_or_quality_alert_required = ar
     this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }]
 
-    this.listOfUsers.forEach((ele) => {
-      if (ele.full_name == this.selectedName) {
-        let data = {
-          user_id: ele.id,
-          user_name: ele.full_name
-        };
-        this.selectedName = ele.full_name;
-        this.names.push(data)
-      }
-    })
-
+    // this.listOfUsers.forEach((ele) => {
+    //   if (ele.full_name == this.selectedName) {
+    //     let data = {
+    //       user_id: ele.id,
+    //       user_name: ele.full_name
+    //     };
+    //     this.selectedName = ele.full_name;
+    //     this.names.push(data)
+    //   }
+    // })
+    console.log('this.names', this.names)
     const fd = new FormData();
     if (this.isFrom == 'edit') {
       fd.append("id", this.investigatorId)
     }
     fd.append("incident_id", this.incident_id);
-    fd.append("name", JSON.stringify(this.names));
+
+    fd.append("name", this.names);
     fd.append("date_investigation_commenced", this.date_investigation_commenced);
     fd.append("reportable_incident", this.reportable_incident);
     fd.append("pre_incident_contributing_events", this.pre_incident_contributing_events);
@@ -452,7 +491,8 @@ export class InvestigationPage implements OnInit {
     fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
     fd.append("additional_investigation_required", this.additional_investigation_required);
     fd.append("type", this.type);
-    fd.append("investigator_id", localStorage.getItem("id"));
+
+    fd.append("investigator_id", this.loggedInUser.id);
 
     console.log('saveItemOffline', fd);
     this.global.presentLoading();
@@ -465,7 +505,7 @@ export class InvestigationPage implements OnInit {
       if (res.status) {
         this.global.presentToast(res.message);
         localStorage.removeItem("investigationLocalStorage");
-        this.nav.navigateRoot("form-list");
+        this.nav.navigateRoot("incident-form-list");
       } else {
         this.global.presentToast("Something went wrong")
       }

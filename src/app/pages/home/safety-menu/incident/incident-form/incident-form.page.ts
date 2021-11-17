@@ -38,6 +38,7 @@ export class IncidentFormPage implements OnInit {
   disabledTab: boolean;
   reputationWitnessList: any = [];
   platformCheck: any = '';
+  nearMissEmpId: string = '';
 
   //----------------------------------------------------- Image variables ----------------------------------------------------//
   photoGraphy = new Array();
@@ -195,6 +196,7 @@ export class IncidentFormPage implements OnInit {
     } else {
       this.platformCheck = 'cordova'
     }
+
     this.loadEmployee();
     this.loadWitness();
     this.loadShift();
@@ -276,7 +278,6 @@ export class IncidentFormPage implements OnInit {
       name_of_witness: [''],                                   // required field
       other_witness_details:
         this.fb.group({
-          employee_id: [''],
           other_witness_name: [''],
           other_witness_mobile_no: [''],
           other_witness_email: ['']
@@ -309,7 +310,7 @@ export class IncidentFormPage implements OnInit {
     this.globalService.getData1("user/getallemployee").subscribe((res: any) => {
       if (res && res.data && res.data.length > 0) {
         this.employeeList = res.data;
-        this.employeeList.push({ full_name: "Other" });
+        this.employeeList.push({ full_name: "Other", employee_id: "0" });
       } else {
         this.employeeList = [];
       }
@@ -322,6 +323,7 @@ export class IncidentFormPage implements OnInit {
     this.globalService.getData1("Witness/getWitnessList").subscribe((res: any) => {
       if (res && res.data && res.data.length > 0) {
         this.witnessList = res.data;
+        console.log('this.witnessList', this.witnessList);
         this.witnessList.push({ full_name: "Other", employee_id: '0' });
       } else {
         this.witnessList = [];
@@ -401,9 +403,7 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onMobileUpload() {
-
-  }
+  onMobileUpload() { }
 
   onPhotoGraphy(event, type) {
     console.log('onPhotoGraphy', event);
@@ -546,11 +546,14 @@ export class IncidentFormPage implements OnInit {
       cssClass: 'managers',
     });
     modal.onDidDismiss().then((res) => {
+      // console.log('onOpenModal', res);
       if (res?.data?.full_name) {
         this.managerList = res.data.full_name;
-        this.classificationForm.controls.classification_manager.setValue(res.data.full_name);
+        this.classificationForm.controls['classification_manager'].setValue(res.data.employee_id);
+        // console.log('this.classificationForm', this.classificationForm);
       }
     });
+
 
     return await modal.present();
   }
@@ -637,17 +640,16 @@ export class IncidentFormPage implements OnInit {
   }
 
   onSubmit(val) {
-    // console.log('incidentForm', this.incidentForm.value);
-    // console.log('incidentForm', this.photoGraphyForm.value);
+    console.log('incidentForm', this.incidentForm.value);
+    // console.log('photoGraphyForm', this.photoGraphyForm.value);
     // console.log('incidentDesForm', this.incidentDesForm.value);
     console.log('classificationForm', this.classificationForm.value);
-    // console.log('injuryForm', this.injuryForm.value);
+    // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
     // console.log('enviornmentForm', this.enviornmentForm.value);
+    console.log('injuryForm', this.injuryForm.value);
+    // console.log('reportForm', this.reportForm.value);
     console.log('reputationDesForm', this.reputationDesForm.value);
     // console.log('securityForm', this.securityForm.value);
-    // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
-    // console.log('reportForm', this.reportForm.value);
-    // console.log('injuryForm', this.injuryForm.value);
 
     if (this.photoGraphy.length > 0) {
       this.photoGraphyObject = { ...this.photoGraphy };
@@ -673,7 +675,9 @@ export class IncidentFormPage implements OnInit {
       this.chemicalImagesObject = { ...this.chemicalImages }
     }
 
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
     let validation: boolean = false;
+
     if (val == 'submit') {
       validation = this.validation();
     }
@@ -684,7 +688,6 @@ export class IncidentFormPage implements OnInit {
       fd.append("incident_value", this.incidentForm.value['incident_value'] ? this.incidentForm.value['incident_value'] : '');                             // required
       fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : '');
       fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : '');
-
       //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
       //---------------------------------------------- photography -------------------------------------------------------------//
@@ -788,22 +791,22 @@ export class IncidentFormPage implements OnInit {
 
       //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
-      fd.append('user_id', localStorage.getItem('id'));
-      let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
+      fd.append('user_id', userDetails.id);
+        let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
-      this.globalService.postData1(url, fd).subscribe((res: any) => {
-        // this.globalService.presentLoading();
-        if (res.status) {
-          this.globalService.presentToast(res.message)
-          this.nav.navigateRoot("form-list")
-        } else {
-          this.globalService.presentToast(res.message)
-        }
-        // this.globalService.dismissLoading();
-      }, err => {
-        console.log("err", err);
-        // this.globalService.dismissLoading();
-      })
+        this.globalService.postData1(url, fd).subscribe((res: any) => {
+          // this.globalService.presentLoading();
+          if (res.status) {
+            this.globalService.presentToast(res.message)
+            this.nav.navigateRoot("incident-form-list")
+          } else {
+            this.globalService.presentToast(res.message)
+          }
+          // this.globalService.dismissLoading();
+        }, err => {
+          console.log("err", err);
+          // this.globalService.dismissLoading();
+        })
     }
   }
 
@@ -1013,10 +1016,27 @@ export class IncidentFormPage implements OnInit {
   onWitnessChange(event) {
     if (event.detail.value != 'Other') {
       this.reputationDesForm.controls['other_witness_details'].reset();
-    } else {
-
-      this.reputationDesForm.value['other_witness_details'].employee_id = 0;
     }
+  }
+
+  // filterSelectedEmp(empName) {
+  //   this.employeeList.filter(ele => {
+  //     if (ele.full_name == empName) { }
+  //     return ele;
+  //   })
+  // }
+
+  onAdministeredPerson(event, index) {
+    // console.log('event', event, index);
+    // let data = this.filterSelectedEmp(event.detail.value);
+    this.employeeList.filter(ele => {
+      if (ele.employee_id == event.detail.value) {
+        console.log('ele', ele);
+        this.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
+        // this.injuryForm.value['person_details'].controls[index]['immediate_treatment_person_number'].setValue(ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email);
+      }
+    })
+    console.log(' this.injuryForm.value', this.injuryForm.value['person_details']);
   }
 
   onImageDelete(index, tabName) {
@@ -1048,7 +1068,6 @@ export class IncidentFormPage implements OnInit {
       this.chemicalImages.splice(index, 1);
     }
   }
-
 
   selected: any;
   onImageClick(event) {

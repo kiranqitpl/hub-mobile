@@ -16,7 +16,7 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   pName: String = 'Vehicle Hoist'
   vehicleHoistForm: FormGroup;
-  logedInUserName: String = '';
+  logedInUserDetails: any = '';
   showMsg: boolean = false;
 
 
@@ -30,7 +30,7 @@ export class VehicleHoistAddFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.logedInUserName = localStorage.getItem('name');
+    this.logedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.vehicleHoistForm = this.fb.group({
       vehicle_host_no: ['', Validators.required],
       trained: ['', Validators.required],
@@ -81,7 +81,7 @@ export class VehicleHoistAddFormPage implements OnInit {
     this.loadingService.presentLoading();
     let formData = {};
     formData = this.vehicleHoistForm.value;
-    formData['user_name'] = this.logedInUserName;
+    formData['user_name'] = this.logedInUserDetails.name;
     formData['date'] = moment().format('YYYY-MM-DD');
     formData['time'] = moment().format('HH:mm:ss');
     this.globalService.postData1('prestart_vehicle/add_prestart_vehicle', formData).subscribe(result => {

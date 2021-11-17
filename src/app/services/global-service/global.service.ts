@@ -19,6 +19,8 @@ export class GlobalService {
   investigator: any = "33";
   manager: any = "34";
   supervisior: any = "35";
+
+
   formType_user = 1;
   formType_investigator = 2;
 
