@@ -84,7 +84,7 @@ export class VehicleHoistAddFormPage implements OnInit {
     formData['user_name'] = this.logedInUserDetails.name;
     formData['date'] = moment().format('YYYY-MM-DD');
     formData['time'] = moment().format('HH:mm:ss');
-    this.globalService.postData1('prestart_vehicle/add_prestart_vehicle', formData).subscribe(result => {
+    this.globalService.postData('prestart_vehicle/add_prestart_vehicle', formData).subscribe(result => {
       if (result && result['status']) {
         this.navCtrl.back();
         this.toastService.toast(result['message'], 'success');

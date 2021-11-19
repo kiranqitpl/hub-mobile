@@ -8,17 +8,18 @@ import { catchError, map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GlobalService {
 
-  baseUrl: string = 'https://mforms-api-devel.horts.com.au/';
-  baseUrl1: string = 'https://mforms-api-devel.horts.com.au/api/';
+  // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
+  baseUrl: string = 'https://mforms-api-devel.horts.com.au/api/';
 
   //Role 
-  user: any = "31";
-  gm: any = "32";
-  investigator: any = "33";
-  manager: any = "34";
-  supervisior: any = "35";
+  // user: any = "31";
+  // gm: any = "32";
+  // investigator: any = "33";
+  // manager: any = "34";
+  // supervisior: any = "35";
 
 
   formType_user = 1;
@@ -75,26 +76,26 @@ export class GlobalService {
     return header;
   }
 
-  getData(url) {
-    let headers = this.setHeader();
-    return this.http.get(this.baseUrl + url, { headers: headers });
-  }
+  // getData1(url) {
+  //   let headers = this.setHeader();
+  //   return this.http.get(this.baseUrl1 + url, { headers: headers });
+  // }
+
+  // postData1(url, data) {
+  //   let headers = this.setHeader();
+  //   return this.http.post(this.baseUrl1 + url, data, { headers: headers });
+  // }
+
+  // --------------------------------------------------New Services ---------------------------------------------//
 
   postData(url, data) {
     let headers = this.setHeader();
     return this.http.post(this.baseUrl + url, data, { headers: headers });
   }
 
-  // --------------------------------------------------New Services ---------------------------------------------//
-
-  postData1(url, data) {
+  getData(url) {
     let headers = this.setHeader();
-    return this.http.post(this.baseUrl1 + url, data, { headers: headers });
-  }
-
-  getData1(url) {
-    let headers = this.setHeader();
-    return this.http.get(this.baseUrl1 + url, { headers: headers });
+    return this.http.get(this.baseUrl + url, { headers: headers });
     // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
     //   map((response) => {
     //     console.log('response', response);

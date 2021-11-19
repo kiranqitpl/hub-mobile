@@ -1,18 +1,19 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title>Name of the Managers</ion-title>
+    <ion-title>{{header}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="close()">
         <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-input placeholder="Search manager" [(ngModel)]="term" ></ion-input>
+  <ion-input placeholder="Search" [(ngModel)]="term" (ionChange)="onSearch($event)"></ion-input>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item button class="ion-no-padding" lines="none" (click)="close(item)" *ngFor="let item of data|filter:term">
+    <ion-item button class="ion-no-padding" lines="none" (click)="close(item)"
+      *ngFor="let item of  newList.value |filter:term">
       <ion-label>{{item?.full_name}}</ion-label>
     </ion-item>
   </ion-list>

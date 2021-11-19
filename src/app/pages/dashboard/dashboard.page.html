@@ -17,9 +17,9 @@
     <div *ngFor="let tabVal of menu">
       <ion-button class="btn" [routerLink]="tabVal.route">
         {{tabVal.menuName}}
-        <!-- <ion-badge class="badge" *ngIf="tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0 "
+        <ion-badge class="badge" *ngIf="tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0"
           color="danger">
-          {{sharedService.notViewNotiCount}}</ion-badge> -->
+          {{sharedService.notViewNotiCount}}</ion-badge>
       </ion-button>
     </div>
     <ion-button class="btn logouts" (click)="onLogOut()">

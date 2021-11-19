@@ -25,7 +25,7 @@ export class InvestigationViewPage implements OnInit {
     // this.globalService.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        this.globalService.getData('api/investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(result => {
+        this.globalService.getData('investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(result => {
           if (result['status']) {
             this.data = result['data'][0];
           } else {

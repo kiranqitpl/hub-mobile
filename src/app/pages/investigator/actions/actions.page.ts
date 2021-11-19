@@ -2,6 +2,7 @@ import { GlobalService } from '../../../services/global-service/global.service';
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import moment from 'moment';
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
 
 @Component({
   selector: 'app-actions',
@@ -12,7 +13,6 @@ export class ActionsPage implements OnInit {
 
   pName: String = "Actions";
   data: any = [];
-
 
   //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
 
@@ -25,26 +25,33 @@ export class ActionsPage implements OnInit {
   id: any;
   incident_id: any;
 
+  loggedInUser = '';
+
   //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
 
-  gmRole: any;
-
-  constructor(private nav: NavController, private global: GlobalService) { }
-
+  constructor(
+    private nav: NavController,
+    private global: GlobalService,
+    private loadingService: LoadingService
+  ) { }
 
   ngOnInit() {
-    this.gmRole = this.global.gm;
-    let ar = [];
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     let d = JSON.parse(localStorage.getItem("singleView"));
-
     this.incident_id = d.id;
+    this.loadEmp();
+  }
 
-    this.global.getData("api/user/getAllUser").subscribe((result: any) => {
+  loadEmp() {
+    this.loadingService.presentLoading();
+    this.global.getData("user/getAllUser").subscribe((result: any) => {
       if (result && result.data) {
         this.data = result.data;
       }
+      this.loadingService.dismissLoading();
       console.log('this.data ', this.data);
     }, err => {
+      this.loadingService.dismissLoading();
       console.log(err)
     })
   }
@@ -54,26 +61,24 @@ export class ActionsPage implements OnInit {
     this.isFrom = isOpenFrom;
     if (isOpenFrom == 'edit') {
       let d = JSON.parse(localStorage.getItem("singleView"));
-      this.incident_id = d.id;
-
+      // this.incident_id = d.id;
       // this.global.presentLoading();
-      this.global.getData("api/Investigator/getInvestigationAction").subscribe((res: any) => {
-
-        console.log('res', res);
+      console.log('  this.incident_id ', this.incident_id);
+      this.global.getData("Investigator/getInvestigationAction/" + this.loggedInUser['id']).subscribe((res: any) => {
+        console.log('getInvestigationAction 1', res);
         if (res) {
           res?.data?.forEach((el) => {
-
+            console.log('getInvestigationAction 2', el);
             if (el.incident_id == this.incident_id) {
-
-              console.log(' this.incident_id', this.incident_id);
-
+              console.log('here');
               this.description_of_required_action = el.description_of_required_action;
-              this.user_name = el.user_name;
-              this.user_id = el.user_id;
+              // this.user_name = el.user_name;
+              this.user_name = el.user_id;
               this.priority = el.priority;
               this.expected_completion = el.expected_completion;
               this.id = el.id
               // this.global.dismissLoading();
+              console.log(' this.id ', this.id);
             }
           })
         }
@@ -91,10 +96,9 @@ export class ActionsPage implements OnInit {
   selectUser(e) {
     this.data.forEach((el) => {
       if (el.employee_id == e.detail.value) {
-        this.user_id = el.employee_id
+        this.user_id = el.full_name
       }
     })
-    console.log('  this.user_id', this.user_id);
   }
 
   dateSelect(e) {
@@ -108,7 +112,7 @@ export class ActionsPage implements OnInit {
     if (this.description_of_required_action == '') {
       this.global.presentToast("Please enter description of required action")
     }
-    else if (this.user_id == '' || this.user_id == undefined) {
+    else if (this.user_name == '') {
       this.global.presentToast("Please Select User")
     }
     else if (this.priority == '') {
@@ -121,13 +125,13 @@ export class ActionsPage implements OnInit {
       if (this.isFrom == 'edit')
         fd.append("id", this.id)
       fd.append("incident_id", this.incident_id);
-      fd.append('user_id', this.user_id);
-      fd.append("user_name", this.user_name);
+      fd.append('user_id', this.user_name);
+      fd.append("user_name", this.user_id);
       fd.append("priority", this.priority);
       fd.append("expected_completion", this.expected_completion);
       fd.append("description_of_required_action", this.description_of_required_action);
       fd.append("investigator_id", userDetails.id);
-      this.global.postData("api/Investigator/InvestigationAction", fd).subscribe((res: any) => {
+      this.global.postData("Investigator/InvestigationAction", fd).subscribe((res: any) => {
         if (res.status) {
           this.global.presentToast(res.message)
           this.global.dismissLoading();
@@ -141,4 +145,5 @@ export class ActionsPage implements OnInit {
       })
     }
   }
+
 }

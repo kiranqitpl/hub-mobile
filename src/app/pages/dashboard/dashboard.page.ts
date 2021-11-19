@@ -10,15 +10,6 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-
-  role: any;
-  userRole: any;
-  gmRole: any;
-  investigatorRole: any;
-  managerRole: any;
-  supervisorRole: any;
-  roleId: string;
-
   menu: any = [
     {
       menuName: "Submitted Form", route: "/incident-form-list"
@@ -50,35 +41,23 @@ export class DashboardPage implements OnInit {
   }
 
   onNotificationLoad() {
-    let formData = new FormData();
-    formData.append("type", this.type);
-    formData.append("user_id", this.loggedInUserDetails.id);
-    let url = "";
-    // if (this.roleId == this.global.investigator) {
-    //   url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-    // } else if (this.roleId == this.global.gm) {
-    //   url = 'api/notification/getGMNotificationByGmID';
-    // }
-    // if (url != "") {
-    //   this.global.postData(url, formData).subscribe(result => {
-    //     if (result['status']) {
-    //       let count: number = 0;
-    //       result['data'].forEach(element => {
-    //         if (element.is_seen == 0) {
-    //           count = count + 1;
-    //         }
-    //       });
-    //       this.sharedService.notViewNotiCount = count
-    //     } else {
-    //       this.sharedService.notViewNotiCount = 0
-    //       console.log('error');
-    //     }
-    //   }), error => {
-    //     console.log('error', error);
-    //   }
-    // } else {
-    //   console.log("error");
-    // }
+    console.log('here');
+    this.global.getData('notification/getNotificationList/' + this.loggedInUserDetails.id).subscribe(result => {
+      console.log('getNotificationList', result);
+      if (result && result['row_count'] > 0) {
+        let count: number = 0;
+        result['data'].forEach(element => {
+          if (element.is_seen == 0) {
+            count = count + 1;
+          }
+        });
+        this.sharedService.notViewNotiCount = count
+      } else {
+        this.sharedService.notViewNotiCount = 0
+      }
+    }), error => {
+      console.log('error', error);
+    }
   }
 
   onAddForm() {

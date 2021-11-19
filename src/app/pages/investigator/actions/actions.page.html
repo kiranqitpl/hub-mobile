@@ -9,9 +9,7 @@
           </p>
           <ion-input placeholder="Enter here" [(ngModel)]="description_of_required_action"></ion-input>
 
-          <p class="question">
-            Allocated to
-          </p>
+          <p class="question">Allocated to</p>
           <ion-item class="ra ion-no-margin ion-no-padding" lines="none">
             <ion-select placeholder="Select One" interface="action-sheet" [(ngModel)]="user_name"
               (ionChange)="selectUser($event)">
@@ -21,9 +19,7 @@
             </ion-select>
           </ion-item>
 
-          <p class="question">
-            Priority
-          </p>
+          <p class="question">Priority</p>
           <ion-radio-group [(ngModel)]="priority">
             <ion-row class="ion-no-padding">
               <ion-col size="4" class="ion-no-padding">
@@ -41,9 +37,7 @@
             </ion-row>
           </ion-radio-group>
 
-          <p class="question">
-            Expected completion
-          </p>
+          <p class="question">Expected completion</p>
           <ion-item class="ra" lines="none">
             <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select date" (ionChange)="dateSelect($event)"
               [(ngModel)]="expected_completion">

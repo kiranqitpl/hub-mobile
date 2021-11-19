@@ -42,15 +42,15 @@ export class LoginPage implements OnInit {
       const fd = new FormData();
       fd.append("email", this.ionicForm.value.email);
       fd.append("password", this.ionicForm.value.password);
-      this.global.postData1("user/login", fd).subscribe((res: any) => {
+      this.global.postData("user/login", fd).subscribe((res: any) => {
         console.log('login',res);
         if (res && res.status) {
           localStorage.setItem("userDetails", JSON.stringify(res.data));
 
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("role", res.data.role);
-          localStorage.setItem("id", res?.data?.id);
-          localStorage.setItem("name", res?.data?.full_name);
+          // localStorage.setItem("email", res.data.email);
+          // localStorage.setItem("role", res.data.role);
+          // localStorage.setItem("id", res?.data?.id);
+          // localStorage.setItem("name", res?.data?.full_name);
 
           this.nav.navigateRoot('dashboard')
           // this.global.dismissLoading();

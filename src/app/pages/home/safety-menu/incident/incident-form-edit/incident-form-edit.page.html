@@ -125,9 +125,39 @@
           </ion-input>
 
           <p class="question">Was there any Witnesses of the incident ? :</p>
-          <ion-input placeholder="Please enter witnesses of the incident"
+          <!-- <ion-input placeholder="Please enter witnesses of the incident"
             formControlName="was_there_any_witness_of_the_incident">
-          </ion-input>
+          </ion-input> -->
+          <ion-item class="ra" lines="none">
+            <ion-select placeholder="Please select witness" interface="action-sheet"
+              formControlName="was_there_any_witness_of_the_incident" (ionChange)="onIncDesWitnessChange($event)">
+              <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
+                {{witnesskeys?.full_name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <div *ngIf="incidentDesForm.value['was_there_any_witness_of_the_incident'] == '0'"
+            formGroupName='incdesc_other_witness_details'>
+            <p class="other_witness"> Other Witness Details </p>
+            <p class="question">
+              Name :
+            </p>
+            <ion-input placeholder="Please enter Other Witness Name" formControlName="incdesc_other_witness_name">
+            </ion-input>
+            <p class="question">
+              Mobile No :
+            </p>
+            <ion-input type="tel" placeholder="Please enter Other Witness Mobile No "
+              formControlName="incdesc_other_witness_mobile_no">
+            </ion-input>
+            <p class="question">
+              Email id :
+            </p>
+            <ion-input type="email" placeholder="Please enter Other Witness Email"
+              formControlName="incdesc_other_witness_email">
+            </ion-input>
+          </div>
+
 
           <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
           <ion-radio-group formControlName="incident_description_alcohol_test"
@@ -385,7 +415,7 @@
 
         <ion-item class="ra" lines="none">
           <ion-select placeholder="Supervisor" interface="action-sheet" formControlName="classification_supervisor">
-            <ion-select-option value="{{superVisorItem?.full_name}}" *ngFor="let superVisorItem of superVisorList">
+            <ion-select-option value="{{superVisorItem?.employee_id}}" *ngFor="let superVisorItem of superVisorList">
               {{superVisorItem?.full_name}}
             </ion-select-option>
           </ion-select>

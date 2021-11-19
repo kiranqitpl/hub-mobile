@@ -12,23 +12,27 @@
       </ion-button>
     </ion-buttons>
   </div>
+  
   <div class="container">
 
     <div *ngFor="let item of data">
+
       <ion-button class="incident" *ngIf="selected!==item" (click)="checkDetails(item)">
         <p>{{item | slice:0:25}}
           <ion-text *ngIf="item.length >= 25">..</ion-text>
         </p>
-        <img class="plus" src="./assets/add.png" />
+        <img class="plus" src="{{imageUrl +'add.png'}}" />
       </ion-button>
+
       <div *ngIf="selected==item && selected=='Investigation team members'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
-        <p class="question">Name</p>
+        <p class="question">Name </p>
         <ion-item class="ra" lines="none" *ngIf="isFrom=='edit'">
+        
           <ion-select placeholder="{{selectedName ? selectedName : 'Select One'}}" interface="action-sheet"
             (ionChange)="selectedValue($event)" value={{selectedName}}>
             <ion-select-option value="{{item.employee_id}}" *ngFor="let item of listOfUsers">
@@ -68,10 +72,11 @@
           </ion-row>
         </ion-radio-group>
       </div>
+
       <div *ngIf="selected==item && selected=='Sequence of events'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
         <p class="question">
@@ -95,11 +100,12 @@
         <ion-input placeholder="Critical controls applicable for task"
           [(ngModel)]="critical_controls_applicable_for_task"></ion-input>
       </div>
+
       <div *ngIf="selected==item && selected=='Investigators Initial Findings (Event Factors)'"
         class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
         <p class="question">
@@ -137,10 +143,11 @@
         <ion-input placeholder="Critical Control Defence Failure / Absent / Non-Compliance"
           [(ngModel)]="critical_control_defence_failure_absent_non_compliance"></ion-input>
       </div>
+
       <div *ngIf="selected==item && selected=='Immediate Cause Analysis'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
         <p class="question">
@@ -154,11 +161,12 @@
         <ion-input placeholder="What systems / personal factors caused or could cause the incident"
           [(ngModel)]="what_systems_personal_factors_caused_or_could_cause_the_incident"></ion-input>
       </div>
+
       <div *ngIf="selected==item && selected=='Investigation Team Conclusion of Incident Causes'"
         class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
         <p class="question">
@@ -184,7 +192,7 @@
       <div *ngIf="selected==item && selected=='Security'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
         <ion-radio-group [(ngModel)]="securityRadio">
@@ -241,10 +249,11 @@
           <ion-input placeholder="Enter here" [(ngModel)]='specificSecurityIncident'></ion-input>
         </div>
       </div>
+
       <div *ngIf="selected==item && selected=='Additional Investigation'" class="activeBackground">
         <div class="headerTitle">
           <p>{{item}}</p>
-          <img (click)="deSelect(item)" class="plus" src="./assets/minus.png" />
+          <img (click)="deSelect(item)" class="plus" src="{{imageUrl +'minus.png'}}" />
         </div>
         <hr />
         <p class="question">
@@ -293,6 +302,7 @@
           </ion-row>
         </ion-radio-group>
       </div>
+
     </div>
 
     <ion-button (click)="onSubmit()" class="btn" *ngIf="isFrom=='edit'">UPDATE</ion-button>

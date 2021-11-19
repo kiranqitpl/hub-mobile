@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ModalController, IonSlides } from '@ionic/angular';
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 import { GlobalService } from 'src/app/services/global-service/global.service';
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import * as moment from 'moment';
 
 @Component({
@@ -27,7 +28,7 @@ export class IncidentDetailsPage implements OnInit {
     private global: GlobalService,
     private activatedRoute: ActivatedRoute,
     private modalController: ModalController,
-    private changeDetectorRef: ChangeDetectorRef
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -35,25 +36,24 @@ export class IncidentDetailsPage implements OnInit {
   }
 
   loadData() {
-    this.global.presentLoading();
+    this.loadingService.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        this.global.getData1('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
+        this.global.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
           console.log('result', result);
           if (result && result['data'] && result['data'][0]) {
             this.incidentDetails = result['data'][0];
             this.classificationList = this.incidentDetails['classification_value'].split(',');
-            this.global.dismissLoading();
           }
-          this.global.dismissLoading();
+          this.loadingService.dismissLoading();
         }), error => {
-          this.global.dismissLoading();
+          this.loadingService.dismissLoading();
           console.log(error);
         }
-        this.global.dismissLoading();
+        this.loadingService.dismissLoading();
       }
     ), error => {
-      this.global.dismissLoading()
+      this.loadingService.dismissLoading()
       console.log('param error', error)
     }
   }

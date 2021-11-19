@@ -1,31 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from '../../services/global-service/global.service'
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-managers',
   templateUrl: './managers.page.html',
   styleUrls: ['./managers.page.scss'],
 })
+
 export class ManagersPage implements OnInit {
-  data: any;
+
   term: any;
-  constructor(private modal: ModalController, private global: GlobalService) {
 
-  }
+  @Input('header') header: any;
+  @Input('list') list: any;
 
-  ionViewWillEnter() {
-    this.global.getData1("Manager/getManagerList").subscribe((res: any) => {
-      console.log('res', res);
-      if (res) {
-        this.data = res.data;
-      }
-    }, err => {
-      console.log(err);
-    });
-  }
+  newList = new BehaviorSubject([]);
+
+  constructor(
+    private modal: ModalController,
+    private global: GlobalService
+  ) { }
+
+  ionViewWillEnter() { }
 
   ngOnInit() {
+    console.log('get list in modal',this.list);
+    this.newList.next(this.list);
+  }
+
+  onSearch(event) {
+    let value: boolean = false
+    this.list.forEach(element => {
+      if (element.full_name == this.term) {
+        value = true;
+      }
+    });
+    if (value == false && event != '') {
+      this.global.getData("user/getallemployee/" + event.detail.value).subscribe((res: any) => {
+        if (res) {
+          this.newList.next(res.data);
+        } else {
+          this.newList.next(this.list);
+        }
+      }, err => {
+        console.log(err);
+      });
+    }
   }
 
   close(item?) {

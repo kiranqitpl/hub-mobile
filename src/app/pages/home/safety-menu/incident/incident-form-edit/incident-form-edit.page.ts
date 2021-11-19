@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
-
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import moment from 'moment';
 
 import { environment } from 'src/environments/environment';
@@ -194,6 +193,7 @@ export class IncidentFormEditPage implements OnInit {
     private nav: NavController,
     private platform: Platform,
     private activatedRoute: ActivatedRoute,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -210,7 +210,6 @@ export class IncidentFormEditPage implements OnInit {
     this.loadLocation();
     // this.findValueInWitness();
     this.loadBodyPart();
-    this.loadIncidentDetails();
 
     this.incidentForm = this.fb.group({
       incident_value: [''],                // required field
@@ -227,11 +226,16 @@ export class IncidentFormEditPage implements OnInit {
       incident_description_action: ['', Validators.required],  // required field
       seen_differently: [''],
       was_there_any_witness_of_the_incident: [''],
+      incdesc_other_witness_details:
+        this.fb.group({
+          incdesc_other_witness_name: [''],
+          incdesc_other_witness_mobile_no: [''],
+          incdesc_other_witness_email: ['']
+        }),
 
+      incident_description_photo: [''],  // incident description images
       incident_description_alcohol_test: [''],
       // alcohol_test_completed: [''],
-      incident_description_photo: [''],                         // incident description images
-
       alcohol_test_image: [''],                                 // alcohal images
 
       drug_test_completed: [''],
@@ -311,10 +315,11 @@ export class IncidentFormEditPage implements OnInit {
     this.reportForm = this.fb.group({
       report: ['']
     });
+    this.loadIncidentDetails();
   }
 
   loadEmployee() {
-    this.globalService.getData1("user/getallemployee").subscribe((res: any) => {
+    this.globalService.getData("user/getallemployee").subscribe((res: any) => {
       if (res && res.data && res.data.length > 0) {
         this.employeeList = res.data;
         this.employeeList.push({ full_name: "Other" });
@@ -327,7 +332,7 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   loadWitness() {
-    this.globalService.getData1("Witness/getWitnessList").subscribe((res: any) => {
+    this.globalService.getData("Witness/getWitnessList").subscribe((res: any) => {
       if (res && res.data && res.data.length > 0) {
         this.witnessList = res.data;
         this.witnessList.push({ full_name: "Other", employee_id: '0' });
@@ -340,7 +345,7 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   loadManger(employee_id) {
-    this.globalService.getData1("Manager/getManagerList").subscribe((res: any) => {
+    this.globalService.getData("Manager/getManagerList").subscribe((res: any) => {
       console.log('res', res);
       if (res) {
         res.data.filter(ele => {
@@ -365,7 +370,7 @@ export class IncidentFormEditPage implements OnInit {
   // }
 
   loadShift() {
-    this.globalService.getData1("Shift/get_shift_typelist").subscribe((res: any) => {
+    this.globalService.getData("Shift/get_shift_typelist").subscribe((res: any) => {
       if (res && res.status && res.data && res.data.length > 0) {
         this.shiftTypeList = res.data;
       } else {
@@ -377,7 +382,7 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   loadSuperwiser() {
-    this.globalService.getData1("Supervisor/getSupervisorList").subscribe((res: any) => {
+    this.globalService.getData("Supervisor/getSupervisorList").subscribe((res: any) => {
       if (res && res.status && res.data && res.data.length > 0) {
         this.superVisorList = res.data;
       } else {
@@ -389,7 +394,7 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   loadLocation() {
-    this.globalService.getData1("location/getLocation").subscribe((res: any) => {
+    this.globalService.getData("location/getLocation").subscribe((res: any) => {
       if (res && res.status && res.data && res.data.length > 0) {
         this.locationList = res.data;
       } else {
@@ -401,7 +406,7 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   loadBodyPart() {
-    this.globalService.getData1("Body_part/getbodypart").subscribe((res: any) => {
+    this.globalService.getData("Body_part/getbodypart").subscribe((res: any) => {
       if (res && res.status && res.data && res.data.length > 0) {
         this.bodyPartList = res.data;
       } else {
@@ -413,9 +418,10 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   loadIncidentDetails() {
+    this.loadingService.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        this.globalService.getData1('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
+        this.globalService.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
           console.log('result', result);
           if (result && result['data'] && result['data'][0]) {
             this.incidentDetails = result['data'][0];
@@ -553,11 +559,15 @@ export class IncidentFormEditPage implements OnInit {
             console.log('securityForm', this.securityForm.value);
             //------------------------------------------------------- securityForm ----------------------------------------------------------//
           }
+          this.loadingService.dismissLoading();
         }), error => {
+          this.loadingService.dismissLoading();
           console.log(error);
         }
+        this.loadingService.dismissLoading();
       }
     ), error => {
+      this.loadingService.dismissLoading();
       console.log('param error', error)
     }
   }
@@ -947,6 +957,7 @@ export class IncidentFormEditPage implements OnInit {
       fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed']);
       fd.append("seen_differently", this.incidentDesForm.value['seen_differently']);
       fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
+      fd.append("incdesc_other_witness_details", JSON.stringify(this.incidentDesForm.value['incdesc_other_witness_details']));
       fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
 
       fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject))                          // alcohal test image
@@ -1036,7 +1047,7 @@ export class IncidentFormEditPage implements OnInit {
 
       let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
-      this.globalService.postData1(url, fd).subscribe((res: any) => {
+      this.globalService.postData(url, fd).subscribe((res: any) => {
         // this.globalService.presentLoading();
         if (res.status) {
           this.globalService.presentToast(res.message)
@@ -1299,5 +1310,11 @@ export class IncidentFormEditPage implements OnInit {
       }
     })
     console.log(' this.injuryForm.value', this.injuryForm.value['person_details']);
+  }
+
+  onIncDesWitnessChange(event) {
+    if (event.detail.value != 0) {
+      this.incidentDesForm.controls['incdesc_other_witness_details'].reset();
+    }
   }
 }

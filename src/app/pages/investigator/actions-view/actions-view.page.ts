@@ -8,19 +8,25 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./actions-view.page.scss'],
 })
 export class ActionsViewPage implements OnInit {
+
   pName: String = 'Actions';
   incident_id: any;
   data: any;
+  loggedInUser = '';
+
   constructor(
     private nav: NavController,
     private global: GlobalService
   ) { }
 
   ngOnInit() {
+
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
+
     let d = JSON.parse(localStorage.getItem("singleView"));
     this.incident_id = d.id;
     this.global.presentLoading();
-    this.global.getData("api/Investigator/getInvestigationAction").subscribe((res: any) => {
+    this.global.getData("Investigator/getInvestigationAction/" + this.loggedInUser['id']).subscribe((res: any) => {
       this.global.dismissLoading();
       if (res) {
         res?.data?.forEach((el) => {
