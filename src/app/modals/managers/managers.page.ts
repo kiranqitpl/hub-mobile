@@ -26,7 +26,7 @@ export class ManagersPage implements OnInit {
   ionViewWillEnter() { }
 
   ngOnInit() {
-    console.log('get list in modal',this.list);
+    console.log('get list in modal', this.list);
     this.newList.next(this.list);
   }
 
@@ -39,7 +39,8 @@ export class ManagersPage implements OnInit {
     });
     if (value == false && event != '') {
       this.global.getData("user/getallemployee/" + event.detail.value).subscribe((res: any) => {
-        if (res) {
+        if (res && res.data && res.data.length > 0) {
+          res.data.unshift({ full_name: "Other", employee_id: '0' });
           this.newList.next(res.data);
         } else {
           this.newList.next(this.list);

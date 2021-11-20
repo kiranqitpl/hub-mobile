@@ -16,7 +16,6 @@ import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 import IncidentJson from '../incident-form.json';
 
 
-
 @Component({
   selector: 'app-incident-form-edit',
   templateUrl: './incident-form-edit.page.html',
@@ -32,7 +31,7 @@ export class IncidentFormEditPage implements OnInit {
   locationList: any = [];
   bodyPartList; any = [];
   employeeList: any = [];
-  managerList: any = 'Name of Manager';
+  managerList: any = [];
   individualChecked: any;
   companyChecked: any;
   selectedTabList: any = [];
@@ -40,6 +39,16 @@ export class IncidentFormEditPage implements OnInit {
   reputationWitnessList: any = [];
   platformCheck: any = '';
   incidentDetails: any = [];
+
+  //-------------------------------------------------- Dropdowns variables---------------------------------------------------------------//
+  incident_near_miss: any = '';
+  was_there_any_witness_of_the_incident: any = '';
+  classification_supervisor: any = '';
+  classification_manager: any = '';
+  injured_person_option: any = '';
+  immediate_treatment_person_name: any = '';
+  name_of_witness: any = '';
+  //-------------------------------------------------- Dropdowns variables---------------------------------------------------------------//
 
   //----------------------------------------------------- Image variables ----------------------------------------------------//
   photoGraphy = [];
@@ -197,19 +206,20 @@ export class IncidentFormEditPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
     if (!this.platform.is('cordova')) {
       this.platformCheck = 'browser'
     } else {
       this.platformCheck = 'cordova'
     }
 
+    this.loadShift();
+    this.loadLocation();
+    this.loadBodyPart();
     this.loadEmployee();
     this.loadWitness();
-    this.loadShift();
     this.loadSuperwiser();
-    this.loadLocation();
     // this.findValueInWitness();
-    this.loadBodyPart();
 
     this.incidentForm = this.fb.group({
       incident_value: [''],                // required field
@@ -320,12 +330,12 @@ export class IncidentFormEditPage implements OnInit {
 
   loadEmployee() {
     this.globalService.getData("user/getallemployee").subscribe((res: any) => {
-      if (res && res.data && res.data.length > 0) {
+      if (res && res.status && res.data && res.data.length > 0) {
         this.employeeList = res.data;
-        this.employeeList.push({ full_name: "Other" });
       } else {
         this.employeeList = [];
       }
+      this.employeeList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log(err);
     })
@@ -333,27 +343,26 @@ export class IncidentFormEditPage implements OnInit {
 
   loadWitness() {
     this.globalService.getData("Witness/getWitnessList").subscribe((res: any) => {
-      if (res && res.data && res.data.length > 0) {
+      if (res && res.status && res.data && res.data.length > 0) {
         this.witnessList = res.data;
-        this.witnessList.push({ full_name: "Other", employee_id: '0' });
       } else {
         this.witnessList = [];
       }
+      this.witnessList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log(err);
     })
   }
 
-  loadManger(employee_id) {
+  loadMangerList() {
     this.globalService.getData("Manager/getManagerList").subscribe((res: any) => {
       console.log('res', res);
-      if (res) {
-        res.data.filter(ele => {
-          if (ele.employee_id == employee_id) {
-            this.managerList = ele.full_name;
-          }
-        })
+      if (res && res.status && res.data && res.data.length > 0) {
+        this.managerList = res.data;
+      } else {
+        this.managerList = [];
       }
+      this.managerList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log(err);
     });
@@ -417,17 +426,39 @@ export class IncidentFormEditPage implements OnInit {
     })
   }
 
+
   loadIncidentDetails() {
-    this.loadingService.presentLoading();
+    // this.loadingService.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
         this.globalService.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
+
           console.log('result', result);
           if (result && result['data'] && result['data'][0]) {
             this.incidentDetails = result['data'][0];
 
-            this.loadManger(this.incidentDetails.classification_manager);
+
             //------------------------------------------------------- incidentForm ----------------------------------------------------------//
+
+            let incident_near_miss_object: any;
+            this.witnessList.forEach(element => {
+              if (element.full_name == this.incidentDetails.incident_near_miss) {
+                incident_near_miss_object = element;
+              }
+            });
+
+            if (incident_near_miss_object != undefined) {
+              this.incident_near_miss = incident_near_miss_object;
+            } else {
+              this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
+                console.log('first', res);
+                if (res && res.status && res.data && res.data.length > 0) {
+                  this.incident_near_miss = res.data[0];
+                }
+              }, err => {
+                console.log("Eror", err)
+              })
+            }
             this.incidentForm.patchValue(this.incidentDetails);
             this.onInput('', 'Incident');
             //------------------------------------------------------- incidentForm ----------------------------------------------------------//
@@ -437,7 +468,28 @@ export class IncidentFormEditPage implements OnInit {
             //------------------------------------------------------- PhotographyForm ----------------------------------------------------------//
             //------------------------------------------------------- incidentDesForm ----------------------------------------------------------//
 
+            let was_there_any_witness_of_the_incident_object: any;
+            this.witnessList.forEach(element => {
+              if (element.full_name == this.incidentDetails.was_there_any_witness_of_the_incident) {
+                was_there_any_witness_of_the_incident_object = element;
+              }
+            });
+
+            if (was_there_any_witness_of_the_incident_object != undefined) {
+              this.was_there_any_witness_of_the_incident = was_there_any_witness_of_the_incident_object;
+            } else {
+              this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
+                console.log('first', res);
+                if (res && res.status && res.data && res.data.length > 0) {
+                  this.was_there_any_witness_of_the_incident = res.data[0];
+                }
+              }, err => {
+                console.log("Eror", err)
+              })
+            }
+
             this.incidentDesForm.patchValue(this.incidentDetails);
+
             this.alcohalImagesObject = this.alcohalImages = this.incidentDetails.alcohol_test_image;
             this.drugTestImagesObject = this.drugTestImages = this.incidentDetails.drug_test_image;
             this.alterDutyImagesObject = this.alterDutyImages = this.incidentDetails.return_to_alternate_duties_image;
@@ -467,8 +519,53 @@ export class IncidentFormEditPage implements OnInit {
             if (this.incidentDetails.classification_location_option == 'Choose Location')
               this.classificationForm.controls['classification_location_value1'].setValue(this.incidentDetails.classification_location_value);
             this.classificationForm.controls['classification_shift_type'].setValue(this.incidentDetails.classification_shift_type);
+
+
+            let classification_supervisor_object: any;
+            this.witnessList.forEach(element => {
+              if (element.full_name == this.incidentDetails.classification_supervisor) {
+                classification_supervisor_object = element;
+              }
+            });
+
+            if (classification_supervisor_object != undefined) {
+              this.classification_supervisor = classification_supervisor_object;
+            } else {
+              this.globalService.getData("Supervisor/getSupervisorList/" + this.incidentDetails.classification_supervisor).subscribe((res: any) => {
+                console.log('first', res);
+                if (res && res.status && res.data && res.data.length > 0) {
+                  this.classification_supervisor = res.data[0];
+                }
+              }, err => {
+                console.log("Eror", err)
+              })
+            }
+
             this.classificationForm.controls['classification_supervisor'].setValue(this.incidentDetails.classification_supervisor);
+
+
+            let classification_manager_object: any;
+            this.witnessList.forEach(element => {
+              if (element.full_name == this.incidentDetails.classification_manager) {
+                classification_manager_object = element;
+              }
+            });
+
+            if (classification_manager_object != undefined) {
+              this.classification_manager = classification_manager_object;
+            } else {
+              this.globalService.getData("Manager/getManagerList/" + this.incidentDetails.classification_manager).subscribe((res: any) => {
+                console.log('first', res);
+                if (res && res.status && res.data && res.data.length > 0) {
+                  this.classification_manager = res.data[0];
+                }
+              }, err => {
+                console.log("Eror", err)
+              })
+            }
+
             this.classificationForm.controls['classification_manager'].setValue(this.incidentDetails.classification_manager);
+
             //------------------------------------------------------- classificationForm ----------------------------------------------------------//
             //------------------------------------------------------- assetDescriptionForm ----------------------------------------------------------//
             this.assetDescriptionForm.patchValue(this.incidentDetails);
@@ -523,6 +620,27 @@ export class IncidentFormEditPage implements OnInit {
             });
 
             this.reputationDesForm.controls['external_party'].setValue(this.incidentDetails.external_party);
+
+            let name_of_witness_object: any;
+            this.witnessList.forEach(element => {
+              if (element.full_name == this.incidentDetails.name_of_witness) {
+                name_of_witness_object = element;
+              }
+            });
+
+            if (name_of_witness_object != undefined) {
+              this.name_of_witness = name_of_witness_object;
+            } else {
+              this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
+                console.log('first', res);
+                if (res && res.status && res.data && res.data.length > 0) {
+                  this.name_of_witness = res.data[0];
+                }
+              }, err => {
+                console.log("Eror", err)
+              })
+            }
+
             this.reputationDesForm.controls['name_of_witness'].setValue(this.incidentDetails.name_of_witness);
             this.reputationDesForm.controls['other_witness_details'].setValue(this.incidentDetails.other_witness_details);
             this.reputationDesForm.controls['possible_outcome_incident'].setValue(this.incidentDetails.possible_outcome_incident);
@@ -547,27 +665,27 @@ export class IncidentFormEditPage implements OnInit {
             });
 
 
-            console.log('incidentForm', this.incidentForm.value);
-            console.log('photoGraphyForm', this.photoGraphyForm.value);
-            console.log('incidentDesForm', this.incidentDesForm.value);
-            console.log('classificationForm', this.classificationForm.value);
-            console.log('assetDescriptionForm', this.assetDescriptionForm.value)
-            console.log('enviornmentForm', this.enviornmentForm.value);
-            console.log('injuryForm', this.injuryForm.value);
-            console.log('reportForm', this.reportForm.value);
-            console.log('reputationDesForm', this.reputationDesForm.value);
-            console.log('securityForm', this.securityForm.value);
+            // console.log('incidentForm', this.incidentForm.value);
+            // console.log('photoGraphyForm', this.photoGraphyForm.value);
+            // console.log('incidentDesForm', this.incidentDesForm.value);
+            // console.log('classificationForm', this.classificationForm.value);
+            // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
+            // console.log('enviornmentForm', this.enviornmentForm.value);
+            // console.log('injuryForm', this.injuryForm.value);
+            // console.log('reportForm', this.reportForm.value);
+            // console.log('reputationDesForm', this.reputationDesForm.value);
+            // console.log('securityForm', this.securityForm.value);
             //------------------------------------------------------- securityForm ----------------------------------------------------------//
           }
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
         }), error => {
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
           console.log(error);
         }
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
       }
     ), error => {
-      this.loadingService.dismissLoading();
+      // this.loadingService.dismissLoading();
       console.log('param error', error)
     }
   }
@@ -795,19 +913,129 @@ export class IncidentFormEditPage implements OnInit {
     }
   }
 
-  async onOpenModal() {
+  async onOpenIncidentModal() {
+    console.log('onOpenIncidentModal');
     const modal = await this.modalController.create({
       component: ManagersPage,
+      componentProps: {
+        "list": this.witnessList,
+        "header": 'Witness List'
+      },
       cssClass: 'managers',
     });
     modal.onDidDismiss().then((res) => {
-      if (res?.data?.full_name) {
-        this.managerList = res.data.full_name;
-        this.classificationForm.controls.classification_manager.setValue(res.data.employee_id);
+      if (res && res?.data) {
+        this.incidentForm.controls['incident_near_miss'].setValue(res.data.full_name);
+        this.incident_near_miss = res.data;
       }
-    });
+    })
     return await modal.present();
   }
+
+  async onOpenIncDesModal() {
+    console.log('onOpenIncidentModal');
+    const modal = await this.modalController.create({
+      component: ManagersPage,
+      componentProps: {
+        "list": this.witnessList,
+        "header": 'Witness List'
+      },
+      cssClass: 'managers',
+    });
+    modal.onDidDismiss().then((res) => {
+      if (res && res?.data) {
+        this.incidentDesForm.controls['was_there_any_witness_of_the_incident'].setValue(res.data.full_name);
+        this.was_there_any_witness_of_the_incident = res.data;
+      }
+    })
+    return await modal.present();
+  }
+
+  async onOpenClassiModal(headerName) {
+    console.log('onOpenIncidentModal');
+    let list = [];
+    if (headerName == 'Supervisor List') {
+      list = this.superVisorList;
+    }
+    if (headerName == 'Manager List') {
+      list = this.employeeList;
+    }
+    const modal = await this.modalController.create({
+      component: ManagersPage,
+      componentProps: {
+        "list": list,
+        "header": headerName
+      },
+      cssClass: 'managers',
+    });
+    modal.onDidDismiss().then((res) => {
+      if (res && res?.data) {
+        if (headerName == 'Supervisor List') {
+          this.classificationForm.controls['classification_supervisor'].setValue(res.data.full_name);
+          this.classification_supervisor = res.data;
+        } else if (headerName == 'Manager List') {
+          this.classificationForm.controls['classification_manager'].setValue(res.data.full_name);
+          this.classification_manager = res.data;
+        }
+      }
+    })
+    return await modal.present();
+  }
+
+  async onOpenInjuryModal(field, index) {
+    const modal = await this.modalController.create({
+      component: ManagersPage,
+      componentProps: {
+        "list": this.employeeList,
+        "header": 'Employee List'
+      },
+      cssClass: 'managers',
+    });
+    modal.onDidDismiss().then((res) => {
+      if (res && res?.data) {
+        console.log('index', index);
+        console.log(this.injuryForm.controls['person_details']);
+        this.injuryForm.controls['person_details'][index].value['injured_person_option'].setValue(res.data.full_name)
+      }
+      // injured_person_option: any = '';
+      // immediate_treatment_person_name: any = '';
+    })
+    return await modal.present();
+  }
+
+  async onOpenReputationModal() {
+    const modal = await this.modalController.create({
+      component: ManagersPage,
+      componentProps: {
+        "list": this.witnessList,
+        "header": 'Witness List'
+      },
+      cssClass: 'managers',
+    });
+    modal.onDidDismiss().then((res) => {
+      if (res && res?.data) {
+        this.reputationDesForm.controls['name_of_witness'].setValue(res.data.full_name);
+        this.name_of_witness = res.data;
+        console.log(' this.name_of_witness', this.name_of_witness);
+        console.log(' this.name_of_witness', this.name_of_witness.employee_id);
+      }
+    })
+    return await modal.present();
+  }
+
+  // async onOpenModal() {
+  //   const modal = await this.modalController.create({
+  //     component: ManagersPage,
+  //     cssClass: 'managers',
+  //   });
+  //   modal.onDidDismiss().then((res) => {
+  //     if (res?.data?.full_name) {
+  //       this.managerList = res.data.full_name;
+  //       this.classificationForm.controls.classification_manager.setValue(res.data.employee_id);
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
 
   async onOpenPreview(img) {
     const modal = await this.modalController.create({
@@ -819,6 +1047,8 @@ export class IncidentFormEditPage implements OnInit {
     });
     modal.present();
   }
+
+  //------------------------------------------------------ Modals------------------------------------------------------------------//
 
   validation() {
     let enviornmental: boolean = false;
@@ -892,16 +1122,28 @@ export class IncidentFormEditPage implements OnInit {
 
   onSubmit(val) {
     // console.log('incidentForm', this.incidentForm.value);
-    // console.log('incidentForm', this.photoGraphyForm.value);
+    // console.log('photoGraphyForm', this.photoGraphyForm.value);
     // console.log('incidentDesForm', this.incidentDesForm.value);
     // console.log('classificationForm', this.classificationForm.value);
-    // console.log('injuryForm', this.injuryForm.value);
+    // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
     // console.log('enviornmentForm', this.enviornmentForm.value);
+    // console.log('injuryForm', this.injuryForm.value);
+    // console.log('reportForm', this.reportForm.value);
     // console.log('reputationDesForm', this.reputationDesForm.value);
     // console.log('securityForm', this.securityForm.value);
-    // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
-    // console.log('reportForm', this.reportForm.value);
-    // console.log('injuryForm', this.injuryForm.value);
+
+    console.log('this.incident_near_miss.employee_id ', this.incident_near_miss.employee_id);
+
+    console.log('this.was_there_any_witness_of_the_incident.employee_id ', this.was_there_any_witness_of_the_incident.employee_id);
+
+    console.log('this.classification_supervisor.employee_id ', this.classification_supervisor.employee_id);
+    console.log('this.classification_manager.employee_id ', this.classification_manager.employee_id);
+
+    console.log('this.name_of_witness.employee_id ', this.name_of_witness.employee_id);
+
+    console.log(' this.classification_manager',this.classification_manager);
+
+
 
 
     if (this.photoGraphy.length > 0) {
@@ -930,6 +1172,9 @@ export class IncidentFormEditPage implements OnInit {
 
     let userDetails = JSON.parse(localStorage.getItem('userDetails'));
     let validation: boolean = false;
+
+
+
     if (val == 'submit') {
       validation = this.validation();
     }
@@ -937,41 +1182,48 @@ export class IncidentFormEditPage implements OnInit {
       let fd = new FormData();
       //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
-      fd.append("incident_value", this.incidentForm.value['incident_value']);                             // required
-      fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss']);
-      fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other']);
+      fd.append("incident_value", this.incidentForm.value['incident_value'] ? this.incidentForm.value['incident_value'] : '');                             // required
+      // fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : '');
+      fd.append("incident_near_miss", this.incident_near_miss && this.incident_near_miss.employee_id ? this.incident_near_miss.employee_id : '');
+      fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : '');
 
       //----------------------------------------------- Incident ---------------------------------------------------------------// 
 
       //---------------------------------------------- photography -------------------------------------------------------------//
 
-      fd.append("photography_image", JSON.stringify(this.photoGraphyObject));
+      fd.append("photography_image", this.photoGraphyObject ? JSON.stringify(this.photoGraphyObject) : '');
 
       //---------------------------------------------- photography --------------------------------------------------------------//
 
       //--------------------------------------------- Incident Description ------------------------------------------------------//
-      fd.append("incident_description", this.incidentDesForm.value['incident_description']);              //required
-      fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action']); //incident photo pending from postman and here also  // required
-      fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test']);
-      fd.append("alcohol_test_completed", this.incidentDesForm.value['incident_description_alcohol_test']);
-      fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed']);
-      fd.append("seen_differently", this.incidentDesForm.value['seen_differently']);
-      fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
+      fd.append("incident_description", this.incidentDesForm.value['incident_description'] ? this.incidentDesForm.value['incident_description'] : '');              //required
+      fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action'] ? this.incidentDesForm.value['incident_description_action'] : ''); //incident photo pending from postman and here also  // required
+      fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test'] ? this.incidentDesForm.value['incident_description_alcohol_test'] : '');
+      fd.append("alcohol_test_completed", this.incidentDesForm.value['incident_description_alcohol_test'] ? this.incidentDesForm.value['incident_description_alcohol_test'] : '');
+      fd.append("drug_test_completed", this.incidentDesForm.value['drug_test_completed'] ? this.incidentDesForm.value['drug_test_completed'] : '');
+      fd.append("seen_differently", this.incidentDesForm.value['seen_differently'] ? this.incidentDesForm.value['seen_differently'] : '');
+      fd.append("was_there_any_witness_of_the_incident", this.was_there_any_witness_of_the_incident && this.was_there_any_witness_of_the_incident.employee_id ? this.was_there_any_witness_of_the_incident.employee_id : '');
+      // fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
       fd.append("incdesc_other_witness_details", JSON.stringify(this.incidentDesForm.value['incdesc_other_witness_details']));
       fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
 
       fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject))                          // alcohal test image
       fd.append("drug_test_image", JSON.stringify(this.drugTestImagesObject));                           // drug_test_image
-      fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject));         // return_to_alternate_duties_image       
+      fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject));         // return_to_alternate_duties_image 
+
       //----------------------------------------------- Incident Description -----------------------------------------------------//
 
       //----------------------------------------------- Classification -----------------------------------------------------------//
 
+      console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
+
+      console.log('time_reported', this.classificationForm.value['time_reported']);
+
       fd.append("classification_value", this.classificationForm.value['classification_value'].join(','));
       fd.append("date_of_incident", this.classificationForm.value['date_of_incident']);
-      fd.append("time_of_incident", moment(this.classificationForm.value['time_of_incident']).format('HH:mm:ss'));
+      fd.append("time_of_incident", this.classificationForm.value['time_of_incident'] != '' ? moment(this.classificationForm.value['time_of_incident']).format('HH:mm:ss') : '');
       fd.append("date_reported", this.classificationForm.value['date_reported']);
-      fd.append("time_reported", moment(this.classificationForm.value['time_reported']).format('HH:mm:ss'));
+      fd.append("time_reported", this.classificationForm.value['time_reported'] != '' ? moment(this.classificationForm.value['time_reported']).format('HH:mm:ss') : '');
       fd.append("classification_location_option", this.classificationForm.value['classification_location_option']);
       if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
         fd.append("classification_location_value", this.classificationForm.value['classification_location_value'])
@@ -980,8 +1232,10 @@ export class IncidentFormEditPage implements OnInit {
         fd.append("classification_location_value", this.classificationForm.value['classification_location_value1'])
       }
       fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type']);
-      fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
-      fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
+      fd.append("classification_supervisor", this.classification_supervisor && this.classification_supervisor.employee_id ? this.classification_supervisor.employee_id : '');
+      // fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
+      // fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
+      fd.append("classification_manager", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
 
       //--------------------------------------------------- Classification ---------------------------------------------------------//
 
@@ -1002,13 +1256,13 @@ export class IncidentFormEditPage implements OnInit {
 
       //------------------------------------------------------ Reputation -------------------------------------------------------------// 
       fd.append("reputation_option", this.reputationDesForm.value['reputation_option']);
-      fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value'])
-      fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value'])
-      // fd.append("reputation_damage_image", '');
+      fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value']);
+      fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value']);
       fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect']);
       fd.append("effected_department", this.reputationDesForm.value['effected_department']);
       fd.append("external_party", this.reputationDesForm.value['external_party']);
-      fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
+      // fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
+      fd.append("name_of_witness", this.name_of_witness && this.name_of_witness.employee_id ? this.name_of_witness.employee_id : '');
       fd.append("other_witness_details", JSON.stringify(this.reputationDesForm.value['other_witness_details']));
       fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident']);    // required
 
@@ -1041,17 +1295,15 @@ export class IncidentFormEditPage implements OnInit {
       fd.append("report", this.reportForm.value['report']);
 
       //--------------------------------------------------------- Report ------------------------------------------------------------------//
-
-      fd.append('user_id', userDetails.id);
       fd.append('id', this.incidentDetails.id);
-
+      fd.append('user_id', userDetails.id);
       let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
       this.globalService.postData(url, fd).subscribe((res: any) => {
         // this.globalService.presentLoading();
         if (res.status) {
           this.globalService.presentToast(res.message)
-          this.nav.navigateRoot("form-list")
+          this.nav.navigateRoot("incident-form-list")
         } else {
           this.globalService.presentToast(res.message)
         }

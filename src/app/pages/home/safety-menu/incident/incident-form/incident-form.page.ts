@@ -15,6 +15,7 @@ import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 import IncidentJson from '../incident-form.json';
 
 
+
 @Component({
   selector: 'app-incident-form',
   templateUrl: './incident-form.page.html',
@@ -209,13 +210,13 @@ export class IncidentFormPage implements OnInit {
       this.platformCheck = 'cordova'
     }
 
+    this.loadShift();
+    this.loadLocation();
+    this.loadBodyPart();
     this.loadEmployee();
     this.loadWitness();
-    this.loadShift();
     this.loadSuperwiser();
-    this.loadLocation();
     // this.findValueInWitness();
-    this.loadBodyPart();
 
     this.incidentForm = this.fb.group({
       incident_value: [''],                // required field
@@ -330,6 +331,7 @@ export class IncidentFormPage implements OnInit {
       } else {
         this.employeeList = [];
       }
+      this.employeeList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log(err);
     })
@@ -339,10 +341,10 @@ export class IncidentFormPage implements OnInit {
     this.globalService.getData("Witness/getWitnessList").subscribe((res: any) => {
       if (res && res.status && res.data && res.data.length > 0) {
         this.witnessList = res.data;
-        this.witnessList.unshift({ full_name: "Other", employee_id: '0' });
       } else {
         this.witnessList = [];
       }
+      this.witnessList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log(err);
     })
@@ -355,6 +357,7 @@ export class IncidentFormPage implements OnInit {
       } else {
         this.superVisorList = [];
       }
+      this.superVisorList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log("Eror", err)
     })
@@ -368,6 +371,7 @@ export class IncidentFormPage implements OnInit {
       } else {
         this.managerList = [];
       }
+      this.managerList.unshift({ full_name: "Other", employee_id: '0' });
     }, err => {
       console.log(err);
     });
@@ -583,6 +587,9 @@ export class IncidentFormPage implements OnInit {
     modal.onDidDismiss().then((res) => {
       if (res && res?.data) {
         this.incidentForm.controls['incident_near_miss'].setValue(res.data.full_name);
+        console.log('incidentForm 1', this.incidentForm.controls);
+        console.log('incidentForm 1', this.incidentForm.controls['incident_near_miss']);
+        console.log('person_details 1', this.injuryForm.controls['person_details']);
         this.incident_near_miss = res.data;
       }
     })
@@ -650,17 +657,38 @@ export class IncidentFormPage implements OnInit {
       cssClass: 'managers',
     });
     modal.onDidDismiss().then((res) => {
+
+      console.log('ggggg',res)
       if (res && res?.data) {
+        // console.log(this.injuryPersonDetails.value);
+        // console.log(this.injuryPersonDetails.controls[index].value['immediate_treatment_person_number']);
 
-        console.log('index',index);
+        // console.log(this.injuryPersonDetails.controls);
+        // console.log(this.injuryPersonDetails.value[index]);
 
-      
+        if (field == 'Injured person') {
+          // this.injuryPersonDetails.controls[index]['injured_person_option'].setValue(res.data.full_name);
+console.log('first')
 
-        console.log(this.injuryForm.controls['person_details']);
-        this.injuryForm.controls['person_details'][index].value['injured_person_option'].setValue(res.data.full_name)
+          this.injuryPersonDetails.controls[index].value['injured_person_option'] = res.data.full_name;
+          this.injuryPersonDetails.controls[index].value['injured_person_option_id'] = res.data.employee_id;
+
+          // this.injuryPersonDetails.controls[index]['injured_person_option'] = res.data.full_name;
+
+          // this.injuryPersonDetails.controls['injured_person_option_id'] = res.data.employee_id;
+
+
+          // this.injuryPersonDetails.value[index]['injured_person_option'] = res.data.full_name;
+        }
+        if (field == 'Injured administered') {
+
+          console.log('first 1')
+          this.injuryPersonDetails.controls[index].value['immediate_treatment_person_name'] = res.data.full_name;
+          this.injuryPersonDetails.controls[index].value['immediate_treatment_person_name_id'] = res.data.employee_id;
+        }
+
+        console.log('injuryPersonDetails', this.injuryPersonDetails);
       }
-      // injured_person_option: any = '';
-      // immediate_treatment_person_name: any = '';
     })
     return await modal.present();
   }
@@ -917,13 +945,13 @@ export class IncidentFormPage implements OnInit {
       fd.append("classification_supervisor", this.classification_supervisor && this.classification_supervisor.employee_id ? this.classification_supervisor.employee_id : '');
       // fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
       // fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
-      fd.append("classification_supervisor", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
+      fd.append("classification_manager", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
 
       //--------------------------------------------------- Classification ---------------------------------------------------------//
 
       //----------------------------------------------------- Injury ---------------------------------------------------------------//
 
-      fd.append("injury_persons", this.injuryForm.value['injury_persons']);                                 // form value
+      fd.append("injury_persons", this.injuryForm.value['injury_persons']);                                 // form value  
       fd.append("person_details", JSON.stringify(this.injuryForm.value['person_details']));
 
       //------------------------------------------------------ Injury ---------------------------------------------------------------//
@@ -979,21 +1007,21 @@ export class IncidentFormPage implements OnInit {
       //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
       fd.append('user_id', userDetails.id);
-      let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
+      // let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
-      this.globalService.postData(url, fd).subscribe((res: any) => {
-        // this.globalService.presentLoading();
-        if (res.status) {
-          this.globalService.presentToast(res.message)
-          this.nav.navigateRoot("incident-form-list")
-        } else {
-          this.globalService.presentToast(res.message)
-        }
-        // this.globalService.dismissLoading();
-      }, err => {
-        console.log("err", err);
-        // this.globalService.dismissLoading();
-      })
+      // this.globalService.postData(url, fd).subscribe((res: any) => {
+      //   // this.globalService.presentLoading();
+      //   if (res.status) {
+      //     this.globalService.presentToast(res.message)
+      //     this.nav.navigateRoot("incident-form-list")
+      //   } else {
+      //     this.globalService.presentToast(res.message)
+      //   }
+      //   // this.globalService.dismissLoading();
+      // }, err => {
+      //   console.log("err", err);
+      //   // this.globalService.dismissLoading();
+      // })
     }
   }
 
@@ -1157,6 +1185,7 @@ export class IncidentFormPage implements OnInit {
   injuryPersonKeys(): FormGroup {
     return this.fb.group({
       injured_person_option: [''],   //  seletced person name
+      injured_person_option_id: [''],
       injured_person_option_value: [''],  // other person name
       gender: [''],
       date_of_birth: [''],
@@ -1169,6 +1198,7 @@ export class IncidentFormPage implements OnInit {
       was_immediate_treatment: [''],
       immediate_treatment_given_explanation: [''],
       immediate_treatment_person_name: [''],
+      immediate_treatment_person_name_id: [''],
       immediate_treatment_person_number: [''],
     })
   }

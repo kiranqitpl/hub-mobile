@@ -59,13 +59,24 @@
           <div *ngIf="incidentForm.value['incident_value'] == 'Near Miss'">
             <p class="question">Who witnessed the near miss ? :</p>
 
-            <ion-item class="ra" lines="none">
+            <ion-item class="ra" lines="none" (click)="onOpenIncidentModal()">
+              <!-- <ion-label>{{managerName}}</ion-label> -->
+              <ion-input placeholder="Please select who witnessed the near miss" formControlName="incident_near_miss">
+              </ion-input>
+              <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+                <ion-button class="ion-no-padding ion-no-margin">
+                  <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+
+            <!-- <ion-item class="ra" lines="none">
               <ion-select placeholder="Please select who witnessed the near miss" interface="action-sheet"
                 formControlName="incident_near_miss">
                 <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
                   {{witnesskeys?.full_name}}</ion-select-option>
               </ion-select>
-            </ion-item>
+            </ion-item> -->
 
             <p class="question">
               Possible consequence under different circumstances :
@@ -125,18 +136,23 @@
           </ion-input>
 
           <p class="question">Was there any Witnesses of the incident ? :</p>
-          <!-- <ion-input placeholder="Please enter witnesses of the incident"
-            formControlName="was_there_any_witness_of_the_incident">
-          </ion-input> -->
-          <ion-item class="ra" lines="none">
-            <ion-select placeholder="Please select witness" interface="action-sheet"
-              formControlName="was_there_any_witness_of_the_incident" (ionChange)="onIncDesWitnessChange($event)">
-              <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
-                {{witnesskeys?.full_name}}</ion-select-option>
-            </ion-select>
+
+          <ion-item class="ra" lines="none" (click)="onOpenIncDesModal('Incident Description', 'Witness List')">
+            <ion-input placeholder="Please select witness" formControlName="was_there_any_witness_of_the_incident">
+            </ion-input>
+            <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+              <ion-button class="ion-no-padding ion-no-margin">
+                <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <!-- <ion-select placeholder="Please select witness" interface="action-sheet"
+                formControlName="was_there_any_witness_of_the_incident" (ionChange)="onIncDesWitnessChange($event)">
+                <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
+                  {{witnesskeys?.full_name}}</ion-select-option>
+              </ion-select> -->
           </ion-item>
 
-          <div *ngIf="incidentDesForm.value['was_there_any_witness_of_the_incident'] == '0'"
+          <div *ngIf="incidentDesForm.value['was_there_any_witness_of_the_incident'] == 'Other'"
             formGroupName='incdesc_other_witness_details'>
             <p class="other_witness"> Other Witness Details </p>
             <p class="question">
@@ -340,33 +356,33 @@
         </ion-row>
 
 
-        <ion-item class="ra" lines="none">
-          <ion-label position="floating">Date of Incident :</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select date of incident"
-            formControlName="date_of_incident">
-          </ion-datetime>
-        </ion-item>
+        <!-- <ion-item class="ra" lines="none"> -->
+        <p class="question">Date of Incident :</p>
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select date of incident"
+          formControlName="date_of_incident">
+        </ion-datetime>
+        <!-- </ion-item> -->
 
-        <ion-item class="ra" lines="none">
-          <ion-label position="floating">Time of Incident :</ion-label>
-          <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select time of incident"
-            formControlName="time_of_incident">
-          </ion-datetime>
-        </ion-item>
+        <!-- <ion-item class="ra" lines="none"> -->
+        <p class="question">Time of Incident :</p>
+        <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select time of incident"
+          formControlName="time_of_incident">
+        </ion-datetime>
+        <!-- </ion-item> -->
 
-        <ion-item class="ra" lines="none">
-          <ion-label position="floating">Date Reported :</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select reported date"
-            formControlName="date_reported">
-          </ion-datetime>
-        </ion-item>
+        <!-- <ion-item class="ra" lines="none"> -->
+        <p class="question">Date Reported :</p>
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select reported date"
+          formControlName="date_reported">
+        </ion-datetime>
+        <!-- </ion-item> -->
 
-        <ion-item class="ra" lines="none">
-          <ion-label position="floating">Time Reported :</ion-label>
-          <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select reported time"
-            formControlName="time_reported">
-          </ion-datetime>
-        </ion-item>
+        <!-- <ion-item class="ra" lines="none"> -->
+        <p class="question">Time Reported :</p>
+        <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select reported time"
+          formControlName="time_reported">
+        </ion-datetime>
+        <!-- </ion-item> -->
 
         <ion-radio-group formControlName="classification_location_option">
           <ion-row>
@@ -405,30 +421,53 @@
           </ion-item>
         </div>
 
-        <ion-item class="ra" lines="none">
-          <ion-select placeholder="Shift Type" interface="action-sheet" formControlName="classification_shift_type">
-            <ion-select-option value="{{shiftItem?.shift_type}}" *ngFor="let shiftItem of shiftTypeList">
-              {{shiftItem?.shift_type}}
-            </ion-select-option>
-          </ion-select>
+        <!-- <ion-item class="ra" lines="none"> -->
+        <p class="question">Shift :</p>
+        <ion-select placeholder="Shift Type" interface="action-sheet" formControlName="classification_shift_type">
+          <ion-select-option value="{{shiftItem?.shift_type}}" *ngFor="let shiftItem of shiftTypeList">
+            {{shiftItem?.shift_type}}
+          </ion-select-option>
+        </ion-select>
+        <!-- </ion-item> -->
+
+        <p class="question">Supervisor :</p>
+        <ion-item class="ra" lines="none" (click)="onOpenClassiModal('Supervisor List')">
+          <ion-input placeholder="Please select supervisor" formControlName="classification_supervisor">
+          </ion-input>
+          <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+            <ion-button class="ion-no-padding ion-no-margin">
+              <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-item>
 
-        <ion-item class="ra" lines="none">
+        <!-- <ion-item class="ra" lines="none">
           <ion-select placeholder="Supervisor" interface="action-sheet" formControlName="classification_supervisor">
             <ion-select-option value="{{superVisorItem?.employee_id}}" *ngFor="let superVisorItem of superVisorList">
               {{superVisorItem?.full_name}}
             </ion-select-option>
           </ion-select>
+        </ion-item> -->
+
+        <p class="question">Manger :</p>
+        <ion-item class="ra" lines="none" (click)="onOpenClassiModal('Manager List')">
+          <ion-input placeholder="Please select manager" formControlName="classification_manager">
+          </ion-input>
+          <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+            <ion-button class="ion-no-padding ion-no-margin">
+              <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-item>
 
-        <ion-item class="ra" lines="none" (click)="onOpenModal()">
+        <!-- <ion-item class="ra" lines="none" (click)="onOpenModal()">
           <ion-label class="labelCustomDropDown">{{managerList}}</ion-label>
           <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
             <ion-button class="ion-no-padding ion-no-margin">
               <ion-icon name="chevron-down" slot="icon-only"></ion-icon>
             </ion-button>
           </ion-buttons>
-        </ion-item>
+        </ion-item> -->
 
       </div>
 
@@ -633,13 +672,22 @@
 
             <div [formGroupName]="j">
               <p class="question">Injured Person Name :</p>
-              <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
+              <ion-item class="ra" lines="none" (click)="onOpenInjuryModal('Injured person', j)">
+                <ion-input placeholder="Please select Injured Person Name" formControlName="injured_person_option">
+                </ion-input>
+                <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+                  <ion-button class="ion-no-padding ion-no-margin">
+                    <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+
+              <!-- <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
                 formControlName="injured_person_option">
                 <ion-select-option value="{{witnessName?.employee_id}}" *ngFor="let witnessName of witnessList">
                   {{witnessName?.full_name}}
                 </ion-select-option>
-              </ion-select>
-              <!-- </ion-item> -->
+              </ion-select> -->
 
               <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
                 <p class="question">Full Name of Injured Person :</p>
@@ -800,12 +848,21 @@
                 <p class="question">Who administered treatment ? : </p>
 
                 <p class="question">Person Name :</p>
-                <ion-select placeholder="Select Person Name" interface="action-sheet"
+                <ion-item class="ra" lines="none" (click)="onOpenInjuryModal('Injured administered', j)">
+                  <ion-input placeholder="Please select person" formControlName="immediate_treatment_person_name">
+                  </ion-input>
+                  <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+                    <ion-button class="ion-no-padding ion-no-margin">
+                      <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-item>
+                <!-- <ion-select placeholder="Select Person Name" interface="action-sheet"
                   formControlName="immediate_treatment_person_name" (ionChange)="onAdministeredPerson($event, j)">
                   <ion-select-option value="{{employeeListValue?.employee_id}}"
                     *ngFor="let employeeListValue of employeeList">
                     {{employeeListValue?.full_name}}</ion-select-option>
-                </ion-select>
+                </ion-select> -->
                 <!-- <ion-input placeholder="Please enter Person Name" formControlName="immediate_treatment_person_name">
                 </ion-input> -->
 
@@ -818,8 +875,6 @@
           </ion-card>
         </div>
       </div>
-
-
 
       <!-------------------------------------------------Injury------------------------------------------------------->
 
@@ -925,19 +980,24 @@
           <ion-input placeholder="Please enter who is the external party" formControlName="external_party"></ion-input>
         </div>
 
-        <p class="question">
-          Name of witness :
-        </p>
+        <p class="question">Name of witness :</p>
+        <ion-item class="ra" lines="none" (click)="onOpenReputationModal()">
+          <ion-input placeholder="Please select witness" formControlName="name_of_witness">
+          </ion-input>
+          <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
+            <ion-button class="ion-no-padding ion-no-margin">
+              <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
 
-        <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="name_of_witness"
+        <!-- <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="name_of_witness"
           (ionChange)="onWitnessChange($event)">
-          <!-- <ion-select-option value="{{employeeListValue?.full_name}}" *ngFor="let employeeListValue of employeeList">
-            {{employeeListValue?.full_name}}</ion-select-option> -->
           <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
             {{witnesskeys?.full_name}}</ion-select-option>
-        </ion-select>
+        </ion-select> -->
 
-        <div *ngIf="reputationDesForm.value['name_of_witness'] == '0'" formGroupName='other_witness_details'>
+        <div *ngIf="reputationDesForm.value['name_of_witness'] == 'Other'" formGroupName='other_witness_details'>
           <p class="other_witness"> Other Witness Details </p>
           <p class="question">
             Name :
