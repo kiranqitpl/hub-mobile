@@ -185,7 +185,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -209,13 +209,13 @@
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
@@ -228,41 +228,55 @@
 
 
       var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+      /* harmony import */
+
+
+      var src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/loading-service/loading.service */
+      80513);
 
       var _ActionsPage = /*#__PURE__*/function () {
-        function ActionsPage(nav, global) {
+        //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
+        function ActionsPage(nav, global, loadingService) {
           _classCallCheck(this, ActionsPage);
 
           this.nav = nav;
           this.global = global;
+          this.loadingService = loadingService;
           this.pName = "Actions";
           this.data = []; //------------------------------------------------------------ Form Variables ---------------------------------------------------------------//
 
           this.description_of_required_action = '';
           this.priority = '';
           this.expected_completion = '';
+          this.loggedInUser = '';
         }
 
         _createClass(ActionsPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this = this;
-
-            this.gmRole = this.global.gm;
-            var ar = [];
+            this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
             var d = JSON.parse(localStorage.getItem("singleView"));
             this.incident_id = d.id;
-            this.global.getData("api/user/getAllUser").subscribe(function (success) {
-              if (success) {
-                success.data.forEach(function (user) {
-                  if (user.role == _this.gmRole) {
-                    ar.push(user);
-                    console.log(ar);
-                    _this.data = ar;
-                  }
-                });
+            this.loadEmp();
+          }
+        }, {
+          key: "loadEmp",
+          value: function loadEmp() {
+            var _this = this;
+
+            this.loadingService.presentLoading();
+            this.global.getData("user/getAllUser").subscribe(function (result) {
+              if (result && result.data) {
+                _this.data = result.data;
               }
+
+              _this.loadingService.dismissLoading();
+
+              console.log('this.data ', _this.data);
             }, function (err) {
+              _this.loadingService.dismissLoading();
+
               console.log(err);
             });
           }
@@ -275,34 +289,36 @@
             this.isFrom = isOpenFrom;
 
             if (isOpenFrom == 'edit') {
-              var d = JSON.parse(localStorage.getItem("singleView"));
-              this.incident_id = d.id;
-              this.global.presentLoading();
-              this.global.getData("api/Investigator/getInvestigationAction").subscribe(function (res) {
+              var d = JSON.parse(localStorage.getItem("singleView")); // this.incident_id = d.id;
+              // this.global.presentLoading();
+
+              console.log('  this.incident_id ', this.incident_id);
+              this.global.getData("Investigator/getInvestigationAction/" + this.loggedInUser['id']).subscribe(function (res) {
                 var _a;
+
+                console.log('getInvestigationAction 1', res);
 
                 if (res) {
                   (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.forEach(function (el) {
+                    console.log('getInvestigationAction 2', el);
+
                     if (el.incident_id == _this2.incident_id) {
-                      _this2.description_of_required_action = el.description_of_required_action;
-                      _this2.user_name = el.user_name;
-                      _this2.user_id = el.user_id;
+                      console.log('here');
+                      _this2.description_of_required_action = el.description_of_required_action; // this.user_name = el.user_name;
+
+                      _this2.user_name = el.user_id;
                       _this2.priority = el.priority;
                       _this2.expected_completion = el.expected_completion;
-                      _this2.id = el.id;
+                      _this2.id = el.id; // this.global.dismissLoading();
 
-                      _this2.global.dismissLoading();
-                    } else {
-                      _this2.global.dismissLoading();
+                      console.log(' this.id ', _this2.id);
                     }
                   });
                 }
               }, function (err) {
-                console.log("res", err);
-
-                _this2.global.dismissLoading();
+                console.log("res", err); // this.global.dismissLoading();
               });
-            } else {}
+            }
           }
         }, {
           key: "goBack",
@@ -315,8 +331,8 @@
             var _this3 = this;
 
             this.data.forEach(function (el) {
-              if (el.full_name == e.detail.value) {
-                _this3.user_id = el.id;
+              if (el.employee_id == e.detail.value) {
+                _this3.user_id = el.full_name;
               }
             });
           }
@@ -334,7 +350,7 @@
 
             if (this.description_of_required_action == '') {
               this.global.presentToast("Please enter description of required action");
-            } else if (this.user_id == '' || this.user_id == undefined) {
+            } else if (this.user_name == '') {
               this.global.presentToast("Please Select User");
             } else if (this.priority == '') {
               this.global.presentToast("Please select the priority");
@@ -345,13 +361,13 @@
               var fd = new FormData();
               if (this.isFrom == 'edit') fd.append("id", this.id);
               fd.append("incident_id", this.incident_id);
-              fd.append('user_id', this.user_id);
-              fd.append("user_name", this.user_name);
+              fd.append('user_id', this.user_name);
+              fd.append("user_name", this.user_id);
               fd.append("priority", this.priority);
               fd.append("expected_completion", this.expected_completion);
               fd.append("description_of_required_action", this.description_of_required_action);
               fd.append("investigator_id", userDetails.id);
-              this.global.postData("api/Investigator/InvestigationAction", fd).subscribe(function (res) {
+              this.global.postData("Investigator/InvestigationAction", fd).subscribe(function (res) {
                 if (res.status) {
                   _this4.global.presentToast(res.message);
 
@@ -375,13 +391,15 @@
 
       _ActionsPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController
         }, {
           type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+        }, {
+          type: src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_4__.LoadingService
         }];
       };
 
-      _ActionsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+      _ActionsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-actions',
         template: _raw_loader_actions_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_actions_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -421,7 +439,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-card>\n      <ion-card-content>\n        <div class=\"ion-padding-start ion-padding-end \">\n          <p class=\"question\">\n            Description of Required Action\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]=\"description_of_required_action\"></ion-input>\n\n          <p class=\"question\">\n            Allocated to\n          </p>\n          <ion-item class=\"ra ion-no-margin ion-no-padding\" lines=\"none\">\n            <ion-select placeholder=\"Select One\" interface=\"action-sheet\" [(ngModel)]=\"user_name\"\n              (ionChange)=\"selectUser($event)\">\n              <ion-select-option value=\"{{item?.full_name}}\" *ngFor=\"let item of data\">\n                <p>{{item?.full_name}}</p>\n              </ion-select-option>\n            </ion-select>\n          </ion-item>\n\n          <p class=\"question\">\n            Priority\n          </p>\n          <ion-radio-group [(ngModel)]=\"priority\">\n            <ion-row class=\"ion-no-padding\">\n              <ion-col size=\"4\" class=\"ion-no-padding\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Minor</ion-label>\n                  <ion-radio slot=\"start\" value=\"Minor\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"4\" class=\"ion-no-padding\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Major</ion-label>\n                  <ion-radio slot=\"start\" value=\"Major\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n\n          <p class=\"question\">\n            Expected completion\n          </p>\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" (ionChange)=\"dateSelect($event)\"\n              [(ngModel)]=\"expected_completion\">\n            </ion-datetime>\n          </ion-item>\n        </div>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-button class=\"btn\" type=\"submit\" (click)=\"onSubmit()\" *ngIf=\"isFrom=='add'\">\n      SUBMIT\n    </ion-button>\n    <ion-button class=\"btn\" type=\"submit\" (click)=\"onSubmit()\" *ngIf=\"isFrom=='edit'\">\n      UPDATE\n    </ion-button>\n\n\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-card>\n      <ion-card-content>\n        <div class=\"ion-padding-start ion-padding-end \">\n          <p class=\"question\">\n            Description of Required Action\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]=\"description_of_required_action\"></ion-input>\n\n          <p class=\"question\">Allocated to</p>\n          <ion-item class=\"ra ion-no-margin ion-no-padding\" lines=\"none\">\n            <ion-select placeholder=\"Select One\" interface=\"action-sheet\" [(ngModel)]=\"user_name\"\n              (ionChange)=\"selectUser($event)\">\n              <ion-select-option value=\"{{item?.employee_id}}\" *ngFor=\"let item of data\">\n                <p>{{item?.full_name}}</p>\n              </ion-select-option>\n            </ion-select>\n          </ion-item>\n\n          <p class=\"question\">Priority</p>\n          <ion-radio-group [(ngModel)]=\"priority\">\n            <ion-row class=\"ion-no-padding\">\n              <ion-col size=\"4\" class=\"ion-no-padding\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Minor</ion-label>\n                  <ion-radio slot=\"start\" value=\"Minor\"></ion-radio>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"4\" class=\"ion-no-padding\">\n                <ion-item class=\"ra\" lines=\"none\">\n                  <ion-label>Major</ion-label>\n                  <ion-radio slot=\"start\" value=\"Major\"></ion-radio>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-radio-group>\n\n          <p class=\"question\">Expected completion</p>\n          <ion-item class=\"ra\" lines=\"none\">\n            <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" (ionChange)=\"dateSelect($event)\"\n              [(ngModel)]=\"expected_completion\">\n            </ion-datetime>\n          </ion-item>\n        </div>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-button class=\"btn\" type=\"submit\" (click)=\"onSubmit()\" *ngIf=\"isFrom=='add'\">\n      SUBMIT\n    </ion-button>\n    <ion-button class=\"btn\" type=\"submit\" (click)=\"onSubmit()\" *ngIf=\"isFrom=='edit'\">\n      UPDATE\n    </ion-button>\n\n\n  </div>\n</ion-content>";
       /***/
     }
   }]);

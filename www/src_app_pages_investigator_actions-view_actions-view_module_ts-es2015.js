@@ -114,12 +114,14 @@ let ActionsViewPage = class ActionsViewPage {
         this.nav = nav;
         this.global = global;
         this.pName = 'Actions';
+        this.loggedInUser = '';
     }
     ngOnInit() {
+        this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
         let d = JSON.parse(localStorage.getItem("singleView"));
         this.incident_id = d.id;
         this.global.presentLoading();
-        this.global.getData("api/Investigator/getInvestigationAction").subscribe((res) => {
+        this.global.getData("Investigator/getInvestigationAction/" + this.loggedInUser['id']).subscribe((res) => {
             var _a;
             this.global.dismissLoading();
             if (res) {

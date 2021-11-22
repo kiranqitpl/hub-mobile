@@ -122,44 +122,30 @@ let NotificationPage = class NotificationPage {
         this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
         this.notificationId = [];
         this.notificationData = '';
+        this.loggedInUser = '';
     }
     ngOnInit() {
-        this.getLoggedInUserDetails();
+        this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
         this.onNotificationLoad();
-    }
-    getLoggedInUserDetails() {
-        this.userId = localStorage.getItem('id');
-        this.roleId = localStorage.getItem('role');
     }
     //----------------------------------- Load Notification Data ---------------------------------------------------------// 
     onNotificationLoad() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
-            let formData = new FormData();
-            formData.append("type", this.type);
-            formData.append("user_id", this.userId);
-            let url = "";
-            if (this.roleId == this.globalService.investigator) {
-                url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-            }
-            else if (this.roleId == this.globalService.gm) {
-                url = 'api/notification/getGMNotificationByGmID';
-            }
-            if (url != "") {
-                // this.globalService.presentLoading();
-                this.globalService.postData(url, formData).subscribe(result => {
-                    if (result['status']) {
-                        this.notificationData = result['data'];
-                    }
-                    // this.globalService.dismissLoading();
-                }), error => {
-                    // this.globalService.dismissLoading();
-                    console.log('error', error);
-                };
-            }
-            else {
-                // this.globalService.dismissLoading();
-                console.log("error");
-            }
+            console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
+            this.globalService.presentLoading();
+            this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
+                if (result && result['row_count'] > 0) {
+                    this.notificationData = result['data'];
+                }
+                else {
+                    this.notificationData = [];
+                }
+                console.log('this.notificationData ', this.notificationData);
+                this.globalService.dismissLoading();
+            }), error => {
+                this.globalService.dismissLoading();
+                console.log('error', error);
+            };
         });
     }
     //----------------------------------- Load Notification Data ---------------------------------------------------------//
@@ -187,10 +173,10 @@ let NotificationPage = class NotificationPage {
     onDelete() {
         if (this.notificationId.length != 0) {
             this.globalService.presentLoading();
-            let url = 'api/notification/deleteNotificationByNotificationID';
             let formData = new FormData();
+            console.log('this.notificationId', this.notificationId);
             formData.append("id", JSON.stringify(this.notificationId));
-            this.globalService.postData(url, formData).subscribe(result => {
+            this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(result => {
                 if (result && result['status']) {
                     this.onNotificationLoad();
                 }
@@ -206,15 +192,15 @@ let NotificationPage = class NotificationPage {
     //----------------------------------- Re-direct on detail page --------------------------------------------------------//
     onNotificationDetaliPage(rowID, formId, formType, isSeen) {
         if (formType == this.globalService.formType_user) {
-            this.nav.navigateForward('view/' + formId);
+            // this.nav.navigateForward('view/' + formId);
+            this.nav.navigateForward('incident-details/' + formId);
         }
         else if (formType == this.globalService.formType_investigator) {
             this.nav.navigateForward('investigation-view/' + formId);
         }
         if (isSeen == 0) {
-            this.globalService.getData('api/notification/changeNotificationSeen/' + rowID).
+            this.globalService.getData('notification/changeNotificationSeen/' + rowID).
                 subscribe(result => {
-                console.log('result', result);
                 if (result['status']) {
                     this.sharedService.notViewNotiCount = this.sharedService.notViewNotiCount != 0 ? (this.sharedService.notViewNotiCount - 1) : 0;
                 }
@@ -381,7 +367,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n    \n  </div>\n</ion-content>");
 
 /***/ })
 

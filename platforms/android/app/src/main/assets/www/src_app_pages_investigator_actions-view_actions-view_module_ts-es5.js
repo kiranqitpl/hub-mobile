@@ -226,6 +226,7 @@
           this.nav = nav;
           this.global = global;
           this.pName = 'Actions';
+          this.loggedInUser = '';
         }
 
         _createClass(ActionsViewPage, [{
@@ -233,10 +234,11 @@
           value: function ngOnInit() {
             var _this = this;
 
+            this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
             var d = JSON.parse(localStorage.getItem("singleView"));
             this.incident_id = d.id;
             this.global.presentLoading();
-            this.global.getData("api/Investigator/getInvestigationAction").subscribe(function (res) {
+            this.global.getData("Investigator/getInvestigationAction/" + this.loggedInUser['id']).subscribe(function (res) {
               var _a;
 
               _this.global.dismissLoading();

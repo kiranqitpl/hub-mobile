@@ -202,12 +202,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ManagersPage": function() { return /* binding */ ManagersPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./managers.page.html */ 72329);
 /* harmony import */ var _managers_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./managers.page.scss */ 80248);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 26215);
+
 
 
 
@@ -218,28 +220,47 @@ let ManagersPage = class ManagersPage {
     constructor(modal, global) {
         this.modal = modal;
         this.global = global;
+        this.newList = new rxjs__WEBPACK_IMPORTED_MODULE_3__.BehaviorSubject([]);
     }
-    ionViewWillEnter() {
-        this.global.getData1("Manager/getManagerList").subscribe((res) => {
-            console.log('res', res);
-            if (res) {
-                this.data = res.data;
-            }
-        }, err => {
-            console.log(err);
-        });
-    }
+    ionViewWillEnter() { }
     ngOnInit() {
+        console.log('get list in modal', this.list);
+        this.newList.next(this.list);
+    }
+    onSearch(event) {
+        let value = false;
+        this.list.forEach(element => {
+            if (element.full_name == this.term) {
+                value = true;
+            }
+        });
+        if (value == false && event != '') {
+            this.global.getData("user/getallemployee/" + event.detail.value).subscribe((res) => {
+                if (res && res.data && res.data.length > 0) {
+                    res.data.unshift({ full_name: "Other", employee_id: '0' });
+                    this.newList.next(res.data);
+                }
+                else {
+                    this.newList.next(this.list);
+                }
+            }, err => {
+                console.log(err);
+            });
+        }
     }
     close(item) {
         this.modal.dismiss(item);
     }
 };
 ManagersPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ModalController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ModalController },
     { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService }
 ];
-ManagersPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+ManagersPage.propDecorators = {
+    header: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input, args: ['header',] }],
+    list: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input, args: ['list',] }]
+};
+ManagersPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-managers',
         template: _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -259,7 +280,7 @@ ManagersPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("ion-header ion-title {\n  font-family: mon-bold;\n}\n\nion-content ion-item {\n  border-bottom: 1px solid #cccccc;\n}\n\nion-content ion-item ion-label {\n  font-family: \"mon-medium\";\n  text-transform: capitalize;\n}\n\nion-content ion-input {\n  background: var(--theme-white-color);\n  border-radius: 15px;\n  font-family: \"mon-medium\";\n  height: 52px;\n  margin-top: 18px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hbmFnZXJzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDRTtFQUNFLHFCQUFBO0FBQUo7O0FBSUU7RUFDRSxnQ0FBQTtBQURKOztBQUVJO0VBQ0UseUJBQUE7RUFDQSwwQkFBQTtBQUFOOztBQUdFO0VBRUUsb0NBQUE7RUFDQSxtQkFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FBRkoiLCJmaWxlIjoibWFuYWdlcnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWhlYWRlciB7XG4gIGlvbi10aXRsZSB7XG4gICAgZm9udC1mYW1pbHk6IG1vbi1ib2xkO1xuICB9XG59XG5pb24tY29udGVudCB7XG4gIGlvbi1pdGVtIHtcbiAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI2NjY2NjYztcbiAgICBpb24tbGFiZWwge1xuICAgICAgZm9udC1mYW1pbHk6ICdtb24tbWVkaXVtJztcbiAgICAgIHRleHQtdHJhbnNmb3JtOiBjYXBpdGFsaXplO1xuICAgIH1cbiAgfVxuICBpb24taW5wdXR7XG5cbiAgICBiYWNrZ3JvdW5kOiB2YXIoLS10aGVtZS13aGl0ZS1jb2xvcik7XG4gICAgYm9yZGVyLXJhZGl1czogMTVweDtcbiAgICBmb250LWZhbWlseTogJ21vbi1tZWRpdW0nO1xuICAgIGhlaWdodDogNTJweDtcbiAgICBtYXJnaW4tdG9wOiAxOHB4O1xuXG4gIH1cbn1cbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("ion-input {\n  color: white !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hbmFnZXJzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF3QkE7RUFDRSx1QkFBQTtBQXZCRiIsImZpbGUiOiJtYW5hZ2Vycy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBpb24taGVhZGVyIHtcbi8vICAgaW9uLXRpdGxlIHtcbi8vICAgICBmb250LWZhbWlseTogbW9uLWJvbGQ7XG4vLyAgIH1cbi8vIH1cbi8vIGlvbi1jb250ZW50IHtcbi8vICAgaW9uLWl0ZW0ge1xuLy8gICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjY2NjY2NjO1xuLy8gICAgIGlvbi1sYWJlbCB7XG4vLyAgICAgICBmb250LWZhbWlseTogJ21vbi1tZWRpdW0nO1xuLy8gICAgICAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XG4vLyAgICAgfVxuLy8gICB9XG4vLyAgIGlvbi1pbnB1dHtcblxuLy8gICAgIGJhY2tncm91bmQ6IHZhcigtLXRoZW1lLXdoaXRlLWNvbG9yKTtcbi8vICAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xuLy8gICAgIGZvbnQtZmFtaWx5OiAnbW9uLW1lZGl1bSc7XG4vLyAgICAgaGVpZ2h0OiA1MnB4O1xuLy8gICAgIG1hcmdpbi10b3A6IDE4cHg7XG5cbi8vICAgfVxuLy8gfVxuXG5pb24taW5wdXQge1xuICBjb2xvcjogd2hpdGUgIWltcG9ydGFudDtcbn1cbiJdfQ== */");
 
 /***/ }),
 
@@ -271,7 +292,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>Name of the Managers</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"close()\">\n        <ion-icon name=\"close\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ion-input placeholder=\"Search manager\" [(ngModel)]=\"term\"></ion-input>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list>\n    <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"close(item)\" *ngFor=\"let item of data|filter:term\">\n      <ion-label>{{item?.full_name}}</ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>{{header}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"close()\">\n        <ion-icon name=\"close\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ion-input placeholder=\"Search\" [(ngModel)]=\"term\" (ionChange)=\"onSearch($event)\"></ion-input>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list>\n    <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"close(item)\"\n      *ngFor=\"let item of  newList.value |filter:term\">\n      <ion-label>{{item?.full_name}}</ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>\n");
 
 /***/ })
 

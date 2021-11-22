@@ -247,7 +247,7 @@
 
             // this.globalService.presentLoading();
             this.activatedRoute.params.subscribe(function (params) {
-              _this.globalService.getData('api/investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(function (result) {
+              _this.globalService.getData('investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(function (result) {
                 if (result['status']) {
                   _this.data = result['data'][0];
                 } else {

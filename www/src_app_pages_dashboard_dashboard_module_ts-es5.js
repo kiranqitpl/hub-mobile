@@ -266,35 +266,24 @@
           value: function onNotificationLoad() {
             var _this = this;
 
-            var formData = new FormData();
-            formData.append("type", this.type);
-            formData.append("user_id", this.loggedInUserDetails.id);
-            var url = ""; // if (this.roleId == this.global.investigator) {
-            //   url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-            // } else if (this.roleId == this.global.gm) {
-            //   url = 'api/notification/getGMNotificationByGmID';
-            // }
+            console.log('here');
+            this.global.getData('notification/getNotificationList/' + this.loggedInUserDetails.id).subscribe(function (result) {
+              console.log('getNotificationList', result);
 
-            if (url != "") {
-              this.global.postData(url, formData).subscribe(function (result) {
-                if (result['status']) {
-                  var count = 0;
-                  result['data'].forEach(function (element) {
-                    if (element.is_seen == 0) {
-                      count = count + 1;
-                    }
-                  });
-                  _this.sharedService.notViewNotiCount = count;
-                } else {
-                  _this.sharedService.notViewNotiCount = 0;
-                  console.log('error');
-                }
-              }), function (error) {
-                console.log('error', error);
-              };
-            } else {
-              console.log("error");
-            }
+              if (result && result['row_count'] > 0) {
+                var count = 0;
+                result['data'].forEach(function (element) {
+                  if (element.is_seen == 0) {
+                    count = count + 1;
+                  }
+                });
+                _this.sharedService.notViewNotiCount = count;
+              } else {
+                _this.sharedService.notViewNotiCount = 0;
+              }
+            }), function (error) {
+              console.log('error', error);
+            };
           }
         }, {
           key: "onAddForm",
@@ -545,7 +534,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <!-- <div class=\"addForm\" (click)=\"onAddForm()\" *ngIf=\"roleId != gmRole\"> -->\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0 \"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <!-- <div class=\"addForm\" (click)=\"onAddForm()\" *ngIf=\"roleId != gmRole\"> -->\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

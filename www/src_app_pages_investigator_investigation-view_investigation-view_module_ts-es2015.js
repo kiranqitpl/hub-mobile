@@ -124,7 +124,7 @@ let InvestigationViewPage = class InvestigationViewPage {
     loadData() {
         // this.globalService.presentLoading();
         this.activatedRoute.params.subscribe((params) => {
-            this.globalService.getData('api/investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(result => {
+            this.globalService.getData('investigator/getInvestigationFormByID/' + params['investigation_id']).subscribe(result => {
                 if (result['status']) {
                     this.data = result['data'][0];
                 }

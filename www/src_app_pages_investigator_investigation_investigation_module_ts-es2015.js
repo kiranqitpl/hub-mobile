@@ -92,14 +92,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "InvestigationPage": function() { return /* binding */ InvestigationPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_investigation_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./investigation.page.html */ 37018);
 /* harmony import */ var _investigation_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./investigation.page.scss */ 57125);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ 16738);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/global-service/global.service */ 89985);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../environments/environment */ 92340);
+
 
 
 
@@ -111,37 +113,10 @@ let InvestigationPage = class InvestigationPage {
     constructor(nav, global) {
         this.nav = nav;
         this.global = global;
-        this.data = [];
+        this.imageUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__.environment.imageUrl;
+        this.loggedInUser = '';
+        // data: any = [];
         this.selected = 'Investigation team members';
-        this.incident_id = "";
-        this.name = "";
-        this.date_investigation_commenced = "";
-        this.reportable_incident = "";
-        this.pre_incident_contributing_events = "";
-        this.impact_contact_events = "";
-        this.post_incident_events = "";
-        this.other_contributing_event_factors = "";
-        this.critical_controls_applicable_for_task = "";
-        this.workplace_conditions = "";
-        this.work_and_people_practices = "";
-        this.employee_competence = "";
-        this.experience = "";
-        this.plant_equipment_or_tooling_involve_in_incident = "";
-        this.relevant_documentation = "";
-        this.environmental_related_factors = "";
-        this.critical_control_defence_failure_absent_non_compliance = "";
-        this.what_substandard_acts_practices_and_conditions_caused_or_could = "";
-        this.what_systems_personal_factors_caused_or_could_cause_the_incident = "";
-        this.root_cause = "";
-        this.key_earnings = "";
-        this.comments = "";
-        this.isFrom = "";
-        this.is_a_safety_environmental_or_quality_alert_required = "";
-        this.additional_investigation_required = "";
-        this.type = "";
-        this.investigatorId = "";
-        this.names = [];
-        this.listOfUsers = [];
         this.reputationCheckBox = [
             {
                 val: "Safety",
@@ -160,9 +135,6 @@ let InvestigationPage = class InvestigationPage {
                 isChecked: false
             }
         ];
-    }
-    ngOnInit() {
-        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
         this.data = [
             'Investigation team members',
             'Sequence of events',
@@ -171,12 +143,15 @@ let InvestigationPage = class InvestigationPage {
             'Investigation Team Conclusion of Incident Causes',
             'Additional Investigation'
         ];
+        this.listOfUsers = [];
+        this.names = [];
     }
-    ionViewWillEnter() {
-        var _a, _b;
-        let d = JSON.parse(localStorage.getItem("singleView"));
-        this.incident_id = d.id;
-        this.global.getData("api/Investigator/getInvestigator").subscribe((res) => {
+    ngOnInit() {
+        this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
+        this.loadData();
+    }
+    loadData() {
+        this.global.getData("Investigator/getInvestigator").subscribe((res) => {
             if (res) {
                 this.listOfUsers = res.data;
             }
@@ -186,11 +161,22 @@ let InvestigationPage = class InvestigationPage {
         }, err => {
             console.log(err);
         });
+    }
+    ionViewWillEnter() {
+        var _a, _b;
+        let d = JSON.parse(localStorage.getItem("singleView"));
+        this.incident_id = d.id;
         this.isFrom = localStorage.getItem("isInvestigationFrom");
         if (this.isFrom == 'edit') {
             this.investigatorId = d.investigation_details.id;
             let investigatorDetails = d.investigation_details;
-            this.selectedName = investigatorDetails.name;
+            // console.log('investigatorDetails', investigatorDetails);
+            // this.selectedName = investigatorDetails.name;
+            // console.log('this.selectedName', this.selectedName);
+            if ((investigatorDetails === null || investigatorDetails === void 0 ? void 0 : investigatorDetails.name) !== null) {
+                this.selectedName = (_a = investigatorDetails === null || investigatorDetails === void 0 ? void 0 : investigatorDetails.name[0]) === null || _a === void 0 ? void 0 : _a.investigator_name;
+            }
+            console.log('this.selectedName ', this.selectedName);
             this.additional_investigation_required = investigatorDetails.additional_investigation_required;
             if (investigatorDetails.comments !== undefined && investigatorDetails.comments !== 'undefined') {
                 this.comments = investigatorDetails.comments;
@@ -203,7 +189,7 @@ let InvestigationPage = class InvestigationPage {
             }
             this.date_investigation_commenced = investigatorDetails.date_investigation_commenced;
             this.impact_contact_events = investigatorDetails.impact_contact_events;
-            let chekBoxDetails = (_a = investigatorDetails === null || investigatorDetails === void 0 ? void 0 : investigatorDetails.is_a_safety_environmental_or_quality_alert_required) === null || _a === void 0 ? void 0 : _a.split(",");
+            let chekBoxDetails = (_b = investigatorDetails === null || investigatorDetails === void 0 ? void 0 : investigatorDetails.is_a_safety_environmental_or_quality_alert_required) === null || _b === void 0 ? void 0 : _b.split(",");
             this.reputationCheckBox.forEach((el) => {
                 chekBoxDetails.forEach((ele) => {
                     if (el.val == ele) {
@@ -214,13 +200,9 @@ let InvestigationPage = class InvestigationPage {
             if (investigatorDetails.key_earnings !== undefined && investigatorDetails.key_earnings !== 'undefined') {
                 this.key_earnings = investigatorDetails.key_earnings;
             }
-            if ((investigatorDetails === null || investigatorDetails === void 0 ? void 0 : investigatorDetails.name) !== null) {
-                this.selectedName = (_b = investigatorDetails === null || investigatorDetails === void 0 ? void 0 : investigatorDetails.name[0]) === null || _b === void 0 ? void 0 : _b.investigator_name;
-            }
             if (investigatorDetails.other_contributing_event_factors !== undefined && investigatorDetails.other_contributing_event_factors !== 'undefined') {
                 this.other_contributing_event_factors = investigatorDetails.other_contributing_event_factors;
             }
-            //pre_incident_contributing_events
             if (investigatorDetails.pre_incident_contributing_events !== undefined && investigatorDetails.pre_incident_contributing_events !== 'undefined') {
                 this.pre_incident_contributing_events = investigatorDetails.pre_incident_contributing_events;
             }
@@ -262,6 +244,235 @@ let InvestigationPage = class InvestigationPage {
             if (investigatorDetails.what_systems_personal_factors_caused_or_could_cause_the_incident !== undefined && investigatorDetails.what_systems_personal_factors_caused_or_could_cause_the_incident !== 'undefined') {
                 this.what_systems_personal_factors_caused_or_could_cause_the_incident = investigatorDetails.what_systems_personal_factors_caused_or_could_cause_the_incident;
             }
+        }
+    }
+    selectedValue(e) {
+        console.log('selectedValue', e);
+        this.listOfUsers.forEach((ele) => {
+            if (ele.employee_id == e.detail.value) {
+                let data = {
+                    user_id: ele.employee_id,
+                    user_name: ele.full_name
+                };
+                this.selectedName = ele.employee_id;
+                this.names.push(data);
+            }
+        });
+    }
+    onSubmit() {
+        let ar = [];
+        this.reputationCheckBox.forEach((e) => {
+            if (e.isChecked) {
+                ar.push(e.val);
+            }
+        });
+        this.listOfUsers.forEach((ele) => {
+            if (ele.full_name == this.selectedName) {
+                let data = {
+                    user_id: ele.employee_id,
+                    user_name: ele.full_name
+                };
+                this.selectedName = ele.employee_id;
+                this.names.push(data);
+            }
+        });
+        console.log('this.names', this.names);
+        this.is_a_safety_environmental_or_quality_alert_required = ar;
+        this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }];
+        const fd = new FormData();
+        if (this.isFrom == 'edit') {
+            fd.append("id", this.investigatorId);
+        }
+        fd.append("incident_id", this.incident_id);
+        fd.append("name", JSON.stringify(this.names));
+        fd.append("date_investigation_commenced", this.date_investigation_commenced);
+        fd.append("reportable_incident", this.reportable_incident);
+        fd.append("pre_incident_contributing_events", this.pre_incident_contributing_events);
+        fd.append("post_incident_events", this.post_incident_events);
+        fd.append("other_contributing_event_factors", this.other_contributing_event_factors);
+        fd.append("critical_controls_applicable_for_task", this.critical_controls_applicable_for_task);
+        fd.append("workplace_conditions", this.workplace_conditions);
+        fd.append("work_and_people_practices", this.work_and_people_practices);
+        fd.append("employee_competence", this.employee_competence);
+        fd.append("experience", this.experience);
+        fd.append("plant_equipment_or_tooling_involve_in_incident", this.plant_equipment_or_tooling_involve_in_incident);
+        fd.append("relevant_documentation", this.relevant_documentation);
+        fd.append("environmental_related_factors", this.environmental_related_factors);
+        fd.append("critical_control_defence_failure_absent_non_compliance", this.critical_control_defence_failure_absent_non_compliance);
+        fd.append("what_substandard_acts_practices_and_conditions_caused_or_could", this.what_substandard_acts_practices_and_conditions_caused_or_could);
+        fd.append("what_systems_personal_factors_caused_or_could_cause_the_incident", this.what_systems_personal_factors_caused_or_could_cause_the_incident);
+        fd.append("root_cause", this.root_cause);
+        fd.append("key_earnings", this.key_earnings);
+        fd.append('comments', this.comments);
+        fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
+        fd.append("additional_investigation_required", this.additional_investigation_required);
+        fd.append("type", this.type);
+        fd.append("investigator_id", this.loggedInUser.id);
+        let dataObj = {
+            incident_id: this.incident_id,
+            name: this.names,
+            date_investigation_commenced: this.date_investigation_commenced,
+            reportable_incident: this.reportable_incident,
+            pre_incident_contributing_events: this.pre_incident_contributing_events,
+            post_incident_events: this.post_incident_events,
+            other_contributing_event_factors: this.other_contributing_event_factors,
+            critical_controls_applicable_for_task: this.critical_controls_applicable_for_task,
+            workplace_conditions: this.workplace_conditions,
+            work_and_people_practices: this.work_and_people_practices,
+            employee_competence: this.employee_competence,
+            experience: this.experience,
+            plant_equipment_or_tooling_involve_in_incident: this.plant_equipment_or_tooling_involve_in_incident,
+            relevant_documentation: this.relevant_documentation,
+            environmental_related_factors: this.environmental_related_factors,
+            critical_control_defence_failure_absent_non_compliance: this.critical_control_defence_failure_absent_non_compliance,
+            what_substandard_acts_practices_and_conditions_caused_or_could: this.what_substandard_acts_practices_and_conditions_caused_or_could,
+            what_systems_personal_factors_caused_or_could_cause_the_incident: this.what_systems_personal_factors_caused_or_could_cause_the_incident,
+            root_cause: this.root_cause,
+            key_earnings: this.key_earnings,
+            comments: this.comments,
+            is_a_safety_environmental_or_quality_alert_required: this.is_a_safety_environmental_or_quality_alert_required,
+            additional_investigation_required: this.additional_investigation_required,
+            type: this.type,
+        };
+        this.global.presentLoading();
+        let addUrl = 'Investigator/submitInvestigation';
+        let editUrl = 'Investigator/submitInvestigation';
+        let url = this.isFrom == 'edit' ? editUrl : addUrl;
+        this.global.postData(url, fd).subscribe((res) => {
+            if (res.status) {
+                this.global.presentToast(res.message);
+                localStorage.removeItem("investigationLocalStorage");
+                this.nav.navigateRoot("incident-form-list");
+            }
+            else {
+                this.global.presentToast("Something went wrong");
+            }
+            this.global.dismissLoading();
+        }, err => {
+            console.log("err", err);
+            this.global.dismissLoading();
+        });
+    }
+    saveItemOffline() {
+        let ar = [];
+        this.reputationCheckBox.forEach((e) => {
+            if (e.isChecked) {
+                ar.push(e.val);
+            }
+        });
+        this.is_a_safety_environmental_or_quality_alert_required = ar;
+        this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }];
+        this.listOfUsers.forEach((ele) => {
+            if (ele.employee_id == this.selectedName) {
+                let data = {
+                    user_id: ele.employee_id,
+                    user_name: ele.full_name
+                };
+                this.selectedName = ele.employee_id;
+                this.names.push(data);
+            }
+        });
+        const fd = new FormData();
+        if (this.isFrom == 'edit') {
+            fd.append("id", this.investigatorId);
+        }
+        fd.append("incident_id", this.incident_id);
+        fd.append("name", JSON.stringify(this.names));
+        fd.append("date_investigation_commenced", this.date_investigation_commenced);
+        fd.append("reportable_incident", this.reportable_incident);
+        fd.append("pre_incident_contributing_events", this.pre_incident_contributing_events);
+        fd.append("post_incident_events", this.post_incident_events);
+        fd.append("other_contributing_event_factors", this.other_contributing_event_factors);
+        fd.append("critical_controls_applicable_for_task", this.critical_controls_applicable_for_task);
+        fd.append("workplace_conditions", this.workplace_conditions);
+        fd.append("work_and_people_practices", this.work_and_people_practices);
+        fd.append("employee_competence", this.employee_competence);
+        fd.append("experience", this.experience);
+        fd.append("plant_equipment_or_tooling_involve_in_incident", this.plant_equipment_or_tooling_involve_in_incident);
+        fd.append("relevant_documentation", this.relevant_documentation);
+        fd.append("environmental_related_factors", this.environmental_related_factors);
+        fd.append("critical_control_defence_failure_absent_non_compliance", this.critical_control_defence_failure_absent_non_compliance);
+        fd.append("what_substandard_acts_practices_and_conditions_caused_or_could", this.what_substandard_acts_practices_and_conditions_caused_or_could);
+        fd.append("what_systems_personal_factors_caused_or_could_cause_the_incident", this.what_systems_personal_factors_caused_or_could_cause_the_incident);
+        fd.append("root_cause", this.root_cause);
+        fd.append("key_earnings", this.key_earnings);
+        fd.append('comments', this.comments);
+        fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
+        fd.append("additional_investigation_required", this.additional_investigation_required);
+        fd.append("type", this.type);
+        let dataObj = {
+            incident_id: this.incident_id,
+            name: this.names,
+            date_investigation_commenced: this.date_investigation_commenced,
+            reportable_incident: this.reportable_incident,
+            pre_incident_contributing_events: this.pre_incident_contributing_events,
+            post_incident_events: this.post_incident_events,
+            other_contributing_event_factors: this.other_contributing_event_factors,
+            critical_controls_applicable_for_task: this.critical_controls_applicable_for_task,
+            workplace_conditions: this.workplace_conditions,
+            work_and_people_practices: this.work_and_people_practices,
+            employee_competence: this.employee_competence,
+            experience: this.experience,
+            plant_equipment_or_tooling_involve_in_incident: this.plant_equipment_or_tooling_involve_in_incident,
+            relevant_documentation: this.relevant_documentation,
+            environmental_related_factors: this.environmental_related_factors,
+            critical_control_defence_failure_absent_non_compliance: this.critical_control_defence_failure_absent_non_compliance,
+            what_substandard_acts_practices_and_conditions_caused_or_could: this.what_substandard_acts_practices_and_conditions_caused_or_could,
+            what_systems_personal_factors_caused_or_could_cause_the_incident: this.what_systems_personal_factors_caused_or_could_cause_the_incident,
+            root_cause: this.root_cause,
+            key_earnings: this.key_earnings,
+            comments: this.comments,
+            is_a_safety_environmental_or_quality_alert_required: this.is_a_safety_environmental_or_quality_alert_required,
+            additional_investigation_required: this.additional_investigation_required,
+            type: this.type,
+        };
+        this.global.presentLoading();
+        let addUrl = 'Investigator/submitInvestigation_incomplete';
+        let editUrl = 'Investigator/submitInvestigation_incomplete';
+        let url = this.isFrom == 'edit' ? editUrl : addUrl;
+        this.global.postData(url, fd).subscribe((res) => {
+            if (res.status) {
+                this.global.presentToast(res.message);
+                localStorage.removeItem("investigationLocalStorage");
+                this.nav.navigateRoot("incident-form-list");
+            }
+            else {
+                this.global.presentToast("Something went wrong");
+            }
+            this.global.dismissLoading();
+        }, err => {
+            console.log("err", err);
+            this.global.dismissLoading();
+        });
+    }
+    selectChekbox(e) {
+        if (this.isFrom == 'add') {
+            let localDataStore = {
+                name: this.selectedName,
+                date_investigation_commenced: this.date_investigation_commenced,
+                reportable_incident: this.reportable_incident,
+                pre_incident_contributing_events: this.pre_incident_contributing_events,
+                post_incident_events: this.post_incident_events,
+                other_contributing_event_factors: this.other_contributing_event_factors,
+                critical_controls_applicable_for_task: this.critical_controls_applicable_for_task,
+                workplace_conditions: this.workplace_conditions,
+                work_and_people_practices: this.work_and_people_practices,
+                employee_competence: this.employee_competence,
+                experience: this.experience,
+                plant_equipment_or_tooling_involve_in_incident: this.plant_equipment_or_tooling_involve_in_incident,
+                relevant_documentation: this.relevant_documentation,
+                environmental_related_factors: this.environmental_related_factors,
+                critical_control_defence_failure_absent_non_compliance: this.critical_control_defence_failure_absent_non_compliance,
+                what_substandard_acts_practices_and_conditions_caused_or_could: this.what_substandard_acts_practices_and_conditions_caused_or_could,
+                what_systems_personal_factors_caused_or_could_cause_the_incident: this.what_systems_personal_factors_caused_or_could_cause_the_incident,
+                key_earnings: this.key_earnings,
+                comments: this.comments,
+                reputationCheckBox: this.reputationCheckBox,
+                additional_investigation_required: this.additional_investigation_required,
+                type: this.type,
+                id: this.incident_id
+            };
+            localStorage.setItem("investigationLocalStorage", JSON.stringify(localDataStore));
         }
     }
     checkDetails(i) {
@@ -359,195 +570,20 @@ let InvestigationPage = class InvestigationPage {
     deSelect(i) {
         this.selected = '';
     }
+    goBack() {
+        this.nav.back();
+    }
     dateSelect(e) {
         moment__WEBPACK_IMPORTED_MODULE_2___default()(e.detail.value).format("YYYY-MM-DD");
         this.date_investigation_commenced = moment__WEBPACK_IMPORTED_MODULE_2___default()(e.detail.value).format("YYYY-MM-DD");
     }
-    selectedValue(e) {
-        this.listOfUsers.forEach((ele) => {
-            if (ele.full_name == e.detail.value) {
-                let data = {
-                    user_id: ele.id,
-                    user_name: ele.full_name
-                };
-                this.selectedName = ele.full_name;
-                this.names.push(data);
-            }
-        });
-    }
-    selectChekbox(e) {
-        if (this.isFrom == 'add') {
-            let localDataStore = {
-                name: this.selectedName,
-                date_investigation_commenced: this.date_investigation_commenced,
-                reportable_incident: this.reportable_incident,
-                pre_incident_contributing_events: this.pre_incident_contributing_events,
-                post_incident_events: this.post_incident_events,
-                other_contributing_event_factors: this.other_contributing_event_factors,
-                critical_controls_applicable_for_task: this.critical_controls_applicable_for_task,
-                workplace_conditions: this.workplace_conditions,
-                work_and_people_practices: this.work_and_people_practices,
-                employee_competence: this.employee_competence,
-                experience: this.experience,
-                plant_equipment_or_tooling_involve_in_incident: this.plant_equipment_or_tooling_involve_in_incident,
-                relevant_documentation: this.relevant_documentation,
-                environmental_related_factors: this.environmental_related_factors,
-                critical_control_defence_failure_absent_non_compliance: this.critical_control_defence_failure_absent_non_compliance,
-                what_substandard_acts_practices_and_conditions_caused_or_could: this.what_substandard_acts_practices_and_conditions_caused_or_could,
-                what_systems_personal_factors_caused_or_could_cause_the_incident: this.what_systems_personal_factors_caused_or_could_cause_the_incident,
-                key_earnings: this.key_earnings,
-                comments: this.comments,
-                reputationCheckBox: this.reputationCheckBox,
-                additional_investigation_required: this.additional_investigation_required,
-                type: this.type,
-                id: this.incident_id
-            };
-            localStorage.setItem("investigationLocalStorage", JSON.stringify(localDataStore));
-        }
-    }
-    onSubmit() {
-        let ar = [];
-        this.reputationCheckBox.forEach((e) => {
-            if (e.isChecked) {
-                ar.push(e.val);
-            }
-        });
-        this.listOfUsers.forEach((ele) => {
-            if (ele.full_name == this.selectedName) {
-                let data = {
-                    user_id: ele.id,
-                    user_name: ele.full_name
-                };
-                this.selectedName = ele.full_name;
-                this.names.push(data);
-            }
-        });
-        this.is_a_safety_environmental_or_quality_alert_required = ar;
-        this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }];
-        const fd = new FormData();
-        if (this.isFrom == 'edit') {
-            fd.append("id", this.investigatorId);
-        }
-        fd.append("incident_id", this.incident_id);
-        fd.append("name", JSON.stringify(this.names));
-        fd.append("date_investigation_commenced", this.date_investigation_commenced);
-        fd.append("reportable_incident", this.reportable_incident);
-        fd.append("pre_incident_contributing_events", this.pre_incident_contributing_events);
-        fd.append("post_incident_events", this.post_incident_events);
-        fd.append("other_contributing_event_factors", this.other_contributing_event_factors);
-        fd.append("critical_controls_applicable_for_task", this.critical_controls_applicable_for_task);
-        fd.append("workplace_conditions", this.workplace_conditions);
-        fd.append("work_and_people_practices", this.work_and_people_practices);
-        fd.append("employee_competence", this.employee_competence);
-        fd.append("experience", this.experience);
-        fd.append("plant_equipment_or_tooling_involve_in_incident", this.plant_equipment_or_tooling_involve_in_incident);
-        fd.append("relevant_documentation", this.relevant_documentation);
-        fd.append("environmental_related_factors", this.environmental_related_factors);
-        fd.append("critical_control_defence_failure_absent_non_compliance", this.critical_control_defence_failure_absent_non_compliance);
-        fd.append("what_substandard_acts_practices_and_conditions_caused_or_could", this.what_substandard_acts_practices_and_conditions_caused_or_could);
-        fd.append("what_systems_personal_factors_caused_or_could_cause_the_incident", this.what_systems_personal_factors_caused_or_could_cause_the_incident);
-        fd.append("root_cause", this.root_cause);
-        fd.append("key_earnings", this.key_earnings);
-        fd.append('comments', this.comments);
-        fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
-        fd.append("additional_investigation_required", this.additional_investigation_required);
-        fd.append("type", this.type);
-        fd.append("investigator_id", this.userDetails.id);
-        console.log('onSubmit', fd);
-        this.global.presentLoading();
-        let addUrl = 'api/Investigator/submitInvestigation';
-        let editUrl = 'api/Investigator/submitInvestigation';
-        let url = this.isFrom == 'edit' ? editUrl : addUrl;
-        this.global.postData(url, fd).subscribe((res) => {
-            if (res.status) {
-                this.global.presentToast(res.message);
-                localStorage.removeItem("investigationLocalStorage");
-                this.nav.navigateRoot("form-list");
-            }
-            else {
-                this.global.presentToast("Something went wrong");
-            }
-            this.global.dismissLoading();
-        }, err => {
-            console.log("err", err);
-            this.global.dismissLoading();
-        });
-    }
-    saveItemOffline() {
-        let ar = [];
-        this.reputationCheckBox.forEach((e) => {
-            if (e.isChecked) {
-                ar.push(e.val);
-            }
-        });
-        this.is_a_safety_environmental_or_quality_alert_required = ar;
-        this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }];
-        this.listOfUsers.forEach((ele) => {
-            if (ele.full_name == this.selectedName) {
-                let data = {
-                    user_id: ele.id,
-                    user_name: ele.full_name
-                };
-                this.selectedName = ele.full_name;
-                this.names.push(data);
-            }
-        });
-        const fd = new FormData();
-        if (this.isFrom == 'edit') {
-            fd.append("id", this.investigatorId);
-        }
-        fd.append("incident_id", this.incident_id);
-        fd.append("name", JSON.stringify(this.names));
-        fd.append("date_investigation_commenced", this.date_investigation_commenced);
-        fd.append("reportable_incident", this.reportable_incident);
-        fd.append("pre_incident_contributing_events", this.pre_incident_contributing_events);
-        fd.append("post_incident_events", this.post_incident_events);
-        fd.append("other_contributing_event_factors", this.other_contributing_event_factors);
-        fd.append("critical_controls_applicable_for_task", this.critical_controls_applicable_for_task);
-        fd.append("workplace_conditions", this.workplace_conditions);
-        fd.append("work_and_people_practices", this.work_and_people_practices);
-        fd.append("employee_competence", this.employee_competence);
-        fd.append("experience", this.experience);
-        fd.append("plant_equipment_or_tooling_involve_in_incident", this.plant_equipment_or_tooling_involve_in_incident);
-        fd.append("relevant_documentation", this.relevant_documentation);
-        fd.append("environmental_related_factors", this.environmental_related_factors);
-        fd.append("critical_control_defence_failure_absent_non_compliance", this.critical_control_defence_failure_absent_non_compliance);
-        fd.append("what_substandard_acts_practices_and_conditions_caused_or_could", this.what_substandard_acts_practices_and_conditions_caused_or_could);
-        fd.append("what_systems_personal_factors_caused_or_could_cause_the_incident", this.what_systems_personal_factors_caused_or_could_cause_the_incident);
-        fd.append("root_cause", this.root_cause);
-        fd.append("key_earnings", this.key_earnings);
-        fd.append('comments', this.comments);
-        fd.append("is_a_safety_environmental_or_quality_alert_required", this.is_a_safety_environmental_or_quality_alert_required);
-        fd.append("additional_investigation_required", this.additional_investigation_required);
-        fd.append("type", this.type);
-        fd.append("investigator_id", this.userDetails.id);
-        console.log('saveItemOffline', fd);
-        this.global.presentLoading();
-        let addUrl = 'api/Investigator/submitInvestigation_incomplete';
-        let editUrl = 'api/Investigator/submitInvestigation_incomplete';
-        let url = this.isFrom == 'edit' ? editUrl : addUrl;
-        this.global.postData(url, fd).subscribe((res) => {
-            if (res.status) {
-                this.global.presentToast(res.message);
-                localStorage.removeItem("investigationLocalStorage");
-                this.nav.navigateRoot("form-list");
-            }
-            else {
-                this.global.presentToast("Something went wrong");
-            }
-            this.global.dismissLoading();
-        }, err => {
-            console.log("err", err);
-            this.global.dismissLoading();
-        });
-    }
 };
 InvestigationPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController },
     { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService }
 ];
-InvestigationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+InvestigationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-investigation',
         template: _raw_loader_investigation_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_investigation_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -578,7 +614,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>INVESTIGATION</ion-text>\n    <ion-buttons class=\"back\">\n      <ion-button (click)=\"nav.back()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='saveBtn' (click)=\"saveItemOffline()\">\n      <ion-button>\n        <ion-icon slot=\"icon-only\" name=\"save-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n  <div class=\"container\">\n\n    <div *ngFor=\"let item of data\">\n      <ion-button class=\"incident\" *ngIf=\"selected!==item\" (click)=\"checkDetails(item)\">\n        <p>{{item | slice:0:25}}\n          <ion-text *ngIf=\"item.length >= 25\">..</ion-text>\n        </p>\n        <img class=\"plus\" src=\"./assets/add.png\" />\n      </ion-button>\n      <div *ngIf=\"selected==item && selected=='Investigation team members'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <p class=\"question\">Name</p>\n        <ion-item class=\"ra\" lines=\"none\" *ngIf=\"isFrom=='edit'\">\n          <ion-select placeholder=\"{{selectedName ? selectedName : 'Select One'}}\" interface=\"action-sheet\"\n            (ionChange)=\"selectedValue($event)\" value={{selectedName}}>\n            <ion-select-option value=\"{{item.full_name}}\" *ngFor=\"let item of listOfUsers\">\n              {{item.full_name}} {{item.email}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n        <ion-item class=\"ra\" lines=\"none\" *ngIf=\"isFrom!=='edit'\">\n          <ion-select placeholder=\"Select One\" interface=\"action-sheet\" (ionChange)=\"selectedValue($event)\"\n            value={{selectedName}}>\n            <ion-select-option value=\"{{item.full_name}}\" *ngFor=\"let item of listOfUsers\">\n              {{item.full_name}} {{item.email}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n        <p class=\"question\">Date Investigation Commenced</p>\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" (ionChange)=\"dateSelect($event,'incident')\"\n            [(ngModel)]=\"date_investigation_commenced\">\n          </ion-datetime>\n        </ion-item>\n        <p class=\"question\">Reportable Incident – Statutory Body</p>\n        <ion-radio-group [(ngModel)]=\"reportable_incident\">\n          <ion-row>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n      </div>\n      <div *ngIf=\"selected==item && selected=='Sequence of events'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Pre incident contributing events\n        </p>\n        <ion-input placeholder=\"Pre incident contributing events\" [(ngModel)]=\"pre_incident_contributing_events\">\n        </ion-input>\n\n        <p class=\"question\">\n          Post incident events\n        </p>\n        <ion-input placeholder=\"Post incident events\" [(ngModel)]=\"post_incident_events\"></ion-input>\n        <p class=\"question\">\n          Other contributing event factors\n        </p>\n        <ion-input placeholder=\"Other contributing event factors\" [(ngModel)]=\"other_contributing_event_factors\">\n        </ion-input>\n        <p class=\"question\">\n          Critical controls applicable for task\n        </p>\n        <ion-input placeholder=\"Critical controls applicable for task\"\n          [(ngModel)]=\"critical_controls_applicable_for_task\"></ion-input>\n      </div>\n      <div *ngIf=\"selected==item && selected=='Investigators Initial Findings (Event Factors)'\"\n        class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Workplace conditions\n        </p>\n        <ion-input placeholder=\"Workplace conditions\" [(ngModel)]=\"workplace_conditions\"></ion-input>\n        <p class=\"question\">\n          Work and People practices\n        </p>\n        <ion-input placeholder=\"Work and People practices\" [(ngModel)]=\"work_and_people_practices\"></ion-input>\n        <p class=\"question\">\n          Employee competence\n        </p>\n        <ion-input placeholder=\"Employee competence\" [(ngModel)]=\"employee_competence\"></ion-input>\n        <p class=\"question\">\n          Experience\n        </p>\n        <ion-input placeholder=\"Experience\" [(ngModel)]=\"experience\"></ion-input>\n        <p class=\"question\">\n          Plant, Equipment or Tooling involve in incident;\n        </p>\n        <ion-input placeholder=\"Plant, Equipment or Tooling involve in incident;\"\n          [(ngModel)]=\"plant_equipment_or_tooling_involve_in_incident\"></ion-input>\n        <p class=\"question\">\n          Relevant Documentation\n        </p>\n        <ion-input placeholder=\"Relevant Documentation\" [(ngModel)]=\"relevant_documentation\"></ion-input>\n        <p class=\"question\">\n          Environmental related factors\n        </p>\n        <ion-input placeholder=\"Environmental related factors\" [(ngModel)]=\"environmental_related_factors\"></ion-input>\n        <p class=\"question\">\n          Critical Control Defence Failure / Absent / Non-Compliance\n        </p>\n        <ion-input placeholder=\"Critical Control Defence Failure / Absent / Non-Compliance\"\n          [(ngModel)]=\"critical_control_defence_failure_absent_non_compliance\"></ion-input>\n      </div>\n      <div *ngIf=\"selected==item && selected=='Immediate Cause Analysis'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          What substandard acts / practices and conditions caused or could cause the incident\n        </p>\n        <ion-input placeholder=\"What substandard acts / practices and conditions caused or could cause the incident\"\n          [(ngModel)]=\"what_substandard_acts_practices_and_conditions_caused_or_could\"></ion-input>\n        <p class=\"question\">\n          What systems / personal factors caused or could cause the incident\n        </p>\n        <ion-input placeholder=\"What systems / personal factors caused or could cause the incident\"\n          [(ngModel)]=\"what_systems_personal_factors_caused_or_could_cause_the_incident\"></ion-input>\n      </div>\n      <div *ngIf=\"selected==item && selected=='Investigation Team Conclusion of Incident Causes'\"\n        class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Root Cause\n        </p>\n        <ion-input placeholder=\"Root Cause\" [(ngModel)]=\"root_cause\"></ion-input>\n        <p class=\"question\">\n          Key Learnings\n        </p>\n        <ion-input placeholder=\"Key Learnings\" [(ngModel)]=\"key_earnings\"></ion-input>\n        <p class=\"question\">\n          Comments\n        </p>\n        <ion-input placeholder=\"Comments\" [(ngModel)]=\"comments\"></ion-input>\n        <p class=\"question\">Is a Safety, Environmental or Quality Alert required?</p>\n        <ion-item class=\"ra\" *ngFor=\"let entry of reputationCheckBox\" lines=\"none\">\n          <ion-label>{{entry.val}}</ion-label>\n          <ion-checkbox slot=\"end\" [(ngModel)]=\"entry.isChecked\" (ionChange)=\"selectChekbox($event)\">\n          </ion-checkbox>\n        </ion-item>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Security'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <ion-radio-group [(ngModel)]=\"securityRadio\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>IT</ion-label>\n                <ion-radio slot=\"start\" value=\"IT\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Theft</ion-label>\n                <ion-radio slot=\"start\" value=\"Theft\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Other</ion-label>\n                <ion-radio slot=\"start\" value=\"Other\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n        <div *ngIf=\"securityRadio=='IT'\">\n          <ion-list class=\"ion-no-padding\">\n            <ion-item class=\"ion-no-padding\" lines=\"none\" class=\"ra\">\n              <ion-label>What kind of IT Security Incident ?</ion-label>\n            </ion-item>\n            <ion-row class=\"ion-no-padding\">\n              <ion-col size=\"6\" class=\"ion-no-padding\" *ngFor=\"let entry of itsecurityCheckbox\">\n                <ion-item lines=\"none\" class=\"ion-no-padding\" class=\"ra\">\n                  <ion-label>{{entry.val}}</ion-label>\n                  <ion-checkbox slot=\"end\" [(ngModel)]=\"entry.isChecked\"></ion-checkbox>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-list>\n        </div>\n        <div *ngIf=\"securityRadio=='Theft'\">\n          <p class=\"question\">\n            What has been stolen ?\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]=\"stolenItem\"></ion-input>\n\n          <p class=\"question\">\n            Approximate value of stolen item ?\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]=\"approximateValueOfStolen\"></ion-input>\n\n          <p class=\"question\">\n            What is the specific Security incident ?\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]='specificSecurityIncident'></ion-input>\n        </div>\n      </div>\n      <div *ngIf=\"selected==item && selected=='Additional Investigation'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"./assets/minus.png\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Additional Investigation Required\n        </p>\n        <ion-radio-group [(ngModel)]=\"additional_investigation_required\" (ionChange)=\"additionalRadio($event)\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <p class=\"question\">\n          Type\n        </p>\n        <ion-radio-group [(ngModel)]=\"type\" (ionChange)=\"typeSelect($event)\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Client</ion-label>\n                <ion-radio slot=\"start\" value=\"Client\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>General Manager</ion-label>\n                <ion-radio slot=\"start\" value=\"General Manager\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>WHSEQ Department</ion-label>\n                <ion-radio slot=\"start\" value=\"WHSEQ Department\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n      </div>\n    </div>\n\n\n    <ion-button (click)=\"onSubmit()\" class=\"btn\" *ngIf=\"isFrom=='edit'\">UPDATE</ion-button>\n    <ion-button (click)=\"onSubmit()\" class=\"btn\" *ngIf=\"isFrom=='add'\">ADD</ion-button>\n  </div>\n\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>INVESTIGATION</ion-text>\n    <ion-buttons class=\"back\">\n      <ion-button (click)=\"nav.back()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='saveBtn' (click)=\"saveItemOffline()\">\n      <ion-button>\n        <ion-icon slot=\"icon-only\" name=\"save-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n  \n  <div class=\"container\">\n\n    <div *ngFor=\"let item of data\">\n\n      <ion-button class=\"incident\" *ngIf=\"selected!==item\" (click)=\"checkDetails(item)\">\n        <p>{{item | slice:0:25}}\n          <ion-text *ngIf=\"item.length >= 25\">..</ion-text>\n        </p>\n        <img class=\"plus\" src=\"{{imageUrl +'add.png'}}\" />\n      </ion-button>\n\n      <div *ngIf=\"selected==item && selected=='Investigation team members'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">Name </p>\n        <ion-item class=\"ra\" lines=\"none\" *ngIf=\"isFrom=='edit'\">\n        \n          <ion-select placeholder=\"{{selectedName ? selectedName : 'Select One'}}\" interface=\"action-sheet\"\n            (ionChange)=\"selectedValue($event)\" value={{selectedName}}>\n            <ion-select-option value=\"{{item.employee_id}}\" *ngFor=\"let item of listOfUsers\">\n              {{item.full_name}} {{item.email}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n        <ion-item class=\"ra\" lines=\"none\" *ngIf=\"isFrom!=='edit'\">\n          <ion-select placeholder=\"Select One\" interface=\"action-sheet\" (ionChange)=\"selectedValue($event)\"\n            value={{selectedName}}>\n            <ion-select-option value=\"{{item.employee_id}}\" *ngFor=\"let item of listOfUsers\">\n              {{item.full_name}} {{item.email}}\n            </ion-select-option>\n          </ion-select>\n        </ion-item>\n        <p class=\"question\">Date Investigation Commenced</p>\n        <ion-item class=\"ra\" lines=\"none\">\n          <ion-datetime displayFormat=\"DD/MM/YYYY\" placeholder=\"Select date\" (ionChange)=\"dateSelect($event,'incident')\"\n            [(ngModel)]=\"date_investigation_commenced\">\n          </ion-datetime>\n        </ion-item>\n        <p class=\"question\">Reportable Incident – Statutory Body</p>\n        <ion-radio-group [(ngModel)]=\"reportable_incident\">\n          <ion-row>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Sequence of events'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Pre incident contributing events\n        </p>\n        <ion-input placeholder=\"Pre incident contributing events\" [(ngModel)]=\"pre_incident_contributing_events\">\n        </ion-input>\n\n        <p class=\"question\">\n          Post incident events\n        </p>\n        <ion-input placeholder=\"Post incident events\" [(ngModel)]=\"post_incident_events\"></ion-input>\n        <p class=\"question\">\n          Other contributing event factors\n        </p>\n        <ion-input placeholder=\"Other contributing event factors\" [(ngModel)]=\"other_contributing_event_factors\">\n        </ion-input>\n        <p class=\"question\">\n          Critical controls applicable for task\n        </p>\n        <ion-input placeholder=\"Critical controls applicable for task\"\n          [(ngModel)]=\"critical_controls_applicable_for_task\"></ion-input>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Investigators Initial Findings (Event Factors)'\"\n        class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Workplace conditions\n        </p>\n        <ion-input placeholder=\"Workplace conditions\" [(ngModel)]=\"workplace_conditions\"></ion-input>\n        <p class=\"question\">\n          Work and People practices\n        </p>\n        <ion-input placeholder=\"Work and People practices\" [(ngModel)]=\"work_and_people_practices\"></ion-input>\n        <p class=\"question\">\n          Employee competence\n        </p>\n        <ion-input placeholder=\"Employee competence\" [(ngModel)]=\"employee_competence\"></ion-input>\n        <p class=\"question\">\n          Experience\n        </p>\n        <ion-input placeholder=\"Experience\" [(ngModel)]=\"experience\"></ion-input>\n        <p class=\"question\">\n          Plant, Equipment or Tooling involve in incident;\n        </p>\n        <ion-input placeholder=\"Plant, Equipment or Tooling involve in incident;\"\n          [(ngModel)]=\"plant_equipment_or_tooling_involve_in_incident\"></ion-input>\n        <p class=\"question\">\n          Relevant Documentation\n        </p>\n        <ion-input placeholder=\"Relevant Documentation\" [(ngModel)]=\"relevant_documentation\"></ion-input>\n        <p class=\"question\">\n          Environmental related factors\n        </p>\n        <ion-input placeholder=\"Environmental related factors\" [(ngModel)]=\"environmental_related_factors\"></ion-input>\n        <p class=\"question\">\n          Critical Control Defence Failure / Absent / Non-Compliance\n        </p>\n        <ion-input placeholder=\"Critical Control Defence Failure / Absent / Non-Compliance\"\n          [(ngModel)]=\"critical_control_defence_failure_absent_non_compliance\"></ion-input>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Immediate Cause Analysis'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          What substandard acts / practices and conditions caused or could cause the incident\n        </p>\n        <ion-input placeholder=\"What substandard acts / practices and conditions caused or could cause the incident\"\n          [(ngModel)]=\"what_substandard_acts_practices_and_conditions_caused_or_could\"></ion-input>\n        <p class=\"question\">\n          What systems / personal factors caused or could cause the incident\n        </p>\n        <ion-input placeholder=\"What systems / personal factors caused or could cause the incident\"\n          [(ngModel)]=\"what_systems_personal_factors_caused_or_could_cause_the_incident\"></ion-input>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Investigation Team Conclusion of Incident Causes'\"\n        class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Root Cause\n        </p>\n        <ion-input placeholder=\"Root Cause\" [(ngModel)]=\"root_cause\"></ion-input>\n        <p class=\"question\">\n          Key Learnings\n        </p>\n        <ion-input placeholder=\"Key Learnings\" [(ngModel)]=\"key_earnings\"></ion-input>\n        <p class=\"question\">\n          Comments\n        </p>\n        <ion-input placeholder=\"Comments\" [(ngModel)]=\"comments\"></ion-input>\n        <p class=\"question\">Is a Safety, Environmental or Quality Alert required?</p>\n        <ion-item class=\"ra\" *ngFor=\"let entry of reputationCheckBox\" lines=\"none\">\n          <ion-label>{{entry.val}}</ion-label>\n          <ion-checkbox slot=\"end\" [(ngModel)]=\"entry.isChecked\" (ionChange)=\"selectChekbox($event)\">\n          </ion-checkbox>\n        </ion-item>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Security'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <ion-radio-group [(ngModel)]=\"securityRadio\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>IT</ion-label>\n                <ion-radio slot=\"start\" value=\"IT\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Theft</ion-label>\n                <ion-radio slot=\"start\" value=\"Theft\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"4\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Other</ion-label>\n                <ion-radio slot=\"start\" value=\"Other\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n        <div *ngIf=\"securityRadio=='IT'\">\n          <ion-list class=\"ion-no-padding\">\n            <ion-item class=\"ion-no-padding\" lines=\"none\" class=\"ra\">\n              <ion-label>What kind of IT Security Incident ?</ion-label>\n            </ion-item>\n            <ion-row class=\"ion-no-padding\">\n              <ion-col size=\"6\" class=\"ion-no-padding\" *ngFor=\"let entry of itsecurityCheckbox\">\n                <ion-item lines=\"none\" class=\"ion-no-padding\" class=\"ra\">\n                  <ion-label>{{entry.val}}</ion-label>\n                  <ion-checkbox slot=\"end\" [(ngModel)]=\"entry.isChecked\"></ion-checkbox>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n          </ion-list>\n        </div>\n        <div *ngIf=\"securityRadio=='Theft'\">\n          <p class=\"question\">\n            What has been stolen ?\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]=\"stolenItem\"></ion-input>\n\n          <p class=\"question\">\n            Approximate value of stolen item ?\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]=\"approximateValueOfStolen\"></ion-input>\n\n          <p class=\"question\">\n            What is the specific Security incident ?\n          </p>\n          <ion-input placeholder=\"Enter here\" [(ngModel)]='specificSecurityIncident'></ion-input>\n        </div>\n      </div>\n\n      <div *ngIf=\"selected==item && selected=='Additional Investigation'\" class=\"activeBackground\">\n        <div class=\"headerTitle\">\n          <p>{{item}}</p>\n          <img (click)=\"deSelect(item)\" class=\"plus\" src=\"{{imageUrl +'minus.png'}}\" />\n        </div>\n        <hr />\n        <p class=\"question\">\n          Additional Investigation Required\n        </p>\n        <ion-radio-group [(ngModel)]=\"additional_investigation_required\" (ionChange)=\"additionalRadio($event)\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Yes</ion-label>\n                <ion-radio slot=\"start\" value=\"Yes\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>No</ion-label>\n                <ion-radio slot=\"start\" value=\"No\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n\n        <p class=\"question\">\n          Type\n        </p>\n        <ion-radio-group [(ngModel)]=\"type\" (ionChange)=\"typeSelect($event)\">\n          <ion-row class=\"ion-no-padding\">\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>Client</ion-label>\n                <ion-radio slot=\"start\" value=\"Client\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>General Manager</ion-label>\n                <ion-radio slot=\"start\" value=\"General Manager\"></ion-radio>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"6\" class=\"ion-no-padding\">\n              <ion-item class=\"ra\" lines=\"none\">\n                <ion-label>WHSEQ Department</ion-label>\n                <ion-radio slot=\"start\" value=\"WHSEQ Department\"></ion-radio>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n        </ion-radio-group>\n      </div>\n\n    </div>\n\n    <ion-button (click)=\"onSubmit()\" class=\"btn\" *ngIf=\"isFrom=='edit'\">UPDATE</ion-button>\n    <ion-button (click)=\"onSubmit()\" class=\"btn\" *ngIf=\"isFrom=='add'\">ADD</ion-button>\n  </div>\n\n</ion-content>");
 
 /***/ })
 

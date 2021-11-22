@@ -67,7 +67,7 @@ const routes = [
     },
     {
         path: 'actions',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/investigator/actions/actions.module */ 99230)).then(m => m.ActionsPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/investigator/actions/actions.module */ 99230)).then(m => m.ActionsPageModule)
     },
     {
         // path: 'investigation-view',
@@ -97,7 +97,7 @@ const routes = [
     },
     {
         path: 'incident-details/:incident_id',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-details/incident-details.module */ 22641)).then(m => m.IncidentDetailsPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-details/incident-details.module */ 22641)).then(m => m.IncidentDetailsPageModule)
     },
     {
         path: 'image-modal',
@@ -105,7 +105,7 @@ const routes = [
     },
     {
         path: 'incident-form-edit/:incident_id',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-98cc75"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-98cc75"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
     },
     {
         path: 'prestart-dashboard',
@@ -331,14 +331,14 @@ let GlobalService = class GlobalService {
         this.toastController = toastController;
         this.http = http;
         this.loadingController = loadingController;
-        this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
-        this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/';
+        // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
+        this.baseUrl = 'https://mforms-api-devel.horts.com.au/api/';
         //Role 
-        this.user = "31";
-        this.gm = "32";
-        this.investigator = "33";
-        this.manager = "34";
-        this.supervisior = "35";
+        // user: any = "31";
+        // gm: any = "32";
+        // investigator: any = "33";
+        // manager: any = "34";
+        // supervisior: any = "35";
         this.formType_user = 1;
         this.formType_investigator = 2;
     }
@@ -390,22 +390,22 @@ let GlobalService = class GlobalService {
         //   header.append("token", localStorage.getItem("token"));
         return header;
     }
-    getData(url) {
-        let headers = this.setHeader();
-        return this.http.get(this.baseUrl + url, { headers: headers });
-    }
+    // getData1(url) {
+    //   let headers = this.setHeader();
+    //   return this.http.get(this.baseUrl1 + url, { headers: headers });
+    // }
+    // postData1(url, data) {
+    //   let headers = this.setHeader();
+    //   return this.http.post(this.baseUrl1 + url, data, { headers: headers });
+    // }
+    // --------------------------------------------------New Services ---------------------------------------------//
     postData(url, data) {
         let headers = this.setHeader();
         return this.http.post(this.baseUrl + url, data, { headers: headers });
     }
-    // --------------------------------------------------New Services ---------------------------------------------//
-    postData1(url, data) {
+    getData(url) {
         let headers = this.setHeader();
-        return this.http.post(this.baseUrl1 + url, data, { headers: headers });
-    }
-    getData1(url) {
-        let headers = this.setHeader();
-        return this.http.get(this.baseUrl1 + url, { headers: headers });
+        return this.http.get(this.baseUrl + url, { headers: headers });
         // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
         //   map((response) => {
         //     console.log('response', response);

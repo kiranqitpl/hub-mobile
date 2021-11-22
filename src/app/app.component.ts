@@ -29,6 +29,16 @@ export class AppComponent {
   }
 
   initializeApp() {
+    // console.log('this.platform', this.platform.ready());
+    if (this.platform.is('cordova')) {
+      this.globalService.platform = 'cordova'
+      // } else if (this.platform.is('android')) {
+      //   this.globalService.platform = 'android'
+    } else {
+      this.globalService.platform = 'browser'
+    }
+
+
     document.body.setAttribute('color-theme', 'dark');
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       if (this._location.isCurrentPathEqualTo('/login')) {

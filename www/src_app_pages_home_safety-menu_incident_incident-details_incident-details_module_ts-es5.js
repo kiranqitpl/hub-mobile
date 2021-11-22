@@ -321,7 +321,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -339,19 +339,19 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -366,15 +366,21 @@
       var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/app/services/global-service/global.service */
       89985);
+      /* harmony import */
+
+
+      var src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/loading-service/loading.service */
+      80513);
 
       var _IncidentDetailsPage = /*#__PURE__*/function () {
-        function IncidentDetailsPage(global, activatedRoute, modalController, changeDetectorRef) {
+        function IncidentDetailsPage(global, activatedRoute, modalController, loadingService) {
           _classCallCheck(this, IncidentDetailsPage);
 
           this.global = global;
           this.activatedRoute = activatedRoute;
           this.modalController = modalController;
-          this.changeDetectorRef = changeDetectorRef;
+          this.loadingService = loadingService;
           this.pName = 'Incident Details';
           this.incidentDetails = [];
           this.classificationList = [];
@@ -396,28 +402,26 @@
           value: function loadData() {
             var _this = this;
 
-            this.global.presentLoading();
+            this.loadingService.presentLoading();
             this.activatedRoute.params.subscribe(function (params) {
-              _this.global.getData1('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(function (result) {
+              _this.global.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(function (result) {
                 console.log('result', result);
 
                 if (result && result['data'] && result['data'][0]) {
                   _this.incidentDetails = result['data'][0];
                   _this.classificationList = _this.incidentDetails['classification_value'].split(',');
-
-                  _this.global.dismissLoading();
                 }
 
-                _this.global.dismissLoading();
+                _this.loadingService.dismissLoading();
               }), function (error) {
-                _this.global.dismissLoading();
+                _this.loadingService.dismissLoading();
 
                 console.log(error);
               };
 
-              _this.global.dismissLoading();
+              _this.loadingService.dismissLoading();
             }), function (error) {
-              _this.global.dismissLoading();
+              _this.loadingService.dismissLoading();
 
               console.log('param error', error);
             };
@@ -425,7 +429,7 @@
         }, {
           key: "onOpenPreview",
           value: function onOpenPreview(img) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var modal;
               return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
@@ -461,15 +465,15 @@
         return [{
           type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController
         }, {
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef
+          type: src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_4__.LoadingService
         }];
       };
 
-      _IncidentDetailsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+      _IncidentDetailsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-incident-details',
         template: _raw_loader_incident_details_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_incident_details_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]

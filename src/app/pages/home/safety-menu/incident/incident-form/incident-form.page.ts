@@ -11,9 +11,9 @@ import { GlobalService } from 'src/app/services/global-service/global.service';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 import { ManagersPage } from 'src/app/modals/managers/managers.page';
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
 
 import IncidentJson from '../incident-form.json';
-
 
 
 @Component({
@@ -200,15 +200,16 @@ export class IncidentFormPage implements OnInit {
     private camera: Camera,
     private fb: FormBuilder,
     private nav: NavController,
-    private platform: Platform
+    private platform: Platform,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
-    if (!this.platform.is('cordova')) {
-      this.platformCheck = 'browser'
-    } else {
-      this.platformCheck = 'cordova'
-    }
+    // if (!this.platform.is('cordova')) {
+    //   this.platformCheck = 'browser'
+    // } else {
+    //   this.platformCheck = 'cordova'
+    // }
 
     this.loadShift();
     this.loadLocation();
@@ -435,14 +436,80 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onMobileUpload() { }
+  // DataURIToBlob(dataURI: string) {
+  //   const splitDataURI = dataURI.split(',')
+  //   const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
+  //   const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
+  //   const ia = new Uint8Array(byteString.length)
+  //   for (let i = 0; i < byteString.length; i++)
+  //     ia[i] = byteString.charCodeAt(i)
+  //   return new Blob([ia], { type: mimeString })
+  // }
+
+  pickImage(sourceType, tabName) {
+    this.loadingService.presentLoading();
+    // console.log('sourceType', sourceType);
+    // console.log('event', event);
+    let image = '';
+
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: sourceType,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+
+    this.camera.getPicture(options).then(
+      (imageData) => {
+        image = 'data:image/jpeg;base64,' + imageData;
+        this.loadingService.dismissLoading();
+        if (tabName == 'PhotoGraphy') {
+          this.photoGraphy.push(image);
+          console.log(' this.photoGraphy', this.photoGraphy);
+        }
+        if (tabName == 'Alcohol') {
+          this.alcohalImages.push(image);
+          console.log(' this.alcohalImages', this.alcohalImages);
+        }
+      },
+      (err) => {
+        console.log('error');
+        this.loadingService.dismissLoading();
+        console.log("errOf Image ", err)
+      }
+    );
+  }
+
+  async mobileUploads(tabName) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Select Image source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, tabName);
+          },
+        },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.CAMERA, tabName);
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
 
   onPhotoGraphy(event, type) {
-    console.log('onPhotoGraphy', event);
     if (type == 1) {
-      // let data = this.mobileUploadImages();
-      // console.log('data', data);
-    } else {
+      this.mobileUploads('PhotoGraphy');
+    } else if (type == 2) {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
@@ -459,19 +526,23 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onAlochaolImage(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[i]).then(
-        data => {
-          // this.alcohalImagesObject[i] = data
-          if (this.alcohalImages.length <= 0) {
-            this.alcohalImages.push(data);
-          } else {
-            this.alcohalImages.unshift(data);
-          }
-        }).catch(error => {
-          console.log('error', error);
-        });
+  onAlcoholImage(event, type) {
+    if (type == 1) {
+      this.mobileUploads('Alcohol');
+    } else if (type == 2) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.sharedService.getBase64(event.target.files[i]).then(
+          data => {
+            // this.alcohalImagesObject[i] = data
+            if (this.alcohalImages.length <= 0) {
+              this.alcohalImages.push(data);
+            } else {
+              this.alcohalImages.unshift(data);
+            }
+          }).catch(error => {
+            console.log('error', error);
+          });
+      }
     }
   }
 
@@ -485,10 +556,6 @@ export class IncidentFormPage implements OnInit {
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[i]).then(
         data => {
-          // let blobImage = this.convertDataURIToBinary(data);
-          // this.drugTestImagesObject[i] = data
-          // this.drugTestImages.push(data);
-
           if (this.drugTestImages.length <= 0) {
             this.drugTestImages.push(data);
           } else {
@@ -596,7 +663,6 @@ export class IncidentFormPage implements OnInit {
     return await modal.present();
   }
 
-
   async onOpenIncDesModal() {
     console.log('onOpenIncidentModal');
     const modal = await this.modalController.create({
@@ -658,7 +724,7 @@ export class IncidentFormPage implements OnInit {
     });
     modal.onDidDismiss().then((res) => {
 
-      console.log('ggggg',res)
+      console.log('ggggg', res)
       if (res && res?.data) {
         // console.log(this.injuryPersonDetails.value);
         // console.log(this.injuryPersonDetails.controls[index].value['immediate_treatment_person_number']);
@@ -668,7 +734,7 @@ export class IncidentFormPage implements OnInit {
 
         if (field == 'Injured person') {
           // this.injuryPersonDetails.controls[index]['injured_person_option'].setValue(res.data.full_name);
-console.log('first')
+          console.log('first')
 
           this.injuryPersonDetails.controls[index].value['injured_person_option'] = res.data.full_name;
           this.injuryPersonDetails.controls[index].value['injured_person_option_id'] = res.data.employee_id;
@@ -1007,21 +1073,21 @@ console.log('first')
       //--------------------------------------------------------- Report ------------------------------------------------------------------//
 
       fd.append('user_id', userDetails.id);
-      // let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
+      let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');
 
-      // this.globalService.postData(url, fd).subscribe((res: any) => {
-      //   // this.globalService.presentLoading();
-      //   if (res.status) {
-      //     this.globalService.presentToast(res.message)
-      //     this.nav.navigateRoot("incident-form-list")
-      //   } else {
-      //     this.globalService.presentToast(res.message)
-      //   }
-      //   // this.globalService.dismissLoading();
-      // }, err => {
-      //   console.log("err", err);
-      //   // this.globalService.dismissLoading();
-      // })
+      this.globalService.postData(url, fd).subscribe((res: any) => {
+        // this.globalService.presentLoading();
+        if (res.status) {
+          this.globalService.presentToast(res.message)
+          this.nav.navigateRoot("incident-form-list")
+        } else {
+          this.globalService.presentToast(res.message)
+        }
+        // this.globalService.dismissLoading();
+      }, err => {
+        console.log("err", err);
+        // this.globalService.dismissLoading();
+      })
     }
   }
 

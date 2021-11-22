@@ -264,36 +264,33 @@
             this.isSubmitted = true;
 
             if (this.ionicForm.valid) {
-              this.global.presentLoading();
+              // this.global.presentLoading();
               var fd = new FormData();
               fd.append("email", this.ionicForm.value.email);
               fd.append("password", this.ionicForm.value.password);
-              this.global.postData1("user/login", fd).subscribe(function (res) {
-                var _a, _b;
+              this.global.postData("user/login", fd).subscribe(function (res) {
+                console.log('login', res);
 
                 if (res && res.status) {
-                  localStorage.setItem("userDetails", JSON.stringify(res.data));
-                  localStorage.setItem("email", res.data.email);
-                  localStorage.setItem("role", res.data.role);
-                  localStorage.setItem("id", (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.id);
-                  localStorage.setItem("name", (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.full_name);
+                  localStorage.setItem("userDetails", JSON.stringify(res.data)); // localStorage.setItem("email", res.data.email);
+                  // localStorage.setItem("role", res.data.role);
+                  // localStorage.setItem("id", res?.data?.id);
+                  // localStorage.setItem("name", res?.data?.full_name);
 
-                  _this.nav.navigateRoot('dashboard');
+                  _this.nav.navigateRoot('dashboard'); // this.global.dismissLoading();
 
-                  _this.global.dismissLoading();
 
                   _this.toastService.toast(res.message, 'success');
                 } else {
-                  _this.global.dismissLoading();
-
+                  // this.global.dismissLoading();
                   _this.toastService.toast(res.message, 'danger');
                 }
               }, function (err) {
-                _this.global.dismissLoading();
-
+                // this.global.dismissLoading();
                 console.log("errs", err);
               });
             } else {
+              console.log("here");
               return false;
             }
           }
@@ -354,7 +351,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>login</ion-text>\n  </div>\n  <div class=\"container\">\n    <div class=\"ion-text-center logo\">\n      <img src=\"{{imageUrl + 'login.png'}}\" />\n    </div>\n\n    <form [formGroup]=\"ionicForm\" (ngSubmit)=\"submitForm()\" novalidate>\n      <div class=\"ion-margin-top ion-margin-bottom \">\n        <ion-item class=\"ion-no-padding\" lines=\"none\">\n          <ion-label position=\"stacked\">Mail Id</ion-label>\n          <ion-input placeholder=\"Enter Mail Id\" formControlName=\"email\" required type=\"email\"> </ion-input>\n        </ion-item>\n\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.email.errors?.required\">\n          Email is required.\n        </span>\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.email.errors?.pattern\">\n          Please provide valid email id.\n        </span>\n\n        <ion-item class=\"ion-no-padding\" lines=\"none\">\n          <ion-label position=\"stacked\">Password</ion-label>\n          <ion-input placeholder=\"Enter Password\" formControlName=\"password\" required type=\"password\"> </ion-input>\n        </ion-item>\n\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.password.errors?.required\">\n          password is required.\n        </span>\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.password.errors?.minlength\">\n          Password must be at least 6 characters.\n        </span>\n\n      </div>\n      <ion-button class=\"btn\" type=\"submit\">\n        Login\n      </ion-button>\n    </form>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>login</ion-text>\n  </div>\n  <div class=\"container\">\n    <div class=\"ion-text-center logo\">\n      <img src=\"{{imageUrl + 'login.png'}}\" />\n    </div>\n\n    <form [formGroup]=\"ionicForm\" (ngSubmit)=\"submitForm()\" novalidate>\n      <div class=\"ion-margin-top ion-margin-bottom \">\n        <ion-item class=\"ion-no-padding\" lines=\"none\">\n          <ion-label position=\"stacked\">Mail Id</ion-label>\n          <ion-input placeholder=\"Enter Mail Id\" formControlName=\"email\" required type=\"email\"> </ion-input>\n        </ion-item>\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.email.errors?.required\">\n          Email is required.\n        </span>\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.email.errors?.pattern\">\n          Please provide valid email id.\n        </span>\n\n        <ion-item class=\"ion-no-padding\" lines=\"none\">\n          <ion-label position=\"stacked\">Password</ion-label>\n          <ion-input placeholder=\"Enter Password\" formControlName=\"password\" required type=\"password\"> </ion-input>\n        </ion-item>\n\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.password.errors?.required\">\n          password is required.\n        </span>\n        <span class=\"error ion-padding\" *ngIf=\"isSubmitted && errorControl.password.errors?.minlength\">\n          Password must be at least 6 characters.\n        </span>\n\n      </div>\n      <ion-button class=\"btn\" type=\"submit\">\n        Login\n      </ion-button>\n    </form>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

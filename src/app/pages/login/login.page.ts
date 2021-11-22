@@ -4,6 +4,9 @@ import { GlobalService } from '../../services/global-service/global.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { environment } from 'src/environments/environment';
+import { HTTP } from '@ionic-native/http/ngx';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
@@ -21,7 +24,8 @@ export class LoginPage implements OnInit {
     private nav: NavController,
     private global: GlobalService,
     private formBuilder: FormBuilder,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private http: HTTP
   ) { }
 
   get errorControl() {
@@ -42,16 +46,33 @@ export class LoginPage implements OnInit {
       const fd = new FormData();
       fd.append("email", this.ionicForm.value.email);
       fd.append("password", this.ionicForm.value.password);
+      // if (this.global.platform == 'cordova') {
+      //   console.log('this.global.platform 1', this.global.platform);
+      //   let header = new HttpHeaders()
+      //     .set('apikey', 'as*37486a*()HGY')
+      //   let data =  {'email': 'joedy.frape@horts.com.au', 'password': 'Password'};
+      //   this.http.post("https://mforms-api-devel.horts.com.au/api/user/login", data, {header:header}).then((res: any) => {
+      //     console.log('login', res);
+      //     if (res && res.status) {
+      //       localStorage.setItem("userDetails", JSON.stringify(res.data));
+      //       this.nav.navigateRoot('dashboard')
+      //       // this.global.dismissLoading();
+      //       this.toastService.toast(res.message, 'success');
+      //     } else {
+      //       // this.global.dismissLoading();
+      //       this.toastService.toast(res.message, 'danger');
+      //     }
+      //   }).catch(error => {
+      //     console.log('fff1', error.status);
+      //     console.log('fff2', error.error); // error message as string
+      //     console.log('fff3', error.headers);
+      //   });
+      // } else {
+      console.log('this.global.platform 2', this.global.platform);
       this.global.postData("user/login", fd).subscribe((res: any) => {
-        console.log('login',res);
+        console.log('login', res);
         if (res && res.status) {
           localStorage.setItem("userDetails", JSON.stringify(res.data));
-
-          // localStorage.setItem("email", res.data.email);
-          // localStorage.setItem("role", res.data.role);
-          // localStorage.setItem("id", res?.data?.id);
-          // localStorage.setItem("name", res?.data?.full_name);
-
           this.nav.navigateRoot('dashboard')
           // this.global.dismissLoading();
           this.toastService.toast(res.message, 'success');
@@ -59,11 +80,11 @@ export class LoginPage implements OnInit {
           // this.global.dismissLoading();
           this.toastService.toast(res.message, 'danger');
         }
-
       }, err => {
         // this.global.dismissLoading();
         console.log("errs", err)
       })
+      // }
     } else {
       console.log("here")
       return false

@@ -142,7 +142,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/investigator/actions/actions.module */
           99230)).then(function (m) {
             return m.ActionsPageModule;
@@ -219,9 +219,9 @@
       }, {
         path: 'incident-details/:incident_id',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/home/safety-menu/incident/incident-details/incident-details.module */
           22641)).then(function (m) {
             return m.IncidentDetailsPageModule;
@@ -243,7 +243,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-98cc75"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-98cc75"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module */
           97694)).then(function (m) {
             return m.IncidentFormEditPageModule;
@@ -631,15 +631,15 @@
 
           this.toastController = toastController;
           this.http = http;
-          this.loadingController = loadingController;
-          this.baseUrl = 'https://mforms-api-devel.horts.com.au/';
-          this.baseUrl1 = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
+          this.loadingController = loadingController; // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
 
-          this.user = "31";
-          this.gm = "32";
-          this.investigator = "33";
-          this.manager = "34";
-          this.supervisior = "35";
+          this.baseUrl = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
+          // user: any = "31";
+          // gm: any = "32";
+          // investigator: any = "33";
+          // manager: any = "34";
+          // supervisior: any = "35";
+
           this.formType_user = 1;
           this.formType_investigator = 2;
         }
@@ -757,15 +757,16 @@
             //   header.append("token", localStorage.getItem("token"));
 
             return header;
-          }
-        }, {
-          key: "getData",
-          value: function getData(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl + url, {
-              headers: headers
-            });
-          }
+          } // getData1(url) {
+          //   let headers = this.setHeader();
+          //   return this.http.get(this.baseUrl1 + url, { headers: headers });
+          // }
+          // postData1(url, data) {
+          //   let headers = this.setHeader();
+          //   return this.http.post(this.baseUrl1 + url, data, { headers: headers });
+          // }
+          // --------------------------------------------------New Services ---------------------------------------------//
+
         }, {
           key: "postData",
           value: function postData(url, data) {
@@ -773,21 +774,12 @@
             return this.http.post(this.baseUrl + url, data, {
               headers: headers
             });
-          } // --------------------------------------------------New Services ---------------------------------------------//
-
-        }, {
-          key: "postData1",
-          value: function postData1(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl1 + url, data, {
-              headers: headers
-            });
           }
         }, {
-          key: "getData1",
-          value: function getData1(url) {
+          key: "getData",
+          value: function getData(url) {
             var headers = this.setHeader();
-            return this.http.get(this.baseUrl1 + url, {
+            return this.http.get(this.baseUrl + url, {
               headers: headers
             }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
             //   map((response) => {

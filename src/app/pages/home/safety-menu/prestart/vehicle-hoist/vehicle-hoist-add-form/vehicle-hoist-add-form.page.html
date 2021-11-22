@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content #scrollMe >
 
   <app-header [pageName]="pName"></app-header>
 
@@ -6,11 +6,12 @@
 
     <ion-card>
       <ion-card-content>
+
         <ion-radio-group formControlName="vehicle_host_no">
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Vehicle Hoist number :
+                <span class="error space_bwt_words">* </span> Vehicle Hoist number :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -31,7 +32,9 @@
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Are you trained and competent to operate the vehicle hoist ? :
+                <span class="error space_bwt_words">* </span> Are you trained and competent to operate the vehicle
+                hoist
+                ? :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -52,7 +55,7 @@
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Certificate of inspection (Current) :
+                <span class="error space_bwt_words">* </span> Certificate of inspection (Current) :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -71,11 +74,18 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['inspection_certificate'] != '' && vehicleHoistForm.value['inspection_certificate'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="inspection_certificate_comment">
             </ion-textarea>
+          </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['inspection_certificate'] == 'Faulty' && vehicleHoistForm.value['inspection_certificate_comment'] == ''">
+              Comment is required.
+            </span>
           </ion-row>
         </ion-grid>
 
@@ -85,7 +95,8 @@
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Operating and Maintenance instructions, SWI (with hoist HE-WHS-SWI-008) :
+                <span class="error space_bwt_words">* </span> Operating and Maintenance instructions, SWI (with hoist
+                HE-WHS-SWI-008) :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -104,20 +115,29 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['maintenance_instructions'] != '' && vehicleHoistForm.value['maintenance_instructions'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="maintenance_instructions_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['maintenance_instructions'] == 'Faulty' && vehicleHoistForm.value['maintenance_instructions_comment'] == ''">
+              Comment is required.
+            </span>
+          </ion-row>
         </ion-grid>
 
-
-        <ion-radio-group formControlName="data_plate" *ngIf="vehicleHoistForm.value['maintenance_instructions'] != ''"
+        <ion-radio-group #radio formControlName="data_plate"
+          *ngIf="vehicleHoistForm.value['maintenance_instructions'] != ''"
           (ionChange)="onValueChange($event, 'data_plate')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none">Data plate, decals (attached/ readable) :</ion-item>
+              <ion-item class="ra" lines="none">
+                <span class="error space_bwt_words">* </span>Data plate, decals (attached/ readable) :
+              </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -135,21 +155,29 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['data_plate'] != '' && vehicleHoistForm.value['data_plate'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="data_plate_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['data_plate'] == 'Faulty' && vehicleHoistForm.value['data_plate_comment'] == ''">
+              Comment is required.
+            </span>
+          </ion-row>
         </ion-grid>
+        <!-- </div>
 
-
+        <div #target> -->
         <ion-radio-group formControlName="safty_devices" *ngIf="vehicleHoistForm.value['data_plate'] != ''"
           (ionChange)="onValueChange($event, 'safty_devices')">
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Safety devices are operational (including E-stop) :
+                <span class="error space_bwt_words">* </span> Safety devices are operational (including E-stop) :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -168,20 +196,33 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['safty_devices'] != '' && vehicleHoistForm.value['safty_devices'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="safty_devices_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.safty_devices_comment.errors?.required">
+              Comment is required.
+            </span> -->
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['safty_devices'] == 'Faulty' && vehicleHoistForm.value['safty_devices_comment'] == ''">
+              Comment is required.
+            </span>
+          </ion-row>
         </ion-grid>
+        <!-- </div>
+
+        <div> -->
 
         <ion-radio-group formControlName="locks_latches" *ngIf="vehicleHoistForm.value['safty_devices'] != ''"
           (ionChange)="onValueChange($event, 'locks_latches')">
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Locks, latches (move freely. Fully engage) :
+                <span class="error space_bwt_words">* </span> Locks, latches (move freely. Fully engage) :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -200,21 +241,35 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['locks_latches'] != '' && vehicleHoistForm.value['locks_latches'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="locks_latches_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['locks_latches'] == 'Faulty' && vehicleHoistForm.value['locks_latches_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.locks_latches_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
+        <!-- </div>
 
+        <div> -->
 
         <ion-radio-group formControlName="rubber_pad" *ngIf="vehicleHoistForm.value['locks_latches'] != ''"
           (ionChange)="onValueChange($event, 'rubber_pad')">
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Rubber pads (attached, good condition on all load points) :
+                <span class="error space_bwt_words">* </span> Rubber pads (attached, good condition on all load
+                points)
+                :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -233,22 +288,34 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['rubber_pad'] != '' && vehicleHoistForm.value['rubber_pad'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
-          <ion-row>
 
+          <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="rubber_pad_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.rubber_pad_comment.errors?.required">
+              Comment is required.
+            </span> -->
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['rubber_pad'] == 'Faulty' && vehicleHoistForm.value['rubber_pad_comment'] == ''">
+              Comment is required.
+            </span>
+          </ion-row>
         </ion-grid>
+        <!-- </div>
 
+        <div> -->
 
         <ion-radio-group formControlName="safty_gaurds" *ngIf="vehicleHoistForm.value['rubber_pad'] != ''"
           (ionChange)="onValueChange($event, 'safty_gaurds')">
           <ion-row>
             <ion-col size="12">
               <ion-item class="ra" lines="none">
-                Safety guards (fitted, secure and operational) :
+                <span class="error space_bwt_words">* </span> Safety guards (fitted, secure and operational) :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -264,24 +331,38 @@
           </ion-row>
         </ion-radio-group>
 
-
         <ion-grid
           *ngIf="vehicleHoistForm.value['safty_gaurds'] != '' && vehicleHoistForm.value['safty_gaurds'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="safty_gaurds_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['safty_gaurds'] == 'Faulty' && vehicleHoistForm.value['safty_gaurds_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.safty_gaurds_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
+        <!-- </div>
 
+        <div> -->
 
         <ion-radio-group formControlName="hydraulic_connections" *ngIf="vehicleHoistForm.value['safty_gaurds'] != ''"
           (ionChange)="onValueChange($event, 'hydraulic_connections')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Hydraulic connections, hoses (secure, no leaks) :</ion-item>
+              <ion-item class="ra" lines="none">
+                <span class="error space_bwt_words">* </span>
+                Hydraulic connections, hoses (secure, no leaks) :
+              </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -299,21 +380,36 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['hydraulic_connections'] != '' && vehicleHoistForm.value['hydraulic_connections'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="hydraulic_connections_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['hydraulic_connections'] == 'Faulty' && vehicleHoistForm.value['hydraulic_connections_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.controls.hydraulic_connections_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
+        <!-- </div>
 
+        <div> -->
 
         <ion-radio-group formControlName="chain_cable_connection"
           *ngIf="vehicleHoistForm.value['hydraulic_connections'] != ''"
           (ionChange)="onValueChange($event, 'chain_cable_connection')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Chain and cable connections (Bends, cracks, lose links or looseness) :
+              <ion-item lines="none">
+                <span class="error space_bwt_words">* </span>
+                Chain and cable connections (Bends, cracks, lose links or looseness) :
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -332,20 +428,32 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['chain_cable_connection'] != '' && vehicleHoistForm.value['chain_cable_connection'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="chain_cable_connection_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['chain_cable_connection'] == 'Faulty' && vehicleHoistForm.value['chain_cable_connection_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.controls.chain_cable_connection_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
-
+        <!-- </div> -->
 
 
         <ion-radio-group formControlName="frayed_cables" *ngIf="vehicleHoistForm.value['chain_cable_connection'] != ''"
           (ionChange)="onValueChange($event, 'frayed_cables')">
           <ion-row>
             <ion-col size="12">
+              <span class="error space_bwt_words">* </span>
               <ion-item class="ra" lines="none"> Check for frayed cables (raised and lowered position) :</ion-item>
             </ion-col>
             <ion-col size="6">
@@ -361,25 +469,33 @@
           </ion-row>
         </ion-radio-group>
 
-
         <ion-grid
           *ngIf="vehicleHoistForm.value['frayed_cables'] != '' && vehicleHoistForm.value['frayed_cables'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="frayed_cables_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['frayed_cables'] == 'Faulty' && vehicleHoistForm.value['frayed_cables_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.frayed_cables_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
-
-
 
         <ion-radio-group formControlName="snap_rings" *ngIf="vehicleHoistForm.value['frayed_cables'] != ''"
           (ionChange)="onValueChange($event, 'snap_rings')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Check snap rings at all rollers and sheaves : </ion-item>
+              <ion-item class="ra" lines="none"> <span class="error space_bwt_words">* </span> Check snap rings at all
+                rollers and sheaves : </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -394,24 +510,33 @@
           </ion-row>
         </ion-radio-group>
 
-
         <ion-grid
           *ngIf="vehicleHoistForm.value['snap_rings'] != '' && vehicleHoistForm.value['snap_rings'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="snap_rings_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['snap_rings'] == 'Faulty' && vehicleHoistForm.value['snap_rings_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.snap_rings_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
-
 
         <ion-radio-group formControlName="bolts_nuts" *ngIf="vehicleHoistForm.value['snap_rings'] != ''"
           (ionChange)="onValueChange($event, 'bolts_nuts')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Check bolts, nuts, screws : </ion-item>
+              <ion-item class="ra" lines="none"> <span class="error space_bwt_words">* </span> Check bolts, nuts, screws
+                : </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -429,20 +554,30 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['bolts_nuts'] != '' && vehicleHoistForm.value['bolts_nuts'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="bolts_nuts_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['bolts_nuts'] == 'Faulty' && vehicleHoistForm.value['bolts_nuts_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.bolts_nuts_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
-
 
         <ion-radio-group formControlName="electrical_switch" *ngIf="vehicleHoistForm.value['bolts_nuts'] != ''"
           (ionChange)="onValueChange($event, 'electrical_switch')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Check wiring and electrical switches for damage :</ion-item>
+              <ion-item class="ra" lines="none"> <span class="error space_bwt_words">* </span> Check wiring and
+                electrical switches for damage :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -462,21 +597,33 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['electrical_switch'] != '' && vehicleHoistForm.value['electrical_switch'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="electrical_switch_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['electrical_switch'] == 'Faulty' && vehicleHoistForm.value['electrical_switch_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.controls.electrical_switch_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
 
-
-
-        <ion-radio-group formControlName="hoist_work_area" *ngIf="vehicleHoistForm.value['electrical_switch'] != ''" (ionChange)="onValueChange($event, 'hoist_work_area')">
+        <ion-radio-group formControlName="hoist_work_area" *ngIf="vehicleHoistForm.value['electrical_switch'] != ''"
+          (ionChange)="onValueChange($event, 'hoist_work_area')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Hoist and work area is free from grease, oil, corrosive substances,
-                slip and trip hazards :</ion-item>
+              <ion-item class="ra" lines="none">
+                <span class="error space_bwt_words">* </span>Hoist and work area is free from grease, oil, corrosive
+                substances, slip and trip hazards :
+              </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -496,19 +643,31 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['hoist_work_area'] != '' && vehicleHoistForm.value['hoist_work_area'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="hoist_work_area_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['hoist_work_area'] == 'Faulty' && vehicleHoistForm.value['hoist_work_area_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.controls.hoist_work_area_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
 
-
-        <ion-radio-group formControlName="anchor_bolts" *ngIf="vehicleHoistForm.value['hoist_work_area'] != ''" (ionChange)="onValueChange($event, 'anchor_bolts')">
+        <ion-radio-group formControlName="anchor_bolts" *ngIf="vehicleHoistForm.value['hoist_work_area'] != ''"
+          (ionChange)="onValueChange($event, 'anchor_bolts')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Check floor for stress cracks near anchor bolts :</ion-item>
+              <ion-item class="ra" lines="none"> <span class="error space_bwt_words">* </span> Check floor for stress
+                cracks near anchor bolts :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -528,19 +687,31 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['anchor_bolts'] != '' && vehicleHoistForm.value['anchor_bolts'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="anchor_bolts_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['anchor_bolts'] == 'Faulty' && vehicleHoistForm.value['anchor_bolts_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.anchor_bolts_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
 
-
-        <ion-radio-group formControlName="swing_arm" *ngIf="vehicleHoistForm.value['anchor_bolts'] != ''" (ionChange)="onValueChange($event, 'swing_arm')">
+        <ion-radio-group formControlName="swing_arm" *ngIf="vehicleHoistForm.value['anchor_bolts'] != ''"
+          (ionChange)="onValueChange($event, 'swing_arm')">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Check swing arm restraints :</ion-item>
+
+              <ion-item class="ra" lines="none"> <span class="error space_bwt_words">* </span> Check swing arm
+                restraints :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -559,21 +730,31 @@
 
         <ion-grid *ngIf="vehicleHoistForm.value['swing_arm'] != '' && vehicleHoistForm.value['swing_arm'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="swing_arm_comment">
             </ion-textarea>
           </ion-row>
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['swing_arm'] == 'Faulty' && vehicleHoistForm.value['swing_arm_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error" *ngIf="isSubmitted && vehicleHoistForm.controls.swing_arm_comment.errors?.required">
+              Comment is required.
+            </span> -->
+          </ion-row>
         </ion-grid>
 
-
-
         <ion-radio-group formControlName="hoist_controls" *ngIf="vehicleHoistForm.value['swing_arm'] != ''"
-          (ionChange)="onHoistControlChange()" >
+          (ionChange)="onHoistControlChange($event)">
           <ion-row>
             <ion-col size="12">
-              <ion-item class="ra" lines="none"> Test all hoist controls and functions :</ion-item>
+
+              <ion-item class="ra" lines="none"> <span class="error space_bwt_words">* </span> Test all hoist controls
+                and functions :</ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item class="ra" lines="none">
@@ -593,11 +774,24 @@
         <ion-grid
           *ngIf="vehicleHoistForm.value['hoist_controls'] != '' && vehicleHoistForm.value['hoist_controls'] == 'Faulty'">
           <ion-row>
+            <span class="error space_bwt_words">* </span>
             <ion-label>Comment : </ion-label>
           </ion-row>
+
           <ion-row>
             <ion-textarea placeholder="Enter Comment" formControlName="hoist_controls_comment">
             </ion-textarea>
+          </ion-row>
+
+          <ion-row>
+            <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.value['hoist_controls'] == 'Faulty' && vehicleHoistForm.value['hoist_controls_comment'] == ''">
+              Comment is required.
+            </span>
+            <!-- <span class="error"
+              *ngIf="isSubmitted && vehicleHoistForm.controls.hoist_controls_comment.errors?.required">
+              Comment is required.
+            </span> -->
           </ion-row>
         </ion-grid>
 

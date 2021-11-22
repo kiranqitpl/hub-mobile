@@ -88,34 +88,28 @@
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
-        <div *ngIf="platformCheck === 'cordova'">
+        <div *ngIf="globalService.platform === 'cordova'">
           <ion-button class="camera" expand="block" (click)="onPhotoGraphy($event, 1)">Upload Image</ion-button>
-          <!-- <img src="{{imagePath}}" class="img-responsive" *ngIf="imagePath!==''" /> -->
         </div>
-        <div *ngIf="platformCheck === 'browser'">
+        <div *ngIf="globalService.platform === 'browser'">
           <input type='file' value="photography_image" multiple (change)="onPhotoGraphy($event, 2)">
-          <!-- <div class="ion-text-center" *ngIf="photoGraphy.length > 0">
-            <div *ngFor="let photographyImages of photoGraphy">
-              <img [src]="photographyImages" height="100" class="img-responsive"> <br />
-            </div>
-          </div> -->
-          <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="photoGraphy.length > 0">
-            <ion-slide *ngFor="let photographyImage of photoGraphy; let i = index">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="11">
-                    <img [src]="photographyImage" tappable (click)="onOpenPreview(photographyImage)">
-                  </ion-col>
-                  <ion-col size="1">
-                    <p class="question">
-                      <ion-icon name="close" (click)="onImageDelete(i, 'Photography')"></ion-icon>
-                    </p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-slide>
-          </ion-slides>
         </div>
+        <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="photoGraphy.length > 0">
+          <ion-slide *ngFor="let photographyImage of photoGraphy; let i = index">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="11">
+                  <img [src]="photographyImage" tappable (click)="onOpenPreview(photographyImage)">
+                </ion-col>
+                <ion-col size="1">
+                  <p class="question">
+                    <ion-icon name="close" (click)="onImageDelete(i, 'Photography')"></ion-icon>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
       </div>
       <!-------------------------------------------------------- Photography ----------------------------------------------------------------->
 
@@ -217,6 +211,31 @@
           </ion-radio-group>
 
           <div *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'">
+
+            <div *ngIf="globalService.platform === 'cordova'">
+              <ion-button class="camera" expand="block" (click)="onAlcoholImage($event, 1)">Upload Image</ion-button>
+            </div>
+            <div *ngIf="globalService.platform === 'browser'">
+              <input type='file' value="incident_description_photo" multiple (change)="onAlcoholImage($event, 2)">
+            </div>
+
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="alcohalImages.length > 0">
+              <ion-slide *ngFor="let alcohalImage of alcohalImages; let i = index">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="11">
+                      <img [src]="alcohalImage" tappable (click)="onOpenPreview(alcohalImage)">
+                    </ion-col>
+                    <ion-col size="1">
+                      <p class="question">
+                        <ion-icon name="close" (click)="onImageDelete(i ,'Alcohal Test')"></ion-icon>
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-slide>
+            </ion-slides>
+            <!-- 
             <div *ngIf="platformCheck === 'cordova'">
               <ion-button *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'" class="camera"
                 expand="block" (click)="selectImage(2)">Upload Image
@@ -227,24 +246,11 @@
 
             <div *ngIf="platformCheck === 'browser'">
               <input type='file' value="incident_description_photo" multiple (change)="onAlochaolImage($event)">
-              <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="alcohalImages.length > 0">
-                <ion-slide *ngFor="let alcohalImage of alcohalImages; let i = index">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col size="11">
-                        <img [src]="alcohalImage" tappable (click)="onOpenPreview(alcohalImage)">
-                      </ion-col>
-                      <ion-col size="1">
-                        <p class="question">
-                          <ion-icon name="close" (click)="onImageDelete(i ,'Alcohal Test')"></ion-icon>
-                        </p>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-slide>
-              </ion-slides>
-            </div>
+            </div> -->
           </div>
+
+
+
 
           <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
 

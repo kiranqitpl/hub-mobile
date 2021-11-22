@@ -1,7 +1,7 @@
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http';
+import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -24,10 +24,12 @@ export class GlobalService {
 
   formType_user = 1;
   formType_investigator = 2;
+  platform: String = '';
 
   constructor(
     public toastController: ToastController,
-    public http: HttpClient,
+    public httpClient: HttpClient,
+    public http: HTTP,
     public loadingController: LoadingController
   ) { }
 
@@ -76,26 +78,25 @@ export class GlobalService {
     return header;
   }
 
-  // getData1(url) {
-  //   let headers = this.setHeader();
-  //   return this.http.get(this.baseUrl1 + url, { headers: headers });
-  // }
-
-  // postData1(url, data) {
-  //   let headers = this.setHeader();
-  //   return this.http.post(this.baseUrl1 + url, data, { headers: headers });
-  // }
-
   // --------------------------------------------------New Services ---------------------------------------------//
 
   postData(url, data) {
     let headers = this.setHeader();
-    return this.http.post(this.baseUrl + url, data, { headers: headers });
+    // if (this.platform == 'cordova') {
+    //   return this.http.post(this.baseUrl + url, data, { headers: headers });
+    // } else {
+      return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
+    // }
   }
 
   getData(url) {
     let headers = this.setHeader();
-    return this.http.get(this.baseUrl + url, { headers: headers });
+    // if (this.platform == 'cordova') {
+    //   return this.http.get(this.baseUrl + url, '', { headers: headers });
+    // } else {
+      return this.httpClient.get(this.baseUrl + url, { headers: headers });
+    // }
+
     // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
     //   map((response) => {
     //     console.log('response', response);

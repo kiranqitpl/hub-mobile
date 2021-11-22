@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +23,7 @@ import { HeaderComponent } from './shared-component/header/header.component';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     // RouterModule
   ],
   providers: [{
@@ -32,7 +33,8 @@ import { HeaderComponent } from './shared-component/header/header.component';
     Camera,
     File,
     Base64,
-    HeaderComponent
+    HTTP,
+    HeaderComponent,
   ],
   bootstrap: [AppComponent],
 })
