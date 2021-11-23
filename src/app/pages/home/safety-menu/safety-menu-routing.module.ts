@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: SafetyMenuPage
+  },
+  {
+    path: 'telehandler',
+    loadChildren: () => import('./prestart/telehandler/telehandler.module').then( m => m.TelehandlerPageModule)
   }
 ];
 

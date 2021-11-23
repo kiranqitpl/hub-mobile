@@ -47,10 +47,10 @@ const routes: Routes = [
     path: 'notification',
     loadChildren: () => import('./pages/notification/notification.module').then(m => m.NotificationPageModule)
   },
-  {
-    path: 'safety-menu',
-    loadChildren: () => import('./pages/home/safety-menu/safety-menu.module').then(m => m.SafetyMenuPageModule)
-  },
+  // {
+  //   path: 'safety-menu',
+  //   loadChildren: () => import('./pages/home/safety-menu/safety-menu.module').then(m => m.SafetyMenuPageModule)
+  // },
   {
     path: 'incident-form',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form/incident-form.module').then(m => m.IncidentFormPageModule)
@@ -79,7 +79,6 @@ const routes: Routes = [
     path: 'vehicle-hoist-add-form',
     loadChildren: () => import('./pages/home/safety-menu/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
   },
-
 
   //------------------------------------------------------------- New Routes -----------------------------------------------------------------//
 

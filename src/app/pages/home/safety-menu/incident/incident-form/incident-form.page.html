@@ -94,7 +94,7 @@
         <div *ngIf="globalService.platform === 'browser'">
           <input type='file' value="photography_image" multiple (change)="onPhotoGraphy($event, 2)">
         </div>
-        <ion-item>{{'view '+ photoGraphy.length}}</ion-item>
+        <!-- <ion-item>{{'view '+ photoGraphy.length}}</ion-item> -->
         <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="photoGraphy.length > 0">
 
 
@@ -740,12 +740,16 @@
           <ion-select-option value="4">4</ion-select-option>
         </ion-select>
 
-        <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index ">
+        <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index">
+
           <ion-card>
+
             <p class="questionHead">Person {{(j+1)}} Details</p>
 
             <div [formGroupName]="j">
+
               <p class="question">Injured Person Name :</p>
+
               <ion-item class="ra" lines="none" (click)="onOpenInjuryModal('Injured person', j)">
                 <ion-input placeholder="Please select Injured Person Name" formControlName="injured_person_option">
                 </ion-input>
@@ -756,36 +760,52 @@
                 </ion-buttons>
               </ion-item>
 
-              <!-- <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
-                formControlName="injured_person_option">
-                <ion-select-option value="{{witnessName?.employee_id}}" *ngFor="let witnessName of witnessList">
-                  {{witnessName?.full_name}}
-                </ion-select-option>
-              </ion-select> -->
-              <!-- </ion-item> -->
+              <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'
+                formGroupName='injured_person_option_other_details'>
 
-              <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
+                <p class="other_witness"> Other Person Details </p>
+
+                <p class="question">
+                  Name :
+                </p>
+                <ion-input placeholder="Please enter other person name"
+                  formControlName="injured_person_option_other_name">
+                </ion-input>
+
+                <p class="question">
+                  Mobile No :
+                </p>
+                <ion-input type="tel" placeholder="Please enter other person mobile no "
+                  formControlName="injured_person_option_other_mobile_no">
+                </ion-input>
+
+                <p class="question">
+                  Email id :
+                </p>
+                <ion-input type="email" placeholder="Please enter other person email"
+                  formControlName="injured_person_option_other_email">
+                </ion-input>
+
+              </div>
+
+              <!-- <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
                 <p class="question">Full Name of Injured Person :</p>
                 <ion-input placeholder="Please enter full name of injured person"
                   formControlName="injured_person_option_value">
                 </ion-input>
-              </div>
+              </div> -->
 
-              <!-- <ion-item class="ra" lines="none"> -->
               <p class="question">Gender :</p>
               <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">
                 <ion-select-option value="Male">Male</ion-select-option>
                 <ion-select-option value="Female">Female</ion-select-option>
                 <ion-select-option value="Other">Other</ion-select-option>
               </ion-select>
-              <!-- </ion-item> -->
 
-              <!-- <ion-item class="ion-no-padding ra" lines="none"> -->
               <p class="question">Date of Birth :</p>
               <ion-datetime placeholder="Please select date of birth" displayFormat="DD/MM/YYYY"
                 formControlName="date_of_birth">
               </ion-datetime>
-              <!-- </ion-item> -->
 
               <ion-radio-group formControlName="normal_duties">
                 <ion-item class="ra" lines="none">
@@ -813,29 +833,27 @@
                 </ion-input>
               </div>
 
-              <div>
-                <ion-radio-group formControlName="alternate_duties">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>Return to Alternate Duties :</ion-label>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>Yes</ion-label>
-                        <ion-radio slot="start" value="Yes"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>No</ion-label>
-                        <ion-radio slot="start" value="No"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
-                </ion-radio-group>
-              </div>
+              <ion-radio-group formControlName="alternate_duties">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>Return to Alternate Duties :</ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>Yes</ion-label>
+                      <ion-radio slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
 
               <div *ngIf="injuryForm.value['person_details'][j].alternate_duties ==='No'">
                 <p class="question">Explanation :</p>
@@ -886,6 +904,7 @@
                 <ion-select-option value="{{bodyPartsVal.name}}" *ngFor="let bodyPartsVal of bodyPartList">
                   {{bodyPartsVal.name}}</ion-select-option>
               </ion-select>
+
               <ion-radio-group formControlName="was_immediate_treatment">
                 <ion-row>
                   <ion-col size="12">
@@ -915,7 +934,6 @@
                 </ion-input>
 
                 <p class="question">Who administered treatment ? : </p>
-
                 <p class="question">Person Name :</p>
                 <ion-item class="ra" lines="none" (click)="onOpenInjuryModal('Injured administered', j)">
                   <ion-input placeholder="Please select person" formControlName="immediate_treatment_person_name">
@@ -926,11 +944,6 @@
                     </ion-button>
                   </ion-buttons>
                 </ion-item>
-                <!-- <ion-select placeholder="Select Person Name" interface="action-sheet"
-                  formControlName="immediate_treatment_person_name" (ionChange)="onAdministeredPerson($event, j)">
-                  <ion-select-option value="{{employeeValue?.employee_id}}" *ngFor="let employeeValue of employeeList">
-                    {{employeeValue?.full_name}}</ion-select-option>
-                </ion-select> -->
 
                 <p class="question">Contact Details :</p>
                 <ion-input placeholder="Please enter mobile no or email id"
@@ -1060,12 +1073,6 @@
             </ion-button>
           </ion-buttons>
         </ion-item>
-
-        <!-- <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="name_of_witness"
-          (ionChange)="onWitnessChange($event)">
-          <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
-            {{witnesskeys?.full_name}}</ion-select-option>
-        </ion-select> -->
 
         <div *ngIf="reputationDesForm.value['name_of_witness'] == 'Other'" formGroupName='other_witness_details'>
           <p class="other_witness"> Other Witness Details </p>

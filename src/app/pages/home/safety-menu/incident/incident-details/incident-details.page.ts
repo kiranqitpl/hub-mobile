@@ -68,5 +68,4 @@ export class IncidentDetailsPage implements OnInit {
     });
     modal.present();
   }
-
 }

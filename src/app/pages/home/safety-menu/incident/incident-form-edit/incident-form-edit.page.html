@@ -689,12 +689,41 @@
                 </ion-select-option>
               </ion-select> -->
 
-              <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
+              <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'
+                formGroupName='injured_person_option_other_details'>
+
+                <p class="other_witness"> Other Person Details </p>
+
+                <p class="question">
+                  Name :
+                </p>
+                <ion-input placeholder="Please enter other person name"
+                  formControlName="injured_person_option_other_name">
+                </ion-input>
+
+                <p class="question">
+                  Mobile No :
+                </p>
+                <ion-input type="tel" placeholder="Please enter other person mobile no "
+                  formControlName="injured_person_option_other_mobile_no">
+                </ion-input>
+
+                <p class="question">
+                  Email id :
+                </p>
+                <ion-input type="email" placeholder="Please enter other person email"
+                  formControlName="injured_person_option_other_email">
+                </ion-input>
+
+              </div>
+
+              <!-- <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
                 <p class="question">Full Name of Injured Person :</p>
                 <ion-input placeholder="Please enter full name of injured person"
                   formControlName="injured_person_option_value">
                 </ion-input>
-              </div>
+              </div> -->
+
 
               <p class="question">Gender :</p>
               <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">

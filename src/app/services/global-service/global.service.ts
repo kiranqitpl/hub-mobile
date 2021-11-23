@@ -62,11 +62,20 @@ export class GlobalService {
     let header = new HttpHeaders()
       .set('apikey', 'as*37486a*()HGY')
       .set('Access-Control-Allow-Origin', '*')
-      .set('Access-Control-Allow-Headers', '*')
-      .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
-      .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
+      
+      // .set('X-Content-Type-Options', 'no-sniff')
+      // .set('Content-Type', 'application/json')
+      // // .set('Content-Type', 'multipart/form-data,application/json')
+      // .set('Access-Control-Allow-Headers', '*')
+
+
+
+      // .set('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
+      // .set('Access-Control-Allow-Methods', '*')
+      // .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
+      // .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
+      
       .set('token', localStorage.getItem('token') && localStorage.getItem('token') != "" ? localStorage.getItem('token') : '')
-    // console.log('header', header);
     return header;
   }
 

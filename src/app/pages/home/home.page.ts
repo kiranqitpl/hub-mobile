@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
       menuName: "Workshops", route: "#"
     },
     {
-      menuName: "Safety", route: "/safety-menu"
+      menuName: "Safety", route: "/home/safety-menu"
     },
   ];
 

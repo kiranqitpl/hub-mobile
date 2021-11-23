@@ -12,7 +12,7 @@ import moment from 'moment';
 })
 export class IncidentFormListPage implements OnInit {
 
-  pName: String = 'Incidents List';
+  pName: String = 'Submitted Forms';
   rows: any = [];
   userDetails: any;
   listOfUsers: any = [];

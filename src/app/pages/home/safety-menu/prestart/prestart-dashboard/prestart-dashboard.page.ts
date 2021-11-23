@@ -16,7 +16,7 @@ export class PrestartDashboardPage implements OnInit {
       menuName: 'Forklift Prestart', route: '#'
     },
     {
-      menuName: 'Telehandler Prestart', route: '#'
+      menuName: 'Telehandler Prestart', route: '/safety-menu/telehandler'
     },
     {
       menuName: 'Crane Prestart', route: '#'

@@ -426,7 +426,6 @@ export class IncidentFormEditPage implements OnInit {
     })
   }
 
-
   loadIncidentDetails() {
     // this.loadingService.presentLoading();
     this.activatedRoute.params.subscribe(
@@ -440,24 +439,26 @@ export class IncidentFormEditPage implements OnInit {
 
             //------------------------------------------------------- incidentForm ----------------------------------------------------------//
 
-            let incident_near_miss_object: any;
-            this.witnessList.forEach(element => {
-              if (element.full_name == this.incidentDetails.incident_near_miss) {
-                incident_near_miss_object = element;
-              }
-            });
-
-            if (incident_near_miss_object != undefined) {
-              this.incident_near_miss = incident_near_miss_object;
-            } else {
-              this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
-                console.log('first', res);
-                if (res && res.status && res.data && res.data.length > 0) {
-                  this.incident_near_miss = res.data[0];
+            if (this.incidentDetails.incident_near_miss != '' || this.incidentDetails.incident_near_miss != null) {
+              let incident_near_miss_object: any;
+              this.witnessList.forEach(element => {
+                if (element.full_name == this.incidentDetails.incident_near_miss) {
+                  incident_near_miss_object = element;
                 }
-              }, err => {
-                console.log("Eror", err)
-              })
+              });
+
+              if (incident_near_miss_object != undefined) {
+                this.incident_near_miss = incident_near_miss_object;
+              } else {
+                this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
+                  console.log('first', res);
+                  if (res && res.status && res.data && res.data.length > 0) {
+                    this.incident_near_miss = res.data[0];
+                  }
+                }, err => {
+                  console.log("Eror", err)
+                })
+              }
             }
             this.incidentForm.patchValue(this.incidentDetails);
             this.onInput('', 'Incident');
@@ -468,28 +469,29 @@ export class IncidentFormEditPage implements OnInit {
             //------------------------------------------------------- PhotographyForm ----------------------------------------------------------//
             //------------------------------------------------------- incidentDesForm ----------------------------------------------------------//
 
-            let was_there_any_witness_of_the_incident_object: any;
-            this.witnessList.forEach(element => {
-              if (element.full_name == this.incidentDetails.was_there_any_witness_of_the_incident) {
-                was_there_any_witness_of_the_incident_object = element;
-              }
-            });
-
-            if (was_there_any_witness_of_the_incident_object != undefined) {
-              this.was_there_any_witness_of_the_incident = was_there_any_witness_of_the_incident_object;
-            } else {
-              this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
-                console.log('first', res);
-                if (res && res.status && res.data && res.data.length > 0) {
-                  this.was_there_any_witness_of_the_incident = res.data[0];
+            if (this.incidentDetails.was_there_any_witness_of_the_incident != '' || this.incidentDetails.was_there_any_witness_of_the_incident != null) {
+              let was_there_any_witness_of_the_incident_object: any;
+              this.witnessList.forEach(element => {
+                if (element.full_name == this.incidentDetails.was_there_any_witness_of_the_incident) {
+                  was_there_any_witness_of_the_incident_object = element;
                 }
-              }, err => {
-                console.log("Eror", err)
-              })
+              });
+
+              if (was_there_any_witness_of_the_incident_object != undefined) {
+                this.was_there_any_witness_of_the_incident = was_there_any_witness_of_the_incident_object;
+              } else {
+                this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
+                  console.log('first', res);
+                  if (res && res.status && res.data && res.data.length > 0) {
+                    this.was_there_any_witness_of_the_incident = res.data[0];
+                  }
+                }, err => {
+                  console.log("Eror", err)
+                })
+              }
             }
 
             this.incidentDesForm.patchValue(this.incidentDetails);
-
             this.alcohalImagesObject = this.alcohalImages = this.incidentDetails.alcohol_test_image;
             this.drugTestImagesObject = this.drugTestImages = this.incidentDetails.drug_test_image;
             this.alterDutyImagesObject = this.alterDutyImages = this.incidentDetails.return_to_alternate_duties_image;
@@ -520,51 +522,52 @@ export class IncidentFormEditPage implements OnInit {
               this.classificationForm.controls['classification_location_value1'].setValue(this.incidentDetails.classification_location_value);
             this.classificationForm.controls['classification_shift_type'].setValue(this.incidentDetails.classification_shift_type);
 
-
-            let classification_supervisor_object: any;
-            this.witnessList.forEach(element => {
-              if (element.full_name == this.incidentDetails.classification_supervisor) {
-                classification_supervisor_object = element;
-              }
-            });
-
-            if (classification_supervisor_object != undefined) {
-              this.classification_supervisor = classification_supervisor_object;
-            } else {
-              this.globalService.getData("Supervisor/getSupervisorList/" + this.incidentDetails.classification_supervisor).subscribe((res: any) => {
-                console.log('first', res);
-                if (res && res.status && res.data && res.data.length > 0) {
-                  this.classification_supervisor = res.data[0];
+            if (this.incidentDetails.classification_supervisor != '' || this.incidentDetails.classification_supervisor != null) {
+              let classification_supervisor_object: any;
+              this.witnessList.forEach(element => {
+                if (element.full_name == this.incidentDetails.classification_supervisor) {
+                  classification_supervisor_object = element;
                 }
-              }, err => {
-                console.log("Eror", err)
-              })
+              });
+
+              if (classification_supervisor_object != undefined) {
+                this.classification_supervisor = classification_supervisor_object;
+              } else {
+                this.globalService.getData("Supervisor/getSupervisorList/" + this.incidentDetails.classification_supervisor).subscribe((res: any) => {
+                  console.log('first', res);
+                  if (res && res.status && res.data && res.data.length > 0) {
+                    this.classification_supervisor = res.data[0];
+                  }
+                }, err => {
+                  console.log("Eror", err)
+                })
+              }
+              this.classificationForm.controls['classification_supervisor'].setValue(this.incidentDetails.classification_supervisor);
             }
 
-            this.classificationForm.controls['classification_supervisor'].setValue(this.incidentDetails.classification_supervisor);
-
-
-            let classification_manager_object: any;
-            this.witnessList.forEach(element => {
-              if (element.full_name == this.incidentDetails.classification_manager) {
-                classification_manager_object = element;
-              }
-            });
-
-            if (classification_manager_object != undefined) {
-              this.classification_manager = classification_manager_object;
-            } else {
-              this.globalService.getData("Manager/getManagerList/" + this.incidentDetails.classification_manager).subscribe((res: any) => {
-                console.log('first', res);
-                if (res && res.status && res.data && res.data.length > 0) {
-                  this.classification_manager = res.data[0];
+            if (this.incidentDetails.classification_manager != '' || this.incidentDetails.classification_manager != null) {
+              let classification_manager_object: any;
+              this.witnessList.forEach(element => {
+                if (element.full_name == this.incidentDetails.classification_manager) {
+                  classification_manager_object = element;
                 }
-              }, err => {
-                console.log("Eror", err)
-              })
-            }
+              });
 
-            this.classificationForm.controls['classification_manager'].setValue(this.incidentDetails.classification_manager);
+              if (classification_manager_object != undefined) {
+                this.classification_manager = classification_manager_object;
+              } else {
+                this.globalService.getData("Manager/getManagerList/" + this.incidentDetails.classification_manager).subscribe((res: any) => {
+                  console.log('first', res);
+                  if (res && res.status && res.data && res.data.length > 0) {
+                    this.classification_manager = res.data[0];
+                  }
+                }, err => {
+                  console.log("Eror", err)
+                })
+              }
+
+              this.classificationForm.controls['classification_manager'].setValue(this.incidentDetails.classification_manager);
+            }
 
             //------------------------------------------------------- classificationForm ----------------------------------------------------------//
             //------------------------------------------------------- assetDescriptionForm ----------------------------------------------------------//
@@ -582,8 +585,13 @@ export class IncidentFormEditPage implements OnInit {
 
             this.injuryForm.controls.injury_persons.setValue(this.incidentDetails.injury_persons);
             if (this.incidentDetails.person_details.length > 0) {
+              // for (let i = 0; i <= this.incidentDetails.person_details.length; i++) {
+              //   // this.injuryForm.controls.person_details.patchValue(this.setPersonDetails(this.incidentDetails.person_details));
+              //   // this.injuryPersonDetails.controls[i].patchValue(this.incidentDetails.person_details[i]);
+              // }
               this.injuryForm.setControl('person_details', this.setPersonDetails(this.incidentDetails.person_details));
             }
+            console.log('this.injuryForm', this.injuryForm);
             //------------------------------------------------------- injuryForm ----------------------------------------------------------//
 
             //------------------------------------------------------- reportForm ----------------------------------------------------------//
@@ -621,24 +629,26 @@ export class IncidentFormEditPage implements OnInit {
 
             this.reputationDesForm.controls['external_party'].setValue(this.incidentDetails.external_party);
 
-            let name_of_witness_object: any;
-            this.witnessList.forEach(element => {
-              if (element.full_name == this.incidentDetails.name_of_witness) {
-                name_of_witness_object = element;
-              }
-            });
-
-            if (name_of_witness_object != undefined) {
-              this.name_of_witness = name_of_witness_object;
-            } else {
-              this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
-                console.log('first', res);
-                if (res && res.status && res.data && res.data.length > 0) {
-                  this.name_of_witness = res.data[0];
+            if (this.incidentDetails.name_of_witness != '' || this.incidentDetails.name_of_witness != null) {
+              let name_of_witness_object: any;
+              this.witnessList.forEach(element => {
+                if (element.full_name == this.incidentDetails.name_of_witness) {
+                  name_of_witness_object = element;
                 }
-              }, err => {
-                console.log("Eror", err)
-              })
+              });
+
+              if (name_of_witness_object != undefined) {
+                this.name_of_witness = name_of_witness_object;
+              } else {
+                this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
+                  console.log('first', res);
+                  if (res && res.status && res.data && res.data.length > 0) {
+                    this.name_of_witness = res.data[0];
+                  }
+                }, err => {
+                  console.log("Eror", err)
+                })
+              }
             }
 
             this.reputationDesForm.controls['name_of_witness'].setValue(this.incidentDetails.name_of_witness);
@@ -663,18 +673,6 @@ export class IncidentFormEditPage implements OnInit {
                 }
               })
             });
-
-
-            // console.log('incidentForm', this.incidentForm.value);
-            // console.log('photoGraphyForm', this.photoGraphyForm.value);
-            // console.log('incidentDesForm', this.incidentDesForm.value);
-            // console.log('classificationForm', this.classificationForm.value);
-            // console.log('assetDescriptionForm', this.assetDescriptionForm.value)
-            // console.log('enviornmentForm', this.enviornmentForm.value);
-            // console.log('injuryForm', this.injuryForm.value);
-            // console.log('reportForm', this.reportForm.value);
-            // console.log('reputationDesForm', this.reputationDesForm.value);
-            // console.log('securityForm', this.securityForm.value);
             //------------------------------------------------------- securityForm ----------------------------------------------------------//
           }
           // this.loadingService.dismissLoading();
@@ -693,10 +691,21 @@ export class IncidentFormEditPage implements OnInit {
   setPersonDetails(person_details): FormArray {
     const formArray = new FormArray([]);
     person_details.forEach(element => {
+
+      console.log('element', element);
       formArray.push(
         this.fb.group({
           injured_person_option: [element.injured_person_option],   //  seletced person name
-          injured_person_option_value: [element.injured_person_option_value],   // other person name
+          injured_person_option_id: [element.injured_person_option_id],
+          injured_person_option_other_details:
+            this.fb.group(
+              {
+                injured_person_option_other_name: [element.injured_person_option_other_details.injured_person_option_other_name],
+                injured_person_option_other_mobile_no: [element.injured_person_option_other_details.injured_person_option_other_mobile_no],
+                injured_person_option_other_email: [element.injured_person_option_other_details.injured_person_option_other_email]
+              }
+            ),
+          // injured_person_option_value: [element.injured_person_option_value],   // other person name
           gender: [element.gender],
           date_of_birth: [element.date_of_birth],
           normal_duties: [element.normal_duties],
@@ -707,9 +716,9 @@ export class IncidentFormEditPage implements OnInit {
           part_of_body_injured_occured: [element.part_of_body_injured_occured],
           was_immediate_treatment: [element.was_immediate_treatment],
           immediate_treatment_given_explanation: [element.immediate_treatment_given_explanation],
+          immediate_treatment_person_name_id: [element.immediate_treatment_person_name_id],
           immediate_treatment_person_name: [element.immediate_treatment_person_name],
           immediate_treatment_person_number: [element.immediate_treatment_person_number],
-          emp_id: [element.emp_id]
         })
       )
     });
@@ -991,14 +1000,38 @@ export class IncidentFormEditPage implements OnInit {
       },
       cssClass: 'managers',
     });
+
+    if (this.injuryPersonDetails.value[index].injured_person_option != '' &&
+      this.injuryPersonDetails.value[index].injured_person_option != 'Other') {
+      let data = {
+        injured_person_option_other_details:
+        {
+          injured_person_option_other_name: '',
+          injured_person_option_other_mobile_no: '',
+          injured_person_option_other_email: ''
+        }
+      }
+      this.injuryPersonDetails.controls[index].patchValue(data);
+    }
+
     modal.onDidDismiss().then((res) => {
       if (res && res?.data) {
-        console.log('index', index);
-        console.log(this.injuryForm.controls['person_details']);
-        this.injuryForm.controls['person_details'][index].value['injured_person_option'].setValue(res.data.full_name)
+        if (field == 'Injured person') {
+          let data = {
+            injured_person_option: res.data.full_name,
+            injured_person_option_id: res.data.employee_id,
+          }
+          this.injuryPersonDetails.controls[index].patchValue(data);
+        }
+        if (field == 'Injured administered') {
+          let data = {
+            immediate_treatment_person_name: res.data.full_name,
+            immediate_treatment_person_name_id: res.data.employee_id,
+            immediate_treatment_person_number: res.data.emp_work_email && res.data.emp_work_email != '' ? res.data.emp_work_email : res.data.emp_mobile
+          }
+          this.injuryPersonDetails.controls[index].patchValue(data);
+        }
       }
-      // injured_person_option: any = '';
-      // immediate_treatment_person_name: any = '';
     })
     return await modal.present();
   }
@@ -1022,20 +1055,6 @@ export class IncidentFormEditPage implements OnInit {
     })
     return await modal.present();
   }
-
-  // async onOpenModal() {
-  //   const modal = await this.modalController.create({
-  //     component: ManagersPage,
-  //     cssClass: 'managers',
-  //   });
-  //   modal.onDidDismiss().then((res) => {
-  //     if (res?.data?.full_name) {
-  //       this.managerList = res.data.full_name;
-  //       this.classificationForm.controls.classification_manager.setValue(res.data.employee_id);
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
 
   async onOpenPreview(img) {
     const modal = await this.modalController.create({
@@ -1141,7 +1160,7 @@ export class IncidentFormEditPage implements OnInit {
 
     console.log('this.name_of_witness.employee_id ', this.name_of_witness.employee_id);
 
-    console.log(' this.classification_manager',this.classification_manager);
+    console.log(' this.classification_manager', this.classification_manager);
 
 
 
@@ -1453,32 +1472,42 @@ export class IncidentFormEditPage implements OnInit {
   injuryPersonKeys(): FormGroup {
     return this.fb.group({
       injured_person_option: [''],   //  seletced person name
-      injured_person_option_value: [''],  // other person name
+      injured_person_option_id: [''],
+      injured_person_option_other_details:
+        this.fb.group({
+          injured_person_option_other_name: [''],
+          injured_person_option_other_mobile_no: [''],
+          injured_person_option_other_email: ['']
+        }),
+      // injured_person_option_value: [''],  // other person name
       gender: [''],
       date_of_birth: [''],
       normal_duties: [''],
       normal_duties_explanation: [''],
       alternate_duties: [''],
       duties_explanation: [''],
-      // initital_injury: new FormArray([]),
       initital_injury: [''],
       part_of_body_injured_occured: [],
       was_immediate_treatment: [''],
       immediate_treatment_given_explanation: [''],
       immediate_treatment_person_name: [''],
+      immediate_treatment_person_name_id: [''],
       immediate_treatment_person_number: [''],
-      emp_id: ['']
     })
   }
 
-  onAddMultiplePersonDetails() {
+  onAddMultiplePersonDetails(event) {
     let no = 0;
     if (this.injuryForm.value["person_details"].length != 0) {
-      no = (this.injuryForm.value['injury_persons'] - this.injuryForm.value["person_details"].length);
+      no = (parseInt(this.injuryForm.value['injury_persons']) - this.injuryForm.value["person_details"].length);
+    } else {
+      no = this.injuryForm.value['injury_persons']
     }
-    if (no == 0) {
-      this.injuryPersonDetails.push(this.injuryPersonKeys());
-    } else if (no > 0) {
+    // if (no == 0) {
+    //   console.log(1);
+    //   this.injuryPersonDetails.push(this.injuryPersonKeys());
+    // } else 
+    if (no > 0) {
       for (let i = 1; i <= no; i++) {
         this.injuryPersonDetails.push(this.injuryPersonKeys());
       }
@@ -1489,6 +1518,7 @@ export class IncidentFormEditPage implements OnInit {
       }
     }
   }
+
 
   onRepoNegativeEffect(evt) {
     if (evt.detail.value == "Internal") {
