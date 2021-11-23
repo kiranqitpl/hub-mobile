@@ -14,14 +14,6 @@ export class GlobalService {
   // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
   baseUrl: string = 'https://mforms-api-devel.horts.com.au/api/';
 
-  //Role 
-  // user: any = "31";
-  // gm: any = "32";
-  // investigator: any = "33";
-  // manager: any = "34";
-  // supervisior: any = "35";
-
-
   formType_user = 1;
   formType_investigator = 2;
   platform: String = '';
@@ -69,12 +61,12 @@ export class GlobalService {
   setHeader() {
     let header = new HttpHeaders()
       .set('apikey', 'as*37486a*()HGY')
-      .set("Access-Control-Allow-Origin", "*")
-      .set("Access-Control-Allow-Headers", "*")
-      .set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-      .set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    // if (localStorage.getItem("token") && localStorage.getItem("token") != "")
-    //   header.append("token", localStorage.getItem("token"));
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Access-Control-Allow-Headers', '*')
+      .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
+      .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
+      .set('token', localStorage.getItem('token') && localStorage.getItem('token') != "" ? localStorage.getItem('token') : '')
+    // console.log('header', header);
     return header;
   }
 
@@ -85,7 +77,7 @@ export class GlobalService {
     // if (this.platform == 'cordova') {
     //   return this.http.post(this.baseUrl + url, data, { headers: headers });
     // } else {
-      return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
+    return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
     // }
   }
 
@@ -94,7 +86,7 @@ export class GlobalService {
     // if (this.platform == 'cordova') {
     //   return this.http.get(this.baseUrl + url, '', { headers: headers });
     // } else {
-      return this.httpClient.get(this.baseUrl + url, { headers: headers });
+    return this.httpClient.get(this.baseUrl + url, { headers: headers });
     // }
 
     // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(

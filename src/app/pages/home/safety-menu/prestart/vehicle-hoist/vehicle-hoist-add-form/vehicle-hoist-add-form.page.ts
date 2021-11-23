@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, IonContent } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
@@ -12,6 +12,8 @@ import moment from 'moment';
   styleUrls: ['./vehicle-hoist-add-form.page.scss'],
 })
 export class VehicleHoistAddFormPage implements OnInit {
+
+  @ViewChild(IonContent, { static: false }) content: IonContent;
 
   pName: String = 'Vehicle Hoist'
   vehicleHoistForm: FormGroup;
@@ -29,13 +31,7 @@ export class VehicleHoistAddFormPage implements OnInit {
     private fb: FormBuilder,
     private globalService: GlobalService,
     public elementRef: ElementRef
-
   ) { }
-
-  // getYPosition(e: Event): number {
-  //   console.log('getYPosition', e);
-  //   return (e.target as Element).scrollTop;
-  // }
 
   ngOnInit() {
     this.logedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -101,36 +97,6 @@ export class VehicleHoistAddFormPage implements OnInit {
     // this.scrollToBottom();
   }
 
-  // ngAfterViewChecked() {
-  //   this.scrollToBottom();
-  // }
-
-  // @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-
-  @ViewChild('scrollMe', {
-    static: true
-  })  private myScrollContainer: ElementRef;
-
-
-  scrollToBottom(): void {
-
-    this.myScrollContainer.nativeElement.scrollTo(0,this.myScrollContainer.nativeElement.scrollHeight);
-
-    //   this.myScrollContainer.nativeElement.scroll({
-    //     top: this.myScrollContainer.nativeElement.scrollHeight,
-    //     left: 0,
-    //     behavior: 'smooth'
-    //  });
-
-    console.log('this.myScrollContainer.nativeElement', this.myScrollContainer.nativeElement);
-    // try {
-    //   this.myScrollContainer.nativeElement.scrollToBottom = this.myScrollContainer.nativeElement.scrollHeight;
-    // } catch (err) {
-    //   console.log('err', err);
-    // }
-  }
-
-
   async alert() {
     const alert = await this.alertCtrl.create({
       cssClass: 'alert-msg',
@@ -154,9 +120,9 @@ export class VehicleHoistAddFormPage implements OnInit {
     }
   }
 
-  onValueChange(event, type) {
-    // this.scrollToBottom();
 
+  onValueChange(event, type) {
+    this.content.scrollToBottom(500);
     if (type == 'inspection_certificate' && event.detail.value == 'OK') {
       this.vehicleHoistForm.controls['inspection_certificate_comment'].reset();
     } else if (type == 'maintenance_instructions' && event.detail.value == 'OK') {

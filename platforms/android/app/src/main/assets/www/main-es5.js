@@ -142,7 +142,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/investigator/actions/actions.module */
           99230)).then(function (m) {
             return m.ActionsPageModule;
@@ -199,7 +199,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-98cc75"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/home/safety-menu/incident/incident-form/incident-form.module */
           96394)).then(function (m) {
             return m.IncidentFormPageModule;
@@ -219,9 +219,9 @@
       }, {
         path: 'incident-details/:incident_id',
         loadChildren: function loadChildren() {
-          return Promise.all(
+          return __webpack_require__.e(
           /*! import() */
-          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/home/safety-menu/incident/incident-details/incident-details.module */
           22641)).then(function (m) {
             return m.IncidentDetailsPageModule;
@@ -243,7 +243,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-98cc75"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module */
           97694)).then(function (m) {
             return m.IncidentFormEditPageModule;
@@ -381,6 +381,14 @@
           value: function initializeApp() {
             var _this = this;
 
+            // console.log('this.platform', this.platform.ready());
+            if (this.platform.is('cordova')) {
+              this.globalService.platform = 'cordova'; // } else if (this.platform.is('android')) {
+              //   this.globalService.platform = 'android'
+            } else {
+              this.globalService.platform = 'browser';
+            }
+
             document.body.setAttribute('color-theme', 'dark');
             this.platform.backButton.subscribeWithPriority(10, function (processNextHandler) {
               if (_this._location.isCurrentPathEqualTo('/login')) {
@@ -481,43 +489,43 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @angular/platform-browser */
       39075);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/common/http */
       91841);
       /* harmony import */
 
 
-      var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! @angular/forms */
       3679);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -541,19 +549,25 @@
       /* harmony import */
 
 
-      var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @ionic-native/http/ngx */
+      68589);
+      /* harmony import */
+
+
+      var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ./app.component */
       55041);
       /* harmony import */
 
 
-      var _app_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ./app-routing.module */
       90158);
       /* harmony import */
 
 
-      var _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ./shared-component/header/header.component */
       13998);
 
@@ -561,16 +575,16 @@
         _classCallCheck(this, AppModule);
       };
 
-      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.NgModule)({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__.AppComponent],
+      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.NgModule)({
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_4__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.ReactiveFormsModule // RouterModule
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule // RouterModule
         ],
         providers: [{
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
-        }, _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64, _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_5__.HeaderComponent],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__.AppComponent]
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouteReuseStrategy,
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicRouteStrategy
+        }, _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64, _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP, _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__.HeaderComponent],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent]
       })], _AppModule);
       /***/
     },
@@ -603,51 +617,53 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! @angular/common/http */
       91841);
+      /* harmony import */
+
+
+      var _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @ionic-native/http/ngx */
+      68589);
 
       var _GlobalService = /*#__PURE__*/function () {
-        function GlobalService(toastController, http, loadingController) {
+        function GlobalService(toastController, httpClient, http, loadingController) {
           _classCallCheck(this, GlobalService);
 
           this.toastController = toastController;
+          this.httpClient = httpClient;
           this.http = http;
           this.loadingController = loadingController; // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
 
-          this.baseUrl = 'https://mforms-api-devel.horts.com.au/api/'; //Role 
-          // user: any = "31";
-          // gm: any = "32";
-          // investigator: any = "33";
-          // manager: any = "34";
-          // supervisior: any = "35";
-
+          this.baseUrl = 'https://mforms-api-devel.horts.com.au/api/';
           this.formType_user = 1;
           this.formType_investigator = 2;
+          this.platform = '';
         }
 
         _createClass(GlobalService, [{
           key: "presentToast",
           value: function presentToast(msg) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               var toast;
               return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
@@ -676,7 +692,7 @@
         }, {
           key: "toast",
           value: function toast(msg, type) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var toast;
               return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
@@ -706,7 +722,7 @@
         }, {
           key: "presentLoading",
           value: function presentLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
               var loading;
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
@@ -734,7 +750,7 @@
         }, {
           key: "dismissLoading",
           value: function dismissLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
               return regeneratorRuntime.wrap(function _callee4$(_context4) {
                 while (1) {
                   switch (_context4.prev = _context4.next) {
@@ -753,35 +769,33 @@
         }, {
           key: "setHeader",
           value: function setHeader() {
-            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders().set('apikey', 'as*37486a*()HGY').set("Access-Control-Allow-Origin", "*").set("Access-Control-Allow-Headers", "*").set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS").set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // if (localStorage.getItem("token") && localStorage.getItem("token") != "")
-            //   header.append("token", localStorage.getItem("token"));
+            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('apikey', 'as*37486a*()HGY').set('Access-Control-Allow-Origin', '*').set('Access-Control-Allow-Headers', '*').set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS').set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With').set('token', localStorage.getItem('token') && localStorage.getItem('token') != "" ? localStorage.getItem('token') : ''); // console.log('header', header);
 
             return header;
-          } // getData1(url) {
-          //   let headers = this.setHeader();
-          //   return this.http.get(this.baseUrl1 + url, { headers: headers });
-          // }
-          // postData1(url, data) {
-          //   let headers = this.setHeader();
-          //   return this.http.post(this.baseUrl1 + url, data, { headers: headers });
-          // }
-          // --------------------------------------------------New Services ---------------------------------------------//
+          } // --------------------------------------------------New Services ---------------------------------------------//
 
         }, {
           key: "postData",
           value: function postData(url, data) {
-            var headers = this.setHeader();
-            return this.http.post(this.baseUrl + url, data, {
+            var headers = this.setHeader(); // if (this.platform == 'cordova') {
+            //   return this.http.post(this.baseUrl + url, data, { headers: headers });
+            // } else {
+
+            return this.httpClient.post(this.baseUrl + url, data, {
               headers: headers
-            });
+            }); // }
           }
         }, {
           key: "getData",
           value: function getData(url) {
-            var headers = this.setHeader();
-            return this.http.get(this.baseUrl + url, {
+            var headers = this.setHeader(); // if (this.platform == 'cordova') {
+            //   return this.http.get(this.baseUrl + url, '', { headers: headers });
+            // } else {
+
+            return this.httpClient.get(this.baseUrl + url, {
               headers: headers
-            }); // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+            }); // }
+            // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
             //   map((response) => {
             //     console.log('response', response);
             //     if (!response['status']) {
@@ -799,15 +813,17 @@
 
       _GlobalService.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ToastController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ToastController
         }, {
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.LoadingController
+          type: _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_0__.HTTP
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.LoadingController
         }];
       };
 
-      _GlobalService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+      _GlobalService = (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
         providedIn: 'root'
       })], _GlobalService); // ---------------------------------------------  New Services --------------------------------------------------//
 

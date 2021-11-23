@@ -262,16 +262,15 @@
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
-                      console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
+                      // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
                       this.globalService.presentLoading();
                       this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(function (result) {
                         if (result && result['row_count'] > 0) {
                           _this.notificationData = result['data'];
                         } else {
                           _this.notificationData = [];
-                        }
+                        } // console.log('this.notificationData ', this.notificationData);
 
-                        console.log('this.notificationData ', _this.notificationData);
 
                         _this.globalService.dismissLoading();
                       }), function (error) {
@@ -280,7 +279,7 @@
                         console.log('error', error);
                       };
 
-                    case 3:
+                    case 2:
                     case "end":
                       return _context.stop();
                   }
@@ -321,8 +320,8 @@
 
             if (this.notificationId.length != 0) {
               this.globalService.presentLoading();
-              var formData = new FormData();
-              console.log('this.notificationId', this.notificationId);
+              var formData = new FormData(); // console.log('this.notificationId', this.notificationId);
+
               formData.append("id", JSON.stringify(this.notificationId));
               this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(function (result) {
                 if (result && result['status']) {

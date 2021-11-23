@@ -131,7 +131,7 @@ let NotificationPage = class NotificationPage {
     //----------------------------------- Load Notification Data ---------------------------------------------------------// 
     onNotificationLoad() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
-            console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
+            // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
             this.globalService.presentLoading();
             this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
                 if (result && result['row_count'] > 0) {
@@ -140,7 +140,7 @@ let NotificationPage = class NotificationPage {
                 else {
                     this.notificationData = [];
                 }
-                console.log('this.notificationData ', this.notificationData);
+                // console.log('this.notificationData ', this.notificationData);
                 this.globalService.dismissLoading();
             }), error => {
                 this.globalService.dismissLoading();
@@ -174,7 +174,7 @@ let NotificationPage = class NotificationPage {
         if (this.notificationId.length != 0) {
             this.globalService.presentLoading();
             let formData = new FormData();
-            console.log('this.notificationId', this.notificationId);
+            // console.log('this.notificationId', this.notificationId);
             formData.append("id", JSON.stringify(this.notificationId));
             this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(result => {
                 if (result && result['status']) {

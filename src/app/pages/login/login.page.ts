@@ -73,6 +73,7 @@ export class LoginPage implements OnInit {
         console.log('login', res);
         if (res && res.status) {
           localStorage.setItem("userDetails", JSON.stringify(res.data));
+          localStorage.setItem('token', res.jwtToken);
           this.nav.navigateRoot('dashboard')
           // this.global.dismissLoading();
           this.toastService.toast(res.message, 'success');

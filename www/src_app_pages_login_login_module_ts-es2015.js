@@ -63,6 +63,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import { HTTP } from '@ionic-native/http/ngx';
 let LoginPageModule = class LoginPageModule {
 };
 LoginPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
@@ -72,7 +73,8 @@ LoginPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
             _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule,
             _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule,
             _login_routing_module__WEBPACK_IMPORTED_MODULE_0__.LoginPageRoutingModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_5__.ReactiveFormsModule
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__.ReactiveFormsModule,
+            // HTTP
         ],
         declarations: [_login_page__WEBPACK_IMPORTED_MODULE_1__.LoginPage]
     })
@@ -93,15 +95,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "LoginPage": function() { return /* binding */ LoginPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_login_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./login.page.html */ 31021);
 /* harmony import */ var _login_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login.page.scss */ 28781);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 3679);
 /* harmony import */ var src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/toast-service/toast.service */ 45311);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ 92340);
+/* harmony import */ var _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic-native/http/ngx */ 68589);
+
 
 
 
@@ -112,11 +116,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let LoginPage = class LoginPage {
-    constructor(nav, global, formBuilder, toastService) {
+    constructor(nav, global, formBuilder, toastService, http) {
         this.nav = nav;
         this.global = global;
         this.formBuilder = formBuilder;
         this.toastService = toastService;
+        this.http = http;
         this.isSubmitted = false;
         this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_4__.environment.imageUrl;
     }
@@ -125,8 +130,8 @@ let LoginPage = class LoginPage {
     }
     ngOnInit() {
         this.ionicForm = this.formBuilder.group({
-            email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]],
-            password: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.minLength(6)]],
+            email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]],
+            password: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.minLength(6)]],
         });
     }
     submitForm() {
@@ -136,14 +141,34 @@ let LoginPage = class LoginPage {
             const fd = new FormData();
             fd.append("email", this.ionicForm.value.email);
             fd.append("password", this.ionicForm.value.password);
+            // if (this.global.platform == 'cordova') {
+            //   console.log('this.global.platform 1', this.global.platform);
+            //   let header = new HttpHeaders()
+            //     .set('apikey', 'as*37486a*()HGY')
+            //   let data =  {'email': 'joedy.frape@horts.com.au', 'password': 'Password'};
+            //   this.http.post("https://mforms-api-devel.horts.com.au/api/user/login", data, {header:header}).then((res: any) => {
+            //     console.log('login', res);
+            //     if (res && res.status) {
+            //       localStorage.setItem("userDetails", JSON.stringify(res.data));
+            //       this.nav.navigateRoot('dashboard')
+            //       // this.global.dismissLoading();
+            //       this.toastService.toast(res.message, 'success');
+            //     } else {
+            //       // this.global.dismissLoading();
+            //       this.toastService.toast(res.message, 'danger');
+            //     }
+            //   }).catch(error => {
+            //     console.log('fff1', error.status);
+            //     console.log('fff2', error.error); // error message as string
+            //     console.log('fff3', error.headers);
+            //   });
+            // } else {
+            console.log('this.global.platform 2', this.global.platform);
             this.global.postData("user/login", fd).subscribe((res) => {
                 console.log('login', res);
                 if (res && res.status) {
                     localStorage.setItem("userDetails", JSON.stringify(res.data));
-                    // localStorage.setItem("email", res.data.email);
-                    // localStorage.setItem("role", res.data.role);
-                    // localStorage.setItem("id", res?.data?.id);
-                    // localStorage.setItem("name", res?.data?.full_name);
+                    localStorage.setItem('token', res.jwtToken);
                     this.nav.navigateRoot('dashboard');
                     // this.global.dismissLoading();
                     this.toastService.toast(res.message, 'success');
@@ -156,6 +181,7 @@ let LoginPage = class LoginPage {
                 // this.global.dismissLoading();
                 console.log("errs", err);
             });
+            // }
         }
         else {
             console.log("here");
@@ -164,13 +190,14 @@ let LoginPage = class LoginPage {
     }
 };
 LoginPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.NavController },
     { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormBuilder },
-    { type: src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__.ToastService }
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormBuilder },
+    { type: src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__.ToastService },
+    { type: _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_5__.HTTP }
 ];
-LoginPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
+LoginPage = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
         selector: 'app-login',
         template: _raw_loader_login_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_login_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]

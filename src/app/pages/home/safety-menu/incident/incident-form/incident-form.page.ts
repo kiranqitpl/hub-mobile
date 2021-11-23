@@ -3,6 +3,7 @@ import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+// import { FilePath } from '@ionic-native/file-path/ngx';
 
 import moment from 'moment';
 
@@ -201,16 +202,11 @@ export class IncidentFormPage implements OnInit {
     private fb: FormBuilder,
     private nav: NavController,
     private platform: Platform,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    // private filePath: FilePath
   ) { }
 
   ngOnInit() {
-    // if (!this.platform.is('cordova')) {
-    //   this.platformCheck = 'browser'
-    // } else {
-    //   this.platformCheck = 'cordova'
-    // }
-
     this.loadShift();
     this.loadLocation();
     this.loadBodyPart();
@@ -327,6 +323,7 @@ export class IncidentFormPage implements OnInit {
 
   loadEmployee() {
     this.globalService.getData("user/getallemployee").subscribe((res: any) => {
+      console.log('loadEmployee', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.employeeList = res.data;
       } else {
@@ -340,6 +337,7 @@ export class IncidentFormPage implements OnInit {
 
   loadWitness() {
     this.globalService.getData("Witness/getWitnessList").subscribe((res: any) => {
+      console.log('loadWitness', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.witnessList = res.data;
       } else {
@@ -353,6 +351,7 @@ export class IncidentFormPage implements OnInit {
 
   loadSuperwiser() {
     this.globalService.getData("Supervisor/getSupervisorList").subscribe((res: any) => {
+      console.log('loadSuperwiser', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.superVisorList = res.data;
       } else {
@@ -366,7 +365,7 @@ export class IncidentFormPage implements OnInit {
 
   loadMangerList() {
     this.globalService.getData("Manager/getManagerList").subscribe((res: any) => {
-      console.log('res', res);
+      console.log('loadMangerList', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.managerList = res.data;
       } else {
@@ -390,6 +389,7 @@ export class IncidentFormPage implements OnInit {
 
   loadShift() {
     this.globalService.getData("Shift/get_shift_typelist").subscribe((res: any) => {
+      console.log('loadShift', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.shiftTypeList = res.data;
       } else {
@@ -415,6 +415,7 @@ export class IncidentFormPage implements OnInit {
 
   loadBodyPart() {
     this.globalService.getData("Body_part/getbodypart").subscribe((res: any) => {
+      console.log('loadBodyPart', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.bodyPartList = res.data;
       } else {
@@ -447,32 +448,64 @@ export class IncidentFormPage implements OnInit {
   // }
 
   pickImage(sourceType, tabName) {
+    console.log('second');
     this.loadingService.presentLoading();
-    // console.log('sourceType', sourceType);
-    // console.log('event', event);
-    let image = '';
+    let image: any;
 
     const options: CameraOptions = {
       quality: 100,
+      destinationType: 2,
       sourceType: sourceType,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+      encodingType: 1,
+      mediaType: 0,
+      // quality: 100,
+      // sourceType: sourceType,
+      // destinationType: this.camera.DestinationType.DATA_URL,
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
     };
-
+    console.log('options', options);
     this.camera.getPicture(options).then(
       (imageData) => {
+        console.log('thrid', imageData);
+
+
+        // this.sharedService.getBase64(imageData).then(data => {
+        //   image = data;
+        // })
+
+
+        // this.filePath.resolveNativePath(imageData)
+        //   .then(filePath => {
+        //     console.log('filePath', filePath);
+        //     image = filePath;
+        //   })
+        //   .catch(err => console.log(err));
+
+
+
+
+        image = imageData;
         image = 'data:image/jpeg;base64,' + imageData;
-        this.loadingService.dismissLoading();
-        if (tabName == 'PhotoGraphy') {
-          this.photoGraphy.push(image);
-          console.log(' this.photoGraphy', this.photoGraphy);
-        }
-        if (tabName == 'Alcohol') {
-          this.alcohalImages.push(image);
-          console.log(' this.alcohalImages', this.alcohalImages);
+
+        console.log('fourth', image);
+
+        if (image != '' || image != undefined) {
+          if (tabName == 'PhotoGraphy') {
+            this.photoGraphy.push(image);
+            console.log('fivth', this.photoGraphy);
+          }
+          if (tabName == 'Alcohol') {
+            this.alcohalImages.push(image);
+            console.log(' this.alcohalImages', this.alcohalImages);
+          }
+          this.loadingService.dismissLoading();
+        } else {
+          console.log('Error in image processing.');
+          this.loadingService.dismissLoading();
         }
       },
+
       (err) => {
         console.log('error');
         this.loadingService.dismissLoading();
@@ -488,13 +521,13 @@ export class IncidentFormPage implements OnInit {
         {
           text: 'Load from Library',
           handler: () => {
-            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, tabName);
+            this.pickImage(0, tabName);
           },
         },
         {
           text: 'Use Camera',
           handler: () => {
-            this.pickImage(this.camera.PictureSourceType.CAMERA, tabName);
+            this.pickImage(1, tabName);
           },
         },
         {
@@ -506,8 +539,10 @@ export class IncidentFormPage implements OnInit {
     await actionSheet.present();
   }
 
-  onPhotoGraphy(event, type) {
+  async onPhotoGraphy(event, type) {
+
     if (type == 1) {
+      console.log('first');
       this.mobileUploads('PhotoGraphy');
     } else if (type == 2) {
       for (let i = 0; i < event.target.files.length; i++) {
