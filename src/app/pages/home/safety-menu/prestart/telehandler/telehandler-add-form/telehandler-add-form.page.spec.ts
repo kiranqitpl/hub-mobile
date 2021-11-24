@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TelehandlerPage } from './telehandler.page';
+import { TelehandlerAddFormPage } from './telehandler-add-form.page';
 
-describe('TelehandlerPage', () => {
-  let component: TelehandlerPage;
-  let fixture: ComponentFixture<TelehandlerPage>;
+describe('TelehandlerAddFormPage', () => {
+  let component: TelehandlerAddFormPage;
+  let fixture: ComponentFixture<TelehandlerAddFormPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TelehandlerPage ],
+      declarations: [ TelehandlerAddFormPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TelehandlerPage);
+    fixture = TestBed.createComponent(TelehandlerAddFormPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

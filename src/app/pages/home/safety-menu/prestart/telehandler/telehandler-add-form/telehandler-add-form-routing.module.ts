@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TelehandlerPage } from './telehandler.page';
+import { TelehandlerAddFormPage } from './telehandler-add-form.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: TelehandlerPage
+    component: TelehandlerAddFormPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TelehandlerPageRoutingModule {}
+export class TelehandlerAddFormPageRoutingModule {}

@@ -237,11 +237,11 @@ ion-content {
         font-family: "mon-bold";
         font-size: 29px;
     }
-
     .error {
         font-family: "mon-medium";
         color: red;
         font-size: 15px;
+        padding-right: 5px;
     }
     .mandatoryField {
         color: red;
@@ -270,10 +270,10 @@ ion-card {
     padding: 16px;
     border-radius: 19px;
     margin: 15px;
-    font-family: "mon-bold";
-    font-size: 18px !important;
+    font-family: "mon-medium";
+    font-size: 16px !important;
     background: white;
-    color: black;
+    color: black !important;
     ion-card-header ion-card-title {
         color: black;
     }
@@ -281,11 +281,6 @@ ion-card {
 
 ion-radio {
     --color: var(--theme-blue-color);
-}
-
-ion-checkbox {
-    --color: var(--theme-blue-color) !important;
-    --background-checked: var(--ion-color-primary, #3880ff) !important;
 }
 
 ion-select {
@@ -308,6 +303,7 @@ ion-input {
     color: red !important;
     font-size: 12px !important;
 }
+
 .preview-slides img {
     // height: 200px;
     width: 500px;

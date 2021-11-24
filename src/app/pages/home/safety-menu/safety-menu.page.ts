@@ -9,10 +9,10 @@ export class SafetyMenuPage implements OnInit {
 
   menu = [
     {
-      menuName: "Prestart", route: "/prestart-dashboard"
+      menuName: "Prestart", route: "/home/safety-menu/prestart-dashboard"
     },
     {
-      menuName: "Incident", route: "/incident-form"
+      menuName: "Incident", route: "/home/safety-menu/incident-form"
     },
     {
       menuName: "Hazard Report", route: "#"

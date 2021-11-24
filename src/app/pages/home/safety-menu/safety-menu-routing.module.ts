@@ -9,13 +9,26 @@ const routes: Routes = [
     component: SafetyMenuPage
   },
   {
-    path: 'telehandler',
-    loadChildren: () => import('./prestart/telehandler/telehandler.module').then( m => m.TelehandlerPageModule)
+    path: 'prestart-dashboard',
+    loadChildren: () => import('./prestart/prestart-dashboard/prestart-dashboard.module').then(m => m.PrestartDashboardPageModule)
+  },
+  {
+    path: 'incident-form',
+    loadChildren: () => import('./incident/incident-form/incident-form.module').then(m => m.IncidentFormPageModule)
+  },
+  {
+    path: 'vehicle-hoist-add-form',
+    loadChildren: () => import('./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
+  },
+  {
+    path: 'telehandler-add-form',
+    loadChildren: () => import('./prestart/telehandler/telehandler-add-form/telehandler-add-form.module').then( m => m.TelehandlerAddFormPageModule)
   }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SafetyMenuPageRoutingModule {}
+export class SafetyMenuPageRoutingModule { }

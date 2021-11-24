@@ -16,13 +16,13 @@ export class PrestartDashboardPage implements OnInit {
       menuName: 'Forklift Prestart', route: '#'
     },
     {
-      menuName: 'Telehandler Prestart', route: '/safety-menu/telehandler'
+      menuName: 'Telehandler Prestart', route: '/home/safety-menu/telehandler-add-form'
     },
     {
       menuName: 'Crane Prestart', route: '#'
     },
     {
-      menuName: 'Vehicle Hoist Prestart', route: '/vehicle-hoist-add-form'
+      menuName: 'Vehicle Hoist Prestart', route: '/home/safety-menu/vehicle-hoist-add-form'
     },
   ];
 

@@ -42,19 +42,6 @@ const routes: Routes = [
   },
 
   //----------------------------------------------------------- New Routes -----------------------------------------------------------------//
-
-  {
-    path: 'notification',
-    loadChildren: () => import('./pages/notification/notification.module').then(m => m.NotificationPageModule)
-  },
-  // {
-  //   path: 'safety-menu',
-  //   loadChildren: () => import('./pages/home/safety-menu/safety-menu.module').then(m => m.SafetyMenuPageModule)
-  // },
-  {
-    path: 'incident-form',
-    loadChildren: () => import('./pages/home/safety-menu/incident/incident-form/incident-form.module').then(m => m.IncidentFormPageModule)
-  },
   {
     path: 'incident-form-list',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
@@ -64,22 +51,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-details/incident-details.module').then(m => m.IncidentDetailsPageModule)
   },
   {
-    path: 'image-modal',
-    loadChildren: () => import('./modals/image-modal/image-modal.module').then(m => m.ImageModalPageModule)
-  },
-  {
     path: 'incident-form-edit/:incident_id',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
   },
   {
-    path: 'prestart-dashboard',
-    loadChildren: () => import('./pages/home/safety-menu/prestart/prestart-dashboard/prestart-dashboard.module').then(m => m.PrestartDashboardPageModule)
+    path: 'notification',
+    loadChildren: () => import('./pages/notification/notification.module').then(m => m.NotificationPageModule)
   },
   {
-    path: 'vehicle-hoist-add-form',
-    loadChildren: () => import('./pages/home/safety-menu/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
+    path: 'image-modal',
+    loadChildren: () => import('./modals/image-modal/image-modal.module').then(m => m.ImageModalPageModule)
   },
-
   //------------------------------------------------------------- New Routes -----------------------------------------------------------------//
 
 ];
