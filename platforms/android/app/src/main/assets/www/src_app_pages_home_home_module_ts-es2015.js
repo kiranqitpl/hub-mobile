@@ -23,7 +23,11 @@ const routes = [
     {
         path: '',
         component: _home_page__WEBPACK_IMPORTED_MODULE_0__.HomePage,
-    }
+    },
+    {
+        path: 'safety-menu',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_safety-menu_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ../../pages/home/safety-menu/safety-menu.module */ 37050)).then(m => m.SafetyMenuPageModule)
+    },
 ];
 let HomePageRoutingModule = class HomePageRoutingModule {
 };
@@ -125,7 +129,7 @@ let HomePage = class HomePage {
                 menuName: "Workshops", route: "#"
             },
             {
-                menuName: "Safety", route: "/safety-menu"
+                menuName: "Safety", route: "/home/safety-menu"
             },
         ];
     }

@@ -80,18 +80,6 @@ const routes = [
     },
     //----------------------------------------------------------- New Routes -----------------------------------------------------------------//
     {
-        path: 'notification',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/notification/notification.module */ 89770)).then(m => m.NotificationPageModule)
-    },
-    {
-        path: 'safety-menu',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_safety-menu_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/safety-menu.module */ 37050)).then(m => m.SafetyMenuPageModule)
-    },
-    {
-        path: 'incident-form',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form/incident-form.module */ 96394)).then(m => m.IncidentFormPageModule)
-    },
-    {
         path: 'incident-form-list',
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-list_incident-form-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module */ 33606)).then(m => m.IncidentFormListPageModule)
     },
@@ -100,20 +88,16 @@ const routes = [
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-details/incident-details.module */ 22641)).then(m => m.IncidentDetailsPageModule)
     },
     {
-        path: 'image-modal',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modals_image-modal_image-modal_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modals/image-modal/image-modal.module */ 19662)).then(m => m.ImageModalPageModule)
-    },
-    {
         path: 'incident-form-edit/:incident_id',
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
     },
     {
-        path: 'prestart-dashboard',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/prestart/prestart-dashboard/prestart-dashboard.module */ 8492)).then(m => m.PrestartDashboardPageModule)
+        path: 'notification',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/notification/notification.module */ 89770)).then(m => m.NotificationPageModule)
     },
     {
-        path: 'vehicle-hoist-add-form',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */ 79496)).then(m => m.VehicleHoistAddFormPageModule)
+        path: 'image-modal',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modals_image-modal_image-modal_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modals/image-modal/image-modal.module */ 19662)).then(m => m.ImageModalPageModule)
     },
     //------------------------------------------------------------- New Routes -----------------------------------------------------------------//
 ];
@@ -393,11 +377,11 @@ let GlobalService = class GlobalService {
         let header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders()
             .set('apikey', 'as*37486a*()HGY')
             .set('Access-Control-Allow-Origin', '*')
-            .set('Access-Control-Allow-Headers', '*')
-            .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
-            .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
+            // .set('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
+            // .set('Access-Control-Allow-Methods', '*')
+            // .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
+            // .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
             .set('token', localStorage.getItem('token') && localStorage.getItem('token') != "" ? localStorage.getItem('token') : '');
-        // console.log('header', header);
         return header;
     }
     // --------------------------------------------------New Services ---------------------------------------------//

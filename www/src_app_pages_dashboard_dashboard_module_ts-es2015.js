@@ -265,21 +265,27 @@ let SharedService = class SharedService {
         });
     }
     pickImage(sourceType) {
-        console.log('sourceType', sourceType);
-        const options = {
-            quality: 100,
-            sourceType: sourceType,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE,
-        };
-        this.camera.getPicture(options).then((imageData) => {
-            console.log('imageData', imageData);
-            // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-            let image = 'data:image/jpeg;base64,' + imageData;
-            return image;
-        }, (err) => {
-            console.log("errOf Image ", err);
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+            console.log('sourceType', sourceType);
+            const options = {
+                quality: 100,
+                sourceType: sourceType,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                // destinationType: 1,
+                encodingType: 1,
+                mediaType: 0,
+                // encodingType: this.camera.EncodingType.JPEG,
+                // mediaType: this.camera.MediaType.PICTURE,
+            };
+            yield this.camera.getPicture(options).then((imageData) => {
+                console.log('imageData', imageData);
+                // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+                let image = 'data:image/jpeg;base64,' + imageData;
+                console.log('pickImage', image);
+                return image;
+            }, (err) => {
+                console.log("errOf Image ", err);
+            });
         });
     }
 };
@@ -318,7 +324,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <!-- <div class=\"addForm\" (click)=\"onAddForm()\" *ngIf=\"roleId != gmRole\"> -->\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>");
 
 /***/ })
 

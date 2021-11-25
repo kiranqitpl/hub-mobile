@@ -459,8 +459,6 @@ export class IncidentFormPage implements OnInit {
         //   .catch(err => console.log(err));
 
 
-
-
         image = imageData;
         image = 'data:image/jpeg;base64,' + imageData;
 
@@ -518,7 +516,6 @@ export class IncidentFormPage implements OnInit {
   async onPhotoGraphy(event, type) {
 
     if (type == 1) {
-      console.log('first');
       this.mobileUploads('PhotoGraphy');
     } else if (type == 2) {
       for (let i = 0; i < event.target.files.length; i++) {
@@ -1312,10 +1309,6 @@ export class IncidentFormPage implements OnInit {
       this.incidentDesForm.controls['incdesc_other_witness_details'].reset();
     }
   }
-
-
-
-
 
 
 

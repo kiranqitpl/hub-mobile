@@ -11761,7 +11761,7 @@
           this.global = global;
           this.toastService = toastService;
           this.loadingService = loadingService;
-          this.pName = 'Incidents List';
+          this.pName = 'Submitted Forms';
           this.rows = [];
           this.listOfUsers = [];
         }

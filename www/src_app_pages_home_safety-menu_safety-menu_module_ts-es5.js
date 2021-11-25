@@ -59,6 +59,50 @@
       var routes = [{
         path: '',
         component: _safety_menu_page__WEBPACK_IMPORTED_MODULE_0__.SafetyMenuPage
+      }, {
+        path: 'prestart-dashboard',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/prestart-dashboard/prestart-dashboard.module */
+          8492)).then(function (m) {
+            return m.PrestartDashboardPageModule;
+          });
+        }
+      }, {
+        path: 'incident-form',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./incident/incident-form/incident-form.module */
+          96394)).then(function (m) {
+            return m.IncidentFormPageModule;
+          });
+        }
+      }, {
+        path: 'vehicle-hoist-add-form',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */
+          79496)).then(function (m) {
+            return m.VehicleHoistAddFormPageModule;
+          });
+        }
+      }, {
+        path: 'telehandler-add-form',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_telehandler_telehandler-add-form_telehandler-add-form-b0535c")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/telehandler/telehandler-add-form/telehandler-add-form.module */
+          4459)).then(function (m) {
+            return m.TelehandlerAddFormPageModule;
+          });
+        }
       }];
 
       var _SafetyMenuPageRoutingModule = function SafetyMenuPageRoutingModule() {
@@ -213,10 +257,10 @@
 
           this.menu = [{
             menuName: "Prestart",
-            route: "/prestart-dashboard"
+            route: "/home/safety-menu/prestart-dashboard"
           }, {
             menuName: "Incident",
-            route: "/incident-form"
+            route: "/home/safety-menu/incident-form"
           }, {
             menuName: "Hazard Report",
             route: "#"

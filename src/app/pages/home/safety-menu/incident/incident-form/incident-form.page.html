@@ -94,10 +94,8 @@
         <div *ngIf="globalService.platform === 'browser'">
           <input type='file' value="photography_image" multiple (change)="onPhotoGraphy($event, 2)">
         </div>
-        <!-- <ion-item>{{'view '+ photoGraphy.length}}</ion-item> -->
+
         <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="photoGraphy.length > 0">
-
-
           <ion-slide *ngFor="let photographyImage of photoGraphy; let i = index">
             <ion-grid>
               <ion-row>

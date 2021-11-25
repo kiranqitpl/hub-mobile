@@ -77,20 +77,24 @@ export class SharedService {
     await actionSheet.present();
   }
 
-  pickImage(sourceType) {
+  async pickImage(sourceType) {
     console.log('sourceType', sourceType);
     const options: CameraOptions = {
       quality: 100,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+      // destinationType: 1,
+      encodingType: 1,
+      mediaType: 0,
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
     };
-    this.camera.getPicture(options).then(
+    await this.camera.getPicture(options).then(
       (imageData) => {
         console.log('imageData', imageData);
         // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
         let image = 'data:image/jpeg;base64,' + imageData;
+        console.log('pickImage',image);
         return image;
       },
       (err) => {

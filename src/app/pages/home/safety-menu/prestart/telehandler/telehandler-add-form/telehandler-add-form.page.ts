@@ -1,22 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import { NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+
+import { GlobalService } from 'src/app/services/global-service/global.service';
+import { ToastService } from 'src/app/services/toast-service/toast.service';
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
+import { SharedService } from 'src/app/services/shared-service/shared.service';
+
+import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
+
+
 @Component({
   selector: 'app-telehandler-add-form',
   templateUrl: './telehandler-add-form.page.html',
   styleUrls: ['./telehandler-add-form.page.scss'],
 })
 export class TelehandlerAddFormPage implements OnInit {
+
   pName: String = 'Telehandler'
   teleHandlerForm: FormGroup;
   isSubmitted: boolean = false;
+  loggedInUser: any;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private globalService: GlobalService,
+    private toastService: ToastService,
+    private nav: NavController,
+    private loadingService: LoadingService,
+    private modalController: ModalController,
+    private sharedService: SharedService,
+    public actionSheetController: ActionSheetController,
+    private camera: Camera,
   ) { }
 
   ngOnInit() {
-
     this.teleHandlerForm = this.fb.group({
 
       telehandler_number: [''],
@@ -151,19 +172,163 @@ export class TelehandlerAddFormPage implements OnInit {
 
       comment: [''],
     })
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
   }
 
   get errorControls() {
     return this.teleHandlerForm.controls;
   }
 
-  onSubmit() {
-    this.isSubmitted = true;
-    if (this.teleHandlerForm.valid) {
-      console.log('submit value 1');
+  async onOpenPreview(img) {
+    const modal = await this.modalController.create({
+      component: ImageModalPage,
+      cssClass: 'transparent-modal',
+      componentProps: {
+        img
+      }
+    });
+    modal.present();
+  }
+
+  pickImage(sourceType, rowName) {
+    let image: any;
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: sourceType == 0 ? this.camera.PictureSourceType.PHOTOLIBRARY : (sourceType == 1 ? this.camera.PictureSourceType.CAMERA : 0),
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      image = imageData != '' ? 'data:image/jpeg;base64,' + imageData : '';
+      return image;
+
+      // if (imageData != '') {
+      //   if (rowName == 'data_plate_image') {
+      //     this.teleHandlerForm.controls['data_plate_image'].setValue(image);
+      //   } else if (rowName == 'engine_oil_image') {
+      //     this.teleHandlerForm.controls['engine_oil_image'].setValue(image);
+      //   } else if (rowName == 'hydraulic_oil_image') {
+      //     this.teleHandlerForm.controls['hydraulic_oil_image'].setValue(image);
+      //   } else if (rowName == 'equipment_inspect_comment') {
+      //     this.teleHandlerForm.controls['equipment_inspect_comment'].setValue(image);
+      //   }
+      // }
+    }, (err) => {
+      console.log("errOf Image ", err)
+    });
+  }
+
+  async mobileUploads(rowName) {
+    let data;
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Select Image source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            data = this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, rowName)
+            console.log('data',data);
+          },
+        },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.CAMERA, rowName);
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  async onSelectImage(event, type, rowName) {
+    if (type == 1) {
+      this.mobileUploads(rowName).then(res => {
+        console.log('res', res);
+      })
     } else {
-      console.log('submit value 2');
-      return false;
+      this.sharedService.getBase64(event.target.files[0]).then(image => {
+        if (rowName == 'data_plate_image') {
+          this.teleHandlerForm.controls['data_plate_image'].setValue(image);
+        } else if (rowName == 'engine_oil_image') {
+          this.teleHandlerForm.controls['engine_oil_image'].setValue(image);
+        } else if (rowName == 'hydraulic_oil_image') {
+          this.teleHandlerForm.controls['hydraulic_oil_image'].setValue(image);
+        } else if (rowName == 'equipment_inspect_comment') {
+          this.teleHandlerForm.controls['equipment_inspect_comment'].setValue(image);
+        }
+      }).catch(error => {
+        console.log('error', error);
+      });
+    }
+  }
+
+  onDeleteImage(rowName) {
+    if (rowName == 'data_plate_image') {
+      this.teleHandlerForm.controls['data_plate_image'].setValue('');
+    }
+  }
+
+  onSubmit() {
+    // this.loadingService.presentLoading();
+    this.isSubmitted = true;
+    if ((this.teleHandlerForm.value['data_plate'] == 'Faulty' && this.teleHandlerForm.value['data_plate_comment'] == '') ||
+      (this.teleHandlerForm.value['engine_oil'] == 'Faulty' && this.teleHandlerForm.value['engine_oil_comment'] == '') ||
+      (this.teleHandlerForm.value['hydraulic_oil'] == 'Faulty' && this.teleHandlerForm.value['hydraulic_oil_comment'] == '') ||
+      (this.teleHandlerForm.value['equipment_inspect'] == 'Faulty' && this.teleHandlerForm.value['equipment_inspect_comment'] == '') ||
+      (this.teleHandlerForm.value['coolant_level'] == 'Faulty' && this.teleHandlerForm.value['coolant_level_comment'] == '') ||
+      (this.teleHandlerForm.value['belts_and_hoses'] == 'Faulty' && this.teleHandlerForm.value['belts_and_hoses_comment'] == '') ||
+      (this.teleHandlerForm.value['wheels_tyres'] == 'Faulty' && this.teleHandlerForm.value['wheels_tyres_comment'] == '') ||
+      (this.teleHandlerForm.value['fire_extinguisher'] == 'Faulty' && this.teleHandlerForm.value['fire_extinguisher_comment'] == '') ||
+      (this.teleHandlerForm.value['fuel_flash'] == 'Faulty' && this.teleHandlerForm.value['fuel_flash_comment'] == '') ||
+      (this.teleHandlerForm.value['hydraulics_functional'] == 'Faulty' && this.teleHandlerForm.value['hydraulics_functional_comment'] == '') ||
+      (this.teleHandlerForm.value['lift_arms'] == 'Faulty' && this.teleHandlerForm.value['lift_arms_comment'] == '') ||
+      (this.teleHandlerForm.value['chain_hose'] == 'Faulty' && this.teleHandlerForm.value['chain_hose_comment'] == '') ||
+      (this.teleHandlerForm.value['cap_bolts'] == 'Faulty' && this.teleHandlerForm.value['cap_bolts_comment'] == '') ||
+      (this.teleHandlerForm.value['safety_stops'] == 'Faulty' && this.teleHandlerForm.value['safety_stops_comment'] == '') ||
+      (this.teleHandlerForm.value['forks'] == 'Faulty' && this.teleHandlerForm.value['forks_comment'] == '') ||
+      (this.teleHandlerForm.value['overhead_guards'] == 'Faulty' && this.teleHandlerForm.value['overhead_guards_comment'] == '') ||
+      (this.teleHandlerForm.value['counterweight'] == 'Faulty' && this.teleHandlerForm.value['counterweight_comment'] == '') ||
+      (this.teleHandlerForm.value['engine_bay'] == 'Faulty' && this.teleHandlerForm.value['engine_bay_components_comment'] == '') ||
+      (this.teleHandlerForm.value['horn'] == 'Faulty' && this.teleHandlerForm.value['horn_comment'] == '') ||
+      (this.teleHandlerForm.value['audible'] == 'Faulty' && this.teleHandlerForm.value['audible_comment'] == '') ||
+      (this.teleHandlerForm.value['headlights'] == 'Faulty' && this.teleHandlerForm.value['headlights_comment'] == '') ||
+      (this.teleHandlerForm.value['turn_signals'] == 'Faulty' && this.teleHandlerForm.value['turn_signals_comment'] == '') ||
+      (this.teleHandlerForm.value['warning_brake_lights'] == 'Faulty' && this.teleHandlerForm.value['warning_brake_lights_comment'] == '') ||
+      (this.teleHandlerForm.value['foot_brake'] == 'Faulty' && this.teleHandlerForm.value['foot_brake_comment'] == '') ||
+      (this.teleHandlerForm.value['parking_brake'] == 'Faulty' && this.teleHandlerForm.value['parking_brake_comment'] == '') ||
+      (this.teleHandlerForm.value['clutch_gear_shift'] == 'Faulty' && this.teleHandlerForm.value['clutch_gear_shift_comment'] == '') ||
+      (this.teleHandlerForm.value['engine_noise'] == 'Faulty' && this.teleHandlerForm.value['engine_noise_comment'] == '') ||
+      (this.teleHandlerForm.value['dash_gauges'] == 'Faulty' && this.teleHandlerForm.value['dash_gauges_comment'] == '') ||
+      (this.teleHandlerForm.value['operational_controls'] == 'Faulty' && this.teleHandlerForm.value['operational_controls_comment'] == '') ||
+      (this.teleHandlerForm.value['fluid_leaks'] == 'Faulty' && this.teleHandlerForm.value['fluid_leaks_comment'] == '') ||
+      (this.teleHandlerForm.value['first_aid_kit'] == 'Faulty' && this.teleHandlerForm.value['first_aid_kit_comment'] == '')) {
+      // this.loadingService.dismissLoading();
+      return;
+    } else {
+      if (this.teleHandlerForm.valid) {
+        let formData = this.teleHandlerForm.value;
+        formData['user_id'] = this.loggedInUser.id
+        let data = { 'formData': formData };
+        this.globalService.postData('Telehandler/submit', data).subscribe(result => {
+          console.log('result', result);
+          if (result && result['status']) {
+            this.toastService.toast(result['message'], 'success');
+            this.nav.back();
+          } else {
+            this.toastService.toast(result['message'], 'danger');
+          }
+        })
+        // this.loadingService.dismissLoading();
+      } else {
+        // this.loadingService.dismissLoading();
+        return false;
+      }
     }
   }
 

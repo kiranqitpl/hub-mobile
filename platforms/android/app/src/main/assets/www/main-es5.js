@@ -173,39 +173,6 @@
         }
       }, //----------------------------------------------------------- New Routes -----------------------------------------------------------------//
       {
-        path: 'notification',
-        loadChildren: function loadChildren() {
-          return __webpack_require__.e(
-          /*! import() */
-          "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./pages/notification/notification.module */
-          89770)).then(function (m) {
-            return m.NotificationPageModule;
-          });
-        }
-      }, {
-        path: 'safety-menu',
-        loadChildren: function loadChildren() {
-          return __webpack_require__.e(
-          /*! import() */
-          "src_app_pages_home_safety-menu_safety-menu_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./pages/home/safety-menu/safety-menu.module */
-          37050)).then(function (m) {
-            return m.SafetyMenuPageModule;
-          });
-        }
-      }, {
-        path: 'incident-form',
-        loadChildren: function loadChildren() {
-          return Promise.all(
-          /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
-          /*! ./pages/home/safety-menu/incident/incident-form/incident-form.module */
-          96394)).then(function (m) {
-            return m.IncidentFormPageModule;
-          });
-        }
-      }, {
         path: 'incident-form-list',
         loadChildren: function loadChildren() {
           return Promise.all(
@@ -228,17 +195,6 @@
           });
         }
       }, {
-        path: 'image-modal',
-        loadChildren: function loadChildren() {
-          return __webpack_require__.e(
-          /*! import() */
-          "src_app_modals_image-modal_image-modal_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./modals/image-modal/image-modal.module */
-          19662)).then(function (m) {
-            return m.ImageModalPageModule;
-          });
-        }
-      }, {
         path: 'incident-form-edit/:incident_id',
         loadChildren: function loadChildren() {
           return Promise.all(
@@ -250,25 +206,25 @@
           });
         }
       }, {
-        path: 'prestart-dashboard',
+        path: 'notification',
         loadChildren: function loadChildren() {
           return __webpack_require__.e(
           /*! import() */
-          "src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./pages/home/safety-menu/prestart/prestart-dashboard/prestart-dashboard.module */
-          8492)).then(function (m) {
-            return m.PrestartDashboardPageModule;
+          "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./pages/notification/notification.module */
+          89770)).then(function (m) {
+            return m.NotificationPageModule;
           });
         }
       }, {
-        path: 'vehicle-hoist-add-form',
+        path: 'image-modal',
         loadChildren: function loadChildren() {
-          return Promise.all(
+          return __webpack_require__.e(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__,
-          /*! ./pages/home/safety-menu/prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */
-          79496)).then(function (m) {
-            return m.VehicleHoistAddFormPageModule;
+          "src_app_modals_image-modal_image-modal_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./modals/image-modal/image-modal.module */
+          19662)).then(function (m) {
+            return m.ImageModalPageModule;
           });
         }
       } //------------------------------------------------------------- New Routes -----------------------------------------------------------------//
@@ -769,8 +725,11 @@
         }, {
           key: "setHeader",
           value: function setHeader() {
-            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('apikey', 'as*37486a*()HGY').set('Access-Control-Allow-Origin', '*').set('Access-Control-Allow-Headers', '*').set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS').set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With').set('token', localStorage.getItem('token') && localStorage.getItem('token') != "" ? localStorage.getItem('token') : ''); // console.log('header', header);
-
+            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('apikey', 'as*37486a*()HGY').set('Access-Control-Allow-Origin', '*') // .set('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
+            // .set('Access-Control-Allow-Methods', '*')
+            // .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
+            // .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
+            .set('token', localStorage.getItem('token') && localStorage.getItem('token') != "" ? localStorage.getItem('token') : '');
             return header;
           } // --------------------------------------------------New Services ---------------------------------------------//
 

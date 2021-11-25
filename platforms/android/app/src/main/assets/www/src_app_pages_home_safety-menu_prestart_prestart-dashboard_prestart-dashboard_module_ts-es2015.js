@@ -20,21 +20,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const routes = [
-    // {
-    //   path: '',
-    //   redirectTo: 'prestart-dashboard',
-    //   pathMatch: 'full'
-    // },
     {
         path: '',
         component: _prestart_dashboard_page__WEBPACK_IMPORTED_MODULE_0__.PrestartDashboardPage,
-        // children: [
-        //   {
-        //     path: 'vehicle-hoist-add-form',
-        //     loadChildren: () => import('../vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
-        //   }
-        // ]
-    }
+    },
+    // {
+    //   path: 'telehandler',
+    //   loadChildren: () => import('../../prestart/telehandler/telehandler.module').then(m => m.TelehandlerPageModule)
+    // }
 ];
 let PrestartDashboardPageRoutingModule = class PrestartDashboardPageRoutingModule {
 };
@@ -127,13 +120,13 @@ let PrestartDashboardPage = class PrestartDashboardPage {
                 menuName: 'Forklift Prestart', route: '#'
             },
             {
-                menuName: 'Telehandler Prestart', route: '#'
+                menuName: 'Telehandler Prestart', route: '/home/safety-menu/telehandler-add-form'
             },
             {
                 menuName: 'Crane Prestart', route: '#'
             },
             {
-                menuName: 'Vehicle Hoist Prestart', route: '/vehicle-hoist-add-form'
+                menuName: 'Vehicle Hoist Prestart', route: '/home/safety-menu/vehicle-hoist-add-form'
             },
         ];
     }

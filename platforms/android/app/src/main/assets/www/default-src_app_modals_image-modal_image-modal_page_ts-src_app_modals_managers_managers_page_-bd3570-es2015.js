@@ -98,7 +98,7 @@ let ManagersPage = class ManagersPage {
     }
     ionViewWillEnter() { }
     ngOnInit() {
-        console.log('get list in modal', this.list);
+        // console.log('get list in modal', this.list);
         this.newList.next(this.list);
     }
     onSearch(event) {
@@ -282,21 +282,27 @@ let SharedService = class SharedService {
         });
     }
     pickImage(sourceType) {
-        console.log('sourceType', sourceType);
-        const options = {
-            quality: 100,
-            sourceType: sourceType,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE,
-        };
-        this.camera.getPicture(options).then((imageData) => {
-            console.log('imageData', imageData);
-            // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
-            let image = 'data:image/jpeg;base64,' + imageData;
-            return image;
-        }, (err) => {
-            console.log("errOf Image ", err);
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+            console.log('sourceType', sourceType);
+            const options = {
+                quality: 100,
+                sourceType: sourceType,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                // destinationType: 1,
+                encodingType: 1,
+                mediaType: 0,
+                // encodingType: this.camera.EncodingType.JPEG,
+                // mediaType: this.camera.MediaType.PICTURE,
+            };
+            yield this.camera.getPicture(options).then((imageData) => {
+                console.log('imageData', imageData);
+                // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+                let image = 'data:image/jpeg;base64,' + imageData;
+                console.log('pickImage', image);
+                return image;
+            }, (err) => {
+                console.log("errOf Image ", err);
+            });
         });
     }
 };

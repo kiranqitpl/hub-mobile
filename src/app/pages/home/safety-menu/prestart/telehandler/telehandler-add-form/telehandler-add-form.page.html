@@ -1,6 +1,7 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
   <div class="container" [formGroup]="teleHandlerForm">
+
     <ion-card>
 
       <ion-grid>
@@ -41,7 +42,8 @@
         </ion-row>
       </ion-radio-group>
 
-      <div *ngIf="isSubmitted && errorControls.data_plate.value =='Faulty'">
+      <div *ngIf="errorControls.data_plate.value && errorControls.data_plate.value =='Faulty'">
+
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -59,14 +61,41 @@
           Please enter comment.
         </ion-item>
 
-        <ion-row>
-          <ion-item lines="none">
-            <ion-label> Upload Image :</ion-label>
-          </ion-item>
+        <ion-row *ngIf="globalService.platform === 'cordova'">
+          <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'data_plate_image')">Upload
+            Image
+          </ion-button>
         </ion-row>
-        <ion-row>
-          <ion-input type="file" formControlName="data_plate_image"></ion-input>
-        </ion-row>
+
+        <div *ngIf="globalService.platform === 'browser'">
+          <ion-row>
+            <ion-item lines="none">
+              <ion-label> Upload Image :</ion-label>
+            </ion-item>
+          </ion-row>
+          <ion-input type="file" formControlName="data_plate_image"
+            (change)="onSelectImage($event, 2, 'data_plate_image')">
+          </ion-input>
+        </div>
+
+        <ion-slides [options]="sliderOpts" class="preview-slides"
+          *ngIf="teleHandlerForm.value['data_plate_image'] !='' ">
+          <ion-slide>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="11">
+                  <img [src]="teleHandlerForm.value['data_plate_image']" tappable
+                    (click)="onOpenPreview(teleHandlerForm.value['data_plate_image'])">
+                </ion-col>
+                <ion-col size="1">
+                  <p class="question">
+                    <ion-icon name="close" (click)="onDeleteImage('data_plate_image')"></ion-icon>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
 
       </div>
 
@@ -90,7 +119,7 @@
         </ion-row>
       </ion-radio-group>
 
-      <div *ngIf="isSubmitted && errorControls.engine_oil.value =='Faulty'">
+      <div *ngIf="errorControls.engine_oil.value  && errorControls.engine_oil.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -107,16 +136,42 @@
           Please enter comment.
         </ion-item>
 
-        <ion-row>
-          <ion-item lines="none">
-            <ion-label> Upload Image :</ion-label>
-          </ion-item>
+        <ion-row *ngIf="globalService.platform === 'cordova'">
+          <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'engine_oil_image')">Upload
+            Image
+          </ion-button>
         </ion-row>
-        <ion-row>
-          <ion-input type="file" formControlName="engine_oil_image"></ion-input>
-        </ion-row>
-      </div>
 
+        <div *ngIf="globalService.platform === 'browser'">
+          <ion-row>
+            <ion-item lines="none">
+              <ion-label> Upload Image :</ion-label>
+            </ion-item>
+          </ion-row>
+          <ion-input type="file" formControlName="engine_oil_image"
+            (change)="onSelectImage($event, 2, 'engine_oil_image')">
+          </ion-input>
+        </div>
+
+        <ion-slides [options]="sliderOpts" class="preview-slides"
+          *ngIf="teleHandlerForm.value['engine_oil_image'] !='' ">
+          <ion-slide>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="11">
+                  <img [src]="teleHandlerForm.value['engine_oil_image']" tappable
+                    (click)="onOpenPreview(teleHandlerForm.value['engine_oil_image'])">
+                </ion-col>
+                <ion-col size="1">
+                  <p class="question">
+                    <ion-icon name="close" (click)="onDeleteImage('engine_oil_image')"></ion-icon>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
+      </div>
 
       <ion-radio-group formControlName="hydraulic_oil">
         <ion-row>
@@ -138,7 +193,7 @@
         </ion-row>
       </ion-radio-group>
 
-      <div *ngIf="isSubmitted && errorControls.hydraulic_oil.value =='Faulty'">
+      <div *ngIf="errorControls.hydraulic_oil.value && errorControls.hydraulic_oil.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -155,14 +210,41 @@
           Please enter comment.
         </ion-item>
 
-        <ion-row>
-          <ion-item lines="none">
-            <ion-label> Upload Image :</ion-label>
-          </ion-item>
+        <ion-row *ngIf="globalService.platform === 'cordova'">
+          <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'hydraulic_oil_image')">Upload
+            Image
+          </ion-button>
         </ion-row>
-        <ion-row>
-          <ion-input type="file" formControlName="hydraulic_oil_image"></ion-input>
-        </ion-row>
+
+        <div *ngIf="globalService.platform === 'browser'">
+          <ion-row>
+            <ion-item lines="none">
+              <ion-label> Upload Image :</ion-label>
+            </ion-item>
+          </ion-row>
+          <ion-input type="file" formControlName="hydraulic_oil_image"
+            (change)="onSelectImage($event, 2, 'hydraulic_oil_image')">
+          </ion-input>
+        </div>
+
+        <ion-slides [options]="sliderOpts" class="preview-slides"
+          *ngIf="teleHandlerForm.value['hydraulic_oil_image'] !='' ">
+          <ion-slide>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="11">
+                  <img [src]="teleHandlerForm.value['hydraulic_oil_image']" tappable
+                    (click)="onOpenPreview(teleHandlerForm.value['hydraulic_oil_image'])">
+                </ion-col>
+                <ion-col size="1">
+                  <p class="question">
+                    <ion-icon name="close" (click)="onDeleteImage('hydraulic_oil_image')"></ion-icon>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
       </div>
 
       <ion-radio-group formControlName="fuel_level">
@@ -211,7 +293,7 @@
         </ion-row>
       </ion-radio-group>
 
-      <div *ngIf="isSubmitted && errorControls.equipment_inspect.value =='Faulty'">
+      <div *ngIf="errorControls.equipment_inspect.value && errorControls.equipment_inspect.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -230,14 +312,41 @@
           Please enter comment.
         </ion-item>
 
-        <ion-row>
-          <ion-item lines="none">
-            <ion-label> Upload Image :</ion-label>
-          </ion-item>
+        <ion-row *ngIf="globalService.platform === 'cordova'">
+          <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'equipment_inspect_image')">Upload
+            Image
+          </ion-button>
         </ion-row>
-        <ion-row>
-          <ion-input type="file" formControlName="equipment_inspect_image"></ion-input>
-        </ion-row>
+
+        <div *ngIf="globalService.platform === 'browser'">
+          <ion-row>
+            <ion-item lines="none">
+              <ion-label> Upload Image :</ion-label>
+            </ion-item>
+          </ion-row>
+          <ion-input type="file" formControlName="equipment_inspect_image"
+            (change)="onSelectImage($event, 2, 'equipment_inspect_image')">
+          </ion-input>
+        </div>
+
+        <ion-slides [options]="sliderOpts" class="preview-slides"
+          *ngIf="teleHandlerForm.value['equipment_inspect_image'] !='' ">
+          <ion-slide>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="11">
+                  <img [src]="teleHandlerForm.value['equipment_inspect_image']" tappable
+                    (click)="onOpenPreview(teleHandlerForm.value['equipment_inspect_image'])">
+                </ion-col>
+                <ion-col size="1">
+                  <p class="question">
+                    <ion-icon name="close" (click)="onDeleteImage('equipment_inspect_image')"></ion-icon>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
       </div>
 
       <ion-radio-group formControlName="coolant_level">
@@ -253,13 +362,14 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
       </ion-radio-group>
 
-      <div *ngIf="isSubmitted && errorControls.coolant_level.value =='Faulty'">
+      <div *ngIf="errorControls.coolant_level.value && errorControls.coolant_level.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -276,16 +386,16 @@
         <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.coolant_level_comment.value  == ''">
           Please enter comment.
         </ion-item>
-      </div>
 
-      <ion-row>
-        <ion-item lines="none">
-          <ion-label> Upload Image :</ion-label>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <ion-input type="file" formControlName="coolant_level_image"></ion-input>
-      </ion-row>
+        <ion-row>
+          <ion-item lines="none">
+            <ion-label> Upload Image :</ion-label>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-input type="file" formControlName="coolant_level_image"></ion-input>
+        </ion-row>
+      </div>
 
       <ion-radio-group formControlName="belts_and_hoses">
         <ion-row>
@@ -300,13 +410,14 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
       </ion-radio-group>
 
-      <div *ngIf="isSubmitted && errorControls.belts_and_hoses.value =='Faulty'">
+      <div *ngIf="errorControls.belts_and_hoses.value && errorControls.belts_and_hoses.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -347,7 +458,8 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -356,7 +468,7 @@
         Please select value.
       </ion-item>
 
-      <div *ngIf="isSubmitted && errorControls.wheels_tyres.value =='Faulty'">
+      <div *ngIf="errorControls.wheels_tyres.value && errorControls.wheels_tyres.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -370,7 +482,8 @@
           </ion-item>
         </ion-row>
 
-        <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.wheels_tyres_comment.value  == ''">
+        <ion-item lines="none" class="error"
+          *ngIf="errorControls.wheels_tyres_comment && errorControls.wheels_tyres_comment.value  == ''">
           Please enter comment.
         </ion-item>
 
@@ -397,7 +510,8 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -406,7 +520,7 @@
         Please select value.
       </ion-item>
 
-      <div *ngIf="isSubmitted && errorControls.fire_extinguisher.value =='Faulty'">
+      <div *ngIf="errorControls.fire_extinguisher.value && errorControls.fire_extinguisher.value =='Faulty'">
         <ion-row>
           <ion-item lines="none">
             <span class="error">* </span>
@@ -447,7 +561,8 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -469,7 +584,8 @@
           </ion-item>
         </ion-row>
 
-        <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.fuel_flash_comment.value  == ''">
+        <ion-item lines="none" class="error"
+          *ngIf="errorControls.fuel_flash_comment && errorControls.fuel_flash_comment.value  == ''">
           Please enter comment.
         </ion-item>
 
@@ -496,7 +612,8 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -546,7 +663,8 @@
           </ion-col>
           <ion-col size="6">
             <ion-item lines="none">
-              Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+              <ion-label>Faulty</ion-label>
+              <ion-radio slot="start" value="Faulty"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -583,7 +701,6 @@
         </ion-row>
       </div>
 
-
       <ion-row>
         In place / Correctly Tensioned
       </ion-row>
@@ -601,7 +718,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -656,7 +774,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -711,7 +830,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -749,7 +869,6 @@
         </ion-row>
       </div>
 
-
       <ion-row>
         <ion-col size="12"> In place</ion-col>
       </ion-row>
@@ -767,7 +886,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -822,7 +942,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -879,7 +1000,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -936,7 +1058,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -994,7 +1117,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1046,7 +1170,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1098,7 +1223,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1150,7 +1276,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1201,7 +1328,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1254,7 +1382,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1312,7 +1441,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1369,7 +1499,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1427,7 +1558,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1484,7 +1616,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1537,7 +1670,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1595,7 +1729,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1653,7 +1788,8 @@
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
-                Faulty<ion-radio slot="start" value="Faulty"></ion-radio>
+                <ion-label>Faulty</ion-label>
+                <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -1703,5 +1839,6 @@
 
       <ion-button class="btn" (click)="onSubmit()">SUBMIT</ion-button>
     </ion-card>
+
   </div>
 </ion-content>

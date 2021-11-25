@@ -225,7 +225,7 @@
         }, {
           key: "ngOnInit",
           value: function ngOnInit() {
-            console.log('get list in modal', this.list);
+            // console.log('get list in modal', this.list);
             this.newList.next(this.list);
           }
         }, {
@@ -559,22 +559,42 @@
         }, {
           key: "pickImage",
           value: function pickImage(sourceType) {
-            console.log('sourceType', sourceType);
-            var options = {
-              quality: 100,
-              sourceType: sourceType,
-              destinationType: this.camera.DestinationType.DATA_URL,
-              encodingType: this.camera.EncodingType.JPEG,
-              mediaType: this.camera.MediaType.PICTURE
-            };
-            this.camera.getPicture(options).then(function (imageData) {
-              console.log('imageData', imageData); // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+              var options;
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                  switch (_context5.prev = _context5.next) {
+                    case 0:
+                      console.log('sourceType', sourceType);
+                      options = {
+                        quality: 100,
+                        sourceType: sourceType,
+                        destinationType: this.camera.DestinationType.DATA_URL,
+                        // destinationType: 1,
+                        encodingType: 1,
+                        mediaType: 0 // encodingType: this.camera.EncodingType.JPEG,
+                        // mediaType: this.camera.MediaType.PICTURE,
 
-              var image = 'data:image/jpeg;base64,' + imageData;
-              return image;
-            }, function (err) {
-              console.log("errOf Image ", err);
-            });
+                      };
+                      _context5.next = 4;
+                      return this.camera.getPicture(options).then(function (imageData) {
+                        console.log('imageData', imageData); // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+
+                        // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+                        var image = 'data:image/jpeg;base64,' + imageData;
+                        console.log('pickImage', image);
+                        return image;
+                      }, function (err) {
+                        console.log("errOf Image ", err);
+                      });
+
+                    case 4:
+                    case "end":
+                      return _context5.stop();
+                  }
+                }
+              }, _callee5, this);
+            }));
           }
         }]);
 
