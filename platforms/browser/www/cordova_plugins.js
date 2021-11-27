@@ -345,6 +345,22 @@ module.exports = [
         "id": "cordova-plugin-statusbar.StatusBarProxy",
         "pluginId": "cordova-plugin-statusbar",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+        "id": "cordova-plugin-actionsheet.ActionSheet",
+        "pluginId": "cordova-plugin-actionsheet",
+        "clobbers": [
+            "window.plugins.actionsheet"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-actionsheet/src/browser/ActionSheetProxy.js",
+        "id": "cordova-plugin-actionsheet.ActionSheetProxy",
+        "pluginId": "cordova-plugin-actionsheet",
+        "merges": [
+            ""
+        ]
     }
 ];
 module.exports.metadata = 
@@ -359,7 +375,8 @@ module.exports.metadata =
     "cordova-plugin-ionic-webview": "4.2.1",
     "cordova-plugin-splashscreen": "5.0.4",
     "cordova-plugin-statusbar": "2.4.3",
-    "cordova-plugin-whitelist": "1.3.5"
+    "cordova-plugin-whitelist": "1.3.5",
+    "cordova-plugin-actionsheet": "2.3.3"
 }
 // BOTTOM OF METADATA
 });

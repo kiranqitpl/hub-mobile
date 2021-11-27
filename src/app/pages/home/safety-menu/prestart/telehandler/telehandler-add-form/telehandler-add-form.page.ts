@@ -9,8 +9,8 @@ import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
-
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
+import { AlertService } from 'src/app/services/alert-service/alert.service';
 
 
 @Component({
@@ -24,6 +24,7 @@ export class TelehandlerAddFormPage implements OnInit {
   teleHandlerForm: FormGroup;
   isSubmitted: boolean = false;
   loggedInUser: any;
+  // showMsg: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -35,12 +36,14 @@ export class TelehandlerAddFormPage implements OnInit {
     private sharedService: SharedService,
     public actionSheetController: ActionSheetController,
     private camera: Camera,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
     this.teleHandlerForm = this.fb.group({
 
-      telehandler_number: [''],
+      competency: [''],
+      telehandler_number: ['TH40'],
 
       hour_meter: [''],
 
@@ -190,7 +193,7 @@ export class TelehandlerAddFormPage implements OnInit {
     modal.present();
   }
 
-  pickImage(sourceType, rowName) {
+  async pickImage(sourceType, rowName) {
     let image: any;
     const options: CameraOptions = {
       quality: 100,
@@ -199,36 +202,87 @@ export class TelehandlerAddFormPage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
     };
-    this.camera.getPicture(options).then((imageData) => {
-      image = imageData != '' ? 'data:image/jpeg;base64,' + imageData : '';
-      return image;
 
-      // if (imageData != '') {
-      //   if (rowName == 'data_plate_image') {
-      //     this.teleHandlerForm.controls['data_plate_image'].setValue(image);
-      //   } else if (rowName == 'engine_oil_image') {
-      //     this.teleHandlerForm.controls['engine_oil_image'].setValue(image);
-      //   } else if (rowName == 'hydraulic_oil_image') {
-      //     this.teleHandlerForm.controls['hydraulic_oil_image'].setValue(image);
-      //   } else if (rowName == 'equipment_inspect_comment') {
-      //     this.teleHandlerForm.controls['equipment_inspect_comment'].setValue(image);
-      //   }
-      // }
+    this.camera.getPicture(options).then((imageData) => {
+      // console.log('imageData', imageData);
+      image = imageData != '' ? 'data:image/jpeg;base64,' + imageData : '';
+      if (rowName == 'data_plate_image') {
+        this.teleHandlerForm.controls['data_plate_image'].setValue(image);
+      } else if (rowName == 'engine_oil_image') {
+        this.teleHandlerForm.controls['engine_oil_image'].setValue(image);
+      } else if (rowName == 'hydraulic_oil_image') {
+        this.teleHandlerForm.controls['hydraulic_oil_image'].setValue(image);
+      } else if (rowName == 'equipment_inspect_image') {
+        this.teleHandlerForm.controls['equipment_inspect_image'].setValue(image);
+      } else if (rowName == 'coolant_level_image') {
+        this.teleHandlerForm.controls['coolant_level_image'].setValue(image);
+      } else if (rowName == 'belts_and_hoses_image') {
+        this.teleHandlerForm.controls['belts_and_hoses_image'].setValue(image);
+      } else if (rowName == 'wheels_tyres_image') {
+        this.teleHandlerForm.controls['wheels_tyres_image'].setValue(image);
+      } else if (rowName == 'fire_extinguisher_image') {
+        this.teleHandlerForm.controls['fire_extinguisher_image'].setValue(image);
+      } else if (rowName == 'fuel_flash_image') {
+        this.teleHandlerForm.controls['fuel_flash_image'].setValue(image);
+      } else if (rowName == 'hydraulics_functional_image') {
+        this.teleHandlerForm.controls['hydraulics_functional_image'].setValue(image);
+      } else if (rowName == 'lift_arms_image') {
+        this.teleHandlerForm.controls['lift_arms_image'].setValue(image);
+      } else if (rowName == 'chain_hose_image') {
+        this.teleHandlerForm.controls['chain_hose_image'].setValue(image);
+      } else if (rowName == 'cap_bolts_image') {
+        this.teleHandlerForm.controls['cap_bolts_image'].setValue(image);
+      } else if (rowName == 'safety_stops_image') {
+        this.teleHandlerForm.controls['safety_stops_image'].setValue(image);
+      } else if (rowName == 'forks_image') {
+        this.teleHandlerForm.controls['forks_image'].setValue(image);
+      } else if (rowName == 'overhead_guards_image') {
+        this.teleHandlerForm.controls['overhead_guards_image'].setValue(image);
+      } else if (rowName == 'counterweight_image') {
+        this.teleHandlerForm.controls['counterweight_image'].setValue(image);
+      } else if (rowName == 'engine_bay_components_image') {
+        this.teleHandlerForm.controls['engine_bay_components_image'].setValue(image);
+      } else if (rowName == 'horn_image') {
+        this.teleHandlerForm.controls['horn_image'].setValue(image);
+      } else if (rowName == 'audible_image') {
+        this.teleHandlerForm.controls['audible_image'].setValue(image);
+      } else if (rowName == 'headlights_image') {
+        this.teleHandlerForm.controls['headlights_image'].setValue(image);
+      } else if (rowName == 'turn_signals_image') {
+        this.teleHandlerForm.controls['turn_signals_image'].setValue(image);
+      } else if (rowName == 'warning_brake_lights_image') {
+        this.teleHandlerForm.controls['warning_brake_lights_image'].setValue(image);
+      } else if (rowName == 'foot_brake_image') {
+        this.teleHandlerForm.controls['foot_brake_image'].setValue(image);
+      } else if (rowName == 'parking_brake_image') {
+        this.teleHandlerForm.controls['parking_brake_image'].setValue(image);
+      } else if (rowName == 'clutch_gear_shift_image') {
+        this.teleHandlerForm.controls['clutch_gear_shift_image'].setValue(image);
+      } else if (rowName == 'engine_noise_image') {
+        this.teleHandlerForm.controls['engine_noise_image'].setValue(image);
+      } else if (rowName == 'dash_gauges_image') {
+        this.teleHandlerForm.controls['dash_gauges_image'].setValue(image);
+      } else if (rowName == 'operational_controls_image') {
+        this.teleHandlerForm.controls['operational_controls_image'].setValue(image);
+      } else if (rowName == 'fluid_leaks_image') {
+        this.teleHandlerForm.controls['fluid_leaks_image'].setValue(image);
+      } else if (rowName == 'first_aid_kit_image') {
+        this.teleHandlerForm.controls['first_aid_kit_image'].setValue(image);
+      }
     }, (err) => {
       console.log("errOf Image ", err)
     });
+
   }
 
   async mobileUploads(rowName) {
-    let data;
     const actionSheet = await this.actionSheetController.create({
       header: 'Select Image source',
       buttons: [
         {
           text: 'Load from Library',
           handler: () => {
-            data = this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, rowName)
-            console.log('data',data);
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, rowName)
           },
         },
         {
@@ -248,9 +302,7 @@ export class TelehandlerAddFormPage implements OnInit {
 
   async onSelectImage(event, type, rowName) {
     if (type == 1) {
-      this.mobileUploads(rowName).then(res => {
-        console.log('res', res);
-      })
+      this.mobileUploads(rowName);
     } else {
       this.sharedService.getBase64(event.target.files[0]).then(image => {
         if (rowName == 'data_plate_image') {
@@ -259,8 +311,62 @@ export class TelehandlerAddFormPage implements OnInit {
           this.teleHandlerForm.controls['engine_oil_image'].setValue(image);
         } else if (rowName == 'hydraulic_oil_image') {
           this.teleHandlerForm.controls['hydraulic_oil_image'].setValue(image);
-        } else if (rowName == 'equipment_inspect_comment') {
-          this.teleHandlerForm.controls['equipment_inspect_comment'].setValue(image);
+        } else if (rowName == 'equipment_inspect_image') {
+          this.teleHandlerForm.controls['equipment_inspect_image'].setValue(image);
+        } else if (rowName == 'coolant_level_image') {
+          this.teleHandlerForm.controls['coolant_level_image'].setValue(image);
+        } else if (rowName == 'belts_and_hoses_image') {
+          this.teleHandlerForm.controls['belts_and_hoses_image'].setValue(image);
+        } else if (rowName == 'wheels_tyres_image') {
+          this.teleHandlerForm.controls['wheels_tyres_image'].setValue(image);
+        } else if (rowName == 'fire_extinguisher_image') {
+          this.teleHandlerForm.controls['fire_extinguisher_image'].setValue(image);
+        } else if (rowName == 'fuel_flash_image') {
+          this.teleHandlerForm.controls['fuel_flash_image'].setValue(image);
+        } else if (rowName == 'hydraulics_functional_image') {
+          this.teleHandlerForm.controls['hydraulics_functional_image'].setValue(image);
+        } else if (rowName == 'lift_arms_image') {
+          this.teleHandlerForm.controls['lift_arms_image'].setValue(image);
+        } else if (rowName == 'chain_hose_image') {
+          this.teleHandlerForm.controls['chain_hose_image'].setValue(image);
+        } else if (rowName == 'cap_bolts_image') {
+          this.teleHandlerForm.controls['cap_bolts_image'].setValue(image);
+        } else if (rowName == 'safety_stops_image') {
+          this.teleHandlerForm.controls['safety_stops_image'].setValue(image);
+        } else if (rowName == 'forks_image') {
+          this.teleHandlerForm.controls['forks_image'].setValue(image);
+        } else if (rowName == 'overhead_guards_image') {
+          this.teleHandlerForm.controls['overhead_guards_image'].setValue(image);
+        } else if (rowName == 'counterweight_image') {
+          this.teleHandlerForm.controls['counterweight_image'].setValue(image);
+        } else if (rowName == 'engine_bay_components_image') {
+          this.teleHandlerForm.controls['engine_bay_components_image'].setValue(image);
+        } else if (rowName == 'horn_image') {
+          this.teleHandlerForm.controls['horn_image'].setValue(image);
+        } else if (rowName == 'audible_image') {
+          this.teleHandlerForm.controls['audible_image'].setValue(image);
+        } else if (rowName == 'headlights_image') {
+          this.teleHandlerForm.controls['headlights_image'].setValue(image);
+        } else if (rowName == 'turn_signals_image') {
+          this.teleHandlerForm.controls['turn_signals_image'].setValue(image);
+        } else if (rowName == 'warning_brake_lights_image') {
+          this.teleHandlerForm.controls['warning_brake_lights_image'].setValue(image);
+        } else if (rowName == 'foot_brake_image') {
+          this.teleHandlerForm.controls['foot_brake_image'].setValue(image);
+        } else if (rowName == 'parking_brake_image') {
+          this.teleHandlerForm.controls['parking_brake_image'].setValue(image);
+        } else if (rowName == 'clutch_gear_shift_image') {
+          this.teleHandlerForm.controls['clutch_gear_shift_image'].setValue(image);
+        } else if (rowName == 'engine_noise_image') {
+          this.teleHandlerForm.controls['engine_noise_image'].setValue(image);
+        } else if (rowName == 'dash_gauges_image') {
+          this.teleHandlerForm.controls['dash_gauges_image'].setValue(image);
+        } else if (rowName == 'operational_controls_image') {
+          this.teleHandlerForm.controls['operational_controls_image'].setValue(image);
+        } else if (rowName == 'fluid_leaks_image') {
+          this.teleHandlerForm.controls['fluid_leaks_image'].setValue(image);
+        } else if (rowName == 'first_aid_kit_image') {
+          this.teleHandlerForm.controls['first_aid_kit_image'].setValue(image);
         }
       }).catch(error => {
         console.log('error', error);
@@ -271,12 +377,83 @@ export class TelehandlerAddFormPage implements OnInit {
   onDeleteImage(rowName) {
     if (rowName == 'data_plate_image') {
       this.teleHandlerForm.controls['data_plate_image'].setValue('');
+    } else if (rowName == 'engine_oil_image') {
+      this.teleHandlerForm.controls['engine_oil_image'].setValue('');
+    } else if (rowName == 'hydraulic_oil_image') {
+      this.teleHandlerForm.controls['hydraulic_oil_image'].setValue('');
+    } else if (rowName == 'equipment_inspect_image') {
+      this.teleHandlerForm.controls['equipment_inspect_image'].setValue('');
+    } else if (rowName == 'coolant_level_image') {
+      this.teleHandlerForm.controls['coolant_level_image'].setValue('');
+    } else if (rowName == 'belts_and_hoses_image') {
+      this.teleHandlerForm.controls['belts_and_hoses_image'].setValue('');
+    } else if (rowName == 'wheels_tyres_image') {
+      this.teleHandlerForm.controls['wheels_tyres_image'].setValue('');
+    } else if (rowName == 'fire_extinguisher_image') {
+      this.teleHandlerForm.controls['fire_extinguisher_image'].setValue('');
+    } else if (rowName == 'fuel_flash_image') {
+      this.teleHandlerForm.controls['fuel_flash_image'].setValue('');
+    } else if (rowName == 'hydraulics_functional_image') {
+      this.teleHandlerForm.controls['hydraulics_functional_image'].setValue('');
+    } else if (rowName == 'lift_arms_image') {
+      this.teleHandlerForm.controls['lift_arms_image'].setValue('');
+    } else if (rowName == 'chain_hose_image') {
+      this.teleHandlerForm.controls['chain_hose_image'].setValue('');
+    } else if (rowName == 'cap_bolts_image') {
+      this.teleHandlerForm.controls['cap_bolts_image'].setValue('');
+    } else if (rowName == 'safety_stops_image') {
+      this.teleHandlerForm.controls['safety_stops_image'].setValue('');
+    } else if (rowName == 'forks_image') {
+      this.teleHandlerForm.controls['forks_image'].setValue('');
+    } else if (rowName == 'overhead_guards_image') {
+      this.teleHandlerForm.controls['overhead_guards_image'].setValue('');
+    } else if (rowName == 'counterweight_image') {
+      this.teleHandlerForm.controls['counterweight_image'].setValue('');
+    } else if (rowName == 'engine_bay_components_image') {
+      this.teleHandlerForm.controls['engine_bay_components_image'].setValue('');
+    } else if (rowName == 'horn_image') {
+      this.teleHandlerForm.controls['horn_image'].setValue('');
+    } else if (rowName == 'audible_image') {
+      this.teleHandlerForm.controls['audible_image'].setValue('');
+    } else if (rowName == 'headlights_image') {
+      this.teleHandlerForm.controls['headlights_image'].setValue('');
+    } else if (rowName == 'turn_signals_image') {
+      this.teleHandlerForm.controls['turn_signals_image'].setValue('');
+    } else if (rowName == 'warning_brake_lights_image') {
+      this.teleHandlerForm.controls['warning_brake_lights_image'].setValue('');
+    } else if (rowName == 'foot_brake_image') {
+      this.teleHandlerForm.controls['foot_brake_image'].setValue('');
+    } else if (rowName == 'parking_brake_image') {
+      this.teleHandlerForm.controls['parking_brake_image'].setValue('');
+    } else if (rowName == 'clutch_gear_shift_image') {
+      this.teleHandlerForm.controls['clutch_gear_shift_image'].setValue('');
+    } else if (rowName == 'engine_noise_image') {
+      this.teleHandlerForm.controls['engine_noise_image'].setValue('');
+    } else if (rowName == 'dash_gauges_image') {
+      this.teleHandlerForm.controls['dash_gauges_image'].setValue('');
+    } else if (rowName == 'operational_controls_image') {
+      this.teleHandlerForm.controls['operational_controls_image'].setValue('');
+    } else if (rowName == 'fluid_leaks_image') {
+      this.teleHandlerForm.controls['fluid_leaks_image'].setValue('');
+    } else if (rowName == 'first_aid_kit_image') {
+      this.teleHandlerForm.controls['first_aid_kit_image'].setValue('');
     }
   }
 
   onSubmit() {
     // this.loadingService.presentLoading();
     this.isSubmitted = true;
+    // let count = 0
+    // Object.values(this.teleHandlerForm.value).forEach(key => {
+    //   if (key == 'Faulty') {
+    //     count++;
+    //   }
+    // });
+    // if (count > 0) {
+    //   this.showMsg = true;
+    // } else {
+    //   this.showMsg = false;
+    // }
     if ((this.teleHandlerForm.value['data_plate'] == 'Faulty' && this.teleHandlerForm.value['data_plate_comment'] == '') ||
       (this.teleHandlerForm.value['engine_oil'] == 'Faulty' && this.teleHandlerForm.value['engine_oil_comment'] == '') ||
       (this.teleHandlerForm.value['hydraulic_oil'] == 'Faulty' && this.teleHandlerForm.value['hydraulic_oil_comment'] == '') ||
@@ -323,12 +500,26 @@ export class TelehandlerAddFormPage implements OnInit {
           } else {
             this.toastService.toast(result['message'], 'danger');
           }
+        }, error => {
+          console.log('error', error);
         })
         // this.loadingService.dismissLoading();
       } else {
         // this.loadingService.dismissLoading();
         return false;
       }
+    }
+  }
+
+  onCompetency(event) {
+    if (event.detail.value == 'Not completed') {
+      this.alertService.alert('STOP do not proceed and see your supervisor to complete a VOC.')
+    }
+  }
+
+  onFuelLevel(event) {
+    if (event.detail.value == 'Empty') {
+      this.alertService.alert('Please ensure you fill up the Telehandler prior to use.')
     }
   }
 

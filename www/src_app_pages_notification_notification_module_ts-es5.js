@@ -547,11 +547,8 @@
                         quality: 100,
                         sourceType: sourceType,
                         destinationType: this.camera.DestinationType.DATA_URL,
-                        // destinationType: 1,
-                        encodingType: 1,
-                        mediaType: 0 // encodingType: this.camera.EncodingType.JPEG,
-                        // mediaType: this.camera.MediaType.PICTURE,
-
+                        encodingType: this.camera.EncodingType.JPEG,
+                        mediaType: this.camera.MediaType.PICTURE
                       };
                       _context3.next = 4;
                       return this.camera.getPicture(options).then(function (imageData) {

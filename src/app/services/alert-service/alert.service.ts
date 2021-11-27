@@ -11,18 +11,35 @@ export class AlertService {
     private navCtrl: NavController
   ) { }
 
-  async presentAlert(message) {
+  async alertWithBack(message) {
     const alert = await this.alertCtrl.create({
-      cssClass: 'alert',
-      header: 'Alert Message',
+      cssClass: 'alert-message',
+      header: 'Alert !',
       backdropDismiss: false,
       message: message,
+      animated: true,
       buttons: [{
         text: 'Ok',
         role: 'Ok',
         handler: () => {
           this.navCtrl.back();
         }
+      }]
+    });
+    await alert.present();
+  }
+
+  async alert(message) {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'alert-message',
+      header: 'Alert !',
+      backdropDismiss: false,
+      message: message,
+      animated: true,
+      buttons: [{
+        text: 'Ok',
+        role: 'Ok',
+        handler: () => { }
       }]
     });
     await alert.present();

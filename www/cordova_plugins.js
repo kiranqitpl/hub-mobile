@@ -325,6 +325,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "window.StatusBar"
       ]
+    },
+    {
+      "id": "cordova-plugin-actionsheet.ActionSheet",
+      "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+      "pluginId": "cordova-plugin-actionsheet",
+      "clobbers": [
+        "window.plugins.actionsheet"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -337,6 +345,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-ionic-webview": "4.2.1",
     "cordova-plugin-splashscreen": "5.0.4",
     "cordova-plugin-statusbar": "2.4.3",
-    "cordova-plugin-whitelist": "1.3.5"
+    "cordova-plugin-whitelist": "1.3.5",
+    "cordova-plugin-actionsheet": "2.3.3"
   };
 });

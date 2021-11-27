@@ -49,13 +49,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NotificationPageModule": function() { return /* binding */ NotificationPageModule; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 38583);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 3679);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 38583);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _notification_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notification-routing.module */ 54863);
 /* harmony import */ var _notification_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notification.page */ 95259);
+/* harmony import */ var src_app_shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared-component/header/header.component */ 13998);
+
 
 
 
@@ -65,15 +67,18 @@ __webpack_require__.r(__webpack_exports__);
 
 let NotificationPageModule = class NotificationPageModule {
 };
-NotificationPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.NgModule)({
+NotificationPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_4__.CommonModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule,
             _notification_routing_module__WEBPACK_IMPORTED_MODULE_0__.NotificationPageRoutingModule
         ],
-        declarations: [_notification_page__WEBPACK_IMPORTED_MODULE_1__.NotificationPage]
+        declarations: [
+            _notification_page__WEBPACK_IMPORTED_MODULE_1__.NotificationPage,
+            src_app_shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_2__.HeaderComponent
+        ]
     })
 ], NotificationPageModule);
 
@@ -97,7 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notification_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notification.page.scss */ 44088);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/global.service */ 97465);
+/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ 92340);
 /* harmony import */ var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/shared-service/shared.service */ 49481);
 
@@ -113,56 +118,34 @@ let NotificationPage = class NotificationPage {
         this.nav = nav;
         this.globalService = globalService;
         this.sharedService = sharedService;
+        this.pName = "Notifications";
         this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
         this.notificationId = [];
         this.notificationData = '';
-    }
-    goBack() {
-        this.nav.back();
-    }
-    logOut() {
-        localStorage.clear();
-        this.nav.navigateRoot("login");
+        this.loggedInUser = '';
     }
     ngOnInit() {
-        this.getUserData();
+        this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
         this.onNotificationLoad();
-    }
-    getUserData() {
-        this.userId = localStorage.getItem('id');
-        this.roleId = localStorage.getItem('role');
     }
     //----------------------------------- Load Notification Data ---------------------------------------------------------// 
     onNotificationLoad() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
-            let formData = new FormData();
-            formData.append("type", this.type);
-            formData.append("user_id", this.userId);
-            // this.notificationData = await this.sharedService.notificationLoad(formData);
-            // console.log("this.notificationData ", this.notificationData);
-            let url = "";
-            if (this.roleId == this.globalService.investigator) {
-                url = 'api/notification/getInvestigatorNotificationByInvestigatorID';
-            }
-            else if (this.roleId == this.globalService.gm) {
-                url = 'api/notification/getGMNotificationByGmID';
-            }
-            if (url != "") {
-                // this.globalService.presentLoading();
-                this.globalService.postData(url, formData).subscribe(result => {
-                    if (result['status']) {
-                        this.notificationData = result['data'];
-                    }
-                    // this.globalService.dismissLoading();
-                }), error => {
-                    // this.globalService.dismissLoading();
-                    console.log('error', error);
-                };
-            }
-            else {
-                // this.globalService.dismissLoading();
-                console.log("error");
-            }
+            // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
+            this.globalService.presentLoading();
+            this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
+                if (result && result['row_count'] > 0) {
+                    this.notificationData = result['data'];
+                }
+                else {
+                    this.notificationData = [];
+                }
+                // console.log('this.notificationData ', this.notificationData);
+                this.globalService.dismissLoading();
+            }), error => {
+                this.globalService.dismissLoading();
+                console.log('error', error);
+            };
         });
     }
     //----------------------------------- Load Notification Data ---------------------------------------------------------//
@@ -190,10 +173,10 @@ let NotificationPage = class NotificationPage {
     onDelete() {
         if (this.notificationId.length != 0) {
             this.globalService.presentLoading();
-            let url = 'api/notification/deleteNotificationByNotificationID';
             let formData = new FormData();
+            // console.log('this.notificationId', this.notificationId);
             formData.append("id", JSON.stringify(this.notificationId));
-            this.globalService.postData(url, formData).subscribe(result => {
+            this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(result => {
                 if (result && result['status']) {
                     this.onNotificationLoad();
                 }
@@ -209,15 +192,15 @@ let NotificationPage = class NotificationPage {
     //----------------------------------- Re-direct on detail page --------------------------------------------------------//
     onNotificationDetaliPage(rowID, formId, formType, isSeen) {
         if (formType == this.globalService.formType_user) {
-            this.nav.navigateForward('view/' + formId);
+            // this.nav.navigateForward('view/' + formId);
+            this.nav.navigateForward('incident-details/' + formId);
         }
         else if (formType == this.globalService.formType_investigator) {
             this.nav.navigateForward('investigation-view/' + formId);
         }
         if (isSeen == 0) {
-            this.globalService.getData('api/notification/changeNotificationSeen/' + rowID).
+            this.globalService.getData('notification/changeNotificationSeen/' + rowID).
                 subscribe(result => {
-                console.log('result', result);
                 if (result['status']) {
                     this.sharedService.notViewNotiCount = this.sharedService.notViewNotiCount != 0 ? (this.sharedService.notViewNotiCount - 1) : 0;
                 }
@@ -229,7 +212,7 @@ let NotificationPage = class NotificationPage {
 };
 NotificationPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController },
-    { type: src_app_services_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
+    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
     { type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService }
 ];
 NotificationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
@@ -244,6 +227,132 @@ NotificationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
 
 /***/ }),
 
+/***/ 49481:
+/*!***********************************************************!*\
+  !*** ./src/app/services/shared-service/shared.service.ts ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SharedService": function() { return /* binding */ SharedService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../global-service/global.service */ 89985);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
+
+
+
+
+
+let SharedService = class SharedService {
+    constructor(globalService, actionSheetController, camera) {
+        this.globalService = globalService;
+        this.actionSheetController = actionSheetController;
+        this.camera = camera;
+        this.notViewNotiCount = 0;
+    }
+    getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+    // fileToBase64 = (file) => {
+    //   let image: any;
+    //   let reader = new FileReader();
+    //   reader.onload = (function (file) {
+    //     return function (e) {
+    //       image = e.target.result;
+    //       this.base64Image = e.target.result;
+    //     };
+    //   })(file);
+    //   reader.readAsDataURL(file);
+    // };
+    // convertDataURIToBinary(dataURI) {
+    //   var BASE64_MARKER = ';base64,';
+    //   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    //   var base64 = dataURI.substring(base64Index);
+    //   var raw = window.atob(base64);
+    //   var rawLength = raw.length;
+    //   var array = new Uint8Array(new ArrayBuffer(rawLength));
+    //   for (let i = 0; i < rawLength; i++) {
+    //     array[i] = raw.charCodeAt(i);
+    //   }
+    //   return array;
+    // }
+    mobileUploadImages() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+            let images;
+            const actionSheet = yield this.actionSheetController.create({
+                header: 'Select Image source',
+                buttons: [
+                    {
+                        text: 'Load from Library',
+                        handler: () => {
+                            return images = this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+                        },
+                    },
+                    {
+                        text: 'Use Camera',
+                        handler: () => {
+                            return images = this.pickImage(this.camera.PictureSourceType.CAMERA);
+                        },
+                    },
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                    },
+                ],
+            });
+            yield actionSheet.present();
+        });
+    }
+    pickImage(sourceType) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+            console.log('sourceType', sourceType);
+            const options = {
+                quality: 100,
+                sourceType: sourceType,
+                destinationType: this.camera.DestinationType.DATA_URL,
+                // destinationType: 1,
+                encodingType: 1,
+                mediaType: 0,
+                // encodingType: this.camera.EncodingType.JPEG,
+                // mediaType: this.camera.MediaType.PICTURE,
+            };
+            yield this.camera.getPicture(options).then((imageData) => {
+                console.log('imageData', imageData);
+                // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
+                let image = 'data:image/jpeg;base64,' + imageData;
+                console.log('pickImage', image);
+                return image;
+            }, (err) => {
+                console.log("errOf Image ", err);
+            });
+        });
+    }
+};
+SharedService.ctorParameters = () => [
+    { type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController },
+    { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
+];
+SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+        providedIn: 'root'
+    })
+], SharedService);
+
+
+
+/***/ }),
+
 /***/ 44088:
 /*!***********************************************************!*\
   !*** ./src/app/pages/notification/notification.page.scss ***!
@@ -252,7 +361,7 @@ NotificationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("ion-content .toolbar {\n  background-color: var(--theme-blue-color);\n  align-items: center;\n  align-content: center;\n  color: white;\n  text-align: center;\n  justify-content: center;\n  align-self: center;\n  padding: 40px;\n  font-family: \"mon-bold\";\n  font-size: 19px;\n  text-transform: uppercase;\n}\nion-content .container {\n  background-color: white;\n  border-top-left-radius: 32px;\n  padding: 20px;\n  border-top-right-radius: 32px;\n  margin-top: -25px;\n}\nion-content .container .logo {\n  padding-top: 80px;\n}\nion-content .container ion-item {\n  --inner-padding-end: 0px;\n}\nion-content .container ion-item ion-label {\n  font-family: \"mon-medium\";\n  color: var(--black-color);\n  font-size: 21px;\n}\nion-content .container ion-item ion-input {\n  font-family: \"mon-medium\";\n  color: var(--black-color);\n  font-size: 16px;\n  border: 1px solid #c3c3c3;\n  border-radius: 20px;\n  margin-top: 14px;\n  --padding-top: 12px;\n  --padding-bottom: 12px;\n  --padding-start: 12px;\n  --padding-end: 12px;\n}\nion-content .container .login-btn {\n  width: 100%;\n  border-radius: 23px;\n  --border-radius: 23px;\n  font-family: \"mon-bold\";\n  color: white;\n  --background: var(--theme-blue-color);\n  height: 50px;\n  overflow: hidden;\n  margin-top: 13px;\n  text-transform: capitalize;\n  font-size: 16px;\n  margin-bottom: 8px;\n}\nion-content .container .input-div {\n  margin-top: 25px;\n}\nion-content .back {\n  position: absolute;\n  left: 0;\n  top: 29px;\n  font-family: \"mon-bold\";\n  font-size: 29px;\n}\nion-content .logout {\n  position: absolute;\n  right: 0;\n  top: 29px;\n  font-family: \"mon-bold\";\n  font-size: 29px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vdGlmaWNhdGlvbi5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0k7RUFDRSx5Q0FBQTtFQUNBLG1CQUFBO0VBQ0EscUJBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7RUFDQSx1QkFBQTtFQUNBLGtCQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0FBQU47QUFFSTtFQUNFLHVCQUFBO0VBQ0EsNEJBQUE7RUFDQSxhQUFBO0VBQ0EsNkJBQUE7RUFDQSxpQkFBQTtBQUFOO0FBQ007RUFDRSxpQkFBQTtBQUNSO0FBQ007RUFDRSx3QkFBQTtBQUNSO0FBQVE7RUFDRSx5QkFBQTtFQUNBLHlCQUFBO0VBQ0EsZUFBQTtBQUVWO0FBQVE7RUFDRSx5QkFBQTtFQUNBLHlCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsbUJBQUE7RUFDQSxnQkFBQTtFQUNBLG1CQUFBO0VBQ0Esc0JBQUE7RUFDQSxxQkFBQTtFQUNBLG1CQUFBO0FBRVY7QUFDTTtFQUNFLFdBQUE7RUFDQSxtQkFBQTtFQUNBLHFCQUFBO0VBQ0EsdUJBQUE7RUFDQSxZQUFBO0VBQ0EscUNBQUE7RUFDQSxZQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtFQUNBLDBCQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0FBQ1I7QUFDTTtFQUNFLGdCQUFBO0FBQ1I7QUFFSTtFQUNFLGtCQUFBO0VBQ0EsT0FBQTtFQUNBLFNBQUE7RUFDQSx1QkFBQTtFQUNBLGVBQUE7QUFBTjtBQUVJO0VBQ0Usa0JBQUE7RUFDQSxRQUFBO0VBQ0EsU0FBQTtFQUNBLHVCQUFBO0VBQ0EsZUFBQTtBQUFOIiwiZmlsZSI6Im5vdGlmaWNhdGlvbi5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJpb24tY29udGVudCB7XHJcbiAgICAudG9vbGJhciB7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLXRoZW1lLWJsdWUtY29sb3IpO1xyXG4gICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgICBhbGlnbi1jb250ZW50OiBjZW50ZXI7XHJcbiAgICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgICAgYWxpZ24tc2VsZjogY2VudGVyO1xyXG4gICAgICBwYWRkaW5nOiA0MHB4O1xyXG4gICAgICBmb250LWZhbWlseTogXCJtb24tYm9sZFwiO1xyXG4gICAgICBmb250LXNpemU6IDE5cHg7XHJcbiAgICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XHJcbiAgICB9XHJcbiAgICAuY29udGFpbmVyIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgICAgIGJvcmRlci10b3AtbGVmdC1yYWRpdXM6IDMycHg7XHJcbiAgICAgIHBhZGRpbmc6IDIwcHg7XHJcbiAgICAgIGJvcmRlci10b3AtcmlnaHQtcmFkaXVzOiAzMnB4O1xyXG4gICAgICBtYXJnaW4tdG9wOiAtMjVweDtcclxuICAgICAgLmxvZ28ge1xyXG4gICAgICAgIHBhZGRpbmctdG9wOiA4MHB4O1xyXG4gICAgICB9XHJcbiAgICAgIGlvbi1pdGVtIHtcclxuICAgICAgICAtLWlubmVyLXBhZGRpbmctZW5kOiAwcHg7XHJcbiAgICAgICAgaW9uLWxhYmVsIHtcclxuICAgICAgICAgIGZvbnQtZmFtaWx5OiBcIm1vbi1tZWRpdW1cIjtcclxuICAgICAgICAgIGNvbG9yOiB2YXIoLS1ibGFjay1jb2xvcik7XHJcbiAgICAgICAgICBmb250LXNpemU6IDIxcHg7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGlvbi1pbnB1dCB7XHJcbiAgICAgICAgICBmb250LWZhbWlseTogXCJtb24tbWVkaXVtXCI7XHJcbiAgICAgICAgICBjb2xvcjogdmFyKC0tYmxhY2stY29sb3IpO1xyXG4gICAgICAgICAgZm9udC1zaXplOiAxNnB4O1xyXG4gICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2MzYzNjMztcclxuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcbiAgICAgICAgICBtYXJnaW4tdG9wOiAxNHB4O1xyXG4gICAgICAgICAgLS1wYWRkaW5nLXRvcDogMTJweDtcclxuICAgICAgICAgIC0tcGFkZGluZy1ib3R0b206IDEycHg7XHJcbiAgICAgICAgICAtLXBhZGRpbmctc3RhcnQ6IDEycHg7XHJcbiAgICAgICAgICAtLXBhZGRpbmctZW5kOiAxMnB4O1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgICAubG9naW4tYnRuIHtcclxuICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICBib3JkZXItcmFkaXVzOiAyM3B4O1xyXG4gICAgICAgIC0tYm9yZGVyLXJhZGl1czogMjNweDtcclxuICAgICAgICBmb250LWZhbWlseTogXCJtb24tYm9sZFwiO1xyXG4gICAgICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgICAgICAtLWJhY2tncm91bmQ6IHZhcigtLXRoZW1lLWJsdWUtY29sb3IpO1xyXG4gICAgICAgIGhlaWdodDogNTBweDtcclxuICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgIG1hcmdpbi10b3A6IDEzcHg7XHJcbiAgICAgICAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XHJcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xyXG4gICAgICAgIG1hcmdpbi1ib3R0b206IDhweDtcclxuICAgICAgfVxyXG4gICAgICAuaW5wdXQtZGl2IHtcclxuICAgICAgICBtYXJnaW4tdG9wOiAyNXB4O1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAuYmFjayB7XHJcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgbGVmdDogMDtcclxuICAgICAgdG9wOiAyOXB4O1xyXG4gICAgICBmb250LWZhbWlseTogXCJtb24tYm9sZFwiO1xyXG4gICAgICBmb250LXNpemU6IDI5cHg7XHJcbiAgICB9XHJcbiAgICAubG9nb3V0e1xyXG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgIHJpZ2h0OiAwO1xyXG4gICAgICB0b3A6IDI5cHg7XHJcbiAgICAgIGZvbnQtZmFtaWx5OiBcIm1vbi1ib2xkXCI7XHJcbiAgICAgIGZvbnQtc2l6ZTogMjlweDtcclxuICAgIH1cclxuICB9XHJcbiAgIl19 */");
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJub3RpZmljYXRpb24ucGFnZS5zY3NzIn0= */");
 
 /***/ }),
 
@@ -264,7 +373,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Notification</ion-text>\n    <ion-buttons class='back'>\n      <ion-button (click)=\"goBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"logOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-card *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-card-content>\n        <ion-row>\n          <ion-col size=\"2\">\n            <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n          </ion-col>\n          <ion-col size=\"10\"\n            (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n            {{notification.message}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n    \n  </div>\n</ion-content>");
 
 /***/ })
 

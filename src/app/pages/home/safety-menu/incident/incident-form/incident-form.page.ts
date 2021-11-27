@@ -424,55 +424,46 @@ export class IncidentFormPage implements OnInit {
   }
 
   pickImage(sourceType, tabName) {
-    console.log('second');
     this.loadingService.presentLoading();
     let image: any;
 
     const options: CameraOptions = {
       quality: 100,
-      destinationType: 2,
       sourceType: sourceType,
-      encodingType: 1,
-      mediaType: 0,
-      // quality: 100,
-      // sourceType: sourceType,
-      // destinationType: this.camera.DestinationType.DATA_URL,
-      // encodingType: this.camera.EncodingType.JPEG,
-      // mediaType: this.camera.MediaType.PICTURE,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
     };
-    console.log('options', options);
     this.camera.getPicture(options).then(
       (imageData) => {
-        console.log('thrid', imageData);
-
-
-        // this.sharedService.getBase64(imageData).then(data => {
-        //   image = data;
-        // })
-
-
-        // this.filePath.resolveNativePath(imageData)
-        //   .then(filePath => {
-        //     console.log('filePath', filePath);
-        //     image = filePath;
-        //   })
-        //   .catch(err => console.log(err));
-
-
-        image = imageData;
+        // image = imageData;
         image = 'data:image/jpeg;base64,' + imageData;
-
-        console.log('fourth', image);
-
         if (image != '' || image != undefined) {
+
           if (tabName == 'PhotoGraphy') {
             this.photoGraphy.push(image);
-            console.log('fivth', this.photoGraphy);
           }
+
           if (tabName == 'Alcohol') {
             this.alcohalImages.push(image);
-            console.log(' this.alcohalImages', this.alcohalImages);
           }
+
+          if (tabName == 'Drug') {
+            this.drugTestImages.push(image);
+          }
+
+          if (tabName == 'ReturnToAlternateDuty') {
+            this.alterDutyImages.push(image);
+          }
+
+          if (tabName == 'ChemicalImage') {
+            this.chemicalImages.push(image);
+          }
+
+          if (tabName == 'DamageImage') {
+            this.damageImages.push(image);
+          }
+
           this.loadingService.dismissLoading();
         } else {
           console.log('Error in image processing.');
@@ -495,13 +486,13 @@ export class IncidentFormPage implements OnInit {
         {
           text: 'Load from Library',
           handler: () => {
-            this.pickImage(0, tabName);
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, tabName);
           },
         },
         {
           text: 'Use Camera',
           handler: () => {
-            this.pickImage(1, tabName);
+            this.pickImage(this.camera.PictureSourceType.CAMERA, tabName);
           },
         },
         {
@@ -514,14 +505,13 @@ export class IncidentFormPage implements OnInit {
   }
 
   async onPhotoGraphy(event, type) {
-
     if (type == 1) {
       this.mobileUploads('PhotoGraphy');
     } else if (type == 2) {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            this.photoGraphyObject[i] = data
+            // this.photoGraphyObject[i] = data
             if (this.photoGraphy.length <= 0) {
               this.photoGraphy.push(data);
             } else {
@@ -542,6 +532,7 @@ export class IncidentFormPage implements OnInit {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
             // this.alcohalImagesObject[i] = data
+            console.log('alcohalImages',this.alcohalImages);
             if (this.alcohalImages.length <= 0) {
               this.alcohalImages.push(data);
             } else {
@@ -560,18 +551,23 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onDrugTestImage(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[i]).then(
-        data => {
-          if (this.drugTestImages.length <= 0) {
-            this.drugTestImages.push(data);
-          } else {
-            this.drugTestImages.unshift(data);
-          }
-        }).catch(error => {
-          console.log('error', error);
-        });
+  onDrugTestImage(event, type) {
+    if (type == 1) {
+      this.mobileUploads('Drug');
+    } else if (type == 2) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.sharedService.getBase64(event.target.files[i]).then(
+          data => {
+            // this.drugTestImagesObject[i] = data
+            if (this.drugTestImages.length <= 0) {
+              this.drugTestImages.push(data);
+            } else {
+              this.drugTestImages.unshift(data);
+            }
+          }).catch(error => {
+            console.log('error', error);
+          });
+      }
     }
   }
 
@@ -581,20 +577,23 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onReturnToDutyImage(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[i]).then(
-        data => {
-          // this.alterDutyImagesObject[i] = data
-          // this.alterDutyImages.push(data);
-          if (this.alterDutyImages.length <= 0) {
-            this.alterDutyImages.push(data);
-          } else {
-            this.alterDutyImages.unshift(data);
-          }
-        }).catch(error => {
-          console.log('error', error);
-        });
+  onReturnToDutyImage(event, type) {
+    if (type == 1) {
+      this.mobileUploads('ReturnToAlternateDuty');
+    } else if (type == 2) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.sharedService.getBase64(event.target.files[i]).then(
+          data => {
+            // this.alterDutyImagesObject[i] = data;
+            if (this.alterDutyImages.length <= 0) {
+              this.alterDutyImages.push(data);
+            } else {
+              this.alterDutyImages.unshift(data);
+            }
+          }).catch(error => {
+            console.log('error', error);
+          });
+      }
     }
   }
 
@@ -604,22 +603,33 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onChemicalImageSelect(event) {
-    console.log('onChemicalImageSelect 1', event);
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[i]).then(
-        data => {
-          console.log('onChemicalImageSelect 2', data);
-          if (this.chemicalImages.length <= 0) {
-            this.chemicalImages.push(data);
-          } else {
-            this.chemicalImages.unshift(data);
-          }
-        }).catch(error => {
-          console.log('error', error);
-        });
+  onChemicalImageSelect(event, type) {
+    if (type == 1) {
+      this.mobileUploads('ChemicalImage');
+    } else if (type == 2) {
+      console.log('onChemicalImageSelect 1', event);
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.sharedService.getBase64(event.target.files[i]).then(
+          data => {
+            console.log('onChemicalImageSelect 2', data);
+            // this.chemicalImagesObject[i] = data;
+            if (this.chemicalImages.length <= 0) {
+              this.chemicalImages.push(data);
+            } else {
+              this.chemicalImages.unshift(data);
+            }
+          }).catch(error => {
+            console.log('error', error);
+          });
+      }
     }
-    this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
+
+    let image = {
+      chemical_photo: this.chemicalImagesObject
+    }
+
+    this.enviornmentForm.controls['chemical_details'].patchValue(image);
+    // this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
   }
 
   onInsertImageSelect(event) {
@@ -628,22 +638,24 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onSelectDamageImage(event) {
-    // this.damageImages = [];
-    // this.damageImagesObject = {};
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[i]).then(
-        data => {
-          // this.damageImagesObject[i] = data
-          // this.damageImages.push(data);
-          if (this.damageImages.length <= 0) {
-            this.damageImages.push(data);
-          } else {
-            this.damageImages.unshift(data);
-          }
-        }).catch(error => {
-          console.log('error', error);
-        });
+  onSelectDamageImage(event, type) {
+    if (type == 1) {
+      this.mobileUploads('DamageImage');
+    } else if (type == 2) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.sharedService.getBase64(event.target.files[i]).then(
+          data => {
+            // this.damageImagesObject[i] = data
+            // this.damageImages.push(data);
+            if (this.damageImages.length <= 0) {
+              this.damageImages.push(data);
+            } else {
+              this.damageImages.unshift(data);
+            }
+          }).catch(error => {
+            console.log('error', error);
+          });
+      }
     }
   }
 

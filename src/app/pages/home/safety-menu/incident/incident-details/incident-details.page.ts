@@ -36,7 +36,7 @@ export class IncidentDetailsPage implements OnInit {
   }
 
   loadData() {
-    this.loadingService.presentLoading();
+    // this.loadingService.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
         this.global.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
@@ -45,15 +45,15 @@ export class IncidentDetailsPage implements OnInit {
             this.incidentDetails = result['data'][0];
             this.classificationList = this.incidentDetails['classification_value'].split(',');
           }
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
         }), error => {
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
           console.log(error);
         }
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
       }
     ), error => {
-      this.loadingService.dismissLoading()
+      // this.loadingService.dismissLoading()
       console.log('param error', error)
     }
   }

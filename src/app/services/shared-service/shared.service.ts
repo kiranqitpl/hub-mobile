@@ -50,7 +50,6 @@ export class SharedService {
   //   return array;
   // }
 
-
   async mobileUploadImages() {
     let images: any;
     const actionSheet = await this.actionSheetController.create({
@@ -83,18 +82,15 @@ export class SharedService {
       quality: 100,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
-      // destinationType: 1,
-      encodingType: 1,
-      mediaType: 0,
-      // encodingType: this.camera.EncodingType.JPEG,
-      // mediaType: this.camera.MediaType.PICTURE,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
     };
     await this.camera.getPicture(options).then(
       (imageData) => {
         console.log('imageData', imageData);
         // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
         let image = 'data:image/jpeg;base64,' + imageData;
-        console.log('pickImage',image);
+        console.log('pickImage', image);
         return image;
       },
       (err) => {

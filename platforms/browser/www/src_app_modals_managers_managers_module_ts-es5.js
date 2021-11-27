@@ -341,6 +341,193 @@
         declarations: [_managers_page__WEBPACK_IMPORTED_MODULE_1__.ManagersPage]
       })], _ManagersPageModule);
       /***/
+    },
+
+    /***/
+    58127:
+    /*!**************************************************!*\
+      !*** ./src/app/modals/managers/managers.page.ts ***!
+      \**************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "ManagersPage": function ManagersPage() {
+          return (
+            /* binding */
+            _ManagersPage
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! !raw-loader!./managers.page.html */
+      72329);
+      /* harmony import */
+
+
+      var _managers_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./managers.page.scss */
+      80248);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @ionic/angular */
+      80476);
+      /* harmony import */
+
+
+      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ../../services/global-service/global.service */
+      89985);
+      /* harmony import */
+
+
+      var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! rxjs */
+      26215);
+
+      var _ManagersPage = /*#__PURE__*/function () {
+        function ManagersPage(modal, global) {
+          _classCallCheck(this, ManagersPage);
+
+          this.modal = modal;
+          this.global = global;
+          this.newList = new rxjs__WEBPACK_IMPORTED_MODULE_3__.BehaviorSubject([]);
+        }
+
+        _createClass(ManagersPage, [{
+          key: "ionViewWillEnter",
+          value: function ionViewWillEnter() {}
+        }, {
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            // console.log('get list in modal', this.list);
+            this.newList.next(this.list);
+          }
+        }, {
+          key: "onSearch",
+          value: function onSearch(event) {
+            var _this = this;
+
+            var value = false;
+            this.list.forEach(function (element) {
+              if (element.full_name == _this.term) {
+                value = true;
+              }
+            });
+
+            if (value == false && event != '') {
+              this.global.getData("user/getallemployee/" + event.detail.value).subscribe(function (res) {
+                if (res && res.data && res.data.length > 0) {
+                  res.data.unshift({
+                    full_name: "Other",
+                    employee_id: '0'
+                  });
+
+                  _this.newList.next(res.data);
+                } else {
+                  _this.newList.next(_this.list);
+                }
+              }, function (err) {
+                console.log(err);
+              });
+            }
+          }
+        }, {
+          key: "close",
+          value: function close(item) {
+            this.modal.dismiss(item);
+          }
+        }]);
+
+        return ManagersPage;
+      }();
+
+      _ManagersPage.ctorParameters = function () {
+        return [{
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ModalController
+        }, {
+          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+        }];
+      };
+
+      _ManagersPage.propDecorators = {
+        header: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+          args: ['header']
+        }],
+        list: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+          args: ['list']
+        }]
+      };
+      _ManagersPage = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+        selector: 'app-managers',
+        template: _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_managers_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
+      })], _ManagersPage);
+      /***/
+    },
+
+    /***/
+    80248:
+    /*!****************************************************!*\
+      !*** ./src/app/modals/managers/managers.page.scss ***!
+      \****************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "ion-input {\n  color: white !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hbmFnZXJzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF3QkE7RUFDRSx1QkFBQTtBQXZCRiIsImZpbGUiOiJtYW5hZ2Vycy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBpb24taGVhZGVyIHtcbi8vICAgaW9uLXRpdGxlIHtcbi8vICAgICBmb250LWZhbWlseTogbW9uLWJvbGQ7XG4vLyAgIH1cbi8vIH1cbi8vIGlvbi1jb250ZW50IHtcbi8vICAgaW9uLWl0ZW0ge1xuLy8gICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjY2NjY2NjO1xuLy8gICAgIGlvbi1sYWJlbCB7XG4vLyAgICAgICBmb250LWZhbWlseTogJ21vbi1tZWRpdW0nO1xuLy8gICAgICAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XG4vLyAgICAgfVxuLy8gICB9XG4vLyAgIGlvbi1pbnB1dHtcblxuLy8gICAgIGJhY2tncm91bmQ6IHZhcigtLXRoZW1lLXdoaXRlLWNvbG9yKTtcbi8vICAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xuLy8gICAgIGZvbnQtZmFtaWx5OiAnbW9uLW1lZGl1bSc7XG4vLyAgICAgaGVpZ2h0OiA1MnB4O1xuLy8gICAgIG1hcmdpbi10b3A6IDE4cHg7XG5cbi8vICAgfVxuLy8gfVxuXG5pb24taW5wdXQge1xuICBjb2xvcjogd2hpdGUgIWltcG9ydGFudDtcbn1cbiJdfQ== */";
+      /***/
+    },
+
+    /***/
+    72329:
+    /*!******************************************************************************************!*\
+      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modals/managers/managers.page.html ***!
+      \******************************************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>{{header}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"close()\">\n        <ion-icon name=\"close\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ion-input placeholder=\"Search\" [(ngModel)]=\"term\" (ionChange)=\"onSearch($event)\"></ion-input>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list>\n    <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"close(item)\"\n      *ngFor=\"let item of  newList.value |filter:term\">\n      <ion-label>{{item?.full_name}}</ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>\n";
+      /***/
     }
   }]);
 })();

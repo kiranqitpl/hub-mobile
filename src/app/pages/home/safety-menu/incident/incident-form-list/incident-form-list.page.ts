@@ -55,7 +55,7 @@ export class IncidentFormListPage implements OnInit {
           }
         })
         this.rows = result.data;
-        console.log('this.rows', this.rows);
+        // console.log('this.rows', this.rows);
       }
       // this.loadingService.dismissLoading();
     }, err => {
@@ -70,12 +70,11 @@ export class IncidentFormListPage implements OnInit {
   }
 
   onGoToEdit(rowData) {
-    console.log('rowData', rowData);
-    this.nav.navigateRoot("/incident-form-edit/" + rowData.id)
+    this.nav.navigateRoot("/home/safety-menu/incident-form-edit/" + rowData.id)
   }
 
   onGoToDetails(rowId) {
-    this.nav.navigateRoot("/incident-details/" + rowId);
+    this.nav.navigateRoot("/home/safety-menu/incident-details/" + rowId);
   }
 
   onAssignInvestigator(event, rowData) {
