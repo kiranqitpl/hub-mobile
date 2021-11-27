@@ -712,6 +712,153 @@
     },
 
     /***/
+    96022:
+    /*!*********************************************************!*\
+      !*** ./src/app/services/alert-service/alert.service.ts ***!
+      \*********************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "AlertService": function AlertService() {
+          return (
+            /* binding */
+            _AlertService
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @ionic/angular */
+      80476);
+
+      var _AlertService = /*#__PURE__*/function () {
+        function AlertService(alertCtrl, navCtrl) {
+          _classCallCheck(this, AlertService);
+
+          this.alertCtrl = alertCtrl;
+          this.navCtrl = navCtrl;
+        }
+
+        _createClass(AlertService, [{
+          key: "alertWithBack",
+          value: function alertWithBack(message) {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+              var _this = this;
+
+              var alert;
+              return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                  switch (_context3.prev = _context3.next) {
+                    case 0:
+                      _context3.next = 2;
+                      return this.alertCtrl.create({
+                        cssClass: 'alert-message',
+                        header: 'Alert !',
+                        backdropDismiss: false,
+                        message: message,
+                        animated: true,
+                        buttons: [{
+                          text: 'Ok',
+                          role: 'Ok',
+                          handler: function handler() {
+                            _this.navCtrl.back();
+                          }
+                        }]
+                      });
+
+                    case 2:
+                      alert = _context3.sent;
+                      _context3.next = 5;
+                      return alert.present();
+
+                    case 5:
+                    case "end":
+                      return _context3.stop();
+                  }
+                }
+              }, _callee3, this);
+            }));
+          }
+        }, {
+          key: "alert",
+          value: function alert(message) {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+              var alert;
+              return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                while (1) {
+                  switch (_context4.prev = _context4.next) {
+                    case 0:
+                      _context4.next = 2;
+                      return this.alertCtrl.create({
+                        cssClass: 'alert-message',
+                        header: 'Alert !',
+                        backdropDismiss: false,
+                        message: message,
+                        animated: true,
+                        buttons: [{
+                          text: 'Ok',
+                          role: 'Ok',
+                          handler: function handler() {}
+                        }]
+                      });
+
+                    case 2:
+                      alert = _context4.sent;
+                      _context4.next = 5;
+                      return alert.present();
+
+                    case 5:
+                    case "end":
+                      return _context4.stop();
+                  }
+                }
+              }, _callee4, this);
+            }));
+          }
+        }]);
+
+        return AlertService;
+      }();
+
+      _AlertService.ctorParameters = function () {
+        return [{
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.AlertController
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.NavController
+        }];
+      };
+
+      _AlertService = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root'
+      })], _AlertService);
+      /***/
+    },
+
+    /***/
     45311:
     /*!*********************************************************!*\
       !*** ./src/app/services/toast-service/toast.service.ts ***!
@@ -765,13 +912,13 @@
         _createClass(ToastService, [{
           key: "presentToast",
           value: function presentToast(msg) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
               var toast;
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
                 while (1) {
-                  switch (_context3.prev = _context3.next) {
+                  switch (_context5.prev = _context5.next) {
                     case 0:
-                      _context3.next = 2;
+                      _context5.next = 2;
                       return this.toastController.create({
                         message: msg,
                         duration: 2000,
@@ -780,27 +927,27 @@
                       });
 
                     case 2:
-                      toast = _context3.sent;
+                      toast = _context5.sent;
                       toast.present();
 
                     case 4:
                     case "end":
-                      return _context3.stop();
+                      return _context5.stop();
                   }
                 }
-              }, _callee3, this);
+              }, _callee5, this);
             }));
           }
         }, {
           key: "toast",
           value: function toast(msg, type) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
               var toast;
-              return regeneratorRuntime.wrap(function _callee4$(_context4) {
+              return regeneratorRuntime.wrap(function _callee6$(_context6) {
                 while (1) {
-                  switch (_context4.prev = _context4.next) {
+                  switch (_context6.prev = _context6.next) {
                     case 0:
-                      _context4.next = 2;
+                      _context6.next = 2;
                       return this.toastController.create({
                         message: msg,
                         duration: 2000,
@@ -809,15 +956,15 @@
                       });
 
                     case 2:
-                      toast = _context4.sent;
+                      toast = _context6.sent;
                       toast.present();
 
                     case 4:
                     case "end":
-                      return _context4.stop();
+                      return _context6.stop();
                   }
                 }
-              }, _callee4, this);
+              }, _callee6, this);
             }));
           }
         }]);

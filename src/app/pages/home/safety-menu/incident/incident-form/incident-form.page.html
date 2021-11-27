@@ -88,13 +88,16 @@
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
-
-        <div *ngIf="globalService.platform === 'cordova'">
-          <ion-button class="camera" expand="block" (click)="onPhotoGraphy($event, 1)">Upload Image</ion-button>
-        </div>
-        <div *ngIf="globalService.platform === 'browser'">
-          <input type='file' value="photography_image" multiple (change)="onPhotoGraphy($event, 2)">
-        </div>
+        <ion-row>
+          <ion-col size="12">
+            <div *ngIf="globalService.platform === 'cordova'">
+              <ion-button class="camera" expand="block" (click)="onPhotoGraphy($event, 1)">Upload Image</ion-button>
+            </div>
+            <div *ngIf="globalService.platform === 'browser'">
+              <input type='file' value="photography_image" multiple (change)="onPhotoGraphy($event, 2)">
+            </div>
+          </ion-col>
+        </ion-row>
 
         <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="photoGraphy.length > 0">
           <ion-slide *ngFor="let photographyImage of photoGraphy; let i = index">
@@ -150,12 +153,6 @@
                 <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
-
-            <!-- <ion-select placeholder="Please select witness" interface="action-sheet"
-              formControlName="was_there_any_witness_of_the_incident" (ionChange)="onIncDesWitnessChange($event)">
-              <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
-                {{witnesskeys?.full_name}}</ion-select-option>
-            </ion-select> -->
           </ion-item>
 
           <div *ngIf="incidentDesForm.value['was_there_any_witness_of_the_incident'] == 'Other'"
@@ -341,7 +338,7 @@
 
             <div *ngIf="globalService.platform === 'cordova'">
               <ion-button class=" camera" expand="block" (click)="onReturnToDutyImage($event, 1)">Upload Image
-              </ion-button> 
+              </ion-button>
             </div>
 
             <div *ngIf="globalService.platform === 'browser'">
@@ -365,7 +362,6 @@
                 </ion-grid>
               </ion-slide>
             </ion-slides>
-
           </div>
 
           <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->

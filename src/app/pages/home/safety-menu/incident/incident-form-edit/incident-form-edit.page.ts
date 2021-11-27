@@ -798,14 +798,12 @@ export class IncidentFormEditPage implements OnInit {
     console.log('options', options);
     this.camera.getPicture(options).then(
       (imageData) => {
-        // image = imageData;
         image = 'data:image/jpeg;base64,' + imageData;
-        console.log('image', image);
         if (image != '' || image != undefined) {
 
           if (tabName == 'PhotoGraphy') {
             console.log(' this.photoGraphy', this.photoGraphy);
-            if (this.photoGraphy.length <= 0) {
+            if (this.photoGraphy.length < 0) {
               this.photoGraphy.push(image);
             } else {
               this.photoGraphy.unshift(image);
@@ -813,23 +811,43 @@ export class IncidentFormEditPage implements OnInit {
           }
 
           if (tabName == 'Alcohol') {
-            this.alcohalImages.push(image);
+            if (this.alcohalImages.length < 0) {
+              this.alcohalImages.push(image);
+            } else {
+              this.alcohalImages.unshift(image);
+            }
           }
 
           if (tabName == 'Drug') {
-            this.drugTestImages.push(image);
+            if (this.drugTestImages.length < 0) {
+              this.drugTestImages.push(image);
+            } else {
+              this.drugTestImages.unshift(image);
+            }
           }
 
           if (tabName == 'ReturnToAlternateDuty') {
-            this.alterDutyImages.push(image);
+            if (this.alterDutyImages.length < 0) {
+              this.alterDutyImages.push(image);
+            } else {
+              this.alterDutyImages.unshift(image);
+            }
           }
 
           if (tabName == 'ChemicalImage') {
-            this.chemicalImages.push(image);
+            if (this.chemicalImages.length < 0) {
+              this.chemicalImages.push(image);
+            } else {
+              this.chemicalImages.unshift(image);
+            }
           }
 
           if (tabName == 'DamageImage') {
-            this.damageImages.push(image);
+            if (this.damageImages.length < 0) {
+              this.damageImages.push(image);
+            } else {
+              this.damageImages.unshift(image);
+            }
           }
 
           this.loadingService.dismissLoading();
@@ -998,11 +1016,9 @@ export class IncidentFormEditPage implements OnInit {
     if (type == 1) {
       this.mobileUploads('ChemicalImage');
     } else if (type == 2) {
-      console.log('onChemicalImageSelect 1', event);
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            console.log('onChemicalImageSelect 2', data);
             // this.chemicalImagesObject[i] = data;
             if (this.chemicalImages.length <= 0) {
               this.chemicalImages.push(data);
@@ -1031,10 +1047,6 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   onImageDelete(index, tabName) {
-
-    console.log('index', index);
-    console.log('tabName', tabName);
-
     if (tabName == 'Photography') {
       this.photoGraphy.splice(index, 1);
     }
@@ -1061,7 +1073,6 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   async onOpenIncidentModal() {
-    console.log('onOpenIncidentModal');
     const modal = await this.modalController.create({
       component: ManagersPage,
       componentProps: {
@@ -1080,7 +1091,6 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   async onOpenIncDesModal() {
-    console.log('onOpenIncidentModal');
     const modal = await this.modalController.create({
       component: ManagersPage,
       componentProps: {
@@ -1099,7 +1109,6 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   async onOpenClassiModal(headerName) {
-    console.log('onOpenIncidentModal');
     let list = [];
     if (headerName == 'Supervisor List') {
       list = this.superVisorList;

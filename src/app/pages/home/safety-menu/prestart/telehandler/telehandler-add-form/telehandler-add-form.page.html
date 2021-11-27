@@ -3,7 +3,6 @@
   <div class="container" [formGroup]="teleHandlerForm">
 
     <ion-card>
-
       <ion-radio-group formControlName="competency" (ionChange)="onCompetency($event)">
         <ion-row>
           <ion-col size="12">
@@ -298,13 +297,13 @@
           <ion-col size="12">
             Verify Equipment Inspections are Current :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -374,13 +373,13 @@
           <ion-col size="12">
             Coolant Level :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -449,13 +448,13 @@
           <ion-col size="12">
             Belts and Hoses :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -524,13 +523,13 @@
           <ion-col size="12">
             <span class="error">* </span> Wheels, Tyres and nuts :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -603,13 +602,13 @@
           <ion-col size="12">
             <span class="error">* </span> Fire-Extinguisher :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -681,13 +680,13 @@
           <ion-col size="12">
             <span class="error">* </span> Fuel Flash Screen: in Place :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -758,13 +757,13 @@
           <ion-col size="12">
             <span class="error">* </span> Hydraulics Functional and No Leaks :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -836,13 +835,13 @@
           <ion-col size="12">
             <span class="error">* </span> Boom, Lift Arms, Extending Structure :
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label> Ok</ion-label>
               <ion-radio slot="start" value="Ok"></ion-radio>
             </ion-item>
           </ion-col>
-          <ion-col size-md="6" size-lg="4">
+          <ion-col size-md="6" size-lg="6">
             <ion-item lines="none">
               <ion-label>Faulty</ion-label>
               <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -912,19 +911,19 @@
       <ion-row>
         In place / Correctly Tensioned
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="chain_hose">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Chain and Hose Guards :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -932,7 +931,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.chain_hose.errors?.required">
         Please select value.
       </ion-item>
@@ -995,19 +994,19 @@
       <ion-row>
         <ion-col> In place</ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="cap_bolts">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Mast Cap Bolts :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1015,7 +1014,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.cap_bolts.errors?.required">
         Please select value.
       </ion-item>
@@ -1078,19 +1077,19 @@
       <ion-row>
         <ion-col size="12">In place and secure</ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="safety_stops">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Safety Stops and Latches :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1098,7 +1097,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.safety_stops.errors?.required">
         Please select value.
       </ion-item>
@@ -1161,19 +1160,19 @@
       <ion-row>
         <ion-col size="12"> In place</ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="forks">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Forks :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1181,7 +1180,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.forks.errors?.required">
         Please select value.
       </ion-item>
@@ -1244,23 +1243,23 @@
       </ion-row>
       <ion-item lines="none">
         <ion-radio-group formControlName="overhead_guards">
-          <ion-row>
+          <!-- <ion-row> -->
             <ion-col size="12">
               <span class="error">* </span> Overhead Guards :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
               </ion-item>
             </ion-col>
-          </ion-row>
+          <!-- </ion-row> -->
         </ion-radio-group>
       </ion-item>
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.overhead_guards.errors?.required">
@@ -1327,19 +1326,19 @@
           In place / Condition
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="counterweight">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Counterweight / Counterweight bolts :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1347,7 +1346,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.counterweight.errors?.required">
         Please select value.
       </ion-item>
@@ -1369,7 +1368,6 @@
         <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.counterweight_comment.value  == ''">
           Please enter comment.
         </ion-item>
-
 
         <ion-row *ngIf="globalService.platform === 'cordova'">
           <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'counterweight_image')">
@@ -1413,19 +1411,19 @@
           Condition / Leaks
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="engine_bay_components">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Engine Bay Components :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1433,7 +1431,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.engine_bay_components.errors?.required">
         Please select value.
       </ion-item>
@@ -1500,19 +1498,19 @@
           Operating
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="horn">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Horn :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1520,7 +1518,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.horn.errors?.required">
         Please select value.
       </ion-item>
@@ -1578,7 +1576,7 @@
         </ion-slides>
       </div>
 
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="audible">
           <ion-row>
             <ion-col size="12">
@@ -1598,7 +1596,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.audible.errors?.required">
         Please select value.
       </ion-item>
@@ -1656,19 +1654,19 @@
         </ion-slides>
       </div>
 
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="headlights">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Headlights :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1676,7 +1674,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.headlights.errors?.required">
         Please select value.
       </ion-item>
@@ -1736,19 +1734,19 @@
         </ion-slides>
       </div>
 
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="turn_signals">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Turn Signals :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1756,7 +1754,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.turn_signals.errors?.required">
         Please select value.
       </ion-item>
@@ -1815,19 +1813,19 @@
         </ion-slides>
       </div>
 
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="warning_brake_lights">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Warning / Brake Lights :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1835,7 +1833,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.warning_brake_lights.errors?.required">
         Please select value.
       </ion-item>
@@ -1902,13 +1900,13 @@
             <ion-col size="12">
               <span class="error">* </span> Foot Brake :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -1982,19 +1980,19 @@
           Pedal Holds / Smooth Stop
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="parking_brake">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Parking Brake :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2002,7 +2000,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.parking_brake.errors?.required">
         Please select value.
       </ion-item>
@@ -2067,19 +2065,19 @@
           Holds against Accelerator
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="clutch_gear_shift">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Clutch / Gear Shift :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2087,7 +2085,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.clutch_gear_shift.errors?.required">
         Please select value.
       </ion-item>
@@ -2153,19 +2151,19 @@
           Smooth operation
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="engine_noise">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Engine Noise :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2173,7 +2171,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.engine_noise.errors?.required">
         Please select value.
       </ion-item>
@@ -2238,19 +2236,19 @@
           Sounds Normal
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="dash_gauges">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Dash Gauges :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2258,7 +2256,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.dash_gauges.errors?.required">
         Please select value.
       </ion-item>
@@ -2321,19 +2319,19 @@
 
       </div>
 
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="operational_controls">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> Operational Controls :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2341,7 +2339,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.operational_controls.errors?.required">
         Please select value.
       </ion-item>
@@ -2407,19 +2405,19 @@
           Smooth operation
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="fluid_leaks">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span>Fluid Leaks :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2427,7 +2425,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
 
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.fluid_leaks.errors?.required">
         Please select value.
@@ -2494,19 +2492,19 @@
           Under truck and Near Hoses
         </ion-col>
       </ion-row>
-      <ion-item lines="none">
+      <!-- <ion-item lines="none"> -->
         <ion-radio-group formControlName="first_aid_kit">
           <ion-row>
             <ion-col size="12">
               <span class="error">* </span> First Aid Kit :
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label> Ok</ion-label>
                 <ion-radio slot="start" value="Ok"></ion-radio>
               </ion-item>
             </ion-col>
-            <ion-col size-md="6" size-lg="4">
+            <ion-col size-md="6" size-lg="6">
               <ion-item lines="none">
                 <ion-label>Faulty</ion-label>
                 <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -2514,7 +2512,7 @@
             </ion-col>
           </ion-row>
         </ion-radio-group>
-      </ion-item>
+      <!-- </ion-item> -->
       <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.first_aid_kit.errors?.required">
         Please select value.
       </ion-item>

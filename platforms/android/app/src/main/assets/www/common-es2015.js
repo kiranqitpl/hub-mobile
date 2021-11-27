@@ -440,6 +440,79 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ 96022:
+/*!*********************************************************!*\
+  !*** ./src/app/services/alert-service/alert.service.ts ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AlertService": function() { return /* binding */ AlertService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ 80476);
+
+
+
+let AlertService = class AlertService {
+    constructor(alertCtrl, navCtrl) {
+        this.alertCtrl = alertCtrl;
+        this.navCtrl = navCtrl;
+    }
+    alertWithBack(message) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const alert = yield this.alertCtrl.create({
+                cssClass: 'alert-message',
+                header: 'Alert !',
+                backdropDismiss: false,
+                message: message,
+                animated: true,
+                buttons: [{
+                        text: 'Ok',
+                        role: 'Ok',
+                        handler: () => {
+                            this.navCtrl.back();
+                        }
+                    }]
+            });
+            yield alert.present();
+        });
+    }
+    alert(message) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const alert = yield this.alertCtrl.create({
+                cssClass: 'alert-message',
+                header: 'Alert !',
+                backdropDismiss: false,
+                message: message,
+                animated: true,
+                buttons: [{
+                        text: 'Ok',
+                        role: 'Ok',
+                        handler: () => { }
+                    }]
+            });
+            yield alert.present();
+        });
+    }
+};
+AlertService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.AlertController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_1__.NavController }
+];
+AlertService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root'
+    })
+], AlertService);
+
+
+
+/***/ }),
+
 /***/ 45311:
 /*!*********************************************************!*\
   !*** ./src/app/services/toast-service/toast.service.ts ***!

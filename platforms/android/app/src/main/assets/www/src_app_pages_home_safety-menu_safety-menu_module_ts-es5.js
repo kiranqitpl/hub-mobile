@@ -82,6 +82,28 @@
           });
         }
       }, {
+        path: 'incident-details/:incident_id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./incident/incident-details/incident-details.module */
+          22641)).then(function (m) {
+            return m.IncidentDetailsPageModule;
+          });
+        }
+      }, {
+        path: 'incident-form-edit/:incident_id',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./incident/incident-form-edit/incident-form-edit.module */
+          97694)).then(function (m) {
+            return m.IncidentFormEditPageModule;
+          });
+        }
+      }, {
         path: 'vehicle-hoist-add-form',
         loadChildren: function loadChildren() {
           return Promise.all(
@@ -101,6 +123,17 @@
           /*! ./prestart/telehandler/telehandler-add-form/telehandler-add-form.module */
           4459)).then(function (m) {
             return m.TelehandlerAddFormPageModule;
+          });
+        }
+      }, {
+        path: 'crane-add-form',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_crane_crane-add-form_crane-add-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/crane/crane-add-form/crane-add-form.module */
+          96614)).then(function (m) {
+            return m.CraneAddFormPageModule;
           });
         }
       }];

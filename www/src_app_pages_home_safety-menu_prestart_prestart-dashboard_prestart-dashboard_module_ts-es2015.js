@@ -123,7 +123,7 @@ let PrestartDashboardPage = class PrestartDashboardPage {
                 menuName: 'Telehandler Prestart', route: '/home/safety-menu/telehandler-add-form'
             },
             {
-                menuName: 'Crane Prestart', route: '#'
+                menuName: 'Crane Prestart', route: '/home/safety-menu/crane-add-form'
             },
             {
                 menuName: 'Vehicle Hoist Prestart', route: '/home/safety-menu/vehicle-hoist-add-form'

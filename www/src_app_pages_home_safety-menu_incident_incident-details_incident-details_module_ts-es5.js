@@ -402,7 +402,7 @@
           value: function loadData() {
             var _this = this;
 
-            this.loadingService.presentLoading();
+            // this.loadingService.presentLoading();
             this.activatedRoute.params.subscribe(function (params) {
               _this.global.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(function (result) {
                 console.log('result', result);
@@ -410,19 +410,14 @@
                 if (result && result['data'] && result['data'][0]) {
                   _this.incidentDetails = result['data'][0];
                   _this.classificationList = _this.incidentDetails['classification_value'].split(',');
-                }
+                } // this.loadingService.dismissLoading();
 
-                _this.loadingService.dismissLoading();
               }), function (error) {
-                _this.loadingService.dismissLoading();
-
+                // this.loadingService.dismissLoading();
                 console.log(error);
-              };
-
-              _this.loadingService.dismissLoading();
+              }; // this.loadingService.dismissLoading();
             }), function (error) {
-              _this.loadingService.dismissLoading();
-
+              // this.loadingService.dismissLoading()
               console.log('param error', error);
             };
           }
@@ -628,7 +623,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJpbmNpZGVudC1kZXRhaWxzLnBhZ2Uuc2NzcyJ9 */";
+      __webpack_exports__["default"] = ".image_div {\n  height: 400px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluY2lkZW50LWRldGFpbHMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQUNKIiwiZmlsZSI6ImluY2lkZW50LWRldGFpbHMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmltYWdlX2RpdntcclxuICAgIGhlaWdodDogNDAwcHg7XHJcbn0iXX0= */";
       /***/
     },
 

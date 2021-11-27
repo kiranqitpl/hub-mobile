@@ -227,7 +227,7 @@
             route: '/home/safety-menu/telehandler-add-form'
           }, {
             menuName: 'Crane Prestart',
-            route: '#'
+            route: '/home/safety-menu/crane-add-form'
           }, {
             menuName: 'Vehicle Hoist Prestart',
             route: '/home/safety-menu/vehicle-hoist-add-form'

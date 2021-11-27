@@ -50,16 +50,24 @@ const routes = [
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_login_login_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/login/login.module */ 21053)).then(m => m.LoginPageModule)
     },
     {
-        path: 'home',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_home_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/home.module */ 57994)).then(m => m.HomePageModule)
-    },
-    {
         path: 'dashboard',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_dashboard_dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/dashboard/dashboard.module */ 71659)).then(m => m.DashboardPageModule)
     },
     {
+        path: 'notification',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/notification/notification.module */ 89770)).then(m => m.NotificationPageModule)
+    },
+    {
+        path: 'home',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_home_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/home.module */ 57994)).then(m => m.HomePageModule)
+    },
+    {
         path: 'managers',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modals_managers_managers_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modals/managers/managers.module */ 45108)).then(m => m.ManagersPageModule)
+    },
+    {
+        path: 'image-modal',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modals_image-modal_image-modal_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modals/image-modal/image-modal.module */ 19662)).then(m => m.ImageModalPageModule)
     },
     {
         path: 'investigation',
@@ -70,36 +78,26 @@ const routes = [
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("src_app_pages_investigator_actions_actions_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/investigator/actions/actions.module */ 99230)).then(m => m.ActionsPageModule)
     },
     {
+        path: 'actions-view',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_investigator_actions-view_actions-view_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/investigator/actions-view/actions-view.module */ 2852)).then(m => m.ActionsViewPageModule)
+    },
+    {
         // path: 'investigation-view',
         path: 'investigation-view/:investigation_id',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_investigator_investigation-view_investigation-view_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/investigator/investigation-view/investigation-view.module */ 67078)).then(m => m.InvestigationViewPageModule)
     },
     {
-        path: 'actions-view',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_investigator_actions-view_actions-view_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/investigator/actions-view/actions-view.module */ 2852)).then(m => m.ActionsViewPageModule)
-    },
-    //----------------------------------------------------------- New Routes -----------------------------------------------------------------//
-    {
         path: 'incident-form-list',
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-list_incident-form-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module */ 33606)).then(m => m.IncidentFormListPageModule)
     },
-    {
-        path: 'incident-details/:incident_id',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-details/incident-details.module */ 22641)).then(m => m.IncidentDetailsPageModule)
-    },
-    {
-        path: 'incident-form-edit/:incident_id',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
-    },
-    {
-        path: 'notification',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_notification_notification_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/notification/notification.module */ 89770)).then(m => m.NotificationPageModule)
-    },
-    {
-        path: 'image-modal',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modals_image-modal_image-modal_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modals/image-modal/image-modal.module */ 19662)).then(m => m.ImageModalPageModule)
-    },
-    //------------------------------------------------------------- New Routes -----------------------------------------------------------------//
+    // {
+    //   path: 'incident-details/:incident_id',
+    //   loadChildren: () => import('./pages/home/safety-menu/incident/incident-details/incident-details.module').then(m => m.IncidentDetailsPageModule)
+    // },
+    // {
+    //   path: 'incident-form-edit/:incident_id',
+    //   loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
+    // },
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
@@ -243,22 +241,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": function() { return /* binding */ AppModule; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser */ 39075);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 39895);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ 91841);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/forms */ 3679);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/platform-browser */ 39075);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 39895);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ 91841);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
 /* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/file/ngx */ 20138);
 /* harmony import */ var _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic-native/base64/ngx */ 31531);
 /* harmony import */ var _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/http/ngx */ 68589);
-/* harmony import */ var _ionic_native_action_sheet_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/action-sheet/ngx */ 52062);
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ 55041);
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ 90158);
-/* harmony import */ var _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared-component/header/header.component */ 13998);
-
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ 55041);
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ 90158);
+/* harmony import */ var _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared-component/header/header.component */ 13998);
 
 
 
@@ -275,30 +271,29 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.NgModule)({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_5__.AppComponent],
+AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.NgModule)({
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent],
         entryComponents: [],
         imports: [
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicModule.forRoot(),
-            _app_routing_module__WEBPACK_IMPORTED_MODULE_6__.AppRoutingModule,
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClientModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_13__.ReactiveFormsModule,
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__.BrowserModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicModule.forRoot(),
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule,
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule,
             // RouterModule
         ],
         providers: [{
-                provide: _angular_router__WEBPACK_IMPORTED_MODULE_14__.RouteReuseStrategy,
-                useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicRouteStrategy
+                provide: _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouteReuseStrategy,
+                useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicRouteStrategy
             },
             _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera,
             _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File,
             _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64,
             _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP,
-            _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_7__.HeaderComponent,
-            _ionic_native_action_sheet_ngx__WEBPACK_IMPORTED_MODULE_4__.ActionSheet,
+            _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__.HeaderComponent,
         ],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__.AppComponent],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent],
     })
 ], AppModule);
 

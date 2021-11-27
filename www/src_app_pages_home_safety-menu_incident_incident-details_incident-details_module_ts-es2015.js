@@ -200,7 +200,7 @@ let IncidentDetailsPage = class IncidentDetailsPage {
         this.loadData();
     }
     loadData() {
-        this.loadingService.presentLoading();
+        // this.loadingService.presentLoading();
         this.activatedRoute.params.subscribe((params) => {
             this.global.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
                 console.log('result', result);
@@ -208,14 +208,14 @@ let IncidentDetailsPage = class IncidentDetailsPage {
                     this.incidentDetails = result['data'][0];
                     this.classificationList = this.incidentDetails['classification_value'].split(',');
                 }
-                this.loadingService.dismissLoading();
+                // this.loadingService.dismissLoading();
             }), error => {
-                this.loadingService.dismissLoading();
+                // this.loadingService.dismissLoading();
                 console.log(error);
             };
-            this.loadingService.dismissLoading();
+            // this.loadingService.dismissLoading();
         }), error => {
-            this.loadingService.dismissLoading();
+            // this.loadingService.dismissLoading()
             console.log('param error', error);
         };
     }
@@ -319,7 +319,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJpbmNpZGVudC1kZXRhaWxzLnBhZ2Uuc2NzcyJ9 */");
+/* harmony default export */ __webpack_exports__["default"] = (".image_div {\n  height: 400px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluY2lkZW50LWRldGFpbHMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQUNKIiwiZmlsZSI6ImluY2lkZW50LWRldGFpbHMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmltYWdlX2RpdntcclxuICAgIGhlaWdodDogNDAwcHg7XHJcbn0iXX0= */");
 
 /***/ }),
 
