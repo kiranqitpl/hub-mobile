@@ -27,6 +27,7 @@ export class IncidentFormPage implements OnInit {
 
   imagePath = environment.imageUrl;
   pName: string = 'Add Form';
+  form_percent: number = 0;
 
   witnessList: any = [];
   superVisorList: any = [];
@@ -319,7 +320,7 @@ export class IncidentFormPage implements OnInit {
 
   loadEmployee() {
     this.globalService.getData("user/getallemployee").subscribe((res: any) => {
-      console.log('loadEmployee', res);
+      // console.log('loadEmployee', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.employeeList = res.data;
       } else {
@@ -333,7 +334,7 @@ export class IncidentFormPage implements OnInit {
 
   loadWitness() {
     this.globalService.getData("Witness/getWitnessList").subscribe((res: any) => {
-      console.log('loadWitness', res);
+      // console.log('loadWitness', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.witnessList = res.data;
       } else {
@@ -347,7 +348,7 @@ export class IncidentFormPage implements OnInit {
 
   loadSuperwiser() {
     this.globalService.getData("Supervisor/getSupervisorList").subscribe((res: any) => {
-      console.log('loadSuperwiser', res);
+      // console.log('loadSuperwiser', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.superVisorList = res.data;
       } else {
@@ -375,7 +376,7 @@ export class IncidentFormPage implements OnInit {
 
   loadShift() {
     this.globalService.getData("Shift/get_shift_typelist").subscribe((res: any) => {
-      console.log('loadShift', res);
+      // console.log('loadShift', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.shiftTypeList = res.data;
       } else {
@@ -388,7 +389,7 @@ export class IncidentFormPage implements OnInit {
 
   loadLocation() {
     this.globalService.getData("location/getLocation").subscribe((res: any) => {
-      console.log('getLocation', res);
+      // console.log('getLocation', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.locationList = res.data;
       } else {
@@ -401,7 +402,7 @@ export class IncidentFormPage implements OnInit {
 
   loadBodyPart() {
     this.globalService.getData("Body_part/getbodypart").subscribe((res: any) => {
-      console.log('loadBodyPart', res);
+      // console.log('loadBodyPart', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.bodyPartList = res.data;
       } else {
@@ -532,7 +533,7 @@ export class IncidentFormPage implements OnInit {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
             // this.alcohalImagesObject[i] = data
-            console.log('alcohalImages',this.alcohalImages);
+            console.log('alcohalImages', this.alcohalImages);
             if (this.alcohalImages.length <= 0) {
               this.alcohalImages.push(data);
             } else {

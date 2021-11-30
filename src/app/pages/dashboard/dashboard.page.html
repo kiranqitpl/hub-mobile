@@ -25,4 +25,29 @@
       Logout
     </ion-button>
   </div>
+
+
+  <!-- <ion-grid class="container" >
+    <ion-row>
+      <ion-col class="addForm" (click)="onAddForm()" size="4">
+        <img src="{{imageUrl + 'form.png'}}" />
+        <p class=" addF">ADD FORM</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let tabVal of menu">
+      <ion-col size="4">
+        <ion-button class="btn" [routerLink]="tabVal.route">
+          {{tabVal.menuName}}
+          <ion-badge class="badge" *ngIf="tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0"
+            color="danger">
+            {{sharedService.notViewNotiCount}}</ion-badge>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-button class="btn logouts" (click)="onLogOut()"> Logout</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 </ion-content>

@@ -441,7 +441,7 @@
       /* harmony import */
 
 
-      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/platform-browser */
       39075);
       /* harmony import */
@@ -465,7 +465,7 @@
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -518,12 +518,14 @@
       _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule // RouterModule
+        imports: [_ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule.forRoot(), _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule // RouterModule
         ],
         providers: [{
           provide: _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicRouteStrategy
-        }, _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64, _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP, _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__.HeaderComponent],
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
+        }, // StatusBar,
+        // SplashScreen,
+        _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64, _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP, _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__.HeaderComponent],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent]
       })], _AppModule);
       /***/
@@ -738,12 +740,12 @@
             return this.httpClient.get(this.baseUrl + url, {
               headers: headers
             }); // }
-            // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+            // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
             //   map((response) => {
             //     console.log('response', response);
-            //     if (!response['status']) {
-            //       throw new Error('Value expected!');
-            //     }
+            //     // if (!response['status']) {
+            //     //   throw new Error('Value expected!');
+            //     // }
             //     response;
             //   }),
             //   catchError(() => of())

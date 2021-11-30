@@ -106,6 +106,7 @@
     --max-height: 400px;
     padding-top: calc(100vh - 397px);
 }
+
 .action-sheet-button {
     font-family: mon-medium !important;
 }
@@ -113,15 +114,19 @@
 .alertBtn {
     font-family: mon-medium !important;
 }
+
 .datatable-header {
     font-family: mon-bold;
 }
+
 .datatable-body-cell-label {
     font-family: mon-medium;
 }
+
 .ngx-datatable.material {
     border-radius: 11px;
 }
+
 .datatable-pager {
     font-family: mon-medium;
 }
@@ -129,6 +134,7 @@
 .datatable-pager {
     font-family: mon-medium;
 }
+
 .action-sheet-button {
     font-family: mon-medium;
     text-transform: capitalize;
@@ -150,6 +156,7 @@ ion-content {
         font-size: 19px;
         text-transform: uppercase;
     }
+
     .container {
         // background-color: white;
         background-color: #121212;
@@ -159,6 +166,7 @@ ion-content {
         padding: 20px;
         border-top-right-radius: 32px;
         margin-top: -25px;
+        // align-items: center;
 
         ion-item {
             --inner-padding-end: 0px;
@@ -308,3 +316,14 @@ ion-input {
     height: 200px;
     width: 300px;
 }
+
+.progress-bar {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+ion-item-sliding {
+    background: white;
+    color: black !important;
+}
+

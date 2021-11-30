@@ -35,6 +35,7 @@ export class NotificationPage implements OnInit {
     // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
     this.globalService.presentLoading();
     this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
+      console.log('onNotificationLoad', result);
       if (result && result['row_count'] > 0) {
         this.notificationData = result['data']
       } else {

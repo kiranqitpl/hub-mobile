@@ -1,8 +1,9 @@
 import { AlertController, NavController, Platform } from '@ionic/angular';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { GlobalService } from './services/global-service/global.service';
-
+import { Subject } from 'rxjs/internal/Subject';
+@HostListener('window:resize', ['$event'])
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent {
 
   initializeApp() {
     // console.log('this.platform', this.platform.ready());
+
     if (this.platform.is('cordova')) {
       this.globalService.platform = 'cordova'
       // } else if (this.platform.is('android')) {
@@ -37,7 +39,6 @@ export class AppComponent {
     } else {
       this.globalService.platform = 'browser'
     }
-
 
     document.body.setAttribute('color-theme', 'dark');
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
@@ -58,7 +59,6 @@ export class AppComponent {
         console.log(err);
       })
     });
-
   }
 
   showExitConfirm() {

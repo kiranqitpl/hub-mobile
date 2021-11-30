@@ -23,7 +23,8 @@ export class VehicleHoistAddFormPage implements OnInit {
   logedInUserDetails: any = '';
   showMsg: boolean = false;
   isSubmitted: boolean = false;
-  cursorFocus: any
+  cursorFocus: any;
+  form_percent: number = 0;
 
 
   constructor(
@@ -47,7 +48,7 @@ export class VehicleHoistAddFormPage implements OnInit {
       inspection_certificate_comment: [''],
 
       maintenance_instructions: ['', Validators.required],
-      maintenance_instructions_comment: [''],
+      // maintenance_instructions_comment: [''],
 
       data_plate: ['', Validators.required],
       data_plate_comment: [''],
@@ -96,24 +97,36 @@ export class VehicleHoistAddFormPage implements OnInit {
 
       comment: ['']
     })
-
-    // this.scrollToBottom();
   }
 
-  onTrainedHoist(event) {
+  onStopContinue(event) {
     if (event.detail.value == 'No') {
       this.alertService.alertWithBack('STOP you can cannot conduct a prestart on this piece of equipment until you have been trained and deemed competent, you must see your supervisor.');
     }
   }
 
   onValueChange(event, type) {
+    console.log('length', Object.keys(this.vehicleHoistForm.controls).length);
+    let data = (0.37 / Object.keys(this.vehicleHoistForm.controls).length) * 100;
+    console.log('data', data);
+    this.form_percent = data + this.form_percent;
+
+    console.log('this.form_percent', this.form_percent);
+
+
     // this.content.scrollToBottom(500);
-    this.content.scrollByPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 3000)
- 
-    if (type == 'inspection_certificate' && event.detail.value == 'OK') {
+    this.content.scrollByPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000)
+    if (event.detail.value == 'No') {
+      this.onStopContinue(event);
+    } else if (type == 'inspection_certificate' && event.detail.value == 'OK') {
       this.vehicleHoistForm.controls['inspection_certificate_comment'].reset();
-    } else if (type == 'maintenance_instructions' && event.detail.value == 'OK') {
-      this.vehicleHoistForm.controls['maintenance_instructions_comment'].reset();
+    } else if (type == 'maintenance_instructions') {
+      // if (event.detail.value == 'Yes') {
+      //   this.vehicleHoistForm.controls['maintenance_instructions_comment'].reset();
+      // }
+      if (event.detail.value == 'No') {
+        this.onStopContinue(event);
+      }
     } else if (type == 'data_plate' && event.detail.value == 'OK') {
       this.vehicleHoistForm.controls['data_plate_comment'].reset();
     } else if (type == 'safty_devices' && event.detail.value == 'OK') {
@@ -237,5 +250,10 @@ export class VehicleHoistAddFormPage implements OnInit {
       this.vehicleHoistForm.controls['hoist_controls_comment'].reset();
     }
   }
+
+  onGoToLink(url) {
+    window.open(url, '_blank');
+  }
+
 
 }

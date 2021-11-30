@@ -10,19 +10,19 @@ export class PrestartDashboardPage implements OnInit {
   pName: String = 'Prestart';
   menu = [
     {
-      menuName: 'LV Prestart', route: '#'
+      menuName: 'LV', route: '#'
     },
     {
-      menuName: 'Forklift Prestart', route: '#'
+      menuName: 'Forklift', route: '#'
     },
     {
-      menuName: 'Telehandler Prestart', route: '/home/safety-menu/telehandler-add-form'
+      menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form'
     },
     {
-      menuName: 'Crane Prestart', route: '/home/safety-menu/crane-add-form'
+      menuName: 'Crane', route: '/home/safety-menu/crane-add-form'
     },
     {
-      menuName: 'Vehicle Hoist Prestart', route: '/home/safety-menu/vehicle-hoist-add-form'
+      menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form'
     },
   ];
 

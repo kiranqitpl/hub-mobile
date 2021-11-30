@@ -87,15 +87,15 @@ export class GlobalService {
     // if (this.platform == 'cordova') {
     //   return this.http.get(this.baseUrl + url, '', { headers: headers });
     // } else {
-    return this.httpClient.get(this.baseUrl + url, { headers: headers });
+    return this.httpClient.get(this.baseUrl + url, { headers: headers })
     // }
 
-    // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+    // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
     //   map((response) => {
     //     console.log('response', response);
-    //     if (!response['status']) {
-    //       throw new Error('Value expected!');
-    //     }
+    //     // if (!response['status']) {
+    //     //   throw new Error('Value expected!');
+    //     // }
     //     response;
     //   }),
     //   catchError(() => of())

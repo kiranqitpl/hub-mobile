@@ -243,11 +243,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/platform-browser */ 39075);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser */ 39075);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 39895);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ 91841);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 3679);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
 /* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/file/ngx */ 20138);
 /* harmony import */ var _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic-native/base64/ngx */ 31531);
@@ -276,17 +276,20 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent],
         entryComponents: [],
         imports: [
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__.BrowserModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicModule.forRoot(),
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule.forRoot(),
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule,
             _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule,
             _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HttpClientModule,
             _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule,
             // RouterModule
         ],
-        providers: [{
+        providers: [
+            {
                 provide: _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouteReuseStrategy,
-                useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicRouteStrategy
+                useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
             },
+            // StatusBar,
+            // SplashScreen,
             _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera,
             _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File,
             _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64,
@@ -398,12 +401,12 @@ let GlobalService = class GlobalService {
         // } else {
         return this.httpClient.get(this.baseUrl + url, { headers: headers });
         // }
-        // return this.http.get(this.baseUrl1 + url, { headers: headers }).pipe(
+        // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
         //   map((response) => {
         //     console.log('response', response);
-        //     if (!response['status']) {
-        //       throw new Error('Value expected!');
-        //     }
+        //     // if (!response['status']) {
+        //     //   throw new Error('Value expected!');
+        //     // }
         //     response;
         //   }),
         //   catchError(() => of())

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
@@ -10,12 +10,16 @@ import moment from 'moment';
   templateUrl: './incident-form-list.page.html',
   styleUrls: ['./incident-form-list.page.scss'],
 })
+
+@HostListener('window:resize', ['$event'])
+
 export class IncidentFormListPage implements OnInit {
 
+ getScreenWidth: any;
   pName: String = 'Submitted Forms';
-  rows: any = [];
-  userDetails: any;
+  incidentList: any = [];
   listOfUsers: any = [];
+  userDetails: any;
   getRowData: any;
 
   constructor(
@@ -26,23 +30,28 @@ export class IncidentFormListPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.onResize(window);
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    this.getInvestigatorDetails();
+    // this.getInvestigatorDetails();
     this.loadData();
   }
 
-  getInvestigatorDetails() {
-    this.global.getData("Investigator/getInvestigator").subscribe((result: any) => {
-      if (result && result.data && result.data.length > 0) {
-        this.listOfUsers = result.data;
-      }
-    }, err => {
-      console.log(err)
-    });
+  onResize(event) {
+    this.getScreenWidth = event.innerWidth ? event.innerWidth : event.target.innerWidth;
   }
 
+  // getInvestigatorDetails() {
+  //   this.global.getData("Investigator/getInvestigator").subscribe((result: any) => {
+  //     if (result && result.data && result.data.length > 0) {
+  //       this.listOfUsers = result.data;
+  //     }
+  //   }, err => {
+  //     console.log(err)
+  //   });
+  // }
+
   loadData() {
-    // this.loadingService.presentLoading();
+    this.loadingService.presentLoading();
     let data = JSON.parse(localStorage.getItem('userDetails'));
     this.global.getData('add_form/getIncidentFormlist/' + data.id).subscribe((result: any) => {
       if (result && result.data && result.data.length > 0) {
@@ -54,19 +63,17 @@ export class IncidentFormListPage implements OnInit {
             el.ivalue = el.investigators.investigator_id;
           }
         })
-        this.rows = result.data;
-        // console.log('this.rows', this.rows);
+        this.incidentList = result.data;
       }
-      // this.loadingService.dismissLoading();
+      this.loadingService.dismissLoading();
     }, err => {
-      // this.loadingService.dismissLoading();
+      this.loadingService.dismissLoading();
       console.log(err)
     });
   }
 
-  onActivate(e) {
-    this.getRowData = e.row;
-    localStorage.setItem("singleView", JSON.stringify(e.row));
+  onLoadMore() {
+
   }
 
   onGoToEdit(rowData) {
@@ -77,72 +84,78 @@ export class IncidentFormListPage implements OnInit {
     this.nav.navigateRoot("/home/safety-menu/incident-details/" + rowId);
   }
 
-  onAssignInvestigator(event, rowData) {
-    this.global.presentLoading();
-    let emp_name = '';
-    this.listOfUsers.forEach(data => {
-      if (data.employee_id == event.detail.value) {
-        emp_name = data.full_name;
-      }
-    })
-    const fd = new FormData();
-    // let data = JSON.parse(localStorage.getItem("singleView"));
-    fd.append("incident_id", rowData.id);
-    fd.append("gm_id", this.userDetails.id)
-    fd.append("gm_name", this.userDetails.full_name);
-    fd.append("investigator_id", event.detail.value);
-    fd.append("investigator_name", emp_name);
-    this.global.postData("GeneralManager/assignedInvestigator", fd).subscribe((res: any) => {
-      if (res && res.status) {
-        this.toastService.toast(res.message, 'success');
-      } else {
-        this.toastService.toast(res.message, 'danger');
-      }
-      this.global.dismissLoading();
-    }, err => {
-      console.log(err)
-      this.global.dismissLoading();
-    });
-  }
+  // onActivate(e) {
+  //   this.getRowData = e.row;
+  //   localStorage.setItem("singleView", JSON.stringify(e.row));
+  // }
 
-  onGoToInvestigation(rowData) {
-    // let data = JSON.parse(localStorage.getItem("singleView"));
-    // console.log('data', data);
-    if (rowData.investigation_details !== null && rowData.investigation_details != '') {
-      localStorage.setItem("isInvestigationFrom", "edit");
-    } else {
-      localStorage.setItem("isInvestigationFrom", "add");
-    }
-    this.nav.navigateForward("investigation");
-  }
+  // onAssignInvestigator(event, rowData) {
+  //   this.global.presentLoading();
+  //   let emp_name = '';
+  //   this.listOfUsers.forEach(data => {
+  //     if (data.employee_id == event.detail.value) {
+  //       emp_name = data.full_name;
+  //     }
+  //   })
+  //   const fd = new FormData();
+  //   // let data = JSON.parse(localStorage.getItem("singleView"));
+  //   fd.append("incident_id", rowData.id);
+  //   fd.append("gm_id", this.userDetails.id)
+  //   fd.append("gm_name", this.userDetails.full_name);
+  //   fd.append("investigator_id", event.detail.value);
+  //   fd.append("investigator_name", emp_name);
+  //   this.global.postData("GeneralManager/assignedInvestigator", fd).subscribe((res: any) => {
+  //     if (res && res.status) {
+  //       this.toastService.toast(res.message, 'success');
+  //     } else {
+  //       this.toastService.toast(res.message, 'danger');
+  //     }
+  //     this.global.dismissLoading();
+  //   }, err => {
+  //     console.log(err)
+  //     this.global.dismissLoading();
+  //   });
+  // }
 
-  onViewInvestigation(rowData) {
-    // console.log('this.getRowData ', this.getRowData);
-    if (rowData && rowData.complete_status && rowData.complete_status == "Complete"
-      && rowData.investigation_details && rowData.investigation_details.id) {
-      this.nav.navigateForward("investigation-view/" + rowData.investigation_details.id);
-    } else {
-      this.global.presentToast("You haven't Investigation created")
-    }
-  }
+  // onGoToInvestigation(rowData) {
+  //   // let data = JSON.parse(localStorage.getItem("singleView"));
+  //   // console.log('data', data);
+  //   if (rowData.investigation_details !== null && rowData.investigation_details != '') {
+  //     localStorage.setItem("isInvestigationFrom", "edit");
+  //   } else {
+  //     localStorage.setItem("isInvestigationFrom", "add");
+  //   }
+  //   this.nav.navigateForward("investigation");
+  // }
 
-  onGoToActions(rowData) {
-    // let data = JSON.parse(localStorage.getItem("singleView"))
-    if (rowData.is_investigation_action == true) {
-      localStorage.setItem("isActionsForm", "edit")
-    } else {
-      localStorage.setItem("isActionsForm", "add")
-    }
-    this.nav.navigateForward("actions");
-  }
+  // onViewInvestigation(rowData) {
+  //   // console.log('this.getRowData ', this.getRowData);
+  //   if (rowData && rowData.complete_status && rowData.complete_status == "Complete"
+  //     && rowData.investigation_details && rowData.investigation_details.id) {
+  //     this.nav.navigateForward("investigation-view/" + rowData.investigation_details.id);
+  //   } else {
+  //     this.global.presentToast("You haven't Investigation created")
+  //   }
+  // }
 
-  onViewAction(rowData) {
-    // let data = JSON.parse(localStorage.getItem("singleView"))
-    // console.log('onViewAction', data);
-    if (rowData.is_investigation_action == true) {
-      this.nav.navigateForward("actions-view");
-    } else {
-      this.global.presentToast("You don't have any actions created");
-    }
-  }
+  // onGoToActions(rowData) {
+  //   // let data = JSON.parse(localStorage.getItem("singleView"))
+  //   if (rowData.is_investigation_action == true) {
+  //     localStorage.setItem("isActionsForm", "edit")
+  //   } else {
+  //     localStorage.setItem("isActionsForm", "add")
+  //   }
+  //   this.nav.navigateForward("actions");
+  // }
+
+  // onViewAction(rowData) {
+  //   // let data = JSON.parse(localStorage.getItem("singleView"))
+  //   // console.log('onViewAction', data);
+  //   if (rowData.is_investigation_action == true) {
+  //     this.nav.navigateForward("actions-view");
+  //   } else {
+  //     this.global.presentToast("You don't have any actions created");
+  //   }
+  // }
+
 }

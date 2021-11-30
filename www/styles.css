@@ -2168,3 +2168,16 @@ ion-input {
   height: 200px;
   width: 300px;
 }
+.progress-bar {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+ion-item-sliding {
+  background: white;
+  color: black !important;
+}
+ion-item-option {
+  background: white;
+  color: #1C6AFE !important;
+  font-size: 10px;
+}

@@ -19,17 +19,20 @@ import { HeaderComponent } from './shared-component/header/header.component';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule,
     IonicModule.forRoot(),
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     // RouterModule
   ],
-  providers: [{
-    provide: RouteReuseStrategy,
-    useClass: IonicRouteStrategy
-  },
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    },
+    // StatusBar,
+    // SplashScreen,
     Camera,
     File,
     Base64,
