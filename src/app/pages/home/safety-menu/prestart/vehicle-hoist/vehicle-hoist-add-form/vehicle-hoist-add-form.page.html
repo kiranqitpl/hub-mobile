@@ -2,7 +2,7 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
   <div class="container" #target>
-    <ion-card [formGroup]="vehicleHoistForm">
+    <ion-card [formGroup]="vehicleHoistForm" (ionChange)="onChanges($event)">
 
       <ion-grid>
         <ion-radio-group formControlName="vehicle_host_no" (ionChange)="onValueChange($event, 'vehicle_host_no')">
@@ -47,9 +47,7 @@
           (ionChange)="onValueChange($event, 'inspection_certificate')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span> Certificate of inspection (Current) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -132,9 +130,7 @@
           (ionChange)="onValueChange($event, 'data_plate')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span>Data plate, decals (attached/ readable) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -171,9 +167,7 @@
           (ionChange)="onValueChange($event, 'safty_devices')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span> Safety devices are operational (including E-stop) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -210,9 +204,7 @@
           (ionChange)="onValueChange($event, 'locks_latches')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span> Locks, latches (move freely. Fully engage) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -249,11 +241,7 @@
           (ionChange)="onValueChange($event, 'rubber_pad')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
-              <span class="error">* </span> Rubber pads (attached, good condition on all load
-              points)
-              :
-              <!-- </ion-item> -->
+              <span class="error">* </span> Rubber pads (attached, good condition on all load points) :
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -291,9 +279,7 @@
           (ionChange)="onValueChange($event, 'safty_gaurds')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span> Safety guards (fitted, secure and operational) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -330,10 +316,8 @@
           (ionChange)="onValueChange($event, 'hydraulic_connections')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span>
               Hydraulic connections, hoses (secure, no leaks) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -371,10 +355,8 @@
           (ionChange)="onValueChange($event, 'chain_cable_connection')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none">  -->
               <span class="error">* </span> Chain and cable
               connections (Bends, cracks, lose links or looseness) :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -411,10 +393,7 @@
           (ionChange)="onValueChange($event, 'frayed_cables')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none">  -->
-              <span class="error">* </span> Check for frayed cables
-              (raised and lowered position) :
-              <!-- </ion-item> -->
+              <span class="error">* </span> Check for frayed cables(raised and lowered position) :
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -451,10 +430,8 @@
           (ionChange)="onValueChange($event, 'snap_rings')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none">  -->
               <span class="error">* </span> Check snap rings at all
               rollers and sheaves :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -491,9 +468,7 @@
           (ionChange)="onValueChange($event, 'bolts_nuts')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span> Check bolts, nuts, screws :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -530,10 +505,8 @@
           (ionChange)="onValueChange($event, 'electrical_switch')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none">  -->
               <span class="error">* </span> Check wiring and
               electrical switches for damage :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -572,10 +545,8 @@
           (ionChange)="onValueChange($event, 'hoist_work_area')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span>Hoist and work area is free from grease, oil, corrosive
               substances, slip and trip hazards :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -614,10 +585,7 @@
           (ionChange)="onValueChange($event, 'anchor_bolts')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none">  -->
-              <span class="error">* </span> Check floor for stress
-              cracks near anchor bolts :
-              <!-- </ion-item> -->
+              <span class="error">* </span> Check floor for stress cracks near anchor bolts :
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -656,10 +624,8 @@
           (ionChange)="onValueChange($event, 'swing_arm')">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none"> -->
               <span class="error">* </span> Check swing arm
               restraints :
-              <!-- </ion-item> -->
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -697,10 +663,7 @@
           (ionChange)="onHoistControlChange($event)">
           <ion-row>
             <ion-col size="12">
-              <!-- <ion-item lines="none">  -->
-              <span class="error">* </span> Test all hoist controls
-              and functions :
-              <!-- </ion-item> -->
+              <span class="error">* </span> Test all hoist controls and functions :
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none">
@@ -759,15 +722,14 @@
             </ion-textarea>
           </ion-row>
         </ion-grid>
-
+        
       </ion-grid>
 
       <ion-grid class="progress-bar">
         <ion-progress-bar [type]="'determinate'" [value]="form_percent"></ion-progress-bar>
       </ion-grid>
-
-      <ion-button class="btn" (click)="onSubmit()" [disabled]="vehicleHoistForm.invalid">SUBMIT
-      </ion-button>
+      
+      <ion-button class="btn" (click)="onSubmit()" [disabled]="vehicleHoistForm.invalid">SUBMIT</ion-button>
 
     </ion-card>
   </div>

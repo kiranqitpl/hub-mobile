@@ -40,6 +40,7 @@ export class TelehandlerAddFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.teleHandlerForm = this.fb.group({
 
       competency: [''],

@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { AlertService } from 'src/app/services/alert-service/alert.service';
 import moment from 'moment';
 
+
 @Component({
   selector: 'app-vehicle-hoist-add-form',
   templateUrl: './vehicle-hoist-add-form.page.html',
@@ -23,9 +24,8 @@ export class VehicleHoistAddFormPage implements OnInit {
   logedInUserDetails: any = '';
   showMsg: boolean = false;
   isSubmitted: boolean = false;
-  cursorFocus: any;
   form_percent: number = 0;
-
+  formControlArray = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -97,6 +97,8 @@ export class VehicleHoistAddFormPage implements OnInit {
 
       comment: ['']
     })
+
+    // Object.keys(this.vehicleHoistForm.controls).map((key) => this.formControlArray.push(key));
   }
 
   onStopContinue(event) {
@@ -106,15 +108,8 @@ export class VehicleHoistAddFormPage implements OnInit {
   }
 
   onValueChange(event, type) {
-    console.log('length', Object.keys(this.vehicleHoistForm.controls).length);
-    let data = (0.37 / Object.keys(this.vehicleHoistForm.controls).length) * 100;
-    console.log('data', data);
-    this.form_percent = data + this.form_percent;
-
-    console.log('this.form_percent', this.form_percent);
-
-
     // this.content.scrollToBottom(500);
+
     this.content.scrollByPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000)
     if (event.detail.value == 'No') {
       this.onStopContinue(event);
@@ -161,7 +156,6 @@ export class VehicleHoistAddFormPage implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     if (this.vehicleHoistForm.valid) {
-
       if (this.vehicleHoistForm.value['inspection_certificate'] == 'Faulty' && this.vehicleHoistForm.value['inspection_certificate_comment'] == '') {
         return;
       } else if (this.vehicleHoistForm.value['maintenance_instructions'] == 'Faulty' && this.vehicleHoistForm.value['maintenance_instructions_comment'] == '') {
@@ -241,11 +235,7 @@ export class VehicleHoistAddFormPage implements OnInit {
         count++;
       }
     });
-    if (count > 0) {
-      this.showMsg = true;
-    } else {
-      this.showMsg = false;
-    }
+    this.showMsg = (count > 0) ? true : false;
     if (event.detail.value == 'OK') {
       this.vehicleHoistForm.controls['hoist_controls_comment'].reset();
     }
@@ -253,6 +243,28 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   onGoToLink(url) {
     window.open(url, '_blank');
+  }
+
+  onChanges(event) {
+
+    // console.log('event 1', event.srcElement.attributes.formcontrolname.nodeValue);
+    // console.log('event 2', event.detail.value);
+
+    let data = 0;
+    let value = '';
+
+    if (this.formControlArray.length > 0) {
+      value = this.formControlArray.find(val => val == event.srcElement.attributes.formcontrolname.nodeValue);
+    }
+
+    // if ((this.formControlArray.length >= 0) && (value == '' || value == undefined)) {
+    //   this.formControlArray.push(event.srcElement.attributes.formcontrolname.nodeValue);
+    //   data = (1 / Object.keys(this.vehicleHoistForm.controls).length);
+    //   this.form_percent = event.detail.value == "OK" ? (data + data + this.form_percent) : (data + this.form_percent);
+    // } else if (value != '') {
+    //   this.form_percent = (this.form_percent - data);
+    // }
+
   }
 
 

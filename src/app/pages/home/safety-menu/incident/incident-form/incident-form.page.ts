@@ -1323,30 +1323,9 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-
-
-  selected: any;
-
   onImageClick(event) {
     console.log('event', event);
-    // console.log(document.getElementById("pointer_div").offsetLeft);
-    // // console.log(document.getElementById("pointer_div").offsetTop);
-    // let pos_x = event.offsetX ? (event.offsetX) : event.pageX - document.getElementById("pointer_div").offsetLeft;
-    // let pos_y = event.offsetY ? (event.offsetY) : event.pageY - document.getElementById("pointer_div").offsetTop;
-    let pos_x = event.pageX;
-    let pos_y = event.pageY;
-    console.log('pos_x', pos_x);
-    console.log('pos_y', pos_y);
-    this.selected = [pos_x, pos_y];
-    console.log(JSON.stringify(this.selected));
-    // console.log(typeof(JSON.parse(this.selected) ));
-    // $('.map').maphilight();
-    console.log('  this.selected ', this.selected)
-  }
-
-  isActive(val) {
-    console.log('isActive', val);
-    return JSON.stringify(this.selected) == val;
+    return false;
   }
 
 }

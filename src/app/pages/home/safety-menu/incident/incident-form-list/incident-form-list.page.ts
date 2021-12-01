@@ -15,7 +15,7 @@ import moment from 'moment';
 
 export class IncidentFormListPage implements OnInit {
 
- getScreenWidth: any;
+  getScreenWidth: any;
   pName: String = 'Submitted Forms';
   incidentList: any = [];
   listOfUsers: any = [];
@@ -53,16 +53,35 @@ export class IncidentFormListPage implements OnInit {
   loadData() {
     this.loadingService.presentLoading();
     let data = JSON.parse(localStorage.getItem('userDetails'));
-    this.global.getData('add_form/getIncidentFormlist/' + data.id).subscribe((result: any) => {
+
+    // this.global.getData('add_form/getIncidentFormlist/' + data.id).subscribe((result: any) => {
+    //   if (result && result.data && result.data.length > 0) {
+    //     result?.data?.forEach((el: any, index) => {
+    //       el.created_date = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY")
+    //       el.created_time = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+    //       el.complete_status = (el.complete_status == 0 ? 'Incomplete' : (el.complete_status == 1 ? 'Complete' : ''));
+    //       if (el.investigators && el.investigators.investigator_id && el.investigators.investigator_id !== null) {
+    //         el.ivalue = el.investigators.investigator_id;
+    //       }
+    //     })
+    //     this.incidentList = result.data;
+    //   }
+    //   this.loadingService.dismissLoading();
+    // }, err => {
+    //   this.loadingService.dismissLoading();
+    //   console.log(err)
+    // });
+
+    this.global.getData('add_form/get/' + data.id).subscribe((result: any) => {
       if (result && result.data && result.data.length > 0) {
-        result?.data?.forEach((el: any, index) => {
-          el.created_date = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY")
-          el.created_time = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
-          el.complete_status = (el.complete_status == 0 ? 'Incomplete' : (el.complete_status == 1 ? 'Complete' : ''));
-          if (el.investigators && el.investigators.investigator_id && el.investigators.investigator_id !== null) {
-            el.ivalue = el.investigators.investigator_id;
-          }
-        })
+        // result?.data?.forEach((el: any, index) => {
+        //   el.created_date = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY")
+        //   el.created_time = moment(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
+        //   el.complete_status = (el.complete_status == 0 ? 'Incomplete' : (el.complete_status == 1 ? 'Complete' : ''));
+        //   if (el.investigators && el.investigators.investigator_id && el.investigators.investigator_id !== null) {
+        //     el.ivalue = el.investigators.investigator_id;
+        //   }
+        // })
         this.incidentList = result.data;
       }
       this.loadingService.dismissLoading();
@@ -70,6 +89,7 @@ export class IncidentFormListPage implements OnInit {
       this.loadingService.dismissLoading();
       console.log(err)
     });
+
   }
 
   onLoadMore() {
