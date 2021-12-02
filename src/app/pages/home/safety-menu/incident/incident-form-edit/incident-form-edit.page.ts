@@ -37,7 +37,7 @@ export class IncidentFormEditPage implements OnInit {
   selectedTabList: any = [];
   disabledTab: boolean;
   reputationWitnessList: any = [];
-  platformCheck: any = '';
+  // platformCheck: any = '';
   incidentDetails: any = [];
 
   //-------------------------------------------------- Dropdowns variables---------------------------------------------------------------//
@@ -207,11 +207,11 @@ export class IncidentFormEditPage implements OnInit {
 
   ngOnInit() {
 
-    if (!this.platform.is('cordova')) {
-      this.platformCheck = 'browser'
-    } else {
-      this.platformCheck = 'cordova'
-    }
+    // if (!this.platform.is('cordova')) {
+    //   this.platformCheck = 'browser'
+    // } else {
+    //   this.platformCheck = 'cordova'
+    // }
 
     this.loadShift();
     this.loadLocation();
@@ -356,7 +356,6 @@ export class IncidentFormEditPage implements OnInit {
 
   loadMangerList() {
     this.globalService.getData("Manager/getManagerList").subscribe((res: any) => {
-      console.log('res', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.managerList = res.data;
       } else {
@@ -784,7 +783,6 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   pickImage(sourceType, tabName) {
-    console.log('second');
     this.loadingService.presentLoading();
     let image: any;
 

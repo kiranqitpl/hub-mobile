@@ -261,9 +261,12 @@ export class IncidentFormPage implements OnInit {
       classification_manager: ['', Validators.required]          // required field
     });
 
-    this.injuryForm = this.fb.group({
-      injury_persons: [''],
-      person_details: this.fb.array([]),
+    this.assetDescriptionForm = this.fb.group({
+      asset_description: [''],                                   // required field
+      asset_has_number: [''],
+      asset_number: [''],
+      extent_of_damage: [''],                                    // required field       
+      extent_damage_image: ['']                                 // extent damage image
     });
 
     this.enviornmentForm = this.fb.group({
@@ -278,6 +281,11 @@ export class IncidentFormPage implements OnInit {
         }),
       emergency_spill_kit_used: [''],
       out_of_split_kit: ['']
+    });
+
+    this.injuryForm = this.fb.group({
+      injury_persons: [''],
+      person_details: this.fb.array([]),
     });
 
     this.reputationDesForm = this.fb.group({
@@ -305,14 +313,6 @@ export class IncidentFormPage implements OnInit {
       what_is_the_specific_securities_incident: [''],
     });
 
-    this.assetDescriptionForm = this.fb.group({
-      asset_description: [''],                                   // required field
-      asset_has_number: [''],
-      asset_number: [''],
-      extent_of_damage: [''],                                    // required field       
-      extent_damage_image: ['']                                 // extent damage image
-    });
-
     this.reportForm = this.fb.group({
       report: ['']
     });
@@ -320,7 +320,6 @@ export class IncidentFormPage implements OnInit {
 
   loadEmployee() {
     this.globalService.getData("user/getallemployee").subscribe((res: any) => {
-      // console.log('loadEmployee', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.employeeList = res.data;
       } else {
@@ -334,7 +333,6 @@ export class IncidentFormPage implements OnInit {
 
   loadWitness() {
     this.globalService.getData("Witness/getWitnessList").subscribe((res: any) => {
-      // console.log('loadWitness', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.witnessList = res.data;
       } else {
@@ -348,7 +346,6 @@ export class IncidentFormPage implements OnInit {
 
   loadSuperwiser() {
     this.globalService.getData("Supervisor/getSupervisorList").subscribe((res: any) => {
-      // console.log('loadSuperwiser', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.superVisorList = res.data;
       } else {
@@ -362,7 +359,6 @@ export class IncidentFormPage implements OnInit {
 
   loadMangerList() {
     this.globalService.getData("Manager/getManagerList").subscribe((res: any) => {
-      console.log('loadMangerList', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.managerList = res.data;
       } else {
@@ -376,7 +372,6 @@ export class IncidentFormPage implements OnInit {
 
   loadShift() {
     this.globalService.getData("Shift/get_shift_typelist").subscribe((res: any) => {
-      // console.log('loadShift', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.shiftTypeList = res.data;
       } else {
@@ -389,7 +384,6 @@ export class IncidentFormPage implements OnInit {
 
   loadLocation() {
     this.globalService.getData("location/getLocation").subscribe((res: any) => {
-      // console.log('getLocation', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.locationList = res.data;
       } else {
@@ -402,7 +396,6 @@ export class IncidentFormPage implements OnInit {
 
   loadBodyPart() {
     this.globalService.getData("Body_part/getbodypart").subscribe((res: any) => {
-      // console.log('loadBodyPart', res);
       if (res && res.status && res.data && res.data.length > 0) {
         this.bodyPartList = res.data;
       } else {
@@ -437,32 +430,55 @@ export class IncidentFormPage implements OnInit {
     };
     this.camera.getPicture(options).then(
       (imageData) => {
-        // image = imageData;
         image = 'data:image/jpeg;base64,' + imageData;
         if (image != '' || image != undefined) {
 
           if (tabName == 'PhotoGraphy') {
-            this.photoGraphy.push(image);
+            if (this.photoGraphy.length < 0) {
+              this.photoGraphy.push(image);
+            } else {
+              this.photoGraphy.unshift(image);
+            }
           }
 
           if (tabName == 'Alcohol') {
-            this.alcohalImages.push(image);
+            if (this.alcohalImages.length < 0) {
+              this.alcohalImages.push(image);
+            } else {
+              this.alcohalImages.unshift(image);
+            }
           }
 
           if (tabName == 'Drug') {
-            this.drugTestImages.push(image);
+            if (this.drugTestImages.length < 0) {
+              this.drugTestImages.push(image);
+            } else {
+              this.drugTestImages.unshift(image);
+            }
           }
 
           if (tabName == 'ReturnToAlternateDuty') {
-            this.alterDutyImages.push(image);
+            if (this.alterDutyImages.length < 0) {
+              this.alterDutyImages.push(image);
+            } else {
+              this.alterDutyImages.unshift(image);
+            }
           }
 
           if (tabName == 'ChemicalImage') {
-            this.chemicalImages.push(image);
+            if (this.chemicalImages.length < 0) {
+              this.chemicalImages.push(image);
+            } else {
+              this.chemicalImages.unshift(image);
+            }
           }
 
           if (tabName == 'DamageImage') {
-            this.damageImages.push(image);
+            if (this.damageImages.length < 0) {
+              this.damageImages.push(image);
+            } else {
+              this.damageImages.unshift(image);
+            }
           }
 
           this.loadingService.dismissLoading();
@@ -473,7 +489,6 @@ export class IncidentFormPage implements OnInit {
       },
 
       (err) => {
-        console.log('error');
         this.loadingService.dismissLoading();
         console.log("errOf Image ", err)
       }
@@ -512,12 +527,12 @@ export class IncidentFormPage implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            // this.photoGraphyObject[i] = data
             if (this.photoGraphy.length <= 0) {
               this.photoGraphy.push(data);
             } else {
               this.photoGraphy.unshift(data);
             }
+            this.photoGraphyForm.controls['photography_image'].setValue(this.photoGraphy);
           }).catch(error => {
             console.log('error', error);
           });
@@ -532,13 +547,12 @@ export class IncidentFormPage implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            // this.alcohalImagesObject[i] = data
-            console.log('alcohalImages', this.alcohalImages);
             if (this.alcohalImages.length <= 0) {
               this.alcohalImages.push(data);
             } else {
               this.alcohalImages.unshift(data);
             }
+            this.incidentDesForm.controls['alcohol_test_image'].setValue(this.alcohalImages);
           }).catch(error => {
             console.log('error', error);
           });
@@ -559,12 +573,12 @@ export class IncidentFormPage implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            // this.drugTestImagesObject[i] = data
             if (this.drugTestImages.length <= 0) {
               this.drugTestImages.push(data);
             } else {
               this.drugTestImages.unshift(data);
             }
+            this.incidentDesForm.controls['drug_test_image'].setValue(this.drugTestImages);
           }).catch(error => {
             console.log('error', error);
           });
@@ -585,12 +599,12 @@ export class IncidentFormPage implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            // this.alterDutyImagesObject[i] = data;
             if (this.alterDutyImages.length <= 0) {
               this.alterDutyImages.push(data);
             } else {
               this.alterDutyImages.unshift(data);
             }
+            this.incidentDesForm.controls['return_to_alternate_duties_image'].setValue(this.alterDutyImages);
           }).catch(error => {
             console.log('error', error);
           });
@@ -608,29 +622,26 @@ export class IncidentFormPage implements OnInit {
     if (type == 1) {
       this.mobileUploads('ChemicalImage');
     } else if (type == 2) {
-      console.log('onChemicalImageSelect 1', event);
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            console.log('onChemicalImageSelect 2', data);
-            // this.chemicalImagesObject[i] = data;
             if (this.chemicalImages.length <= 0) {
               this.chemicalImages.push(data);
             } else {
               this.chemicalImages.unshift(data);
             }
+
+            let image = {
+              chemical_photo: this.chemicalImages
+            }
+
+            this.enviornmentForm.controls['chemical_details'].patchValue(image);
+            // this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
           }).catch(error => {
             console.log('error', error);
           });
       }
     }
-
-    let image = {
-      chemical_photo: this.chemicalImagesObject
-    }
-
-    this.enviornmentForm.controls['chemical_details'].patchValue(image);
-    // this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
   }
 
   onInsertImageSelect(event) {
@@ -646,13 +657,12 @@ export class IncidentFormPage implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         this.sharedService.getBase64(event.target.files[i]).then(
           data => {
-            // this.damageImagesObject[i] = data
-            // this.damageImages.push(data);
             if (this.damageImages.length <= 0) {
               this.damageImages.push(data);
             } else {
               this.damageImages.unshift(data);
             }
+            this.assetDescriptionForm.controls['extent_damage_image'].setValue(this.damageImages);
           }).catch(error => {
             console.log('error', error);
           });
@@ -663,7 +673,6 @@ export class IncidentFormPage implements OnInit {
   //----------------------------------------------------------- Modals ----------------------------------------------------------------------//
 
   async onOpenIncidentModal() {
-    console.log('onOpenIncidentModal');
     const modal = await this.modalController.create({
       component: ManagersPage,
       componentProps: {
@@ -675,9 +684,6 @@ export class IncidentFormPage implements OnInit {
     modal.onDidDismiss().then((res) => {
       if (res && res?.data) {
         this.incidentForm.controls['incident_near_miss'].setValue(res.data.full_name);
-        console.log('incidentForm 1', this.incidentForm.controls);
-        console.log('incidentForm 1', this.incidentForm.controls['incident_near_miss']);
-        console.log('person_details 1', this.injuryForm.controls['person_details']);
         this.incident_near_miss = res.data;
       }
     })
@@ -685,7 +691,6 @@ export class IncidentFormPage implements OnInit {
   }
 
   async onOpenIncDesModal() {
-    console.log('onOpenIncidentModal');
     const modal = await this.modalController.create({
       component: ManagersPage,
       componentProps: {
@@ -704,7 +709,6 @@ export class IncidentFormPage implements OnInit {
   }
 
   async onOpenClassiModal(headerName) {
-    console.log('onOpenIncidentModal');
     let list = [];
     if (headerName == 'Supervisor List') {
       list = this.superVisorList;
@@ -1324,8 +1328,61 @@ export class IncidentFormPage implements OnInit {
   }
 
   onImageClick(event) {
-    console.log('event', event);
     return false;
+  }
+
+  onProgressBar(event, tabName) {
+    let count = 0;
+    let formControlList = [];
+
+    Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
+
+    if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != '') {
+
+      Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
+
+      Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
+      Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
+
+      if (this.classificationForm.valid) {
+        Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
+      }
+
+      console.log(this.classificationForm.value);
+
+      // Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
+      // console.log('this.injuryForm.controls', this.injuryForm.controls);
+      // Object.keys(this.injuryForm.controls.person_details).map(ele => formControlList.push(ele));
+
+      // Object.keys(this.enviornmentForm.controls).map(ele => formControlList.push(ele));
+      // Object.keys(this.enviornmentForm.value.chemical_details).map(ele => formControlList.push(ele));
+
+      // Object.keys(this.reputationDesForm.controls).map(ele => formControlList.push(ele));
+      // Object.keys(this.reputationDesForm.value.other_witness_details).map(ele => formControlList.push(ele));
+
+      // Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
+      // Object.keys(this.assetDescriptionForm.controls).map(ele => formControlList.push(ele));
+      // Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
+
+    }
+    formControlList.forEach(key => {
+      if (tabName == 'Incident') {
+        if (this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] != 'Near Miss') {
+          count = count + 2;
+        } else if (this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] == 'Near Miss') {
+          count = ++count;
+        }
+      }
+      
+    })
+
+
+    console.log('count', count);
+    console.log('formControlList.length', formControlList.length);
+    console.log('formControlList', formControlList);
+
+    this.form_percent = ((1 / formControlList.length) * count);
+
   }
 
 }

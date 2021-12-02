@@ -25,18 +25,29 @@ const routes: Routes = [
     loadChildren: () => import('./incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
   },
   {
-    path: 'vehicle-hoist-add-form',
-    loadChildren: () => import('./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
+    path: 'telehandler-add-form',
+    loadChildren: () => import('./prestart/telehandler/telehandler-add-form/telehandler-add-form.module').then(m => m.TelehandlerAddFormPageModule)
   },
   {
-    path: 'telehandler-add-form',
+    path: 'telehandler-add-form/:id',
     loadChildren: () => import('./prestart/telehandler/telehandler-add-form/telehandler-add-form.module').then(m => m.TelehandlerAddFormPageModule)
   },
   {
     path: 'crane-add-form',
     loadChildren: () => import('./prestart/crane/crane-add-form/crane-add-form.module').then(m => m.CraneAddFormPageModule)
-  }
-
+  },
+  {
+    path: 'crane-add-form/:id',
+    loadChildren: () => import('./prestart/crane/crane-add-form/crane-add-form.module').then(m => m.CraneAddFormPageModule)
+  },
+  {
+    path: 'vehicle-hoist-add-form',
+    loadChildren: () => import('./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
+  },
+  {
+    path: 'vehicle-hoist-add-form/:id',
+    loadChildren: () => import('./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
+  },
 ];
 
 @NgModule({

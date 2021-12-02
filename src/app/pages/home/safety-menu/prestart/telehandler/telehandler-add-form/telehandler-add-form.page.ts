@@ -5,6 +5,8 @@ import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
@@ -25,6 +27,7 @@ export class TelehandlerAddFormPage implements OnInit {
   isSubmitted: boolean = false;
   loggedInUser: any;
   // showMsg: boolean = false;
+  form_percent: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -36,11 +39,16 @@ export class TelehandlerAddFormPage implements OnInit {
     private sharedService: SharedService,
     public actionSheetController: ActionSheetController,
     private camera: Camera,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    
+
+    this.activatedRoute.params.subscribe((params: Params) => {
+      console.log('params', params);
+    })
+
     this.teleHandlerForm = this.fb.group({
 
       competency: [''],
@@ -176,7 +184,9 @@ export class TelehandlerAddFormPage implements OnInit {
 
       comment: [''],
     })
+
     this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
+
   }
 
   get errorControls() {
@@ -522,6 +532,20 @@ export class TelehandlerAddFormPage implements OnInit {
     if (event.detail.value == 'Empty') {
       this.alertService.alert('Please ensure you fill up the Telehandler prior to use.')
     }
+  }
+
+  onProgressBar(event) {
+    let count = 0;
+    let formControlList = [];
+    Object.keys(this.teleHandlerForm.controls).map(ele => formControlList.push(ele));
+    formControlList.forEach(key => {
+      if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] == 'Ok') {
+        count = (count + 3);
+      } else if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] != 'Ok') {
+        count = ++count;
+      }
+    })
+    this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
   }
 
 }

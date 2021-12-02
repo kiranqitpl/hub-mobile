@@ -25,7 +25,6 @@ export class VehicleHoistAddFormPage implements OnInit {
   showMsg: boolean = false;
   isSubmitted: boolean = false;
   form_percent: number = 0;
-  formControlArray = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -97,8 +96,6 @@ export class VehicleHoistAddFormPage implements OnInit {
 
       comment: ['']
     })
-
-    // Object.keys(this.vehicleHoistForm.controls).map((key) => this.formControlArray.push(key));
   }
 
   onStopContinue(event) {
@@ -156,39 +153,24 @@ export class VehicleHoistAddFormPage implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     if (this.vehicleHoistForm.valid) {
-      if (this.vehicleHoistForm.value['inspection_certificate'] == 'Faulty' && this.vehicleHoistForm.value['inspection_certificate_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['maintenance_instructions'] == 'Faulty' && this.vehicleHoistForm.value['maintenance_instructions_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['data_plate'] == 'Faulty' && this.vehicleHoistForm.value['data_plate_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['safty_devices'] == 'Faulty' && this.vehicleHoistForm.value['safty_devices_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['locks_latches'] == 'Faulty' && this.vehicleHoistForm.value['locks_latches_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['rubber_pad'] == 'Faulty' && this.vehicleHoistForm.value['rubber_pad_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['safty_gaurds'] == 'Faulty' && this.vehicleHoistForm.value['safty_gaurds_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['hydraulic_connections'] == 'Faulty' && this.vehicleHoistForm.value['hydraulic_connections_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['chain_cable_connection'] == 'Faulty' && this.vehicleHoistForm.value['chain_cable_connection_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['frayed_cables'] == 'Faulty' && this.vehicleHoistForm.value['frayed_cables_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['snap_rings'] == 'Faulty' && this.vehicleHoistForm.value['snap_rings_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['bolts_nuts'] == 'Faulty' && this.vehicleHoistForm.value['bolts_nuts_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['electrical_switch'] == 'Faulty' && this.vehicleHoistForm.value['electrical_switch_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['hoist_work_area'] == 'Faulty' && this.vehicleHoistForm.value['hoist_work_area_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['anchor_bolts'] == 'Faulty' && this.vehicleHoistForm.value['anchor_bolts_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['swing_arm'] == 'Faulty' && this.vehicleHoistForm.value['swing_arm_comment'] == '') {
-        return;
-      } else if (this.vehicleHoistForm.value['hoist_controls'] == 'Faulty' && this.vehicleHoistForm.value['hoist_controls_comment'] == '') {
+      if ((this.vehicleHoistForm.value['inspection_certificate'] == 'Faulty' && this.vehicleHoistForm.value['inspection_certificate_comment'] == '') ||
+        (this.vehicleHoistForm.value['maintenance_instructions'] == 'Faulty' && this.vehicleHoistForm.value['maintenance_instructions_comment'] == '') ||
+        (this.vehicleHoistForm.value['data_plate'] == 'Faulty' && this.vehicleHoistForm.value['data_plate_comment'] == '') ||
+        (this.vehicleHoistForm.value['safty_devices'] == 'Faulty' && this.vehicleHoistForm.value['safty_devices_comment'] == '') ||
+        (this.vehicleHoistForm.value['locks_latches'] == 'Faulty' && this.vehicleHoistForm.value['locks_latches_comment'] == '') ||
+        (this.vehicleHoistForm.value['rubber_pad'] == 'Faulty' && this.vehicleHoistForm.value['rubber_pad_comment'] == '') ||
+        (this.vehicleHoistForm.value['safty_gaurds'] == 'Faulty' && this.vehicleHoistForm.value['safty_gaurds_comment'] == '') ||
+        (this.vehicleHoistForm.value['hydraulic_connections'] == 'Faulty' && this.vehicleHoistForm.value['hydraulic_connections_comment'] == '') ||
+        (this.vehicleHoistForm.value['chain_cable_connection'] == 'Faulty' && this.vehicleHoistForm.value['chain_cable_connection_comment'] == '') ||
+        (this.vehicleHoistForm.value['frayed_cables'] == 'Faulty' && this.vehicleHoistForm.value['frayed_cables_comment'] == '') ||
+        (this.vehicleHoistForm.value['snap_rings'] == 'Faulty' && this.vehicleHoistForm.value['snap_rings_comment'] == '') ||
+        (this.vehicleHoistForm.value['bolts_nuts'] == 'Faulty' && this.vehicleHoistForm.value['bolts_nuts_comment'] == '') ||
+        (this.vehicleHoistForm.value['electrical_switch'] == 'Faulty' && this.vehicleHoistForm.value['electrical_switch_comment'] == '') ||
+        (this.vehicleHoistForm.value['hoist_work_area'] == 'Faulty' && this.vehicleHoistForm.value['hoist_work_area_comment'] == '') ||
+        (this.vehicleHoistForm.value['anchor_bolts'] == 'Faulty' && this.vehicleHoistForm.value['anchor_bolts_comment'] == '') ||
+        (this.vehicleHoistForm.value['swing_arm'] == 'Faulty' && this.vehicleHoistForm.value['swing_arm_comment'] == '') ||
+        (this.vehicleHoistForm.value['hoist_controls'] == 'Faulty' && this.vehicleHoistForm.value['hoist_controls_comment'] == '')
+      ) {
         return;
       } else {
         this.loadingService.presentLoading();
@@ -198,9 +180,6 @@ export class VehicleHoistAddFormPage implements OnInit {
         formData['date'] = moment().format('YYYY-MM-DD');
         formData['time'] = moment().format('HH:mm:ss');
         let val = { 'formData': formData };
-
-        console.log('typeof', typeof (val));
-
         this.globalService.postData('prestart_vehicle/add_prestart_vehicle', val).subscribe(result => {
           if (result && result['status']) {
             this.navCtrl.back();
@@ -245,27 +224,18 @@ export class VehicleHoistAddFormPage implements OnInit {
     window.open(url, '_blank');
   }
 
-  onChanges(event) {
-
-    // console.log('event 1', event.srcElement.attributes.formcontrolname.nodeValue);
-    // console.log('event 2', event.detail.value);
-
-    let data = 0;
-    let value = '';
-
-    if (this.formControlArray.length > 0) {
-      value = this.formControlArray.find(val => val == event.srcElement.attributes.formcontrolname.nodeValue);
-    }
-
-    // if ((this.formControlArray.length >= 0) && (value == '' || value == undefined)) {
-    //   this.formControlArray.push(event.srcElement.attributes.formcontrolname.nodeValue);
-    //   data = (1 / Object.keys(this.vehicleHoistForm.controls).length);
-    //   this.form_percent = event.detail.value == "OK" ? (data + data + this.form_percent) : (data + this.form_percent);
-    // } else if (value != '') {
-    //   this.form_percent = (this.form_percent - data);
-    // }
-
+  onProgressBar(event) {
+    let count = 0;
+    let formControlList = [];
+    Object.keys(this.vehicleHoistForm.controls).map(ele => formControlList.push(ele));
+    formControlList.forEach(key => {
+      if (this.vehicleHoistForm.value[key] && this.vehicleHoistForm.value[key] != '' && this.vehicleHoistForm.value[key] == 'OK') {
+        count = (count + 2)
+      } else if (this.vehicleHoistForm.value[key] && this.vehicleHoistForm.value[key] != '' && this.vehicleHoistForm.value[key] != 'OK') {
+        count = ++count;
+      }
+    })
+    this.form_percent = ((1 / Object.keys(this.vehicleHoistForm.controls).length) * count);
   }
-
 
 }

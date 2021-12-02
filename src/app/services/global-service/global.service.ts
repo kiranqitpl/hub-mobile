@@ -75,20 +75,12 @@ export class GlobalService {
 
   postData(url, data) {
     let headers = this.setHeader();
-    // if (this.platform == 'cordova') {
-    //   return this.http.post(this.baseUrl + url, data, { headers: headers });
-    // } else {
     return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
-    // }
   }
 
   getData(url) {
     let headers = this.setHeader();
-    // if (this.platform == 'cordova') {
-    //   return this.http.get(this.baseUrl + url, '', { headers: headers });
-    // } else {
     return this.httpClient.get(this.baseUrl + url, { headers: headers })
-    // }
 
     // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
     //   map((response) => {
@@ -100,6 +92,7 @@ export class GlobalService {
     //   }),
     //   catchError(() => of())
     // );
+    
   }
 }
 // ---------------------------------------------  New Services --------------------------------------------------//

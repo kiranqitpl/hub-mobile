@@ -4,19 +4,18 @@
 
   <div class="container">
     <!-- <div class="ion-margin-top ion-margin-bottom"> -->
-    <ion-list *ngIf="getScreenWidth < 800">
+    <!-- <ion-list *ngIf="getScreenWidth < 1080">
 
-      <ion-card *ngFor="let incidentRow of incidentList">
+    <ion-card *ngFor="let rowData of allSubmittedFormlist">
         <ion-item-sliding>
           <ion-item lines="none">
-            <!-- <ion-avatar slot="start"></ion-avatar> -->
             <ion-label>
               <ion-row>
                 <ion-col size="auto">
                   <h2>Form :</h2>
                 </ion-col>
                 <ion-col>
-                  <h6> {{incidentRow.incident_value}} </h6>
+                  <h6> {{rowData.Form}} </h6>
                 </ion-col>
               </ion-row>
 
@@ -26,7 +25,7 @@
                 </ion-col>
                 <ion-col>
                   <p class="value">
-                    {{incidentRow.created_date}}
+                    {{rowData.Date}}
                   </p>
                 </ion-col>
               </ion-row>
@@ -36,7 +35,7 @@
                   <ion-label>Name :</ion-label>
                 </ion-col>
                 <ion-col>
-                  <p class="value"> {{incidentRow.created_date}}</p>
+                  <p class="value"> {{rowData.Name}}</p>
                 </ion-col>
               </ion-row>
 
@@ -45,7 +44,7 @@
                   <ion-label>Delegated :</ion-label>
                 </ion-col>
                 <ion-col>
-                  <p class="value"> {{incidentRow.created_date}}</p>
+                  <p class="value"> {{rowData.Delegate}}</p>
                 </ion-col>
               </ion-row>
 
@@ -54,66 +53,80 @@
                   <ion-label>Status :</ion-label>
                 </ion-col>
                 <ion-col>
-                  <p class="value">{{incidentRow.created_date}}</p>
+                  <p class="value" *ngIf="rowData.Status == 'Complete'">
+                    <ion-text color="success">{{rowData.Status}}</ion-text>
+                  </p>
+                  <p class="value" *ngIf="rowData.Status == 'In progress'">
+                    <ion-text color="warning">{{rowData.Status}}</ion-text>
+                  </p>
+                  <p class="value" *ngIf="rowData.Status == 'Cancel'">
+                    <ion-text color="danger">{{rowData.Status}}</ion-text>
+                  </p>
                 </ion-col>
               </ion-row>
-
             </ion-label>
           </ion-item>
 
           <ion-item-options side="end">
             <ion-item-option class="item-option">
-              <ion-icon slot="icon-only" (click)="onGoToDetails(incidentRow.id)" name="eye-outline"></ion-icon>
+              <ion-icon slot="icon-only" (click)="onGoToDetails(rowData)" name="eye-outline"></ion-icon>
             </ion-item-option>
 
             <ion-item-option class="item-option">
-              <ion-icon slot="icon-only" (click)="onGoToEdit(incidentRow.id)" name="create-outline"></ion-icon>
+              <ion-icon slot="icon-only" (click)="onGoToEdit(rowData)" name="create-outline"></ion-icon>
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
       </ion-card>
 
-      <div *ngIf="incidentList.length > 0" class="ion-margin-top ion-text-center"> <a href="#"
-          (click)="onLoadMore()">Load More </a></div>
-    </ion-list>
+      <div *ngIf="allSubmittedFormlist.length > 0" class="ion-margin-top ion-text-center"> <a href="javascript:void(0)"
+          (click)="onLoadMoreData()">Load More </a></div>
 
-    <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="incidentList" [rowHeight]="50"
-      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" *ngIf="getScreenWidth >= 800">
+    </ion-list>-->
 
-      <ngx-datatable-column name="Sr.No" [width]="80" [resizeable]="true">
+    <!-- <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="allSubmittedFormlist" [rowHeight]="50"
+      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" *ngIf="getScreenWidth >= 1080"> -->
+
+
+    <ngx-datatable [scrollbarH]="true" class="material" [rows]="allSubmittedFormlist" [rowHeight]="50"  [limit]="100"
+      [headerHeight]="50" [footerHeight]="50"   [externalPaging]="true">
+
+      <ngx-datatable-column name="Sr.No" [width]="30" [resizeable]="true">
         <ng-template let-rowIndex="rowIndex" let-value="rows" ngx-datatable-cell-template>{{ (rowIndex+1) }}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Form" prop="incident_value" [minWidth]="100" [resizeable]="true">
+      <ngx-datatable-column name="Form" prop="Form" [minWidth]="180" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Date" prop="created_date" [minWidth]="100" [resizeable]="true">
+      <ngx-datatable-column name="Date" prop="Date" [minWidth]="50" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Name" prop="created_time" [minWidth]="100" [resizeable]="true">
+      <ngx-datatable-column name="Name" prop="Name" [minWidth]="50" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Delegated" prop="classification_manager" [minWidth]="100" [resizeable]="true">
+      <ngx-datatable-column name="Delegated" prop="Delegated" [minWidth]="50" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Status" prop="complete_status" [minWidth]="100" [resizeable]="true">
-      </ngx-datatable-column>
-
-      <ngx-datatable-column [minWidth]="50" [resizeable]="true" prop="id">
-        <ng-template let-column="column" ngx-datatable-header-template>View</ng-template>
-        <ng-template let-value="value" ngx-datatable-cell-template>
-          <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="onGoToDetails(value)"></ion-icon>
+      <ngx-datatable-column name="Status" prop="Status" [minWidth]="50" [resizeable]="true">
+        <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
+          <ion-text color="success" *ngIf="value == 'Complete'">{{value}}</ion-text>
+          <ion-text color="warning" *ngIf="value == 'In progress'">{{value}}</ion-text>
+          <ion-text color="danger" *ngIf="value == 'Cancel'">{{value}}</ion-text>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [minWidth]="30" [resizeable]="true" prop="edit_status">
+      <ngx-datatable-column [minWidth]="10" [resizeable]="true" prop="Id">
+        <ng-template let-column="column" ngx-datatable-header-template>View</ng-template>
+        <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
+          <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="onGoToDetails(row)"></ion-icon>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [minWidth]="10" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>Edit</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-          <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="create-outline">
-          </ion-icon>
-          <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="create-outline" (click)="onGoToEdit(row)">
-          </ion-icon>
+          <ion-icon class="view" slot="icon-only" name="create-outline" (click)="onGoToEdit(row)"></ion-icon>
         </ng-template>
       </ngx-datatable-column>
 
@@ -218,7 +231,8 @@
           <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
             <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="eye-outline">
             </ion-icon>
-            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="eye-outline" (click)="onViewAction(row)">
+            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="eye-outline"
+              (click)="onViewAction(row)">
             </ion-icon>
           </ng-template>
         </ngx-datatable-column>

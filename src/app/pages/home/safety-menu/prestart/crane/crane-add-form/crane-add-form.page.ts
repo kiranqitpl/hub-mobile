@@ -55,6 +55,8 @@ export class CraneAddFormPage implements OnInit {
   ];
   craneForm: FormGroup;
 
+  form_percent: number = 0;
+
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -65,7 +67,6 @@ export class CraneAddFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.craneNoList);
     this.craneForm = this.fb.group({
       crane_number: [''],
       operate_crane: [''],
@@ -85,7 +86,6 @@ export class CraneAddFormPage implements OnInit {
   }
 
   onPassedInspection(event) {
-    console.log('event', event);
     if (event.detail.value == "No") {
       this.alertService.alert('Tag the crane out of service and report any abnormalities immediately to your supervisor.');
     }
@@ -107,6 +107,18 @@ export class CraneAddFormPage implements OnInit {
       this.loadingService.dismissLoading();
       console.log(error);
     })
+  }
+
+  onProgressBar(event) {
+    let count = 0;
+    let formControlList = [];
+    Object.keys(this.craneForm.controls).map(ele => formControlList.push(ele));
+    formControlList.forEach(key => { 
+      if (this.craneForm.value[key] && this.craneForm.value[key] != '') {
+        count = ++count;
+      }
+    })
+    this.form_percent = ((1 / Object.keys(this.craneForm.controls).length) * count);
   }
 
 }
