@@ -1,15 +1,22 @@
 <ion-content (window:resize)="onResize($event)">
-
   <app-header [pageName]="pName"></app-header>
-
   <div class="container">
     <!-- <div class="ion-margin-top ion-margin-bottom"> -->
-    <!-- <ion-list *ngIf="getScreenWidth < 1080">
-
-    <ion-card *ngFor="let rowData of allSubmittedFormlist">
+    <ion-list *ngIf="getScreenWidth < 1080">
+      <ion-card *ngFor="let rowData of allSubmittedFormlist">
         <ion-item-sliding>
           <ion-item lines="none">
             <ion-label>
+
+              <!-- <ion-row>
+                <ion-col size="auto">
+                  <h2>ID :</h2>
+                </ion-col>
+                <ion-col>
+                  <h6> {{rowData.Id}} </h6>
+                </ion-col>
+              </ion-row> -->
+
               <ion-row>
                 <ion-col size="auto">
                   <h2>Form :</h2>
@@ -82,16 +89,17 @@
       <div *ngIf="allSubmittedFormlist.length > 0" class="ion-margin-top ion-text-center"> <a href="javascript:void(0)"
           (click)="onLoadMoreData()">Load More </a></div>
 
-    </ion-list>-->
+    </ion-list>
 
-    <!-- <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="allSubmittedFormlist" [rowHeight]="50"
-      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" *ngIf="getScreenWidth >= 1080"> -->
+    <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="allSubmittedFormlist" [rowHeight]="50"
+      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"  *ngIf="getScreenWidth >= 1080" [count]="total_page_no"
+      [externalPaging]="true"  [limit]="10"
+      >
 
+      <!--   <ngx-datatable class="bootstrap table table-striped" [scrollbarH]="true" class="material"
+      [rows]="allSubmittedFormlist" [rowHeight]="50" [limit]="100" [headerHeight]="50" [footerHeight]="50"> -->
 
-    <ngx-datatable [scrollbarH]="true" class="material" [rows]="allSubmittedFormlist" [rowHeight]="50"  [limit]="100"
-      [headerHeight]="50" [footerHeight]="50"   [externalPaging]="true">
-
-      <ngx-datatable-column name="Sr.No" [width]="30" [resizeable]="true">
+      <ngx-datatable-column name="Sr.No" [width]="80" [resizeable]="true">
         <ng-template let-rowIndex="rowIndex" let-value="rows" ngx-datatable-cell-template>{{ (rowIndex+1) }}
         </ng-template>
       </ngx-datatable-column>
@@ -99,16 +107,16 @@
       <ngx-datatable-column name="Form" prop="Form" [minWidth]="180" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Date" prop="Date" [minWidth]="50" [resizeable]="true">
+      <ngx-datatable-column name="Date" prop="Date" [minWidth]="80" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Name" prop="Name" [minWidth]="50" [resizeable]="true">
+      <ngx-datatable-column name="Name" prop="Name" [minWidth]="80" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Delegated" prop="Delegated" [minWidth]="50" [resizeable]="true">
+      <ngx-datatable-column name="Delegated" prop="Delegated" [minWidth]="80" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Status" prop="Status" [minWidth]="50" [resizeable]="true">
+      <ngx-datatable-column name="Status" prop="Status" [minWidth]="80" [resizeable]="true">
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
           <ion-text color="success" *ngIf="value == 'Complete'">{{value}}</ion-text>
           <ion-text color="warning" *ngIf="value == 'In progress'">{{value}}</ion-text>
@@ -116,14 +124,14 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [minWidth]="10" [resizeable]="true" prop="Id">
+      <ngx-datatable-column [minWidth]="20" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>View</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
           <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="onGoToDetails(row)"></ion-icon>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [minWidth]="10" [resizeable]="true" prop="Id">
+      <ngx-datatable-column [minWidth]="20" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>Edit</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
           <ion-icon class="view" slot="icon-only" name="create-outline" (click)="onGoToEdit(row)"></ion-icon>

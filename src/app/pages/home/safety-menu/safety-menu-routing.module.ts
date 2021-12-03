@@ -48,6 +48,18 @@ const routes: Routes = [
     path: 'vehicle-hoist-add-form/:id',
     loadChildren: () => import('./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module').then(m => m.VehicleHoistAddFormPageModule)
   },
+  {
+    path: 'crane-view-detail/:id',
+    loadChildren: () => import('./prestart/crane/crane-view-detail/crane-view-detail.module').then(m => m.CraneViewDetailPageModule)
+  },
+  {
+    path: 'telehandler-view-detail/:id',
+    loadChildren: () => import('./prestart/telehandler/telehandler-view-detail/telehandler-view-detail.module').then( m => m.TelehandlerViewDetailPageModule)
+  },
+  {
+    path: 'vehicle-host-view-detail/:id',
+    loadChildren: () => import('./prestart/vehicle-hoist/vehicle-host-view-detail/vehicle-host-view-detail.module').then( m => m.VehicleHostViewDetailPageModule)
+  },
 ];
 
 @NgModule({

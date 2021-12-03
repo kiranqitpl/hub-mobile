@@ -393,7 +393,7 @@
         }];
       };
 
-      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.HostListener)('window:resize', ['$event']), (0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -722,25 +722,18 @@
         }, {
           key: "postData",
           value: function postData(url, data) {
-            var headers = this.setHeader(); // if (this.platform == 'cordova') {
-            //   return this.http.post(this.baseUrl + url, data, { headers: headers });
-            // } else {
-
+            var headers = this.setHeader();
             return this.httpClient.post(this.baseUrl + url, data, {
               headers: headers
-            }); // }
+            });
           }
         }, {
           key: "getData",
           value: function getData(url) {
-            var headers = this.setHeader(); // if (this.platform == 'cordova') {
-            //   return this.http.get(this.baseUrl + url, '', { headers: headers });
-            // } else {
-
+            var headers = this.setHeader();
             return this.httpClient.get(this.baseUrl + url, {
               headers: headers
-            }); // }
-            // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
+            }); // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
             //   map((response) => {
             //     console.log('response', response);
             //     // if (!response['status']) {
@@ -1098,7 +1091,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-app>\n  <ion-router-outlet></ion-router-outlet>\n</ion-app>\n";
+      __webpack_exports__["default"] = "<ion-app>\n  <ion-router-outlet ></ion-router-outlet>\n</ion-app>\n";
       /***/
     },
 

@@ -308,8 +308,8 @@
           this.employeeList = [];
           this.managerList = [];
           this.selectedTabList = [];
-          this.reputationWitnessList = [];
-          this.platformCheck = '';
+          this.reputationWitnessList = []; // platformCheck: any = '';
+
           this.incidentDetails = []; //-------------------------------------------------- Dropdowns variables---------------------------------------------------------------//
 
           this.incident_near_miss = '';
@@ -412,12 +412,11 @@
         _createClass(IncidentFormEditPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            if (!this.platform.is('cordova')) {
-              this.platformCheck = 'browser';
-            } else {
-              this.platformCheck = 'cordova';
-            }
-
+            // if (!this.platform.is('cordova')) {
+            //   this.platformCheck = 'browser'
+            // } else {
+            //   this.platformCheck = 'cordova'
+            // }
             this.loadShift();
             this.loadLocation();
             this.loadBodyPart();
@@ -567,8 +566,6 @@
             var _this3 = this;
 
             this.globalService.getData("Manager/getManagerList").subscribe(function (res) {
-              console.log('res', res);
-
               if (res && res.status && res.data && res.data.length > 0) {
                 _this3.managerList = res.data;
               } else {
@@ -1044,7 +1041,6 @@
           value: function pickImage(sourceType, tabName) {
             var _this10 = this;
 
-            console.log('second');
             this.loadingService.presentLoading();
             var image;
             var options = {

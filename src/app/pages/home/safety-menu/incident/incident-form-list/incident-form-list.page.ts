@@ -18,10 +18,12 @@ export class IncidentFormListPage implements OnInit {
   getScreenWidth: any;
   pName: String = 'Submitted Forms';
   allSubmittedFormlist: any = [];
+  newList: any = [];
   listOfUsers: any = [];
   userDetails: any;
   getRowData: any;
   current_page_no: number = 0;
+  total_page_no: number = 0;
 
   constructor(
     private nav: NavController,
@@ -52,14 +54,10 @@ export class IncidentFormListPage implements OnInit {
   // }
 
   loadData(pageNo) {
-    this.loadingService.presentLoading();
-    let data = JSON.parse(localStorage.getItem('userDetails'));
 
-    console.log('pageNo', pageNo);
+    this.loadingService.presentLoading();
 
     this.current_page_no = pageNo;
-
-    console.log('this.current_page_no', this.current_page_no);
 
     this.global.getData('add_form/get/?page_no=' + this.current_page_no).subscribe((result: any) => {
       if (result && result.data && result.data.mforms_add_form && result.data.mforms_add_form.length > 0) {
@@ -73,10 +71,18 @@ export class IncidentFormListPage implements OnInit {
           } else if (el.Form == 'mforms_prestart_vehicle_hoist') {
             el.Form = 'Vehicle Hoist Prestarts'
           }
-          el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY")
-          el.Status = (el.Status == 0 ? 'In progress' : (el.Status == 1 ? 'Complete' : ''));
+          el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
+          el.Status = (el.Status == 0 ? 'In progress' : (el.Status == 1 ? 'Complete' : (el.Status == 2 ? 'Cancel' : '')));
         })
-        this.allSubmittedFormlist = result.data.mforms_add_form;
+
+        this.total_page_no = result.total_pages;
+
+        if (this.allSubmittedFormlist.length <= 0) {
+          this.allSubmittedFormlist = result.data.mforms_add_form;
+        } else {
+          this.newList = this.allSubmittedFormlist;
+          this.allSubmittedFormlist = this.newList.concat(result.data.mforms_add_form);
+        }
       }
       this.loadingService.dismissLoading();
     }, err => {
@@ -91,7 +97,6 @@ export class IncidentFormListPage implements OnInit {
   }
 
   onGoToEdit(rowData) {
-    // console.log('onGoToEdit', rowData);
     if (rowData && rowData.Form == 'Incident') {
       this.nav.navigateRoot("/home/safety-menu/incident-form-edit/" + rowData.Id);
     } else if (rowData && rowData.Form == 'Telehandler Prestarts') {
@@ -104,15 +109,17 @@ export class IncidentFormListPage implements OnInit {
   }
 
   onGoToDetails(rowData) {
-    console.log('onGoToDetails', rowData);
     if (rowData && rowData.Form == 'Incident') {
       this.nav.navigateRoot("/home/safety-menu/incident-details/" + rowData.Id);
+
     } else if (rowData && rowData.Form == 'Telehandler Prestarts') {
-      this.nav.navigateRoot("/home/safety-menu/telehandler-add-form/" + rowData.Id);
+      this.nav.navigateRoot("/home/safety-menu/telehandler-view-detail/" + rowData.Id);
+
     } else if (rowData && rowData.Form == 'Crane Prestarts') {
-      this.nav.navigateRoot("/home/safety-menu/crane-add-form/" + rowData.Id);
+      this.nav.navigateRoot("/home/safety-menu/crane-view-detail/" + rowData.Id);
+
     } else if (rowData && rowData.Form == 'Vehicle Hoist Prestarts') {
-      this.nav.navigateRoot("/home/safety-menu/vehicle-hoist-add-form/" + rowData.Id);
+      this.nav.navigateRoot("/home/safety-menu/vehicle-host-view-detail/" + rowData.Id);
     }
   }
 

@@ -104,18 +104,18 @@
           });
         }
       }, {
-        path: 'vehicle-hoist-add-form',
+        path: 'telehandler-add-form',
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__,
-          /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */
-          79496)).then(function (m) {
-            return m.VehicleHoistAddFormPageModule;
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_telehandler_telehandler-add-form_telehandler-add-form-b0535c")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/telehandler/telehandler-add-form/telehandler-add-form.module */
+          4459)).then(function (m) {
+            return m.TelehandlerAddFormPageModule;
           });
         }
       }, {
-        path: 'telehandler-add-form',
+        path: 'telehandler-add-form/:id',
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
@@ -134,6 +134,72 @@
           /*! ./prestart/crane/crane-add-form/crane-add-form.module */
           96614)).then(function (m) {
             return m.CraneAddFormPageModule;
+          });
+        }
+      }, {
+        path: 'crane-add-form/:id',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_crane_crane-add-form_crane-add-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/crane/crane-add-form/crane-add-form.module */
+          96614)).then(function (m) {
+            return m.CraneAddFormPageModule;
+          });
+        }
+      }, {
+        path: 'vehicle-hoist-add-form',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */
+          79496)).then(function (m) {
+            return m.VehicleHoistAddFormPageModule;
+          });
+        }
+      }, {
+        path: 'vehicle-hoist-add-form/:id',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */
+          79496)).then(function (m) {
+            return m.VehicleHoistAddFormPageModule;
+          });
+        }
+      }, {
+        path: 'crane-view-detail/:id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_prestart_crane_crane-view-detail_crane-view-detail_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/crane/crane-view-detail/crane-view-detail.module */
+          35718)).then(function (m) {
+            return m.CraneViewDetailPageModule;
+          });
+        }
+      }, {
+        path: 'telehandler-view-detail/:id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_prestart_telehandler_telehandler-view-detail_telehandler-view--8e57a8").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/telehandler/telehandler-view-detail/telehandler-view-detail.module */
+          75656)).then(function (m) {
+            return m.TelehandlerViewDetailPageModule;
+          });
+        }
+      }, {
+        path: 'vehicle-host-view-detail/:id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-host-view-detail_vehicle-host-v-1b091b").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/vehicle-hoist/vehicle-host-view-detail/vehicle-host-view-detail.module */
+          89304)).then(function (m) {
+            return m.VehicleHostViewDetailPageModule;
           });
         }
       }];

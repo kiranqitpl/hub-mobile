@@ -18,6 +18,7 @@
         </ion-row>
       </ion-grid>
       <ion-grid [formGroup]="craneForm" (ionChange)="onProgressBar($event)">
+        
         <ion-row>
           <ion-item lines="none">
             <ion-label>Crane number :</ion-label>
@@ -78,7 +79,7 @@
           </ion-radio-group>
         </ion-row>
 
-        <ion-row>
+        <!-- <ion-row>
           <ion-radio-group formControlName="equipment_isolated">
             <ion-item lines="none">
               <ion-label>Is the equipment isolated ? </ion-label>
@@ -98,7 +99,31 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
+        </ion-row> -->
+
+        
+        <ion-row>
+          <ion-radio-group formControlName="equipment_isolated">
+            <ion-item lines="none">
+              <ion-label>Is the equipment isolated ?  </ion-label>
+            </ion-item>
+            <ion-row>
+              <ion-col size="6" >
+                <ion-item lines="none">
+                  <ion-label>Ok</ion-label>
+                  <ion-radio slot="start" value="Ok"></ion-radio>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6" >
+                <ion-item lines="none">
+                  <ion-label>Faulty </ion-label>
+                  <ion-radio slot="start" value="Faulty"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
         </ion-row>
+
         <ion-text class="mandatoryField">* Ensure there are no maintenance, lock-out tags or isolation procedures in
           place. </ion-text>
 
@@ -108,13 +133,13 @@
               <ion-label>Inspect Pendant :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Faulty</ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -134,13 +159,13 @@
               <ion-label> Inspect Control operation :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6" >
                 <ion-item lines="none">
                   <ion-label> Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6" >
                 <ion-item lines="none">
                   <ion-label>Faulty </ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -159,13 +184,13 @@
               <ion-label> Directional and SWL sign in place : </ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6" >
                 <ion-item lines="none">
                   <ion-label>Faulty </ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -184,13 +209,13 @@
                 <ion-label> Brakes operational :</ion-label>
               </ion-item>
               <ion-row>
-                <ion-col size-md="6" size-lg="4">
+                <ion-col size="6">
                   <ion-item lines="none">
                     <ion-label> Ok</ion-label>
                     <ion-radio slot="start" value="Ok"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-md="6" size-lg="4">
+                <ion-col size="6">
                   <ion-item lines="none">
                     <ion-label>Faulty </ion-label>
                     <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -209,13 +234,13 @@
               <ion-label> Limit Switches operational :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label> Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Faulty </ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -232,13 +257,13 @@
               <ion-label> Hook :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label> Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Faulty </ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -256,13 +281,13 @@
               <ion-label> Hoist chain/rope :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label> Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Faulty </ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -280,13 +305,13 @@
               <ion-label> Mechanically Sound :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label> Ok</ion-label>
                   <ion-radio slot="start" value="Ok"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size="6">
                 <ion-item lines="none">
                   <ion-label>Faulty </ion-label>
                   <ion-radio slot="start" value="Faulty"></ion-radio>
@@ -305,13 +330,13 @@
               <ion-label> Passed Inspection :</ion-label>
             </ion-item>
             <ion-row>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size-md="6">
                 <ion-item lines="none">
-                  <ion-label> Yes</ion-label>
+                  <ion-label>Yes</ion-label>
                   <ion-radio slot="start" value="Yes"></ion-radio>
                 </ion-item>
               </ion-col>
-              <ion-col size-md="6" size-lg="4">
+              <ion-col size-md="6">
                 <ion-item lines="none">
                   <ion-label>No </ion-label>
                   <ion-radio slot="start" value="No"></ion-radio>
