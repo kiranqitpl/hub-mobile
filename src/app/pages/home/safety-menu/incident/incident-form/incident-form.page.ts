@@ -204,6 +204,7 @@ export class IncidentFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.loadShift();
     this.loadLocation();
     this.loadBodyPart();
@@ -258,7 +259,22 @@ export class IncidentFormPage implements OnInit {
       // selectLocation: [''],
       classification_shift_type: [''],
       classification_supervisor: [''],
-      classification_manager: ['', Validators.required]          // required field
+
+      classification_supervisor_other_details:
+        this.fb.group({
+          classification_supervisor_other_name: [''],
+          classification_supervisor_other_mobile_no: [''],
+          classification_supervisor_other_email: ['']
+        }),
+
+      classification_manager: ['', Validators.required],          // required field
+      classification_manager_other_details:
+        this.fb.group({
+          classification_manager_other_name: [''],
+          classification_manager_other_mobile_no: [''],
+          classification_manager_other_email: ['']
+        }),
+
     });
 
     this.assetDescriptionForm = this.fb.group({
@@ -774,7 +790,11 @@ export class IncidentFormPage implements OnInit {
           let data = {
             immediate_treatment_person_name: res.data.full_name,
             immediate_treatment_person_name_id: res.data.employee_id,
-            immediate_treatment_person_number: res.data.emp_work_email && res.data.emp_work_email != '' ? res.data.emp_work_email : res.data.emp_mobile
+            // immediate_treatment_person_number: res.data.emp_work_email && res.data.emp_work_email != '' ? res.data.emp_work_email : res.data.emp_mobile
+            immediate_treatment_other_person_detail: {
+              immediate_treatment_person_number: res.data.emp_mobile,
+              immediate_treatment_other_email: res.data.emp_work_email ? res.data.emp_work_email : res.data.emp_oth_email
+            }
           }
           this.injuryPersonDetails.controls[index].patchValue(data);
         }
@@ -981,10 +1001,11 @@ export class IncidentFormPage implements OnInit {
       }
       fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type'] ? this.classificationForm.value['classification_shift_type'] : '');
       fd.append("classification_supervisor", this.classification_supervisor && this.classification_supervisor.employee_id ? this.classification_supervisor.employee_id : '');
+      fd.append("classification_supervisor_other_details", JSON.stringify(this.classificationForm.value['classification_supervisor_other_details']));
       // fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
       // fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
       fd.append("classification_manager", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
-
+      fd.append("classification_manager_other_details", JSON.stringify(this.classificationForm.value['classification_manager_other_details']));
       //--------------------------------------------------- Classification ---------------------------------------------------------//
 
       //----------------------------------------------------- Injury ---------------------------------------------------------------//
@@ -1240,10 +1261,17 @@ export class IncidentFormPage implements OnInit {
       initital_injury: [''],
       part_of_body_injured_occured: [],
       was_immediate_treatment: [''],
+      was_immediate_treatment_comment: [''],
       immediate_treatment_given_explanation: [''],
       immediate_treatment_person_name: [''],
       immediate_treatment_person_name_id: [''],
-      immediate_treatment_person_number: [''],
+      immediate_treatment_other_person_detail: this.fb.group({
+        immediate_treatment_other_name: [''],
+        immediate_treatment_person_number: [''],
+        immediate_treatment_other_email: ['']
+      }),
+
+      // immediate_treatment_person_number: [''],
     })
   }
 
@@ -1347,9 +1375,6 @@ export class IncidentFormPage implements OnInit {
       if (this.classificationForm.valid) {
         Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
       }
-
-      console.log(this.classificationForm.value);
-
       // Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
       // console.log('this.injuryForm.controls', this.injuryForm.controls);
       // Object.keys(this.injuryForm.controls.person_details).map(ele => formControlList.push(ele));
@@ -1373,13 +1398,8 @@ export class IncidentFormPage implements OnInit {
           count = ++count;
         }
       }
-      
+
     })
-
-
-    console.log('count', count);
-    console.log('formControlList.length', formControlList.length);
-    console.log('formControlList', formControlList);
 
     this.form_percent = ((1 / formControlList.length) * count);
 

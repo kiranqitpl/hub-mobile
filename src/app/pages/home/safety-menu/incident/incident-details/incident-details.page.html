@@ -135,8 +135,72 @@
         <p class="question">Supervisor :</p>
         <p class="value">{{incidentDetails['classification_supervisor'] }}</p>
 
+        <ion-grid *ngIf="incidentDetails['classification_supervisor'] == 'Other' " lines="none">
+          <ion-row>
+            <ion-col size="6">
+              <p class="question">Other Person Name :</p>
+            </ion-col>
+            <ion-col size="6">
+              <p class="value">
+                {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_name }}
+              </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <p class="question">Other Person Mobile No :</p>
+            </ion-col>
+            <ion-col size="6">
+              <p class="value">
+                {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_mobile_no
+                }} </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <p class="question">Other Person Email id :</p>
+            </ion-col>
+            <ion-col size="6">
+              <p class="value">
+                {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_email }}
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
         <p class="question">Name of Manager :</p>
         <p class="value">{{incidentDetails['classification_manager']}}</p>
+
+        <ion-grid *ngIf="incidentDetails['classification_manager'] == 'Other' " lines="none">
+          <ion-row>
+            <ion-col size="6">
+              <p class="question">Other Person Name :</p>
+            </ion-col>
+            <ion-col size="6">
+              <p class="value">
+                {{incidentDetails['classification_manager_other_details'].classification_manager_other_name }} </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <p class="question">Other Person Mobile No:</p>
+            </ion-col>
+            <ion-col size="6">
+              <p class="value">
+                {{incidentDetails['classification_manager_other_details'].classification_manager_other_mobile_no }} </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <p class="question">Other Person Email id:</p>
+            </ion-col>
+            <ion-col size="6">
+              <p class="value">
+                {{incidentDetails['classification_manager_other_details'].classification_manager_other_email }} </p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
       </ion-card-content>
     </ion-card>
     <!------------------------------------------------------------- Classification ---------------------------------------------------->
@@ -157,11 +221,8 @@
               </ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <p class="question">Full Name of Injured Person :</p>
+              <p class="question">Injured Person Name :</p>
               <p class="value">{{personDetails['injured_person_option'] }}</p>
-
-              <!-- <p class="value" *ngIf="personDetails['injured_person_option_value'] == 'Other' ">
-                {{personDetails['injured_person_option_value'] }}</p> -->
 
               <ion-grid *ngIf="personDetails['injured_person_option'] == 'Other' " lines="none">
                 <ion-row>
@@ -235,7 +296,9 @@
               <p class="question">Was immediate treatment given ? :</p>
               <p class="value">{{personDetails['was_immediate_treatment'] }}</p>
 
+
               <ion-grid *ngIf="personDetails['was_immediate_treatment'] == 'Yes'" lines="none">
+
                 <ion-row>
                   <ion-col size="6">
                     <p class="question">What treatment was given ? :</p>
@@ -244,26 +307,51 @@
                     <p class="value">{{personDetails['immediate_treatment_given_explanation'] }}</p>
                   </ion-col>
                 </ion-row>
+
                 <ion-row>
                   <p class="question">Who administered treatment ? :</p>
                 </ion-row>
+
                 <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Person Name :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">{{personDetails['immediate_treatment_person_name'] }}</p>
-                  </ion-col>
+                  <p class="value">{{personDetails['immediate_treatment_person_name'] }}</p>
                 </ion-row>
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Contact Details :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">{{personDetails['immediate_treatment_person_number'] }}</p>
-                  </ion-col>
-                </ion-row>
-                <!-- </ion-row> -->
+
+                <ion-grid *ngIf="personDetails['immediate_treatment_person_name'] == 'Other'">
+
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Other Person Name :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">
+                        {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_other_name }}
+                      </p>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Other Person Mobile No :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">
+                        {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_person_number }}
+                      </p>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Other Person Email id :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">
+                        {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_other_email }}
+                      </p>
+                    </ion-col>
+                  </ion-row>
+
+                </ion-grid>
               </ion-grid>
             </ion-card-content>
           </ion-card>

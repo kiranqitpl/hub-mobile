@@ -22,8 +22,15 @@ export class IncidentFormListPage implements OnInit {
   listOfUsers: any = [];
   userDetails: any;
   getRowData: any;
+
+
   current_page_no: number = 0;
   total_page_no: number = 0;
+
+  page = 1;
+  count = 0;
+  tableSize = 8;
+  tableSizesArr = [4, 8, 12];
 
   constructor(
     private nav: NavController,
@@ -111,13 +118,10 @@ export class IncidentFormListPage implements OnInit {
   onGoToDetails(rowData) {
     if (rowData && rowData.Form == 'Incident') {
       this.nav.navigateRoot("/home/safety-menu/incident-details/" + rowData.Id);
-
     } else if (rowData && rowData.Form == 'Telehandler Prestarts') {
       this.nav.navigateRoot("/home/safety-menu/telehandler-view-detail/" + rowData.Id);
-
     } else if (rowData && rowData.Form == 'Crane Prestarts') {
       this.nav.navigateRoot("/home/safety-menu/crane-view-detail/" + rowData.Id);
-
     } else if (rowData && rowData.Form == 'Vehicle Hoist Prestarts') {
       this.nav.navigateRoot("/home/safety-menu/vehicle-host-view-detail/" + rowData.Id);
     }

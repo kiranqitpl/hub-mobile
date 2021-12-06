@@ -266,8 +266,22 @@ export class IncidentFormEditPage implements OnInit {
       classification_location_value1: [''],
       // selectLocation: [''],
       classification_shift_type: [''],
-      classification_supervisor: [''],
-      classification_manager: ['', Validators.required]          // required field
+      // classification_supervisor: [''],
+      // classification_manager: ['', Validators.required]          // required field
+      classification_supervisor_other_details:
+        this.fb.group({
+          classification_supervisor_other_name: [''],
+          classification_supervisor_other_mobile_no: [''],
+          classification_supervisor_other_email: ['']
+        }),
+
+      classification_manager: ['', Validators.required],          // required field
+      classification_manager_other_details:
+        this.fb.group({
+          classification_manager_other_name: [''],
+          classification_manager_other_mobile_no: [''],
+          classification_manager_other_email: ['']
+        }),
     });
 
     this.injuryForm = this.fb.group({
@@ -429,16 +443,17 @@ export class IncidentFormEditPage implements OnInit {
     // this.loadingService.presentLoading();
     this.activatedRoute.params.subscribe(
       (params: Params) => {
-        this.globalService.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
+        this.globalService.getData('add_form/getSingleData?table_name=add_form&id=' + params['incident_id']).subscribe(result => {
+          // this.globalService.getData('add_form/getIncidentFormByID/' + params['incident_id']).subscribe(result => {
 
-          console.log('result', result);
+          console.log('loadIncidentDetails', result);
           if (result && result['data'] && result['data'][0]) {
 
             this.incidentDetails = result['data'][0];
 
             //------------------------------------------------------- incidentForm ----------------------------------------------------------//
 
-            if (this.incidentDetails.incident_near_miss != '' || this.incidentDetails.incident_near_miss != null) {
+            if (this.incidentDetails.incident_near_miss != '' && this.incidentDetails.incident_near_miss != null) {
               let incident_near_miss_object: any;
               this.witnessList.forEach(element => {
                 if (element.full_name == this.incidentDetails.incident_near_miss) {
@@ -449,17 +464,21 @@ export class IncidentFormEditPage implements OnInit {
               if (incident_near_miss_object != undefined) {
                 this.incident_near_miss = incident_near_miss_object;
               } else {
-                this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
-                  console.log('first', res);
-                  if (res && res.status && res.data && res.data.length > 0) {
-                    this.incident_near_miss = res.data[0];
-                  }
-                }, err => {
-                  console.log("Eror", err)
-                })
+                console.log('this.incidentDetails.incident_near_miss', this.incidentDetails.incident_near_miss);
+                if (this.incidentDetails.incident_near_miss != '' && this.incidentDetails.incident_near_miss != null) {
+                  this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
+                    console.log('getWitnessList 1', res);
+                    if (res && res.status && res.data && res.data.length > 0) {
+                      this.incident_near_miss = res.data[0];
+                    }
+                  }, err => {
+                    console.log("Eror", err)
+                  })
+                }
               }
             }
             this.incidentForm.patchValue(this.incidentDetails);
+
             this.onInput('', 'Incident');
             //------------------------------------------------------- incidentForm ----------------------------------------------------------//
             //------------------------------------------------------- PhotographyForm ----------------------------------------------------------//
@@ -470,8 +489,6 @@ export class IncidentFormEditPage implements OnInit {
               }
               this.photoGraphyObject = this.incidentDetails.photography_image;
             }
-
-            console.log('this.photoGraphyObject', this.photoGraphyObject);
 
             //------------------------------------------------------- PhotographyForm ----------------------------------------------------------//
             //------------------------------------------------------- incidentDesForm ----------------------------------------------------------//
@@ -487,14 +504,17 @@ export class IncidentFormEditPage implements OnInit {
               if (was_there_any_witness_of_the_incident_object != undefined) {
                 this.was_there_any_witness_of_the_incident = was_there_any_witness_of_the_incident_object;
               } else {
-                this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
-                  console.log('first', res);
-                  if (res && res.status && res.data && res.data.length > 0) {
-                    this.was_there_any_witness_of_the_incident = res.data[0];
-                  }
-                }, err => {
-                  console.log("Eror", err)
-                })
+                if (this.incidentDetails.was_there_any_witness_of_the_incident != '' && this.incidentDetails.was_there_any_witness_of_the_incident != null) {
+                  this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
+                    console.log('getWitnessList 2', res);
+                    if (res && res.status && res.data && res.data.length > 0) {
+                      this.was_there_any_witness_of_the_incident = res.data[0];
+                    }
+                  }, err => {
+                    console.log("Eror", err)
+                  })
+                }
+
               }
             }
 
@@ -530,6 +550,9 @@ export class IncidentFormEditPage implements OnInit {
             //------------------------------------------------------- classificationForm ----------------------------------------------------------//
 
             let classificationValue: FormArray = this.classificationForm.get('classification_value') as FormArray;
+
+            // console.log('classification_value',JSON.parse(this.incidentDetails['classification_value']));
+
             this.selectedTabList = this.incidentDetails['classification_value'].split(',');
             this.classificationList.forEach((element) => {
               this.selectedTabList.find(ele => {
@@ -564,7 +587,6 @@ export class IncidentFormEditPage implements OnInit {
                 this.classification_supervisor = classification_supervisor_object;
               } else {
                 this.globalService.getData("Supervisor/getSupervisorList/" + this.incidentDetails.classification_supervisor).subscribe((res: any) => {
-                  console.log('first', res);
                   if (res && res.status && res.data && res.data.length > 0) {
                     this.classification_supervisor = res.data[0];
                   }
@@ -572,7 +594,11 @@ export class IncidentFormEditPage implements OnInit {
                   console.log("Eror", err)
                 })
               }
-              this.classificationForm.controls['classification_supervisor'].setValue(this.incidentDetails.classification_supervisor);
+
+              // console.log('this.classification_supervisor ', this.classification_supervisor, this.incidentDetails.classification_supervisor.employee_id);
+
+
+              // this.classificationForm.controls['classification_supervisor'].setValue(this.incidentDetails.classification_supervisor.employee_id);
             }
 
             if (this.incidentDetails.classification_manager != '' || this.incidentDetails.classification_manager != null) {
@@ -596,7 +622,7 @@ export class IncidentFormEditPage implements OnInit {
                 })
               }
 
-              this.classificationForm.controls['classification_manager'].setValue(this.incidentDetails.classification_manager);
+              // this.classificationForm.controls['classification_manager'].setValue(this.incidentDetails.classification_manager.employee_id);
             }
 
             //------------------------------------------------------- classificationForm ----------------------------------------------------------//
@@ -686,14 +712,16 @@ export class IncidentFormEditPage implements OnInit {
               if (name_of_witness_object != undefined) {
                 this.name_of_witness = name_of_witness_object;
               } else {
-                this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
-                  console.log('first', res);
-                  if (res && res.status && res.data && res.data.length > 0) {
-                    this.name_of_witness = res.data[0];
-                  }
-                }, err => {
-                  console.log("Eror", err)
-                })
+                if (this.incidentDetails.name_of_witness != '' && this.incidentDetails.name_of_witness != null) {
+                  this.globalService.getData("Witness/getWitnessList/" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
+                    console.log('getWitnessList 3', res);
+                    if (res && res.status && res.data && res.data.length > 0) {
+                      this.name_of_witness = res.data[0];
+                    }
+                  }, err => {
+                    console.log("Eror", err)
+                  })
+                }
               }
             }
 
@@ -737,8 +765,6 @@ export class IncidentFormEditPage implements OnInit {
   setPersonDetails(person_details): FormArray {
     const formArray = new FormArray([]);
     person_details.forEach(element => {
-
-      console.log('element', element);
       formArray.push(
         this.fb.group({
           injured_person_option: [element.injured_person_option],   //  seletced person name
@@ -761,10 +787,16 @@ export class IncidentFormEditPage implements OnInit {
           initital_injury: [element.initital_injury],
           part_of_body_injured_occured: [element.part_of_body_injured_occured],
           was_immediate_treatment: [element.was_immediate_treatment],
+          was_immediate_treatment_comment: [element.was_immediate_treatment_comment],
           immediate_treatment_given_explanation: [element.immediate_treatment_given_explanation],
           immediate_treatment_person_name_id: [element.immediate_treatment_person_name_id],
           immediate_treatment_person_name: [element.immediate_treatment_person_name],
-          immediate_treatment_person_number: [element.immediate_treatment_person_number],
+          // immediate_treatment_person_number: [element.immediate_treatment_person_number],
+          immediate_treatment_other_person_detail: this.fb.group({
+            immediate_treatment_other_name: [element.injured_person_option_other_details.immediate_treatment_other_name],
+            immediate_treatment_person_number: [element.injured_person_option_other_details.immediate_treatment_person_number],
+            immediate_treatment_other_email: [element.injured_person_option_other_details.immediate_treatment_other_email]
+          }),
         })
       )
     });
@@ -1172,7 +1204,12 @@ export class IncidentFormEditPage implements OnInit {
           let data = {
             immediate_treatment_person_name: res.data.full_name,
             immediate_treatment_person_name_id: res.data.employee_id,
-            immediate_treatment_person_number: res.data.emp_work_email && res.data.emp_work_email != '' ? res.data.emp_work_email : res.data.emp_mobile
+            // immediate_treatment_person_number: res.data.emp_work_email && res.data.emp_work_email != '' ? res.data.emp_work_email : res.data.emp_mobile
+            immediate_treatment_other_person_detail: {
+
+              immediate_treatment_person_number: res.data.emp_mobile,
+              immediate_treatment_other_email: res.data.emp_work_email ? res.data.emp_work_email : res.data.emp_oth_email
+            }
           }
           this.injuryPersonDetails.controls[index].patchValue(data);
         }
@@ -1382,10 +1419,11 @@ export class IncidentFormEditPage implements OnInit {
       }
       fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type']);
       fd.append("classification_supervisor", this.classification_supervisor && this.classification_supervisor.employee_id ? this.classification_supervisor.employee_id : '');
+      fd.append("classification_supervisor_other_details", JSON.stringify(this.classificationForm.value['classification_supervisor_other_details']));
       // fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
       // fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
       fd.append("classification_manager", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
-
+      fd.append("classification_manager_other_details", JSON.stringify(this.classificationForm.value['classification_manager_other_details']));
       //--------------------------------------------------- Classification ---------------------------------------------------------//
 
       //----------------------------------------------------- Injury ---------------------------------------------------------------//
@@ -1619,10 +1657,16 @@ export class IncidentFormEditPage implements OnInit {
       initital_injury: [''],
       part_of_body_injured_occured: [],
       was_immediate_treatment: [''],
+      was_immediate_treatment_comment: [''],
       immediate_treatment_given_explanation: [''],
       immediate_treatment_person_name: [''],
       immediate_treatment_person_name_id: [''],
-      immediate_treatment_person_number: [''],
+      // immediate_treatment_person_number: [''],
+      immediate_treatment_other_person_detail: this.fb.group({
+        immediate_treatment_other_name: [''],
+        immediate_treatment_person_number: [''],
+        immediate_treatment_other_email: ['']
+      }),
     })
   }
 

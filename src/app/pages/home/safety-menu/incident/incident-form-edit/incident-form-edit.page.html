@@ -1,6 +1,7 @@
 <ion-content>
+
   <div class="toolbar">
-    <ion-text>Edit Incident Form</ion-text>
+    <ion-text>Incident Form</ion-text>
     <ion-buttons class="back">
       <ion-button (click)="nav.back()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
@@ -14,18 +15,36 @@
   </div>
 
   <div class="container">
-    <p>ReacIncident report</p>
+    <p class="question">ReacIncident report</p>
   </div>
 
   <div class="ion-padding-start ion-padding-end">
-    <div *ngFor="let tabItem of tabList">
+
+    <!-- <div class="activeBackground">
+      <ion-row>
+        <ion-col size="10">
+          <div class="headerTitle">Form progress bar</div>
+        </ion-col>
+        <ion-col size="2">
+          {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+        </ion-col>
+      </ion-row>
+    </div> -->
+
+    <div *ngFor=" let tabItem of tabList">
       <ion-button class="incident" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
         [disabled]="tabItem.tabDisable">
         <p>{{tabItem.val}} </p>
         <img class="plus" src="{{imagePath+'add.png'}}" />
       </ion-button>
 
-      <!------------------------------------------------------------- Incident -------------------------------------------------------------->
+      <!--------------------------------------------------------- Incident ------------------------------------------------------------------->
       <div *ngIf="selectedTabItem==tabItem.val && selectedTabItem =='Incident'" class="activeBackground">
         <div class="headerTitle">
           <p>{{tabItem.val}}</p>
@@ -70,14 +89,6 @@
               </ion-buttons>
             </ion-item>
 
-            <!-- <ion-item class="ra" lines="none">
-              <ion-select placeholder="Please select who witnessed the near miss" interface="action-sheet"
-                formControlName="incident_near_miss">
-                <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
-                  {{witnesskeys?.full_name}}</ion-select-option>
-              </ion-select>
-            </ion-item> -->
-
             <p class="question">
               Possible consequence under different circumstances :
             </p>
@@ -86,9 +97,9 @@
           </div>
         </div>
       </div>
-      <!------------------------------------------------------------- Incident -------------------------------------------------------------->
+      <!--------------------------------------------------------- Incident ------------------------------------------------------------------->
 
-      <!------------------------------------------------------------ Photography ------------------------------------------------------------>
+      <!-------------------------------------------------------- Photography ----------------------------------------------------------------->
       <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem=='Photography'" class="activeBackground"
         [formGroup]="photoGraphyForm">
         <div class="headerTitle">
@@ -124,10 +135,10 @@
           </ion-slide>
         </ion-slides>
       </div>
-      <!------------------------------------------------------------ Photography ------------------------------------------------------------>
+      <!-------------------------------------------------------- Photography ----------------------------------------------------------------->
 
 
-      <!-------------------------------------------------------- Incident Description ------------------------------------------------------->
+      <!----------------------------------------------------- Incident Description ----------------------------------------------------------->
 
       <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem=='Incident Description'" class="activeBackground">
         <div class="headerTitle">
@@ -152,7 +163,6 @@
           </ion-input>
 
           <p class="question">Was there any Witnesses of the incident ? :</p>
-
           <ion-item class="ra" lines="none" (click)="onOpenIncDesModal('Incident Description', 'Witness List')">
             <ion-input placeholder="Please select witness" formControlName="was_there_any_witness_of_the_incident">
             </ion-input>
@@ -161,11 +171,6 @@
                 <ion-icon class="btn-icon" name="caret-down-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
-            <!-- <ion-select placeholder="Please select witness" interface="action-sheet"
-                formControlName="was_there_any_witness_of_the_incident" (ionChange)="onIncDesWitnessChange($event)">
-                <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
-                  {{witnesskeys?.full_name}}</ion-select-option>
-              </ion-select> -->
           </ion-item>
 
           <div *ngIf="incidentDesForm.value['was_there_any_witness_of_the_incident'] == 'Other'"
@@ -190,8 +195,12 @@
             </ion-input>
           </div>
 
+          <!-- <ion-input placeholder="Please enter witnesses of the incident"
+            formControlName="was_there_any_witness_of_the_incident">
+          </ion-input> -->
 
           <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
+
           <ion-radio-group formControlName="incident_description_alcohol_test"
             (ionChange)="onAlcohalTestSelect($event)">
             <ion-item class="ra" lines="none">
@@ -220,6 +229,7 @@
           </ion-radio-group>
 
           <div *ngIf="incidentDesForm.value['incident_description_alcohol_test']=='Yes'">
+
             <div *ngIf="globalService.platform === 'cordova'">
               <ion-button class="camera" expand="block" (click)="onAlcoholImage($event, 1)">Upload Image</ion-button>
             </div>
@@ -244,6 +254,8 @@
               </ion-slide>
             </ion-slides>
           </div>
+
+
           <!----------------------------------------------- Alcohal Test -------------------------------------------------------->
 
 
@@ -276,6 +288,7 @@
           </ion-radio-group>
 
           <div *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'">
+
             <div *ngIf="globalService.platform === 'cordova'">
               <ion-button *ngIf="incidentDesForm.value['drug_test_completed']=='Yes'" class="camera" expand="block"
                 (click)="onDrugTestImage($event, 1)">Upload Image
@@ -302,6 +315,7 @@
                 </ion-grid>
               </ion-slide>
             </ion-slides>
+
           </div>
 
           <!----------------------------------------------- Drug Test -------------------------------------------------------->
@@ -334,7 +348,12 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <div *ngIf="incidentDesForm.value['return_to_alternate_duties']=='Yes'">
+
+          <div *ngIf="incidentDesForm.value['return_to_alternate_duties'] == 'Yes'">
+
+            <ion-text class="mandatoryField">* Please take a photo or upload the Cerificate of Copacity (COC).
+            </ion-text>
+
             <div *ngIf="globalService.platform === 'cordova'">
               <ion-button class=" camera" expand="block" (click)="onReturnToDutyImage($event, 1)">Upload Image
               </ion-button>
@@ -361,16 +380,16 @@
                 </ion-grid>
               </ion-slide>
             </ion-slides>
-
           </div>
+
           <!----------------------------------------------- Return to Alternate Duties -------------------------------------------------------->
         </div>
       </div>
 
-      <!------------------------------------------------------- Incident Description -------------------------------------------------------->
+      <!----------------------------------------------------- Incident Description ----------------------------------------------------------->
 
 
-      <!--------------------------------------------------------- Classification ------------------------------------------------------------>
+      <!----------------------------------------------------- Classification ----------------------------------------------------------------->
 
       <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem =='Classification'" [formGroup]='classificationForm'
         class="activeBackground">
@@ -389,8 +408,9 @@
           </ion-col>
         </ion-row>
 
-
-        <!-- <ion-item class="ra" lines="none"> -->
+        <!-- <ion-item class="ra" lines="none">
+          <ion-label position="floating">Date of Incident :</ion-label> -->
+        <!-- <ion-label position="floating">Date of Incident :</ion-label> -->
         <p class="question">Date of Incident :</p>
         <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select date of incident"
           formControlName="date_of_incident">
@@ -404,14 +424,16 @@
         </ion-datetime>
         <!-- </ion-item> -->
 
-        <!-- <ion-item class="ra" lines="none"> -->
+        <!-- <ion-item class="ra" lines="none">
+          <ion-label position="floating">Date Reported :</ion-label> -->
         <p class="question">Date Reported :</p>
         <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select reported date"
           formControlName="date_reported">
         </ion-datetime>
         <!-- </ion-item> -->
 
-        <!-- <ion-item class="ra" lines="none"> -->
+        <!-- <ion-item class="ra" lines="none">
+          <ion-label position="floating">Time Reported :</ion-label> -->
         <p class="question">Time Reported :</p>
         <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select reported time"
           formControlName="time_reported">
@@ -457,13 +479,15 @@
 
         <!-- <ion-item class="ra" lines="none"> -->
         <p class="question">Shift :</p>
-        <ion-select placeholder="Shift Type" interface="action-sheet" formControlName="classification_shift_type">
+        <ion-select placeholder="Please select shift Type" interface="action-sheet"
+          formControlName="classification_shift_type">
           <ion-select-option value="{{shiftItem?.shift_type}}" *ngFor="let shiftItem of shiftTypeList">
             {{shiftItem?.shift_type}}
           </ion-select-option>
         </ion-select>
         <!-- </ion-item> -->
 
+        <!-- <ion-item class="ra" lines="none"> -->
         <p class="question">Supervisor :</p>
         <ion-item class="ra" lines="none" (click)="onOpenClassiModal('Supervisor List')">
           <ion-input placeholder="Please select supervisor" formControlName="classification_supervisor">
@@ -475,13 +499,32 @@
           </ion-buttons>
         </ion-item>
 
-        <!-- <ion-item class="ra" lines="none">
-          <ion-select placeholder="Supervisor" interface="action-sheet" formControlName="classification_supervisor">
-            <ion-select-option value="{{superVisorItem?.employee_id}}" *ngFor="let superVisorItem of superVisorList">
-              {{superVisorItem?.full_name}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item> -->
+        <div *ngIf='classificationForm.value["classification_supervisor"] == "Other"'
+          formGroupName='classification_supervisor_other_details'>
+          <p class="other_witness"> Other Person Details </p>
+          <p class="question">Name :</p>
+          <ion-input placeholder="Please enter other person name"
+            formControlName="classification_supervisor_other_name">
+          </ion-input>
+
+          <p class="question"> Mobile No :</p>
+          <ion-input type="tel" placeholder="Please enter other person mobile no "
+            formControlName="classification_supervisor_other_mobile_no">
+          </ion-input>
+
+          <p class="question">Email id :</p>
+          <ion-input type="email" placeholder="Please enter other person email"
+            formControlName="classification_supervisor_other_email">
+          </ion-input>
+        </div>
+
+        <!-- <ion-select placeholder="Please select supervisor" interface="action-sheet"
+          formControlName="classification_supervisor">
+          <ion-select-option value="{{superVisorItem?.employee_id}}" *ngFor="let superVisorItem of superVisorList">
+            {{superVisorItem?.full_name}}
+          </ion-select-option>
+        </ion-select> -->
+        <!-- </ion-item> -->
 
         <p class="question">Manger :</p>
         <ion-item class="ra" lines="none" (click)="onOpenClassiModal('Manager List')">
@@ -494,30 +537,43 @@
           </ion-buttons>
         </ion-item>
 
-        <!-- <ion-item class="ra" lines="none" (click)="onOpenModal()">
-          <ion-label class="labelCustomDropDown">{{managerList}}</ion-label>
-          <ion-buttons slot="end" class="ion-no-padding ion-no-margin">
-            <ion-button class="ion-no-padding ion-no-margin">
-              <ion-icon name="chevron-down" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-item> -->
+        <div *ngIf="classificationForm.value['classification_manager'] == 'Other'"
+          formGroupName='classification_manager_other_details'>
+          <p class="other_witness"> Other Witness Details </p>
+          <p class="question">
+            Name :
+          </p>
+          <ion-input placeholder="Please enter Other Witness Name" formControlName="classification_manager_other_name">
+          </ion-input>
+          <p class="question">
+            Mobile No :
+          </p>
+          <ion-input type="tel" placeholder="Please enter Other Witness Mobile No "
+            formControlName="classification_manager_other_mobile_no">
+          </ion-input>
+          <p class="question">
+            Email id :
+          </p>
+          <ion-input type="email" placeholder="Please enter Other Witness Email"
+            formControlName="classification_manager_other_email">
+          </ion-input>
+        </div>
 
       </div>
 
-      <!---------------------------------------------------------- Classification ----------------------------------------------------------->
+      <!----------------------------------------------------- Classification ----------------------------------------------------------------->
     </div>
 
-    <!-------------------------------------------------------- Classification Sub Tab ------------------------------------------------------->
+    <!---------------------------------------------------- Classification Sub Tab ------------------------------------------------------------>
 
     <div *ngFor="let classification of selectedTabList; let i = index">
+
       <ion-button class="incident" *ngIf="selectedTabItem != classification" (click)="onSelectTabItem(classification)">
         <p>{{classification}} </p>
         <img class="plus" src="{{imagePath+'add.png'}}" />
       </ion-button>
 
-
-      <!-------------------------------------------------Asset-------------------------------------------------------->
+      <!------------------------------------------------------- Asset ------------------------------------------------------------------------>
 
       <div *ngIf=" selectedTabItem == classification && classification =='Asset'" class="activeBackground"
         [formGroup]="assetDescriptionForm">
@@ -587,8 +643,9 @@
           </ion-slide>
         </ion-slides>
       </div>
-      <!-------------------------------------------------Asset-------------------------------------------------------->
-      <!-------------------------------------------------Environmental------------------------------------------------>
+      <!------------------------------------------------------- Asset ------------------------------------------------------------------------>
+
+      <!----------------------------------------------------- Environmental ------------------------------------------------------------------>
 
       <div *ngIf="selectedTabItem == classification && classification =='Environmental'" class="activeBackground"
         [formGroup]="enviornmentForm">
@@ -625,7 +682,6 @@
         </ion-radio-group>
 
         <div *ngIf="enviornmentForm.value['was_a_chemical_split']==='Yes'" formGroupName="chemical_details">
-
           <p class="question">
             Name of chemical :
           </p>
@@ -640,6 +696,7 @@
 
 
           <div *ngIf="enviornmentForm.value['chemical_details'].insertPhotoCheckBox">
+
             <div *ngIf="globalService.platform === 'cordova'">
               <ion-button class="camera" expand="block" (click)="onChemicalImageSelect($event, 1)">Upload Image
               </ion-button>
@@ -668,9 +725,14 @@
             </ion-slides>
           </div>
 
-          <p class="question">Approximate quantity of chemical spilled :</p>
-          <ion-input placeholder="Enter here" type="tel" formControlName="approximate_quantity">
+          <p class="question">
+            Approximate quantity of chemical spilled :
+          </p>
+
+          <ion-input placeholder="Please enter approximate qunatity of chemical spilled" type="tel"
+            formControlName="approximate_quantity">
           </ion-input>
+
         </div>
 
         <ion-radio-group formControlName='emergency_spill_kit_used'>
@@ -701,9 +763,9 @@
         </div>
       </div>
 
-      <!-------------------------------------------------Environmental------------------------------------------------>
+      <!----------------------------------------------------- Environmental ------------------------------------------------------------------>
 
-      <!-------------------------------------------------Injury------------------------------------------------------->
+      <!-------------------------------------------------------- Injury ----------------------------------------------------------------------->
 
       <div *ngIf="selectedTabItem == classification && classification =='Injury'" class="activeBackground"
         [formGroup]="injuryForm">
@@ -722,10 +784,10 @@
           <ion-select-option value="4">4</ion-select-option>
         </ion-select>
 
-        <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index ">
+        <div formArrayName="person_details" *ngFor="let personDetails of injuryPersonDetails.controls; let j = index">
+
           <ion-card>
             <p class="questionHead">Person {{(j+1)}} Details</p>
-
             <div [formGroupName]="j">
               <p class="question">Injured Person Name :</p>
               <ion-item class="ra" lines="none" (click)="onOpenInjuryModal('Injured person', j)">
@@ -737,40 +799,23 @@
                   </ion-button>
                 </ion-buttons>
               </ion-item>
-
-              <!-- <ion-select placeholder="Please select Injured Person Name" interface="action-sheet"
-                formControlName="injured_person_option">
-                <ion-select-option value="{{witnessName?.employee_id}}" *ngFor="let witnessName of witnessList">
-                  {{witnessName?.full_name}}
-                </ion-select-option>
-              </ion-select> -->
-
               <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'
                 formGroupName='injured_person_option_other_details'>
-
                 <p class="other_witness"> Other Person Details </p>
-
-                <p class="question">
-                  Name :
-                </p>
+                <p class="question">Name :</p>
                 <ion-input placeholder="Please enter other person name"
                   formControlName="injured_person_option_other_name">
                 </ion-input>
 
-                <p class="question">
-                  Mobile No :
-                </p>
+                <p class="question"> Mobile No :</p>
                 <ion-input type="tel" placeholder="Please enter other person mobile no "
                   formControlName="injured_person_option_other_mobile_no">
                 </ion-input>
 
-                <p class="question">
-                  Email id :
-                </p>
+                <p class="question">Email id :</p>
                 <ion-input type="email" placeholder="Please enter other person email"
                   formControlName="injured_person_option_other_email">
                 </ion-input>
-
               </div>
 
               <!-- <div *ngIf='injuryForm.value["person_details"][j].injured_person_option=="Other"'>
@@ -779,7 +824,6 @@
                   formControlName="injured_person_option_value">
                 </ion-input>
               </div> -->
-
 
               <p class="question">Gender :</p>
               <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">
@@ -819,29 +863,27 @@
                 </ion-input>
               </div>
 
-              <div>
-                <ion-radio-group formControlName="alternate_duties">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>Return to Alternate Duties :</ion-label>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>Yes</ion-label>
-                        <ion-radio slot="start" value="Yes"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>No</ion-label>
-                        <ion-radio slot="start" value="No"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
-                </ion-radio-group>
-              </div>
+              <ion-radio-group formControlName="alternate_duties">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>Return to Alternate Duties :</ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>Yes</ion-label>
+                      <ion-radio slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
 
               <div *ngIf="injuryForm.value['person_details'][j].alternate_duties ==='No'">
                 <p class="question">Explanation :</p>
@@ -867,72 +909,114 @@
                 </ion-row>
               </ion-radio-group>
 
-              <!-- <img *ngIf="injuryForm.value['person_details'][j].gender ==='Male'" class="img-responsive"
-                src="{{imagePath+'Male_Silhouette.png'}}" usemap="#map_example">
-              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Female'" class="img-responsive"
-                src="{{imagePath+'Female_Silhouette.png'}}" usemap="#map_example"> -->
-              <img *ngIf="injuryForm.value['person_details'][j].gender ==='Male'"
-                src="{{imagePath+'Male_Silhouette.png'}}" usemap="#map_example" (click)="onImageClick($event)">
+              <!-- <img *ngIf="injuryForm.value['person_details'][j].gender ==='Male'"
+                src="{{imagePath+'Male_Silhouette.png'}}" usemap="#image-map" (click)="onImageClick($event)">
+
               <img *ngIf="injuryForm.value['person_details'][j].gender ==='Female'"
-                src="{{imagePath+'Female_Silhouette.png'}}" usemap="#map_example" (click)="onImageClick($event)">
+                src="{{imagePath+'Female_Silhouette.png'}}" usemap="#image-map" (click)="onImageClick($event)"> -->
 
+              <ion-grid *ngIf="injuryForm.value['person_details'][j].gender ==='Male'">
+                <img src="{{imagePath+'Male_Silhouette.png'}}" usemap="#image-map">
 
-              <!-- <div id="image_map">
+                <map name="image-map">
+                  <area target="_self" alt="Head" title="Head" href="javascript:void(0)" coords="68,11,20"
+                    shape="circle" (click)="onImageClick('Head')">
+                  <area target="_self" alt="Face" title="Face" href="javascript:void(0)" coords="69,20,33"
+                    shape="circle" (click)="onImageClick('Face')">
+                  <area target="_self" alt="Neck" title="Neck" href="javascript:void(0)" coords="72,48,16"
+                    shape="circle" (click)="onImageClick('Neck')">
+                  <area target="_self" alt="Left Shoulder" title="Left Shoulder" href="javascript:void(0)"
+                    coords="50,64,22" shape="circle" (click)="onImageClick('Left Shoulder')">
+                  <area target="_self" alt="Right Shoulder" title="Right Shoulder" href="javascript:void(0)"
+                    coords="90,53,21" shape="circle" (click)="onImageClick('Right Shoulder')">
+                  <area target="_self" alt="Left hand" title="Left hand" coords="68,97,73" shape="circle"
+                    (click)="onImageClick('Left hand')">
+                  <area target="_self" alt="Right hand" title="Right hand" href="javascript:void(0)" coords="107,68,79"
+                    shape="circle" (click)="onImageClick('Right hand')">
+                  <area target="_self" alt="Left palm" title="Left palm" href="javascript:void(0)" coords="20,154,17"
+                    shape="circle" (click)="onImageClick('Left palm')">
+                  <area target="_self" alt="Left hand finger" title="Left hand finger" href="javascript:void(0)"
+                    coords="14,169,12" shape="circle" (click)="onImageClick('Left hand finger')">
+                  <area target="_self" alt="Left hand thumb" title="Left hand thumb" href="javascript:void(0)"
+                    coords="8,157,9" shape="circle" (click)="onImageClick('Left hand thumb')">
+                  <area target="_self" alt="Right hand palm" title="Right hand palm" href="javascript:void(0)"
+                    coords="130,150,17" shape="circle" (click)="onImageClick('Right hand palm')">
+                  <area target="_self" alt="Right hand finger" title="Right hand finger" href="javascript:void(0)"
+                    coords="133,168,16" shape="circle" (click)="onImageClick('Right hand finger')">
+                  <area target="_self" alt="Right hand thumb" title="Right hand thumb" href="javascript:void(0)"
+                    coords="144,155,6" shape="circle" (click)="onImageClick('Right hand thumb')">
+                  <area target="_self" alt="Upper Abdomen" title="Upper Abdomen" href="javascript:void(0)"
+                    coords="62,120,37" shape="circle" (click)="onImageClick('Upper Abdomen')">
+                  <area target="_self" alt="Lower Abdomen" title="Lower Abdomen" href="javascript:void(0)"
+                    coords="53,132,48" shape="circle" (click)="onImageClick('Lower Abdomen')">
+                  <area target="_self" alt="Left Thigh" title="Left Thigh" href="javascript:void(0)" coords="49,154,66"
+                    shape="circle" (click)="onImageClick('Left Thigh')">
+                  <area target="_self" alt="Right Thigh" title="Right Thigh" href="javascript:void(0)"
+                    coords="102,153,55" shape="circle" (click)="onImageClick('Right Thigh')">
+                  <area target="_self" alt="Left Knee" title="Left Knee" href="javascript:void(0)" coords="62,225,12"
+                    shape="circle" (click)="onImageClick('Left Knee')">
+                  <area target="_self" alt="Right Knee" title="Right Knee" href="javascript:void(0)" coords="81,223,16"
+                    shape="circle" (click)="onImageClick('Right Knee')">
+                  <area target="_self" alt="Left Lower leg" title="Left Lower leg" href="javascript:void(0)"
+                    coords="61,236,52" shape="circle" (click)="onImageClick('Left Lower leg')">
+                  <area target="_self" alt="Right Lower leg" title="Right Lower leg" href="javascript:void(0)"
+                    coords="98,231,55" shape="circle" (click)="onImageClick('Right Lower leg')">
+                  <area target="_self" alt="Left Foot" title="Left Foot" href="javascript:void(0)" coords="69,293,21"
+                    shape="circle" (click)="onImageClick('Left Foot')">
+                  <area target="_self" alt="Right Foot" title="Right Foot" href="javascript:void(0)" coords="86,295,19"
+                    shape="circle" (click)="onImageClick('Right Foot')">
+                  <area target="_self" alt="Spin" title="Spin" href="javascript:void(0)" coords="261,55,75"
+                    shape="circle" (click)="onImageClick('Spin')">
+                </map>
+              </ion-grid>
 
-             <map name="map_example"> <area href="https://facebook.com" alt="Facebook" target="_blank" shape=poly
-                 coords="30,100, 140,50, 290,220, 180,280">
-
-               <area href="https://en.wikipedia.org/wiki/Social_media" target="_blank"
-                 alt="Wikipedia Social Media Article" shape=poly coords="190,75, 200,60, 495,60, 495,165, 275,165">
-
-             </map>
-
-             <img src="../../wp-content/uploads/image_map_example_shapes.png" alt="image map example" width=500
-               height=332 usemap="#map_example">
-
-           </div> -->
-
-              <p class="question">Part of body injured :</p>
+              <ion-item class="ra" lines="none">
+                <p class="question">Part of body injured :</p>
+              </ion-item>
               <ion-select multiple="true" cancelText="Cancel" okText="Ok" formControlName="part_of_body_injured_occured"
                 placeholder="Select Part of body injured">
                 <ion-select-option value="{{bodyPartsVal.name}}" *ngFor="let bodyPartsVal of bodyPartList">
                   {{bodyPartsVal.name}}</ion-select-option>
               </ion-select>
 
-
-              <div>
-                <ion-radio-group formControlName="was_immediate_treatment">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>Was immediate treatment given ? :</ion-label>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>Yes</ion-label>
-                        <ion-radio slot="start" value="Yes"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item class="ra" lines="none">
-                        <ion-label>No</ion-label>
-                        <ion-radio slot="start" value="No"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
-                </ion-radio-group>
-              </div>
+              <ion-radio-group formControlName="was_immediate_treatment">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>Was immediate treatment given ? :</ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>Yes</ion-label>
+                      <ion-radio slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item class="ra" lines="none">
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
 
               <div *ngIf="injuryForm.value['person_details'][j].was_immediate_treatment == 'Yes'">
-                <p class="question">What treatment was given ? :</p>
+
+                <ion-item class="ra" lines="none">
+                  <p class="question">What treatment was given ? :</p>
+                </ion-item>
                 <ion-input placeholder="Please enter what treatment was given "
                   formControlName="immediate_treatment_given_explanation">
                 </ion-input>
 
-                <p class="question">Who administered treatment ? : </p>
+                <ion-item class="ra" lines="none">
+                  <p class="question">Who administered treatment ? : </p>
+                </ion-item>
+                <ion-item class="ra" lines="none">
+                  <p class="question">Person Name :</p>
+                </ion-item>
 
-                <p class="question">Person Name :</p>
                 <ion-item class="ra" lines="none" (click)="onOpenInjuryModal('Injured administered', j)">
                   <ion-input placeholder="Please select person" formControlName="immediate_treatment_person_name">
                   </ion-input>
@@ -942,29 +1026,69 @@
                     </ion-button>
                   </ion-buttons>
                 </ion-item>
-                <!-- <ion-select placeholder="Select Person Name" interface="action-sheet"
-                  formControlName="immediate_treatment_person_name" (ionChange)="onAdministeredPerson($event, j)">
-                  <ion-select-option value="{{employeeListValue?.employee_id}}"
-                    *ngFor="let employeeListValue of employeeList">
-                    {{employeeListValue?.full_name}}</ion-select-option>
-                </ion-select> -->
-                <!-- <ion-input placeholder="Please enter Person Name" formControlName="immediate_treatment_person_name">
+
+                <div *ngIf='injuryForm.value["person_details"][j].immediate_treatment_person_name=="Other"'
+                  formGroupName='immediate_treatment_other_person_detail'>
+                  <ion-item class="ra" lines="none">
+                    <p class="other_witness"> Other Person Details </p>
+                  </ion-item>
+                  <ion-item class="ra" lines="none">
+                    <p class="question">Name :</p>
+                  </ion-item>
+                  <ion-input placeholder="Please enter other person name"
+                    formControlName="immediate_treatment_other_name">
+                  </ion-input>
+                </div>
+
+                <div formGroupName='immediate_treatment_other_person_detail'>
+                  <ion-item class="ra" lines="none">
+                    <p class="question"> Mobile No :</p>
+                  </ion-item>
+                  <ion-input type="tel" placeholder="Please enter other person mobile no "
+                    formControlName="immediate_treatment_person_number">
+                  </ion-input>
+
+                  <ion-item class="ra" lines="none">
+                    <p class="question">Email id :</p>
+                  </ion-item>
+                  <ion-input type="email" placeholder="Please enter other person email"
+                    formControlName="immediate_treatment_other_email">
+                  </ion-input>
+                </div>
+
+                <!-- <p class="question">Contact Details :</p>
+                <ion-input placeholder="Please enter mobile no or email id"
+                  formControlName="immediate_treatment_person_number">
                 </ion-input> -->
 
-                <p class="question">Contact Details :</p>
-                <ion-input placeholder="Please enter mobile no or email id" type="tel"
-                  formControlName="immediate_treatment_person_number">
-                </ion-input>
               </div>
+
+              <div *ngIf="injuryForm.value['person_details'][j].was_immediate_treatment == 'No'">
+                <ion-row>
+                  <!-- <ion-item lines="none"> -->
+                  <ion-item class="ra" lines="none">
+                    <span class="error">* </span>
+                    <ion-label> Explain why immediate treatment was not given : </ion-label>
+                  </ion-item>
+                </ion-row>
+                <ion-row>
+                  <!-- <ion-item lines="none"> -->
+                  <ion-textarea placeholder="Enter Comment" autoGrow="true"
+                    formControlName="was_immediate_treatment_comment">
+                  </ion-textarea>
+                  <!-- </ion-item> -->
+                </ion-row>
+              </div>
+
             </div>
           </ion-card>
         </div>
       </div>
 
-      <!-------------------------------------------------Injury------------------------------------------------------->
+      <!------------------------------------------------------- Injury ----------------------------------------------------------------------->
 
+      <!------------------------------------------------------  Report ----------------------------------------------------------------------->
 
-      <!-------------------------------------------------Report------------------------------------------------------->
       <div *ngIf=" selectedTabItem == classification && classification =='Report'" class="activeBackground"
         [formGroup]="reportForm">
         <div class="headerTitle">
@@ -977,9 +1101,9 @@
         </p>
         <ion-input placeholder="Please enter what could have done differently" formControlName='report'></ion-input>
       </div>
-      <!-------------------------------------------------Report------------------------------------------------------->
+      <!------------------------------------------------------- Report ----------------------------------------------------------------------->
 
-      <!-------------------------------------------------Reputation--------------------------------------------------->
+      <!------------------------------------------------------ Reputation -------------------------------------------------------------------->
 
       <div *ngIf="selectedTabItem == classification && classification =='Reputation'" class="activeBackground"
         [formGroup]="reputationDesForm">
@@ -1008,6 +1132,7 @@
           <ion-input placeholder="Please enter how has the individual's reputation been damaged"
             formControlName="individual_damage_value"></ion-input>
         </div>
+
         <div
           *ngIf="reputationDesForm.value['reputation_option'][0] == 'Company' || reputationDesForm.value['reputation_option'][1] =='Company'">
           <p class="question">
@@ -1065,7 +1190,10 @@
           <ion-input placeholder="Please enter who is the external party" formControlName="external_party"></ion-input>
         </div>
 
-        <p class="question">Name of witness :</p>
+        <p class="question">
+          Name of witness :
+        </p>
+
         <ion-item class="ra" lines="none" (click)="onOpenReputationModal()">
           <ion-input placeholder="Please select witness" formControlName="name_of_witness">
           </ion-input>
@@ -1075,12 +1203,6 @@
             </ion-button>
           </ion-buttons>
         </ion-item>
-
-        <!-- <ion-select placeholder="Select Witness" interface="action-sheet" formControlName="name_of_witness"
-          (ionChange)="onWitnessChange($event)">
-          <ion-select-option value="{{witnesskeys?.employee_id}}" *ngFor="let witnesskeys of witnessList">
-            {{witnesskeys?.full_name}}</ion-select-option>
-        </ion-select> -->
 
         <div *ngIf="reputationDesForm.value['name_of_witness'] == 'Other'" formGroupName='other_witness_details'>
           <p class="other_witness"> Other Witness Details </p>
@@ -1106,9 +1228,9 @@
         <ion-input placeholder="Please enter  what is the possible outcome of this incident"
           formControlName="possible_outcome_incident"></ion-input>
       </div>
-      <!-------------------------------------------------Reputation--------------------------------------------------->
+      <!------------------------------------------------------ Reputation -------------------------------------------------------------------->
 
-      <!-------------------------------------------------Security----------------------------------------------------->
+      <!------------------------------------------------------ Security ---------------------------------------------------------------------->
 
       <div *ngIf="selectedTabItem == classification && classification =='Security'" class="activeBackground"
         [formGroup]="securityForm">
@@ -1178,13 +1300,15 @@
             formControlName="what_is_the_specific_securities_incident"></ion-input>
         </div>
       </div>
-      <!-------------------------------------------------Security----------------------------------------------------->
+      <!------------------------------------------------------ Security ---------------------------------------------------------------------->
 
     </div>
 
-    <!-------------------------------------------------------- Classification Sub Tab ------------------------------------------------------->
+    <!----------------------------------------------------- Classification Sub Tab ----------------------------------------------------------->
   </div>
+
   <div class="container">
-    <ion-button (click)="onSubmit('submit')" class="btn">Update</ion-button>
+    <ion-button (click)="onSubmit('submit')" class="btn">SUBMIT</ion-button>
   </div>
+
 </ion-content>

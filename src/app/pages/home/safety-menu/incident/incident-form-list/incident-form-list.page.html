@@ -75,6 +75,7 @@
           </ion-item>
 
           <ion-item-options side="end">
+
             <ion-item-option class="item-option">
               <ion-icon slot="icon-only" (click)="onGoToDetails(rowData)" name="eye-outline"></ion-icon>
             </ion-item-option>
@@ -82,19 +83,21 @@
             <ion-item-option class="item-option">
               <ion-icon slot="icon-only" (click)="onGoToEdit(rowData)" name="create-outline"></ion-icon>
             </ion-item-option>
+
           </ion-item-options>
+          
         </ion-item-sliding>
       </ion-card>
 
       <div *ngIf="allSubmittedFormlist.length > 0" class="ion-margin-top ion-text-center"> <a href="javascript:void(0)"
-          (click)="onLoadMoreData()">Load More </a></div>
+          (click)="onLoadMoreData($event)">Load More </a></div>
 
     </ion-list>
 
-    <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="allSubmittedFormlist" [rowHeight]="50"
-      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"  *ngIf="getScreenWidth >= 1080" [count]="total_page_no"
-      [externalPaging]="true"  [limit]="10"
-      >
+    <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="allSubmittedFormlist" [rowHeight]="auto"
+      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" *ngIf="getScreenWidth >= 1080"
+      [count]="total_page_no" [externalPaging]="true" [limit]="10" [externalPaging]="true" [count]="total_page_no"
+      [limit]="10" (page)="onLoadMoreData($event)">
 
       <!--   <ngx-datatable class="bootstrap table table-striped" [scrollbarH]="true" class="material"
       [rows]="allSubmittedFormlist" [rowHeight]="50" [limit]="100" [headerHeight]="50" [footerHeight]="50"> -->

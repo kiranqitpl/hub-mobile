@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { NavController } from '@ionic/angular';
+
+
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { AlertService } from 'src/app/services/alert-service/alert.service';
@@ -54,8 +58,9 @@ export class CraneAddFormPage implements OnInit {
     }
   ];
   craneForm: FormGroup;
-
   form_percent: number = 0;
+  url_id = '';
+  craneData = [];
 
   constructor(
     private fb: FormBuilder,
@@ -63,10 +68,18 @@ export class CraneAddFormPage implements OnInit {
     private globalService: GlobalService,
     private toastService: ToastService,
     private loadingService: LoadingService,
-    private nav: NavController
+    private nav: NavController,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.url_id = params['id'];
+      if (this.url_id != '') {
+        this.loadData(this.url_id);
+      }
+    })
+
     this.craneForm = this.fb.group({
       crane_number: [''],
       operate_crane: [''],
@@ -113,12 +126,24 @@ export class CraneAddFormPage implements OnInit {
     let count = 0;
     let formControlList = [];
     Object.keys(this.craneForm.controls).map(ele => formControlList.push(ele));
-    formControlList.forEach(key => { 
+    formControlList.forEach(key => {
       if (this.craneForm.value[key] && this.craneForm.value[key] != '') {
         count = ++count;
       }
     })
     this.form_percent = ((1 / Object.keys(this.craneForm.controls).length) * count);
+  }
+
+  loadData(id) {
+    this.globalService.getData('add_form/getSingleData?table_name=crane&id=' + id).subscribe(result => {
+      if (result && result['data'] && result['data'][0]) {
+        this.craneData = result['data'][0];
+        this.craneForm.patchValue(this.craneData);
+        console.log('this.craneForm ', this.craneForm);
+      }
+    }), error => {
+      console.log(error);
+    }
   }
 
 }
