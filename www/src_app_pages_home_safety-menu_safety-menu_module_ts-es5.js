@@ -82,17 +82,6 @@
           });
         }
       }, {
-        path: 'incident-details/:incident_id',
-        loadChildren: function loadChildren() {
-          return __webpack_require__.e(
-          /*! import() */
-          "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./incident/incident-details/incident-details.module */
-          22641)).then(function (m) {
-            return m.IncidentDetailsPageModule;
-          });
-        }
-      }, {
         path: 'incident-form-edit/:incident_id',
         loadChildren: function loadChildren() {
           return Promise.all(
@@ -101,6 +90,17 @@
           /*! ./incident/incident-form-edit/incident-form-edit.module */
           97694)).then(function (m) {
             return m.IncidentFormEditPageModule;
+          });
+        }
+      }, {
+        path: 'incident-details/:incident_id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./incident/incident-details/incident-details.module */
+          22641)).then(function (m) {
+            return m.IncidentDetailsPageModule;
           });
         }
       }, {
@@ -126,6 +126,17 @@
           });
         }
       }, {
+        path: 'telehandler-view-detail/:id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_prestart_telehandler_telehandler-view-detail_telehandler-view--8e57a8").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/telehandler/telehandler-view-detail/telehandler-view-detail.module */
+          75656)).then(function (m) {
+            return m.TelehandlerViewDetailPageModule;
+          });
+        }
+      }, {
         path: 'crane-add-form',
         loadChildren: function loadChildren() {
           return Promise.all(
@@ -148,6 +159,17 @@
           });
         }
       }, {
+        path: 'crane-view-detail/:id',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_safety-menu_prestart_crane_crane-view-detail_crane-view-detail_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./prestart/crane/crane-view-detail/crane-view-detail.module */
+          35718)).then(function (m) {
+            return m.CraneViewDetailPageModule;
+          });
+        }
+      }, {
         path: 'vehicle-hoist-add-form',
         loadChildren: function loadChildren() {
           return Promise.all(
@@ -167,28 +189,6 @@
           /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */
           79496)).then(function (m) {
             return m.VehicleHoistAddFormPageModule;
-          });
-        }
-      }, {
-        path: 'crane-view-detail/:id',
-        loadChildren: function loadChildren() {
-          return __webpack_require__.e(
-          /*! import() */
-          "src_app_pages_home_safety-menu_prestart_crane_crane-view-detail_crane-view-detail_module_ts").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./prestart/crane/crane-view-detail/crane-view-detail.module */
-          35718)).then(function (m) {
-            return m.CraneViewDetailPageModule;
-          });
-        }
-      }, {
-        path: 'telehandler-view-detail/:id',
-        loadChildren: function loadChildren() {
-          return __webpack_require__.e(
-          /*! import() */
-          "src_app_pages_home_safety-menu_prestart_telehandler_telehandler-view-detail_telehandler-view--8e57a8").then(__webpack_require__.bind(__webpack_require__,
-          /*! ./prestart/telehandler/telehandler-view-detail/telehandler-view-detail.module */
-          75656)).then(function (m) {
-            return m.TelehandlerViewDetailPageModule;
           });
         }
       }, {

@@ -120,7 +120,7 @@ let HomePage = class HomePage {
                 menuName: "Admin", route: "#"
             },
             {
-                menuName: "Company", route: "#"
+                menuName: "HR", route: "#"
             },
             {
                 menuName: "Projects", route: "#"

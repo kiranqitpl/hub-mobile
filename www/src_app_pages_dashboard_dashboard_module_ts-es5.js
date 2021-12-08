@@ -215,15 +215,15 @@
       /* harmony import */
 
 
-      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ../../services/global-service/global.service */
-      89985);
+      var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/environments/environment */
+      92340);
       /* harmony import */
 
 
-      var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! src/environments/environment */
-      92340);
+      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ../../services/global-service/global.service */
+      89985);
       /* harmony import */
 
 
@@ -245,8 +245,8 @@
             menuName: "Notification",
             route: "/notification"
           }];
-          this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
-          this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.imageUrl;
+          this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.allType;
+          this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.imageUrl;
         }
 
         _createClass(DashboardPage, [{
@@ -266,10 +266,7 @@
           value: function onNotificationLoad() {
             var _this = this;
 
-            console.log('here');
             this.global.getData('notification/getNotificationList/' + this.loggedInUserDetails.id).subscribe(function (result) {
-              console.log('getNotificationList', result);
-
               if (result && result['row_count'] > 0) {
                 var count = 0;
                 result['data'].forEach(function (element) {
@@ -299,7 +296,7 @@
         return [{
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController
         }, {
-          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
         }, {
           type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService
         }];

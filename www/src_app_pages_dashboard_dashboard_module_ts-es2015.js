@@ -102,8 +102,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard.page.scss */ 24494);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ 92340);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 92340);
+/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
 /* harmony import */ var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/shared-service/shared.service */ 49481);
 
 
@@ -126,8 +126,8 @@ let DashboardPage = class DashboardPage {
                 menuName: "Notification", route: "/notification"
             },
         ];
-        this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
-        this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.imageUrl;
+        this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.allType;
+        this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.imageUrl;
     }
     ngOnInit() {
         this.loggedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -138,9 +138,7 @@ let DashboardPage = class DashboardPage {
         this.nav.navigateRoot("login");
     }
     onNotificationLoad() {
-        console.log('here');
         this.global.getData('notification/getNotificationList/' + this.loggedInUserDetails.id).subscribe(result => {
-            console.log('getNotificationList', result);
             if (result && result['row_count'] > 0) {
                 let count = 0;
                 result['data'].forEach(element => {
@@ -163,7 +161,7 @@ let DashboardPage = class DashboardPage {
 };
 DashboardPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController },
-    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
+    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService },
     { type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService }
 ];
 DashboardPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([

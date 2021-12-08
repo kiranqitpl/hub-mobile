@@ -1,22 +1,12 @@
 <ion-content (window:resize)="onResize($event)">
   <app-header [pageName]="pName"></app-header>
   <div class="container">
-    <!-- <div class="ion-margin-top ion-margin-bottom"> -->
+
     <ion-list *ngIf="getScreenWidth < 1080">
-      <ion-card *ngFor="let rowData of allSubmittedFormlist">
+      <ion-card *ngFor="let rowData of allSubmittedFormlist ; let index=i">
         <ion-item-sliding>
           <ion-item lines="none">
             <ion-label>
-
-              <!-- <ion-row>
-                <ion-col size="auto">
-                  <h2>ID :</h2>
-                </ion-col>
-                <ion-col>
-                  <h6> {{rowData.Id}} </h6>
-                </ion-col>
-              </ion-row> -->
-
               <ion-row>
                 <ion-col size="auto">
                   <h2>Form :</h2>
@@ -60,7 +50,7 @@
                   <ion-label>Status :</ion-label>
                 </ion-col>
                 <ion-col>
-                  <p class="value" *ngIf="rowData.Status == 'Complete'">
+                  <p class="value" *ngIf="rowData.Status == 'Completed'">
                     <ion-text color="success">{{rowData.Status}}</ion-text>
                   </p>
                   <p class="value" *ngIf="rowData.Status == 'In progress'">
@@ -75,7 +65,6 @@
           </ion-item>
 
           <ion-item-options side="end">
-
             <ion-item-option class="item-option">
               <ion-icon slot="icon-only" (click)="onGoToDetails(rowData)" name="eye-outline"></ion-icon>
             </ion-item-option>
@@ -83,27 +72,24 @@
             <ion-item-option class="item-option">
               <ion-icon slot="icon-only" (click)="onGoToEdit(rowData)" name="create-outline"></ion-icon>
             </ion-item-option>
-
           </ion-item-options>
-          
         </ion-item-sliding>
       </ion-card>
 
-      <div *ngIf="allSubmittedFormlist.length > 0" class="ion-margin-top ion-text-center"> <a href="javascript:void(0)"
-          (click)="onLoadMoreData($event)">Load More </a></div>
-
+      <span *ngIf=" totalElements != ((pageNumber - 1) * size + index +1)">
+        <div *ngIf="allSubmittedFormlist.length > 0" class="ion-margin-top ion-text-center">
+          <a href="javascript:void(0)" (click)="loadData('newList', pageNumber, 'mobile')">Load More </a>
+        </div>
+      </span>
     </ion-list>
 
-    <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="allSubmittedFormlist" [rowHeight]="auto"
-      [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" *ngIf="getScreenWidth >= 1080"
-      [count]="total_page_no" [externalPaging]="true" [limit]="10" [externalPaging]="true" [count]="total_page_no"
-      [limit]="10" (page)="onLoadMoreData($event)">
-
-      <!--   <ngx-datatable class="bootstrap table table-striped" [scrollbarH]="true" class="material"
-      [rows]="allSubmittedFormlist" [rowHeight]="50" [limit]="100" [headerHeight]="50" [footerHeight]="50"> -->
+    <ngx-datatable class="material" [rows]="allSubmittedFormlist" [columnMode]="force" [headerHeight]="50"
+      [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [count]="totalElements" [offset]="offset"
+      [limit]="size" (page)="loadData($event, '','web')" *ngIf="getScreenWidth >= 1080">
 
       <ngx-datatable-column name="Sr.No" [width]="80" [resizeable]="true">
-        <ng-template let-rowIndex="rowIndex" let-value="rows" ngx-datatable-cell-template>{{ (rowIndex+1) }}
+        <ng-template let-rowIndex="rowIndex" let-value="rows" ngx-datatable-cell-template>{{ (pageNumber - 1) * size +
+          rowIndex +1 }}
         </ng-template>
       </ngx-datatable-column>
 
@@ -121,7 +107,7 @@
 
       <ngx-datatable-column name="Status" prop="Status" [minWidth]="80" [resizeable]="true">
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-          <ion-text color="success" *ngIf="value == 'Complete'">{{value}}</ion-text>
+          <ion-text color="success" *ngIf="value == 'Completed'">{{value}}</ion-text>
           <ion-text color="warning" *ngIf="value == 'In progress'">{{value}}</ion-text>
           <ion-text color="danger" *ngIf="value == 'Cancel'">{{value}}</ion-text>
         </ng-template>
@@ -137,117 +123,15 @@
       <ngx-datatable-column [minWidth]="20" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>Edit</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-          <ion-icon class="view" slot="icon-only" name="create-outline" (click)="onGoToEdit(row)"></ion-icon>
+          <ion-icon class="view" slot="icon-only" name="create-outline" (click)="loadData($event, '', 'web')">
+          </ion-icon>
         </ng-template>
       </ngx-datatable-column>
 
+      <div class="d-flex justify-content-center">
+        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next" (pageChange)="tabSize($event)">
+        </pagination-controls>
+      </div>
     </ngx-datatable>
-
-    <!-- <ngx-datatable [scrollbarH]="true" class="material" [limit]="10" [rows]="rows" [rowHeight]="50"
-        [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" (activate)="onActivate($event)">
-
-        <ngx-datatable-column name="Sr.No" [width]="80" [resizeable]="true">
-          <ng-template let-rowIndex="rowIndex" let-value="rows" ngx-datatable-cell-template>{{ (rowIndex+1) }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="Incident Type" prop="incident_value" [minWidth]="150" [resizeable]="true">
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="Incident Date" [minWidth]="150" [resizeable]="true" prop="created_date">
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="Incident Time" prop="created_time" [minWidth]="150" [resizeable]="true">
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="Assigned Manager" prop="classification_manager" [minWidth]="150"
-          [resizeable]="true">
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="Status" prop="complete_status" [minWidth]="150" [resizeable]="true">
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="50" [resizeable]="true" prop="id">
-          <ng-template let-column="column" ngx-datatable-header-template>View</ng-template>
-          <ng-template let-value="value" ngx-datatable-cell-template>
-            <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="onGoToDetails(value)"></ion-icon>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="50" [resizeable]="true" prop="edit_status">
-          <ng-template let-column="column" ngx-datatable-header-template>Edit</ng-template>
-          <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-            <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="create-outline">
-            </ion-icon>
-            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="create-outline"
-              (click)="onGoToEdit(row)">
-            </ion-icon>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="230" [resizeable]="true" prop="ivalue" [resizeable]="true">
-          <ng-template let-column="column" ngx-datatable-header-template>Assign Investigator</ng-template>
-          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <ion-item *ngIf="row.assign_investigator_status == true" class="ion-no-padding ion-no-margin dropDownStyle"
-              lines="none">
-              <ion-select placeholder="Select Investigator" value={{value}}
-                (ionChange)="onAssignInvestigator($event, row)">
-                <ion-select-option value="{{item?.employee_id}}" *ngFor="let item of listOfUsers">{{item?.full_name}}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-
-            <ion-item *ngIf="row.assign_investigator_status == false" disabled="true"
-              class="ion-no-padding ion-no-margin dropDownStyle" lines="none">
-              <ion-select placeholder="Select Investigator" value={{value}}>
-                <ion-select-option value="{{item?.employee_id}}" *ngFor="let item of listOfUsers">{{item?.full_name}}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="50" [resizeable]="true" prop="id" prop="investigation_form_status">
-          <ng-template let-column="column" ngx-datatable-header-template>Investigation</ng-template>
-          <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-            <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="create-outline">
-            </ion-icon>
-            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="create-outline"
-              (click)="onGoToInvestigation(row)"></ion-icon>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="150" [resizeable]="true" prop="view_investigation_status">
-          <ng-template let-column="column" ngx-datatable-header-template>View Investigation</ng-template>
-          <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-            <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="eye-outline">
-            </ion-icon>
-            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="eye-outline"
-              (click)="onViewInvestigation(row)"></ion-icon>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="50" [resizeable]="true" prop="actions_status">
-          <ng-template let-column="column" ngx-datatable-header-template>Actions</ng-template>
-          <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-            <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="create-outline">
-            </ion-icon>
-            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="create-outline"
-              (click)="onGoToActions(row)"></ion-icon>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column [minWidth]="50" [resizeable]="true" prop="view_actions_status">
-          <ng-template let-column="column" ngx-datatable-header-template> View Actions </ng-template>
-          <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-            <ion-icon *ngIf="value == false" class="view icon-disabled" slot="icon-only" name="eye-outline">
-            </ion-icon>
-            <ion-icon *ngIf="value == true" class="view" slot="icon-only" name="eye-outline"
-              (click)="onViewAction(row)">
-            </ion-icon>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable> -->
-    <!-- </div> -->
   </div>
 </ion-content>

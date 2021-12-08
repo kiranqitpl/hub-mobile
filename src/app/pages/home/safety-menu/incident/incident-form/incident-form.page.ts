@@ -745,9 +745,25 @@ export class IncidentFormPage implements OnInit {
         if (headerName == 'Supervisor List') {
           this.classificationForm.controls['classification_supervisor'].setValue(res.data.full_name);
           this.classification_supervisor = res.data;
+          if (res.data.full_name != 'Other') {
+            let data = {
+              classification_supervisor_other_name: '',
+              classification_supervisor_other_mobile_no: '',
+              classification_supervisor_other_email: ''
+            }
+            this.classificationForm.controls['classification_supervisor_other_details'].patchValue(data);
+          }
         } else if (headerName == 'Manager List') {
           this.classificationForm.controls['classification_manager'].setValue(res.data.full_name);
           this.classification_manager = res.data;
+          if (res.data.full_name != 'Other') {
+            let data = {
+              classification_manager_other_name: '',
+              classification_manager_other_mobile_no: '',
+              classification_manager_other_email: ''
+            }
+            this.classificationForm.controls['classification_manager_other_details'].patchValue(data);
+          }
         }
       }
     })
@@ -800,7 +816,6 @@ export class IncidentFormPage implements OnInit {
         }
       }
     })
-
     return await modal.present();
   }
 
@@ -817,8 +832,6 @@ export class IncidentFormPage implements OnInit {
       if (res && res?.data) {
         this.reputationDesForm.controls['name_of_witness'].setValue(res.data.full_name);
         this.name_of_witness = res.data;
-        console.log(' this.name_of_witness', this.name_of_witness);
-        console.log(' this.name_of_witness', this.name_of_witness.employee_id);
       }
     })
     return await modal.present();
@@ -1116,7 +1129,6 @@ export class IncidentFormPage implements OnInit {
       this.securityForm.controls['what_has_been_stolen_item'].reset();
       this.securityForm.controls['approximate_value_of_stolen'].reset();
       this.securityForm.controls['what_is_the_specific_securities_incident'].reset();
-
     } else if (evt.detail.value == 'Theft') {
       this.itSecurityList.find(ele => {
         ele.isChecked = false
@@ -1270,7 +1282,6 @@ export class IncidentFormPage implements OnInit {
         immediate_treatment_person_number: [''],
         immediate_treatment_other_email: ['']
       }),
-
       // immediate_treatment_person_number: [''],
     })
   }
@@ -1309,11 +1320,8 @@ export class IncidentFormPage implements OnInit {
   }
 
   onAdministeredPerson(event, index) {
-    // console.log('event', event, index);
-    // let data = this.filterSelectedEmp(event.detail.value);
     this.employeeList.filter(ele => {
       if (ele.employee_id == event.detail.value) {
-        console.log('ele', ele);
         this.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
         // this.injuryForm.value['person_details'].controls[index]['immediate_treatment_person_number'].setValue(ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email);
       }
@@ -1402,7 +1410,29 @@ export class IncidentFormPage implements OnInit {
     })
 
     this.form_percent = ((1 / formControlList.length) * count);
+  }
 
+  onImmediateTreatment(event, index) {
+    if (event.detail.value == 'Yes') {
+      let data = {
+        was_immediate_treatment_comment: ''
+      }
+      this.injuryPersonDetails.controls[index].patchValue(data);
+    }
+
+    if (event.detail.value == 'No') {
+      let data = {
+        immediate_treatment_given_explanation: '',
+        immediate_treatment_person_name: '',
+        immediate_treatment_person_name_id: '',
+        immediate_treatment_other_person_detail: {
+          immediate_treatment_other_name: '',
+          immediate_treatment_person_number: '',
+          immediate_treatment_other_email: ''
+        }
+      }
+      this.injuryPersonDetails.controls[index].patchValue(data);
+    }
   }
 
 }

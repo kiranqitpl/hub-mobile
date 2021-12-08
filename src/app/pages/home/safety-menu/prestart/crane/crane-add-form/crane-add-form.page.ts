@@ -75,7 +75,8 @@ export class CraneAddFormPage implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.url_id = params['id'];
-      if (this.url_id != '') {
+      console.log(' this.url_id ', this.url_id);
+      if (this.url_id != '' && this.url_id != undefined) {
         this.loadData(this.url_id);
       }
     })

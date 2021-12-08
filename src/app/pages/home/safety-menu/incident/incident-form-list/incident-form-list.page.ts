@@ -15,22 +15,19 @@ import moment from 'moment';
 
 export class IncidentFormListPage implements OnInit {
 
-  getScreenWidth: any;
   pName: String = 'Submitted Forms';
   allSubmittedFormlist: any = [];
   newList: any = [];
   listOfUsers: any = [];
+  getScreenWidth: any;
   userDetails: any;
   getRowData: any;
 
-
-  current_page_no: number = 0;
-  total_page_no: number = 0;
-
-  page = 1;
-  count = 0;
-  tableSize = 8;
-  tableSizesArr = [4, 8, 12];
+  size: number = 10;
+  totalElements: number = 0;
+  totalPages: number = 0;
+  pageNumber: number = 0;
+  offset: number = 0
 
   constructor(
     private nav: NavController,
@@ -41,66 +38,79 @@ export class IncidentFormListPage implements OnInit {
 
   ngOnInit() {
     this.onResize(window);
-    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    // this.getInvestigatorDetails();
-    this.loadData(1);
+    // this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    this.setValueOnLoadData();
   }
 
   onResize(event) {
     this.getScreenWidth = event.innerWidth ? event.innerWidth : event.target.innerWidth;
   }
 
-  // getInvestigatorDetails() {
-  //   this.global.getData("Investigator/getInvestigator").subscribe((result: any) => {
-  //     if (result && result.data && result.data.length > 0) {
-  //       this.listOfUsers = result.data;
-  //     }
-  //   }, err => {
-  //     console.log(err)
-  //   });
-  // }
+  setValueOnLoadData() {
+    let screen = this.getScreenWidth < 1080 ? 'mobile' : 'web'
 
-  loadData(pageNo) {
-
-    this.loadingService.presentLoading();
-
-    this.current_page_no = pageNo;
-
-    this.global.getData('add_form/get/?page_no=' + this.current_page_no).subscribe((result: any) => {
-      if (result && result.data && result.data.mforms_add_form && result.data.mforms_add_form.length > 0) {
-        result.data.mforms_add_form.forEach((el: any) => {
-          if (el.Form == 'mforms_add_form') {
-            el.Form = 'Incident'
-          } else if (el.Form == 'mforms_telehandler') {
-            el.Form = 'Telehandler Prestarts'
-          } else if (el.Form == 'mforms_crane') {
-            el.Form = 'Crane Prestarts'
-          } else if (el.Form == 'mforms_prestart_vehicle_hoist') {
-            el.Form = 'Vehicle Hoist Prestarts'
-          }
-          el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-          el.Status = (el.Status == 0 ? 'In progress' : (el.Status == 1 ? 'Complete' : (el.Status == 2 ? 'Cancel' : '')));
-        })
-
-        this.total_page_no = result.total_pages;
-
-        if (this.allSubmittedFormlist.length <= 0) {
-          this.allSubmittedFormlist = result.data.mforms_add_form;
-        } else {
-          this.newList = this.allSubmittedFormlist;
-          this.allSubmittedFormlist = this.newList.concat(result.data.mforms_add_form);
-        }
+    if (screen == 'mobile') {
+      this.loadData('', 1, screen);
+    } else {
+      let object = {
+        count: 60,
+        limit: 10,
+        offset: 0,
+        pageSize: 10,
       }
-      this.loadingService.dismissLoading();
-    }, err => {
-      this.loadingService.dismissLoading();
-      console.log(err)
-    });
+      this.loadData(object, '', screen);
+    }
   }
 
-  onLoadMoreData() {
-    this.current_page_no = this.current_page_no + 1;
-    this.loadData(this.current_page_no);
+  loadData(event, pageNo, screen) {
+    if (screen == 'mobile') {
+      this.pageNumber = event == 'newList' ? ++pageNo : pageNo;
+    }
+
+    if (screen == 'web') {
+      this.pageNumber = (event.offset + 1);
+      this.offset = event.offset
+    }
+
+    if (this.pageNumber != 0) {
+      // this.loadingService.presentLoading();
+      this.global.getData('add_form/get/?page_no=' + this.pageNumber).subscribe((result: any) => {
+        if (result && result.data && result.data.mforms_add_form && result.data.mforms_add_form.length > 0) {
+          result.data.mforms_add_form.forEach((el: any) => {
+            if (el.Form == 'mforms_add_form') {
+              el.Form = 'Incident'
+            } else if (el.Form == 'mforms_telehandler') {
+              el.Form = 'Telehandler Prestarts'
+            } else if (el.Form == 'mforms_crane') {
+              el.Form = 'Crane Prestarts'
+            } else if (el.Form == 'mforms_prestart_vehicle_hoist') {
+              el.Form = 'Vehicle Hoist Prestarts'
+            }
+            el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
+            el.Status = (el.Status == 0 ? 'In progress' : (el.Status == 1 ? 'Completed' : (el.Status == 2 ? 'Cancel' : '')));
+          })
+          this.totalPages = result.total_pages;
+          this.totalElements = result.row_count
+          if (screen == 'mobile') {
+            if (this.allSubmittedFormlist.length == 0) {
+              this.allSubmittedFormlist = result.data.mforms_add_form;
+            } else {
+              this.newList = this.allSubmittedFormlist;
+              this.allSubmittedFormlist = this.newList.concat(result.data.mforms_add_form);
+            }
+          }
+          if (screen == 'web') {
+            this.allSubmittedFormlist = result.data.mforms_add_form;
+          }
+
+          // console.log(' this.allSubmittedFormlist ', this.allSubmittedFormlist);
+        }
+        // this.loadingService.dismissLoading();
+      }, err => {
+        // this.loadingService.dismissLoading();
+        console.log(err)
+      });
+    }
   }
 
   onGoToEdit(rowData) {
@@ -126,6 +136,16 @@ export class IncidentFormListPage implements OnInit {
       this.nav.navigateRoot("/home/safety-menu/vehicle-host-view-detail/" + rowData.Id);
     }
   }
+
+  // getInvestigatorDetails() {
+  //   this.global.getData("Investigator/getInvestigator").subscribe((result: any) => {
+  //     if (result && result.data && result.data.length > 0) {
+  //       this.listOfUsers = result.data;
+  //     }
+  //   }, err => {
+  //     console.log(err)
+  //   });
+  // }
 
   // onActivate(e) {
   //   this.getRowData = e.row;

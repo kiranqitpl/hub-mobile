@@ -1,7 +1,7 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from '../../services/global-service/global.service';
 import { environment } from 'src/environments/environment';
+import { GlobalService } from '../../services/global-service/global.service';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({
@@ -41,9 +41,7 @@ export class DashboardPage implements OnInit {
   }
 
   onNotificationLoad() {
-    console.log('here');
     this.global.getData('notification/getNotificationList/' + this.loggedInUserDetails.id).subscribe(result => {
-      console.log('getNotificationList', result);
       if (result && result['row_count'] > 0) {
         let count: number = 0;
         result['data'].forEach(element => {

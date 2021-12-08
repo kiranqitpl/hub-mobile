@@ -19,7 +19,7 @@
   </div>
 
   <div class="ion-padding-start ion-padding-end">
-<!-- 
+    <!-- 
     <div class="activeBackground">
       <ion-row>
         <ion-col size="10.5">
@@ -979,7 +979,7 @@
                   {{bodyPartsVal.name}}</ion-select-option>
               </ion-select>
 
-              <ion-radio-group formControlName="was_immediate_treatment">
+              <ion-radio-group formControlName="was_immediate_treatment" (ionChange)="onImmediateTreatment($event, j)">
                 <ion-row>
                   <ion-col size="12">
                     <ion-item class="ra" lines="none">

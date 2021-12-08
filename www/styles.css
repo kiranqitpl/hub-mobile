@@ -2176,3 +2176,6 @@ ion-item-sliding {
   background: white;
   color: black !important;
 }
+ion-textarea {
+  border: groove;
+}

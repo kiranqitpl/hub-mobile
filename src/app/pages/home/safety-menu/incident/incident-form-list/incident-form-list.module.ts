@@ -11,13 +11,16 @@ import { IncidentFormListPage } from './incident-form-list.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     IncidentFormListPageRoutingModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgxPaginationModule
   ],
   declarations: [
     IncidentFormListPage,
