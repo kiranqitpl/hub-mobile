@@ -469,7 +469,7 @@ export class IncidentFormEditPage implements OnInit {
               if (incident_near_miss_object != undefined) {
                 this.incident_near_miss = incident_near_miss_object;
               } else {
-                this.globalService.getData("Witness/getWitnessList/?term" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
+                this.globalService.getData("Witness/getWitnessList/?term=" + this.incidentDetails.incident_near_miss).subscribe((res: any) => {
                   if (res && res.status && res.data && res.data.length > 0) {
                     this.incident_near_miss = res.data[0];
                   }
@@ -508,7 +508,7 @@ export class IncidentFormEditPage implements OnInit {
                 this.was_there_any_witness_of_the_incident = was_there_any_witness_of_the_incident_object;
               } else {
                 if (this.incidentDetails.was_there_any_witness_of_the_incident != '' && this.incidentDetails.was_there_any_witness_of_the_incident != null) {
-                  this.globalService.getData("Witness/getWitnessList/?term" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
+                  this.globalService.getData("Witness/getWitnessList/?term=" + this.incidentDetails.was_there_any_witness_of_the_incident).subscribe((res: any) => {
                     if (res && res.status && res.data && res.data.length > 0) {
                       this.was_there_any_witness_of_the_incident = res.data[0];
                     }
@@ -614,7 +614,7 @@ export class IncidentFormEditPage implements OnInit {
               if (classification_manager_object != undefined) {
                 this.classification_manager = classification_manager_object;
               } else {
-                this.globalService.getData("Manager/getManagerList/?term" + this.incidentDetails.classification_manager).subscribe((res: any) => {
+                this.globalService.getData("Manager/getManagerList/?term=" + this.incidentDetails.classification_manager).subscribe((res: any) => {
                   if (res && res.status && res.data && res.data.length > 0) {
                     this.classification_manager = res.data[0];
                   }
@@ -715,7 +715,7 @@ export class IncidentFormEditPage implements OnInit {
                 this.name_of_witness = name_of_witness_object;
               } else {
                 if (this.incidentDetails.name_of_witness != '' && this.incidentDetails.name_of_witness != null) {
-                  this.globalService.getData("Witness/getWitnessList/?term" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
+                  this.globalService.getData("Witness/getWitnessList/?term=" + this.incidentDetails.name_of_witness).subscribe((res: any) => {
                     console.log('getWitnessList 3', res);
                     if (res && res.status && res.data && res.data.length > 0) {
                       this.name_of_witness = res.data[0];

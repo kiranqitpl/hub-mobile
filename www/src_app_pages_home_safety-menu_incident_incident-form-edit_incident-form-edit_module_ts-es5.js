@@ -686,7 +686,7 @@
                     if (incident_near_miss_object != undefined) {
                       _this8.incident_near_miss = incident_near_miss_object;
                     } else {
-                      _this8.globalService.getData("Witness/getWitnessList/?term" + _this8.incidentDetails.incident_near_miss).subscribe(function (res) {
+                      _this8.globalService.getData("Witness/getWitnessList/?term=" + _this8.incidentDetails.incident_near_miss).subscribe(function (res) {
                         if (res && res.status && res.data && res.data.length > 0) {
                           _this8.incident_near_miss = res.data[0];
                         }
@@ -725,7 +725,7 @@
                       _this8.was_there_any_witness_of_the_incident = was_there_any_witness_of_the_incident_object;
                     } else {
                       if (_this8.incidentDetails.was_there_any_witness_of_the_incident != '' && _this8.incidentDetails.was_there_any_witness_of_the_incident != null) {
-                        _this8.globalService.getData("Witness/getWitnessList/?term" + _this8.incidentDetails.was_there_any_witness_of_the_incident).subscribe(function (res) {
+                        _this8.globalService.getData("Witness/getWitnessList/?term=" + _this8.incidentDetails.was_there_any_witness_of_the_incident).subscribe(function (res) {
                           if (res && res.status && res.data && res.data.length > 0) {
                             _this8.was_there_any_witness_of_the_incident = res.data[0];
                           }
@@ -839,7 +839,7 @@
                     if (classification_manager_object != undefined) {
                       _this8.classification_manager = classification_manager_object;
                     } else {
-                      _this8.globalService.getData("Manager/getManagerList/?term" + _this8.incidentDetails.classification_manager).subscribe(function (res) {
+                      _this8.globalService.getData("Manager/getManagerList/?term=" + _this8.incidentDetails.classification_manager).subscribe(function (res) {
                         if (res && res.status && res.data && res.data.length > 0) {
                           _this8.classification_manager = res.data[0];
                         }
@@ -948,7 +948,7 @@
                       _this8.name_of_witness = name_of_witness_object;
                     } else {
                       if (_this8.incidentDetails.name_of_witness != '' && _this8.incidentDetails.name_of_witness != null) {
-                        _this8.globalService.getData("Witness/getWitnessList/?term" + _this8.incidentDetails.name_of_witness).subscribe(function (res) {
+                        _this8.globalService.getData("Witness/getWitnessList/?term=" + _this8.incidentDetails.name_of_witness).subscribe(function (res) {
                           console.log('getWitnessList 3', res);
 
                           if (res && res.status && res.data && res.data.length > 0) {

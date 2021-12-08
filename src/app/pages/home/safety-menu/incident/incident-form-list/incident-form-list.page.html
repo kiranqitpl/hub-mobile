@@ -123,13 +123,13 @@
       <ngx-datatable-column [minWidth]="20" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>Edit</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-          <ion-icon class="view" slot="icon-only" name="create-outline" (click)="loadData($event, '', 'web')">
+          <ion-icon class="view" slot="icon-only" name="create-outline" (click)="onGoToEdit(row)">
           </ion-icon>
         </ng-template>
       </ngx-datatable-column>
 
       <div class="d-flex justify-content-center">
-        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next" (pageChange)="tabSize($event)">
+        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next" (pageChange)="loadData($event, '', 'web')">
         </pagination-controls>
       </div>
     </ngx-datatable>
