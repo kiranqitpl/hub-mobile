@@ -590,7 +590,7 @@ export class IncidentFormEditPage implements OnInit {
               } else {
                 // let firstStringEle = this.incidentDetails.classification_supervisor.charAt(0);
                 // let newString = firstStringEle == '*' ? this.incidentDetails.classification_supervisor.substring(1).trim() : this.incidentDetails.classification_supervisor;
-                this.globalService.getData("Supervisor/getSupervisorList?term="+ this.incidentDetails.classification_supervisor).subscribe((res: any) => {
+                this.globalService.getData("Supervisor/getSupervisorList?term=" + this.incidentDetails.classification_supervisor).subscribe((res: any) => {
                   if (res && res.status && res.data && res.data.length > 0) {
                     this.classification_supervisor = res.data[0];
                   }
@@ -1380,22 +1380,22 @@ export class IncidentFormEditPage implements OnInit {
 
     if ((val == 'submit' && validation) || (val == 'incomplete_submit' && validation == false)) {
       let fd = new FormData();
-      //--------------------------------------------------------- Incident -----------------------------------------------------------------// 
+      //---------------------------------------------------------- Incident ---------------------------------------------------------------------// 
 
       fd.append("incident_value", this.incidentForm.value['incident_value'] ? this.incidentForm.value['incident_value'] : '');                             // required
-      // fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : '');
-      fd.append("incident_near_miss", this.incident_near_miss && this.incident_near_miss.employee_id ? this.incident_near_miss.employee_id : '');
+      fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : '');
+      // fd.append("incident_near_miss", this.incident_near_miss && this.incident_near_miss.employee_id ? this.incident_near_miss.employee_id : '');
       fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : '');
 
-      //-------------------------------------------------------- Incident ------------------------------------------------------------------// 
+      //----------------------------------------------------------- Incident --------------------------------------------------------------------// 
 
-      //------------------------------------------------------- photography ----------------------------------------------------------------//
+      //---------------------------------------------------------- photography ------------------------------------------------------------------//
 
-      fd.append("photography_image", this.photoGraphyObject ? JSON.stringify(this.photoGraphyObject) : '');
+      fd.append("photography_image", this.photoGraphyObject.length > 0 ? JSON.stringify(this.photoGraphyObject) : '');
 
-      //------------------------------------------------------- photography ----------------------------------------------------------------//
+      //---------------------------------------------------------- photography ------------------------------------------------------------------//
 
-      //--------------------------------------------------- Incident Description -----------------------------------------------------------//
+      //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
       fd.append("incident_description", this.incidentDesForm.value['incident_description'] ? this.incidentDesForm.value['incident_description'] : '');              //required
       fd.append("incident_description_action", this.incidentDesForm.value['incident_description_action'] ? this.incidentDesForm.value['incident_description_action'] : ''); //incident photo pending from postman and here also  // required
       fd.append("incident_description_alcohol_test", this.incidentDesForm.value['incident_description_alcohol_test'] ? this.incidentDesForm.value['incident_description_alcohol_test'] : '');
@@ -1405,97 +1405,98 @@ export class IncidentFormEditPage implements OnInit {
       fd.append("was_there_any_witness_of_the_incident", this.was_there_any_witness_of_the_incident && this.was_there_any_witness_of_the_incident.employee_id ? this.was_there_any_witness_of_the_incident.employee_id : '');
       // fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
       fd.append("incdesc_other_witness_details", JSON.stringify(this.incidentDesForm.value['incdesc_other_witness_details']));
-      fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
+      fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties'] ? this.incidentDesForm.value['return_to_alternate_duties'] : '');
+      fd.append("alcohol_test_image", this.alcohalImagesObject.length > 0 ? JSON.stringify(this.alcohalImagesObject) : '')                          // alcohal test image
+      fd.append("drug_test_image", this.drugTestImagesObject.length > 0 ? JSON.stringify(this.drugTestImagesObject) : '');                          // drug_test_image
+      fd.append("return_to_alternate_duties_image", this.alterDutyImagesObject.length > 0 ? JSON.stringify(this.alterDutyImagesObject) : '');       // return_to_alternate_duties_image 
 
-      fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject))                          // alcohal test image
-      fd.append("drug_test_image", JSON.stringify(this.drugTestImagesObject));                           // drug_test_image
-      fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject));         // return_to_alternate_duties_image 
+      //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
 
-      //---------------------------------------------------- Incident Description -----------------------------------------------------------//
+      //-------------------------------------------------------- Classification -----------------------------------------------------------------//
 
-      //------------------------------------------------------- Classification --------------------------------------------------------------//
+      // console.log('date_of_incident', this.classificationForm.value['date_of_incident']);
+      // console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
+      // console.log('date_reported', this.classificationForm.value['date_reported']);
+      // console.log('time_reported', this.classificationForm.value['time_reported']);
 
-      console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
-
-      console.log('time_reported', this.classificationForm.value['time_reported']);
-
-      fd.append("classification_value", this.classificationForm.value['classification_value'].join(','));
-      fd.append("date_of_incident", this.classificationForm.value['date_of_incident']);
-      fd.append("time_of_incident", this.classificationForm.value['time_of_incident'] != '' ? moment(this.classificationForm.value['time_of_incident']).format('HH:mm:ss') : '');
-      fd.append("date_reported", this.classificationForm.value['date_reported']);
-      fd.append("time_reported", this.classificationForm.value['time_reported'] != '' ? moment(this.classificationForm.value['time_reported']).format('HH:mm:ss') : '');
-      fd.append("classification_location_option", this.classificationForm.value['classification_location_option']);
+      fd.append("classification_value", this.classificationForm.value['classification_value'].length > 0 ? this.classificationForm.value['classification_value'].join(',') : '');
+      fd.append("date_of_incident", this.classificationForm.value['date_of_incident'] ? this.classificationForm.value['date_of_incident'] : '');
+      fd.append("time_of_incident", this.classificationForm.value['time_of_incident'] ? this.classificationForm.value['time_of_incident'] : '');
+      fd.append("date_reported", this.classificationForm.value['date_reported'] ? this.classificationForm.value['date_reported'] : '');
+      fd.append("time_reported", this.classificationForm.value['time_reported'] ? this.classificationForm.value['time_reported'] : '');
+      fd.append("classification_location_option", this.classificationForm.value['classification_location_option'] ? this.classificationForm.value['classification_location_option'] : '');
       if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
-        fd.append("classification_location_value", this.classificationForm.value['classification_location_value'])
+        fd.append("classification_location_value", this.classificationForm.value['classification_location_value'] ? this.classificationForm.value['classification_location_value'] : '')
       }
       if (this.classificationForm.value['classification_location_option'] == 'Choose Location') {
-        fd.append("classification_location_value", this.classificationForm.value['classification_location_value1'])
+        fd.append("classification_location_value", this.classificationForm.value['classification_location_value1'] ? this.classificationForm.value['classification_location_value1'] : '')
       }
-      fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type']);
+      fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type'] ? this.classificationForm.value['classification_shift_type'] : '');
       fd.append("classification_supervisor", this.classification_supervisor && this.classification_supervisor.employee_id ? this.classification_supervisor.employee_id : '');
       fd.append("classification_supervisor_other_details", JSON.stringify(this.classificationForm.value['classification_supervisor_other_details']));
       // fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
       // fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
       fd.append("classification_manager", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
       fd.append("classification_manager_other_details", JSON.stringify(this.classificationForm.value['classification_manager_other_details']));
-      //--------------------------------------------------------- Classification ------------------------------------------------------------//
+      //----------------------------------------------------------- Classification ---------------------------------------------------------------//
 
-      //------------------------------------------------------------ Injury -----------------------------------------------------------------//
+      //------------------------------------------------------------- Injury ---------------------------------------------------------------------//
 
-      fd.append("injury_persons", this.injuryForm.value['injury_persons']);                                 // form value
+      fd.append("injury_persons", this.injuryForm.value['injury_persons'] ? this.injuryForm.value['injury_persons'] : '');                                 // form value  
       fd.append("person_details", JSON.stringify(this.injuryForm.value['person_details']));
 
-      //------------------------------------------------------------ Injury -----------------------------------------------------------------//
+      //------------------------------------------------------------- Injury ---------------------------------------------------------------------//
 
-      //----------------------------------------------------------- Enviornment -------------------------------------------------------------//
-      fd.append("environmental_description", this.enviornmentForm.value['environmental_description']);      // required
-      fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split']);                // chemical split value inner side query
+      //----------------------------------------------------------- Enviornment ------------------------------------------------------------------//
+      fd.append("environmental_description", this.enviornmentForm.value['environmental_description'] ? this.enviornmentForm.value['environmental_description'] : '');      // required
+      fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split'] ? this.enviornmentForm.value['was_a_chemical_split'] : '');                // chemical split value inner side query
       fd.append("chemical_details", JSON.stringify(this.enviornmentForm.value['chemical_details']))         // data with image
-      fd.append("emergency_spill_kit_used", this.enviornmentForm.value['emergency_spill_kit_used']);
-      fd.append("out_of_split_kit", this.enviornmentForm.value['out_of_split_kit']);
-      //----------------------------------------------------------- Enviornment ------------------------------------------------------------//
+      fd.append("emergency_spill_kit_used", this.enviornmentForm.value['emergency_spill_kit_used'] ? this.enviornmentForm.value['emergency_spill_kit_used'] : '');
+      fd.append("out_of_split_kit", this.enviornmentForm.value['out_of_split_kit'] ? this.enviornmentForm.value['out_of_split_kit'] : '');
+      //------------------------------------------------------------ Enviornment ----------------------------------------------------------------//
 
-      //----------------------------------------------------------- Reputation -------------------------------------------------------------// 
-      fd.append("reputation_option", this.reputationDesForm.value['reputation_option']);
-      fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value']);
-      fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value']);
-      fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect']);
-      fd.append("effected_department", this.reputationDesForm.value['effected_department']);
-      fd.append("external_party", this.reputationDesForm.value['external_party']);
+      //------------------------------------------------------------- Reputation ----------------------------------------------------------------// 
+      fd.append("reputation_option", this.reputationDesForm.value['reputation_option'] ? this.reputationDesForm.value['reputation_option'] : '');
+      fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value'] ? this.reputationDesForm.value['individual_damage_value'] : '');
+      fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value'] ? this.reputationDesForm.value['company_damage_value'] : '');
+      fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect'] ? this.reputationDesForm.value['reputation_negative_effect'] : '');
+      fd.append("effected_department", this.reputationDesForm.value['effected_department'] ? this.reputationDesForm.value['effected_department'] : '');
+      fd.append("external_party", this.reputationDesForm.value['external_party'] ? this.reputationDesForm.value['external_party'] : '');
       // fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
       fd.append("name_of_witness", this.name_of_witness && this.name_of_witness.employee_id ? this.name_of_witness.employee_id : '');
       fd.append("other_witness_details", JSON.stringify(this.reputationDesForm.value['other_witness_details']));
-      fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident']);    // required
+      fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident'] ? this.reputationDesForm.value['possible_outcome_incident'] : '');    // required
 
-      //----------------------------------------------------------- Reputation -------------------------------------------------------------//
+      //-------------------------------------------------------------- Reputation ---------------------------------------------------------------//
 
-      //------------------------------------------------------------ Security --------------------------------------------------------------//
-      fd.append("security_option", this.securityForm.value['security_option']);
+      //--------------------------------------------------------------- Security ----------------------------------------------------------------//
+      fd.append("security_option", this.securityForm.value['security_option'] ? this.securityForm.value['security_option'] : '');
       if (this.securityForm.value['security_option'] == 'IT') {
-        fd.append("it_option_value", this.securityForm.value['it_option_value'].join(','))                  // chexkbox and inner value
+        fd.append("it_option_value", this.securityForm.value['it_option_value'].length > 0 ? this.securityForm.value['it_option_value'].join(',') : '')                  // chexkbox and inner value
       }
-      fd.append("what_has_been_stolen_item", this.securityForm.value['what_has_been_stolen_item']);
-      fd.append("approximate_value_of_stolen", this.securityForm.value['approximate_value_of_stolen']);
-      fd.append("what_is_the_specific_securities_incident", this.securityForm.value['what_is_the_specific_securities_incident']);
-      //----------------------------------------------------------- Security ---------------------------------------------------------------//
+      fd.append("what_has_been_stolen_item", this.securityForm.value['what_has_been_stolen_item'] ? this.securityForm.value['what_has_been_stolen_item'] : '');
+      fd.append("approximate_value_of_stolen", this.securityForm.value['approximate_value_of_stolen'] ? this.securityForm.value['approximate_value_of_stolen'] : '');
+      fd.append("what_is_the_specific_securities_incident", this.securityForm.value['what_is_the_specific_securities_incident'] ? this.securityForm.value['what_is_the_specific_securities_incident'] : '');
+      //---------------------------------------------------------------- Security----------------------------------------------------------------//
 
-      //------------------------------------------------------------ Asset -----------------------------------------------------------------//
+      //----------------------------------------------------------------- Asset ----------------------------------------------------------------//
 
-      fd.append("asset_description", this.assetDescriptionForm.value['asset_description']);                 // required
-      fd.append("asset_has_number", this.assetDescriptionForm.value['asset_has_number']);
+      fd.append("asset_description", this.assetDescriptionForm.value['asset_description'] ? this.assetDescriptionForm.value['asset_description'] : '');                 // required
+      fd.append("asset_has_number", this.assetDescriptionForm.value['asset_has_number'] ? this.assetDescriptionForm.value['asset_has_number'] : '');
       if (this.assetDescriptionForm.value['asset_has_number'] == 'Yes') {
-        fd.append("asset_number", this.assetDescriptionForm.value['asset_number']);
+        fd.append("asset_number", this.assetDescriptionForm.value['asset_number'] ? this.assetDescriptionForm.value['asset_number'] : '');
       }
-      fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage']);                   // required
-      fd.append("extent_damage_image", JSON.stringify(this.damageImagesObject));                            // extent_damage_image
+      fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage'] ? this.assetDescriptionForm.value['extent_of_damage'] : '');                   // required
+      fd.append("extent_damage_image", this.damageImagesObject.length > 0 ? JSON.stringify(this.damageImagesObject) : '');                            // extent_damage_image
 
-      //---------------------------------------------------------- Asset -----------------------------------------------------------------//
+      //----------------------------------------------------------------- Asset -----------------------------------------------------------------//
 
-      //--------------------------------------------------------- Report -----------------------------------------------------------------//
+      //---------------------------------------------------------------- Report -----------------------------------------------------------------//
 
-      fd.append("report", this.reportForm.value['report']);
+      fd.append("report", this.reportForm.value['report'] ? this.reportForm.value['report'] : '');
 
-      //--------------------------------------------------------- Report ------------------------------------------------------------------//
+      //---------------------------------------------------------------- Report -----------------------------------------------------------------//
+
       fd.append('id', this.incidentDetails.id);
       fd.append('user_id', userDetails.id);
       let url = (val == 'submit' ? "add_form/submit" : 'Add_form/submit_incomplete');

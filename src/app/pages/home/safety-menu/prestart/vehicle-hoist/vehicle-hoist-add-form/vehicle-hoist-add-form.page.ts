@@ -1,6 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NavController, IonContent, IonButton } from '@ionic/angular';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
@@ -21,10 +24,12 @@ export class VehicleHoistAddFormPage implements OnInit {
 
   pName: String = 'Vehicle Hoist'
   vehicleHoistForm: FormGroup;
-  logedInUserDetails: any = '';
   showMsg: boolean = false;
   isSubmitted: boolean = false;
   form_percent: number = 0;
+  loggedInUser: any;
+  vehicleHoistSingleRecord = [];
+  url_id = '';
 
   constructor(
     private loadingService: LoadingService,
@@ -33,11 +38,12 @@ export class VehicleHoistAddFormPage implements OnInit {
     private fb: FormBuilder,
     private globalService: GlobalService,
     public elementRef: ElementRef,
-    public alertService: AlertService
+    public alertService: AlertService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.logedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     this.vehicleHoistForm = this.fb.group({
 
       vehicle_host_no: ['', Validators.required],
@@ -95,6 +101,14 @@ export class VehicleHoistAddFormPage implements OnInit {
       hoist_controls_comment: [''],
 
       comment: ['']
+    });
+
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.url_id = params['id'] != undefined ? params['id'] : '';
+      if (this.url_id != '' && this.url_id != undefined) {
+        this.loadData(this.url_id);
+      }
     })
   }
 
@@ -171,16 +185,18 @@ export class VehicleHoistAddFormPage implements OnInit {
         (this.vehicleHoistForm.value['swing_arm'] == 'Faulty' && this.vehicleHoistForm.value['swing_arm_comment'] == '') ||
         (this.vehicleHoistForm.value['hoist_controls'] == 'Faulty' && this.vehicleHoistForm.value['hoist_controls_comment'] == '')
       ) {
+        this.toastService.toast('Please fill all required fields.', 'danger');
         return;
       } else {
         this.loadingService.presentLoading();
         let formData = {};
         formData = this.vehicleHoistForm.value;
-        formData['user_name'] = this.logedInUserDetails.name;
-        formData['date'] = moment().format('YYYY-MM-DD');
-        formData['time'] = moment().format('HH:mm:ss');
-        let val = { 'formData': formData };
-        this.globalService.postData('prestart_vehicle/add_prestart_vehicle', val).subscribe(result => {
+        formData['user_id'] = this.loggedInUser.id;
+        let data = { formData: formData };
+        if (this.url_id != '' && this.url_id != undefined) {
+          formData['id'] = this.vehicleHoistSingleRecord['id'];
+        }
+        this.globalService.postData('prestart_vehicle/add_prestart_vehicle', data).subscribe(result => {
           if (result && result['status']) {
             this.navCtrl.back();
             this.toastService.toast(result['message'], 'success');
@@ -236,6 +252,18 @@ export class VehicleHoistAddFormPage implements OnInit {
       }
     })
     this.form_percent = ((1 / Object.keys(this.vehicleHoistForm.controls).length) * count);
+  }
+
+  loadData(id) {
+    this.globalService.getData('add_form/getSingleData?table_name=prestart&id=' + id).subscribe(result => {
+      if (result && result['data'] && result['data'][0]) {
+        this.vehicleHoistSingleRecord = result['data'][0];
+        this.vehicleHoistForm.patchValue(this.vehicleHoistSingleRecord);
+        this.onProgressBar('');
+      }
+    }), error => {
+      console.log(error);
+    }
   }
 
 }

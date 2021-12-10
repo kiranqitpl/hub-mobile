@@ -7,31 +7,29 @@
           <ion-col size="6">
             <ion-label>Vehicle Hoist number :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.vehicle_host_no}}</ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="6">
             <ion-label>Are you trained and competent to operate the vehicle hoist ? :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.trained}}</ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="6">
             <ion-label>Certificate of inspection (Current) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.inspection_certificate}}</ion-col>
         </ion-row>
 
-        <ion-grid lines="none">
+        <ion-grid lines="none" *ngIf="vehicleHoist.inspection_certificate == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.inspection_certificate_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -40,23 +38,22 @@
             <ion-label>Have you read and understood the Safe Work Instruction 2 Post Vehicle Hoist (HE-WHS-SWI-008) :
             </ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.maintenance_instructions}}</ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="6">
             <ion-label>Data plate, decals (attached/ readable) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.data_plate}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.data_plate == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.data_plate_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -64,16 +61,15 @@
           <ion-col size="6">
             <ion-label>Safety devices are operational (including E-stop) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.safty_devices}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.safty_devices == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.safty_devices_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -81,16 +77,15 @@
           <ion-col size="6">
             <ion-label>Locks, latches (move freely. Fully engage) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.locks_latches}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.locks_latches == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.locks_latches_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -98,16 +93,15 @@
           <ion-col size="6">
             <ion-label>Rubber pads (attached, good condition on all load points) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.rubber_pad}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.rubber_pad == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.rubber_pad_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -115,16 +109,15 @@
           <ion-col size="6">
             <ion-label>Safety guards (fitted, secure and operational) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.safty_gaurds}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.safty_gaurds == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.safty_gaurds_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -132,16 +125,15 @@
           <ion-col size="6">
             <ion-label>Hydraulic connections, hoses (secure, no leaks) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.hydraulic_connections}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.hydraulic_connections == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.hydraulic_connections_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -149,16 +141,15 @@
           <ion-col size="6">
             <ion-label>Chain and cable connections (Bends, cracks, lose links or looseness) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.chain_cable_connection}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.chain_cable_connection == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.chain_cable_connection_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -166,16 +157,15 @@
           <ion-col size="6">
             <ion-label>Check for frayed cables(raised and lowered position) :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.frayed_cables}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.frayed_cables == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.frayed_cables_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -183,16 +173,15 @@
           <ion-col size="6">
             <ion-label>Check snap rings at all rollers and sheaves :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.snap_rings}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.snap_rings == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.snap_rings_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -200,16 +189,15 @@
           <ion-col size="6">
             <ion-label>Check bolts, nuts, screws :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.bolts_nuts}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.bolts_nuts == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.bolts_nuts_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -217,16 +205,15 @@
           <ion-col size="6">
             <ion-label>Check wiring and electrical switches for damage :</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.electrical_switch}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.electrical_switch == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.electrical_switch_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -235,16 +222,15 @@
             <ion-label>Hoist and work area is free from grease, oil, corrosive substances, slip and trip hazards :
             </ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.hoist_work_area}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.hoist_work_area == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.hoist_work_area_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -253,16 +239,15 @@
             <ion-label>Check floor for stress cracks near anchor bolts :
             </ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.anchor_bolts}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.anchor_bolts == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.anchor_bolts_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -271,16 +256,15 @@
             <ion-label>Check swing arm restraints :
             </ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.swing_arm}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.swing_arm == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.swing_arm_comment}}</p>
           </ion-row>
         </ion-grid>
 
@@ -289,26 +273,28 @@
             <ion-label>Test all hoist controls and functions :
             </ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="6">{{vehicleHoist.hoist_controls}}</ion-col>
         </ion-row>
-        <ion-grid lines="none">
+
+        <ion-grid lines="none" *ngIf="vehicleHoist.hoist_controls == 'Faulty'">
           <ion-row>
-            <ion-col size="6">
-              <ion-label>Comment : </ion-label>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"></p>
-            </ion-col>
+            <ion-label>Comment : </ion-label>
+          </ion-row>
+          <ion-row>
+            <p class="value">{{vehicleHoist.hoist_controls_comment}}</p>
           </ion-row>
         </ion-grid>
 
-        <ion-row>
-          <ion-col size="6">
-            <ion-label>Comment :
-            </ion-label>
-          </ion-col>
-          <ion-col size="6"></ion-col>
-        </ion-row>
+        <ion-grid lines="none">
+          <ion-row>
+            <ion-label>Comment :</ion-label>
+          </ion-row>
+        </ion-grid>
+        <ion-grid lines="none">
+          <ion-row>
+            <p class="value"> {{vehicleHoist.comment}}</p>
+          </ion-row>
+        </ion-grid>
 
 
       </ion-card-content>

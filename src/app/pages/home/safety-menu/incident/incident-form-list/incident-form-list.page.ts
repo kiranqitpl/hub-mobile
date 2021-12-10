@@ -63,6 +63,7 @@ export class IncidentFormListPage implements OnInit {
   }
 
   loadData(event, pageNo, screen) {
+
     if (screen == 'mobile') {
       this.pageNumber = event == 'newList' ? ++pageNo : pageNo;
     }
@@ -76,6 +77,16 @@ export class IncidentFormListPage implements OnInit {
       // this.loadingService.presentLoading();
       this.global.getData('add_form/get/?page_no=' + this.pageNumber).subscribe((result: any) => {
         if (result && result.data && result.data.mforms_add_form && result.data.mforms_add_form.length > 0) {
+
+          result.data.mforms_add_form.sort(function (a, b) {
+            let keyA = new Date(a.Date),
+              keyB = new Date(b.Date);
+            if (keyA > keyB) return -1;
+            if (keyA < keyB) return 1;
+            return 0;
+
+          });
+
           result.data.mforms_add_form.forEach((el: any) => {
             if (el.Form == 'mforms_add_form') {
               el.Form = 'Incident'
@@ -86,11 +97,14 @@ export class IncidentFormListPage implements OnInit {
             } else if (el.Form == 'mforms_prestart_vehicle_hoist') {
               el.Form = 'Vehicle Hoist Prestarts'
             }
-            el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
+            el.Date = moment(el.Date).format("DD-MM-YYYY hh:mm");
+            // el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY hh:mm:ss");
             el.Status = (el.Status == 0 ? 'In progress' : (el.Status == 1 ? 'Completed' : (el.Status == 2 ? 'Cancel' : '')));
           })
+
           this.totalPages = result.total_pages;
-          this.totalElements = result.row_count
+          this.totalElements = result.row_count;
+
           if (screen == 'mobile') {
             if (this.allSubmittedFormlist.length == 0) {
               this.allSubmittedFormlist = result.data.mforms_add_form;

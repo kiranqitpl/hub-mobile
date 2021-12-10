@@ -3,7 +3,7 @@
   <div class="container" #target>
     <ion-card [formGroup]="vehicleHoistForm" (ionChange)="onProgressBar($event)">
 
-      <ion-grid class="progress-bar">
+      <!-- <ion-grid class="progress-bar">
         <ion-row>
           <ion-col size="10.5">
             Form progress bar
@@ -18,27 +18,7 @@
             <ion-progress-bar [value]="form_percent"></ion-progress-bar>
           </ion-col>
         </ion-row>
-
-        <!-- <ion-row>
-          <ion-col size="12" *ngIf="form_percent == 0">
-            <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-          </ion-col>
-
-          <ion-col size="11" *ngIf="form_percent != 0 &&  form_percent != 1">
-            <ion-progress-bar [type]="'determinate'" [value]="form_percent"></ion-progress-bar>
-          </ion-col>
-          <ion-col size="1" *ngIf="form_percent != 0 &&  form_percent != 1">
-            {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
-          </ion-col>
-
-          <ion-col size="10" *ngIf="form_percent == 1">
-            <ion-progress-bar [type]="'determinate'" [value]="form_percent"></ion-progress-bar>
-          </ion-col>
-          <ion-col size="2" *ngIf="form_percent == 1">
-            {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
-          </ion-col>
-        </ion-row> -->
-      </ion-grid>
+      </ion-grid> -->
 
       <ion-grid>
         <ion-radio-group formControlName="vehicle_host_no" (ionChange)="onValueChange($event, 'vehicle_host_no')">
@@ -760,7 +740,36 @@
         </ion-grid>
       </ion-grid>
 
-      <ion-button class="btn" (click)="onSubmit()" [disabled]="vehicleHoistForm.invalid">SUBMIT</ion-button>
+
+      <ion-grid class="progress-bar">
+        <ion-row>
+          <ion-col size="10.5">
+            Form progress bar
+          </ion-col>
+          <ion-col size="1.5">
+            {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit()"
+        class="btn" [disabled]="vehicleHoistForm.invalid">SUBMIT
+      </ion-button>
+
+      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit()"
+        class="btn" [disabled]="vehicleHoistForm.invalid">Update
+      </ion-button>
+
+      <!-- <ion-button *ngIf="url_id == ''" (click)="onSubmit()" class="btn" [disabled]="vehicleHoistForm.invalid">SUBMIT
+      </ion-button>
+
+      <ion-button *ngIf="url_id != ''" (click)="onSubmit()" class="btn" [disabled]="vehicleHoistForm.invalid">Update
+      </ion-button> -->
 
     </ion-card>
   </div>

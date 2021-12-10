@@ -1,8 +1,8 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
-  <div class="container">
+  <div class="container" #target>
     <ion-card>
-      <ion-grid class="progress-bar">
+      <!-- <ion-grid class="progress-bar">
         <ion-row>
           <ion-col size="10.5">
             Form progress bar
@@ -16,8 +16,9 @@
             <ion-progress-bar [value]="form_percent"></ion-progress-bar>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
       <ion-grid [formGroup]="teleHandlerForm" (ionChange)="onProgressBar($event)">
+
         <ion-radio-group formControlName="competency" (ionChange)="onCompetency($event)">
           <ion-row>
             <ion-col size="12">
@@ -58,7 +59,7 @@
         </ion-grid>
 
         <div *ngIf="teleHandlerForm.value['hour_meter'] != ''">
-          <ion-radio-group formControlName="data_plate">
+          <ion-radio-group formControlName="data_plate" (ionChange)="onRadioButtonChange($event, 'data_plate')">
             <ion-row>
               <ion-col size=" 12">
                 <ion-label>Data plate attached and legible : </ion-label>
@@ -85,7 +86,7 @@
               <ion-label> Comment : </ion-label>
             </ion-row>
             <ion-row>
-              <ion-textarea placeholder="Enter Comment" autoGrow="true">
+              <ion-textarea placeholder="Enter Comment" autoGrow="true" formControlName="data_plate_comment">
               </ion-textarea>
             </ion-row>
             <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.data_plate_comment.value  == ''">
@@ -104,13 +105,13 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="data_plate_image"
+              <ion-input type="file" formControlName="data_plate_image" multiple
                 (change)="onSelectImage($event, 2, 'data_plate_image')">
               </ion-input>
             </div>
 
             <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['data_plate_image'] !='' ">
+              *ngIf="teleHandlerForm.value['data_plate_image'] !=''">
               <ion-slide>
                 <ion-grid>
                   <ion-row>
@@ -132,7 +133,7 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['data_plate'] != ''">
-          <ion-radio-group formControlName="engine_oil">
+          <ion-radio-group formControlName="engine_oil" (ionChange)="onRadioButtonChange($event, 'engine_oil')">
             <ion-row>
               <ion-col size=" 12">
                 <ion-label> Engine Oil Level :</ion-label>
@@ -177,7 +178,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="engine_oil_image"
+              <ion-input type="file" formControlName="engine_oil_image" multiple
                 (change)="onSelectImage($event, 2, 'engine_oil_image')">
               </ion-input>
             </div>
@@ -204,7 +205,7 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['engine_oil'] != ''">
-          <ion-radio-group formControlName="hydraulic_oil">
+          <ion-radio-group formControlName="hydraulic_oil" (ionChange)="onRadioButtonChange($event, 'hydraulic_oil')">
             <ion-row>
               <ion-col size="12">
                 Hydraulic Oil :
@@ -250,7 +251,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="hydraulic_oil_image"
+              <ion-input type="file" formControlName="hydraulic_oil_image" multiple
                 (change)="onSelectImage($event, 2, 'hydraulic_oil_image')">
               </ion-input>
             </div>
@@ -305,7 +306,8 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['fuel_level'] != ''">
-          <ion-radio-group formControlName="equipment_inspect">
+          <ion-radio-group formControlName="equipment_inspect"
+            (ionChange)="onRadioButtonChange($event, 'equipment_inspect')">
             <ion-row>
               <ion-col size="12">
                 Verify Equipment Inspections are Current :
@@ -353,7 +355,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="equipment_inspect_image"
+              <ion-input type="file" formControlName="equipment_inspect_image" multiple
                 (change)="onSelectImage($event, 2, 'equipment_inspect_image')">
               </ion-input>
             </div>
@@ -380,7 +382,7 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['equipment_inspect'] != ''">
-          <ion-radio-group formControlName="coolant_level">
+          <ion-radio-group formControlName="coolant_level" (ionChange)="onRadioButtonChange($event, 'coolant_level')">
             <ion-row>
               <ion-col size="12">
                 Coolant Level :
@@ -427,7 +429,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="coolant_level_image"
+              <ion-input type="file" formControlName="coolant_level_image" multiple
                 (change)="onSelectImage($event, 2, 'coolant_level_image')">
               </ion-input>
             </div>
@@ -454,7 +456,8 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['coolant_level'] != ''">
-          <ion-radio-group formControlName="belts_and_hoses">
+          <ion-radio-group formControlName="belts_and_hoses"
+            (ionChange)="onRadioButtonChange($event, 'belts_and_hoses')">
             <ion-row>
               <ion-col size="12">
                 Belts and Hoses :
@@ -502,7 +505,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="belts_and_hoses_image"
+              <ion-input type="file" formControlName="belts_and_hoses_image" multiple
                 (change)="onSelectImage($event, 2, 'belts_and_hoses_image')">
               </ion-input>
             </div>
@@ -529,7 +532,7 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['belts_and_hoses'] != ''">
-          <ion-radio-group formControlName="wheels_tyres">
+          <ion-radio-group formControlName="wheels_tyres" (ionChange)="onRadioButtonChange($event, 'wheels_tyres')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Wheels, Tyres and nuts :
@@ -578,7 +581,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="wheels_tyres_image"
+              <ion-input type="file" formControlName="wheels_tyres_image" multiple
                 (change)="onSelectImage($event, 2, 'wheels_tyres_image')">
               </ion-input>
             </div>
@@ -605,7 +608,8 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['wheels_tyres'] != ''">
-          <ion-radio-group formControlName="fire_extinguisher">
+          <ion-radio-group formControlName="fire_extinguisher"
+            (ionChange)="onRadioButtonChange($event, 'fire_extinguisher')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Fire-Extinguisher :
@@ -655,7 +659,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="fire_extinguisher_image"
+              <ion-input type="file" formControlName="fire_extinguisher_image" multiple
                 (change)="onSelectImage($event, 2, 'fire_extinguisher_image')">
               </ion-input>
             </div>
@@ -682,7 +686,7 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['fire_extinguisher'] != ''">
-          <ion-radio-group formControlName="fuel_flash">
+          <ion-radio-group formControlName="fuel_flash" (ionChange)="onRadioButtonChange($event, 'fuel_flash')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Fuel Flash Screen: in Place :
@@ -730,7 +734,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="fuel_flash_image"
+              <ion-input type="file" formControlName="fuel_flash_image" multiple
                 (change)="onSelectImage($event, 2, 'fuel_flash_image')">
               </ion-input>
             </div>
@@ -757,7 +761,8 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['fuel_flash'] != ''">
-          <ion-radio-group formControlName="hydraulics_functional">
+          <ion-radio-group formControlName="hydraulics_functional"
+            (ionChange)="onRadioButtonChange($event, 'hydraulics_functional')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Hydraulics Functional and No Leaks :
@@ -809,7 +814,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="hydraulics_functional_image"
+              <ion-input type="file" formControlName="hydraulics_functional_image" multiple
                 (change)="onSelectImage($event, 2, 'hydraulics_functional_image')">
               </ion-input>
             </div>
@@ -836,7 +841,7 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['hydraulics_functional'] != ''">
-          <ion-radio-group formControlName="lift_arms">
+          <ion-radio-group formControlName="lift_arms" (ionChange)="onRadioButtonChange($event, 'lift_arms')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Boom, Lift Arms, Extending Structure :
@@ -885,7 +890,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="lift_arms_image"
+              <ion-input type="file" formControlName="lift_arms_image" multiple
                 (change)="onSelectImage($event, 2, 'lift_arms_image')">
               </ion-input>
             </div>
@@ -916,7 +921,7 @@
             In place / Correctly Tensioned
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="chain_hose">
+          <ion-radio-group formControlName="chain_hose" (ionChange)="onRadioButtonChange($event, 'chain_hose')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Chain and Hose Guards :
@@ -966,7 +971,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="chain_hose_image"
+              <ion-input type="file" formControlName="chain_hose_image" multiple
                 (change)="onSelectImage($event, 2, 'chain_hose_image')">
               </ion-input>
             </div>
@@ -997,7 +1002,7 @@
             <ion-col> In place</ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="cap_bolts">
+          <ion-radio-group formControlName="cap_bolts" (ionChange)="onRadioButtonChange($event, 'cap_bolts')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Mast Cap Bolts :
@@ -1047,7 +1052,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="cap_bolts_image"
+              <ion-input type="file" formControlName="cap_bolts_image" multiple
                 (change)="onSelectImage($event, 2, 'cap_bolts_image')">
               </ion-input>
             </div>
@@ -1078,7 +1083,7 @@
             <ion-col size="12">In place and secure</ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="safety_stops">
+          <ion-radio-group formControlName="safety_stops" (ionChange)="onRadioButtonChange($event, 'safety_stops')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Safety Stops and Latches :
@@ -1128,7 +1133,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="safety_stops_image"
+              <ion-input type="file" formControlName="safety_stops_image" multiple
                 (change)="onSelectImage($event, 2, 'safety_stops_image')">
               </ion-input>
             </div>
@@ -1159,7 +1164,7 @@
             <ion-col size="12"> In place</ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="forks">
+          <ion-radio-group formControlName="forks" (ionChange)="onRadioButtonChange($event, 'forks')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Forks :
@@ -1209,7 +1214,8 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="forks_image" (change)="onSelectImage($event, 2, 'forks_image')">
+              <ion-input type="file" formControlName="forks_image" multiple
+                (change)="onSelectImage($event, 2, 'forks_image')">
               </ion-input>
             </div>
 
@@ -1240,7 +1246,8 @@
           </ion-row>
           <!-- <ion-item lines="none"> -->
 
-          <ion-radio-group formControlName="overhead_guards">
+          <ion-radio-group formControlName="overhead_guards"
+            (ionChange)="onRadioButtonChange($event, 'overhead_guards')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Overhead Guards :
@@ -1292,7 +1299,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="overhead_guards_image"
+              <ion-input type="file" formControlName="overhead_guards_image" multiple
                 (change)="onSelectImage($event, 2, 'overhead_guards_image')">
               </ion-input>
             </div>
@@ -1325,7 +1332,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="counterweight">
+          <ion-radio-group formControlName="counterweight" (ionChange)="onRadioButtonChange($event, 'counterweight')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Counterweight / Counterweight bolts :
@@ -1376,7 +1383,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="counterweight_image"
+              <ion-input type="file" formControlName="counterweight_image" multiple
                 (change)="onSelectImage($event, 2, 'counterweight_image')">
               </ion-input>
             </div>
@@ -1402,7 +1409,6 @@
           </div>
         </div>
 
-
         <div *ngIf="teleHandlerForm.value['counterweight'] != ''">
           <ion-row>
             <ion-col size="12">
@@ -1410,7 +1416,8 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="engine_bay_components">
+          <ion-radio-group formControlName="engine_bay_components"
+            (ionChange)="onRadioButtonChange($event, 'engine_bay_components')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Engine Bay Components :
@@ -1464,7 +1471,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="engine_bay_components_image"
+              <ion-input type="file" formControlName="engine_bay_components_image" multiple
                 (change)="onSelectImage($event, 2, 'engine_bay_components_image')">
               </ion-input>
             </div>
@@ -1497,7 +1504,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="horn">
+          <ion-radio-group formControlName="horn" (ionChange)="onRadioButtonChange($event, 'horn')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Horn :
@@ -1547,7 +1554,8 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="horn_image" (change)="onSelectImage($event, 2, 'horn_image')">
+              <ion-input type="file" formControlName="horn_image" multiple
+                (change)="onSelectImage($event, 2, 'horn_image')">
               </ion-input>
             </div>
 
@@ -1574,7 +1582,7 @@
 
         <div *ngIf="teleHandlerForm.value['horn'] != ''">
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="audible">
+          <ion-radio-group formControlName="audible" (ionChange)="onRadioButtonChange($event, 'audible')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Audible, Visual Warning Devices :
@@ -1624,7 +1632,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="audible_image"
+              <ion-input type="file" formControlName="audible_image" multiple
                 (change)="onSelectImage($event, 2, 'audible_image')">
               </ion-input>
             </div>
@@ -1652,7 +1660,7 @@
 
         <div *ngIf="teleHandlerForm.value['audible'] != ''">
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="headlights">
+          <ion-radio-group formControlName="headlights" (ionChange)="onRadioButtonChange($event, 'headlights')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Headlights :
@@ -1702,7 +1710,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="headlights_image"
+              <ion-input type="file" formControlName="headlights_image" multiple
                 (change)="onSelectImage($event, 2, 'headlights_image')">
               </ion-input>
             </div>
@@ -1730,7 +1738,7 @@
 
         <div *ngIf="teleHandlerForm.value['headlights'] != ''">
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="turn_signals">
+          <ion-radio-group formControlName="turn_signals" (ionChange)="onRadioButtonChange($event, 'turn_signals')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Turn Signals :
@@ -1779,7 +1787,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="turn_signals_image"
+              <ion-input type="file" formControlName="turn_signals_image" multiple
                 (change)="onSelectImage($event, 2, 'turn_signals_image')">
               </ion-input>
             </div>
@@ -1807,7 +1815,8 @@
 
         <div *ngIf="teleHandlerForm.value['turn_signals'] != ''">
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="warning_brake_lights">
+          <ion-radio-group formControlName="warning_brake_lights"
+            (ionChange)="onRadioButtonChange($event, 'warning_brake_lights')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Warning / Brake Lights :
@@ -1860,7 +1869,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="warning_brake_lights_image"
+              <ion-input type="file" formControlName="warning_brake_lights_image" multiple
                 (change)="onSelectImage($event, 2, 'warning_brake_lights_image')">
               </ion-input>
             </div>
@@ -1887,9 +1896,8 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['warning_brake_lights'] != ''">
-
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="foot_brake">
+          <ion-radio-group formControlName="foot_brake" (ionChange)="onRadioButtonChange($event, 'foot_brake')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Foot Brake :
@@ -1940,7 +1948,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="foot_brake_image"
+              <ion-input type="file" formControlName="foot_brake_image" multiple
                 (change)="onSelectImage($event, 2, 'foot_brake_image')">
               </ion-input>
             </div>
@@ -1973,7 +1981,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="parking_brake">
+          <ion-radio-group formControlName="parking_brake" (ionChange)="onRadioButtonChange($event, 'parking_brake')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Parking Brake :
@@ -2024,7 +2032,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="parking_brake_image"
+              <ion-input type="file" formControlName="parking_brake_image" multiple
                 (change)="onSelectImage($event, 2, 'parking_brake_image')">
               </ion-input>
             </div>
@@ -2057,7 +2065,8 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="clutch_gear_shift">
+          <ion-radio-group formControlName="clutch_gear_shift"
+            (ionChange)="onRadioButtonChange($event, 'clutch_gear_shift')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Clutch / Gear Shift :
@@ -2108,7 +2117,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="clutch_gear_shift_image"
+              <ion-input type="file" formControlName="clutch_gear_shift_image" multiple
                 (change)="onSelectImage($event, 2, 'clutch_gear_shift_image')">
               </ion-input>
             </div>
@@ -2141,7 +2150,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="engine_noise">
+          <ion-radio-group formControlName="engine_noise" (ionChange)="onRadioButtonChange($event, 'engine_noise')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Engine Noise :
@@ -2191,7 +2200,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="engine_noise_image"
+              <ion-input type="file" formControlName="engine_noise_image" multiple
                 (change)="onSelectImage($event, 2, 'engine_noise_image')">
               </ion-input>
             </div>
@@ -2224,7 +2233,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="dash_gauges">
+          <ion-radio-group formControlName="dash_gauges" (ionChange)="onRadioButtonChange($event, 'dash_gauges')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Dash Gauges :
@@ -2275,7 +2284,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="dash_gauges_image"
+              <ion-input type="file" formControlName="dash_gauges_image" multiple
                 (change)="onSelectImage($event, 2, 'dash_gauges_image')">
               </ion-input>
             </div>
@@ -2303,7 +2312,8 @@
 
         <div *ngIf="teleHandlerForm.value['dash_gauges'] != ''">
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="operational_controls">
+          <ion-radio-group formControlName="operational_controls"
+            (ionChange)="onRadioButtonChange($event, 'operational_controls')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> Operational Controls :
@@ -2356,7 +2366,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="operational_controls_image"
+              <ion-input type="file" formControlName="operational_controls_image" multiple
                 (change)="onSelectImage($event, 2, 'operational_controls_image')">
               </ion-input>
             </div>
@@ -2389,7 +2399,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="fluid_leaks">
+          <ion-radio-group formControlName="fluid_leaks" (ionChange)="onRadioButtonChange($event, 'fluid_leaks')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span>Fluid Leaks :
@@ -2440,7 +2450,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="fluid_leaks_image"
+              <ion-input type="file" formControlName="fluid_leaks_image" multiple
                 (change)="onSelectImage($event, 2, 'fluid_leaks_image')">
               </ion-input>
             </div>
@@ -2473,7 +2483,7 @@
             </ion-col>
           </ion-row>
           <!-- <ion-item lines="none"> -->
-          <ion-radio-group formControlName="first_aid_kit">
+          <ion-radio-group formControlName="first_aid_kit" (ionChange)="onRadioButtonChange($event, 'first_aid_kit')">
             <ion-row>
               <ion-col size="12">
                 <span class="error">* </span> First Aid Kit :
@@ -2523,7 +2533,7 @@
                   <ion-label> Upload Image :</ion-label>
                 </ion-item>
               </ion-row>
-              <ion-input type="file" formControlName="first_aid_kit_image"
+              <ion-input type="file" formControlName="first_aid_kit_image" multiple
                 (change)="onSelectImage($event, 2, 'first_aid_kit_image')">
               </ion-input>
             </div>
@@ -2570,7 +2580,39 @@
               this report.</ion-text>
           </p>
         </div>
-        <ion-button class="btn" (click)="onSubmit()" [disabled]="teleHandlerForm.invalid">SUBMIT</ion-button>
+
+        <!-- <ion-button class="btn" (click)="onSubmit()" [disabled]="teleHandlerForm.invalid">SUBMIT</ion-button> -->
+
+        <ion-grid class="progress-bar">
+          <ion-row>
+            <ion-col size="10.5">
+              Form progress bar
+            </ion-col>
+            <ion-col size="1.5">
+              {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-button *ngIf="url_id == '' && teleHandlerForm.invalid == false" (click)="onSubmit()" class="btn">SUBMIT
+        </ion-button>
+
+        <ion-button *ngIf="url_id != '' && teleHandlerForm.invalid == false " (click)="onSubmit()" class="btn">Update
+        </ion-button>
+
+        <!-- <ion-button *ngIf="url_id == ''" (click)="onSubmit()"
+          class="btn" [disabled]="teleHandlerForm.invalid">SUBMIT
+        </ion-button>
+
+        <ion-button *ngIf="url_id != '' " (click)="onSubmit()"  
+          class="btn" [disabled]="teleHandlerForm.invalid">Update
+        </ion-button> -->
+
       </ion-grid>
     </ion-card>
   </div>

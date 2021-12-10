@@ -19,7 +19,7 @@
   </div>
 
   <div class="ion-padding-start ion-padding-end">
-    <!-- 
+
     <div class="activeBackground">
       <ion-row>
         <ion-col size="10.5">
@@ -35,7 +35,7 @@
           <ion-progress-bar [value]="form_percent"></ion-progress-bar>
         </ion-col>
       </ion-row>
-    </div> -->
+    </div>
 
     <div *ngFor=" let tabItem of tabList">
       <ion-button class="incident" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
@@ -45,7 +45,8 @@
       </ion-button>
 
       <!--------------------------------------------------------- Incident ------------------------------------------------------------------->
-      <div *ngIf="selectedTabItem==tabItem.val && selectedTabItem =='Incident'" class="activeBackground">
+      <div *ngIf="selectedTabItem==tabItem.val && selectedTabItem =='Incident'" class="activeBackground"
+        (ionChange)="onProgressBar($event, 'Incident')">
         <div class="headerTitle">
           <p>{{tabItem.val}}</p>
           <img (click)="onDeSelectTabItem(tabItem.val)" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -408,37 +409,25 @@
           </ion-col>
         </ion-row>
 
-        <!-- <ion-item class="ra" lines="none">
-          <ion-label position="floating">Date of Incident :</ion-label> -->
-        <!-- <ion-label position="floating">Date of Incident :</ion-label> -->
         <p class="question">Date of Incident :</p>
-        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select date of incident"
-          formControlName="date_of_incident">
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select date of incident" value=""
+          formControlName="date_of_incident" min="2000">
         </ion-datetime>
-        <!-- </ion-item> -->
 
-        <!-- <ion-item class="ra" lines="none"> -->
         <p class="question">Time of Incident :</p>
-        <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select time of incident"
+        <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select time of incident" value=""
           formControlName="time_of_incident">
         </ion-datetime>
-        <!-- </ion-item> -->
 
-        <!-- <ion-item class="ra" lines="none">
-          <ion-label position="floating">Date Reported :</ion-label> -->
         <p class="question">Date Reported :</p>
-        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select reported date"
-          formControlName="date_reported">
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Please select reported date" value=""
+          formControlName="date_reported" min="2000">
         </ion-datetime>
-        <!-- </ion-item> -->
 
-        <!-- <ion-item class="ra" lines="none">
-          <ion-label position="floating">Time Reported :</ion-label> -->
         <p class="question">Time Reported :</p>
-        <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select reported time"
+        <ion-datetime displayFormat="HH:mm:ss" placeholder="Please select reported time" value=""
           formControlName="time_reported">
         </ion-datetime>
-        <!-- </ion-item> -->
 
         <ion-radio-group formControlName="classification_location_option">
           <ion-row>

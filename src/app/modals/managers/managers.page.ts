@@ -38,7 +38,8 @@ export class ManagersPage implements OnInit {
       }
     });
     if (value == false && event != '') {
-      this.global.getData("user/getallemployee/?term" + event.detail.value).subscribe((res: any) => {
+      this.newList.next([]);
+      this.global.getData("user/getallemployee/?term=" + event.detail.value).subscribe((res: any) => {
         if (res && res.data && res.data.length > 0) {
           res.data.unshift({ full_name: "Other", employee_id: '0' });
           this.newList.next(res.data);

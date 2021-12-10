@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-import { NavController } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-
-import { ActivatedRoute, Params } from '@angular/router';
 
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
@@ -22,12 +21,17 @@ import { AlertService } from 'src/app/services/alert-service/alert.service';
 })
 export class TelehandlerAddFormPage implements OnInit {
 
+  @ViewChild(IonContent) content: IonContent;
+  @ViewChild('target') myScrollContainer: ElementRef
+
   pName: String = 'Telehandler'
   teleHandlerForm: FormGroup;
   isSubmitted: boolean = false;
   loggedInUser: any;
-  // showMsg: boolean = false;
   form_percent: number = 0;
+  // showMsg: boolean = false;
+  url_id = '';
+  telehandlerData = [];
 
   constructor(
     private fb: FormBuilder,
@@ -45,8 +49,12 @@ export class TelehandlerAddFormPage implements OnInit {
 
   ngOnInit() {
 
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     this.activatedRoute.params.subscribe((params: Params) => {
-      console.log('params', params);
+      this.url_id = params['id'] != undefined ? params['id'] : '';
+      if (this.url_id != '' && this.url_id != undefined) {
+        this.loadData(this.url_id);
+      }
     })
 
     this.teleHandlerForm = this.fb.group({
@@ -166,6 +174,11 @@ export class TelehandlerAddFormPage implements OnInit {
       engine_noise_comment: [''],
       engine_noise_image: [''],
 
+
+      fluid_leaks: ['', Validators.required],
+      fluid_leaks_comment: [''],
+      fluid_leaks_image: [''],
+
       dash_gauges: ['', Validators.required],
       dash_gauges_comment: [''],
       dash_gauges_image: [''],
@@ -173,10 +186,6 @@ export class TelehandlerAddFormPage implements OnInit {
       operational_controls: ['', Validators.required],
       operational_controls_comment: [''],
       operational_controls_image: [''],
-
-      fluid_leaks: ['', Validators.required],
-      fluid_leaks_comment: [''],
-      fluid_leaks_image: [''],
 
       first_aid_kit: ['', Validators.required],
       first_aid_kit_comment: [''],
@@ -192,6 +201,8 @@ export class TelehandlerAddFormPage implements OnInit {
   get errorControls() {
     return this.teleHandlerForm.controls;
   }
+
+  //------------------------------------------------------------------ Images ----------------------------------------------------------------//
 
   async onOpenPreview(img) {
     const modal = await this.modalController.create({
@@ -318,6 +329,12 @@ export class TelehandlerAddFormPage implements OnInit {
       this.sharedService.getBase64(event.target.files[0]).then(image => {
         if (rowName == 'data_plate_image') {
           this.teleHandlerForm.controls['data_plate_image'].setValue(image);
+          // if (this.teleHandlerForm.value['data_plate_image'].length <= 0) {
+          //   this.teleHandlerForm.controls['data_plate_image'].setValue(image);
+          // } else {
+          //   this.teleHandlerForm.value['data_plate_image'].unshift(image);
+          // }
+          // console.log('data_plate_image', this.teleHandlerForm.value['data_plate_image']);
         } else if (rowName == 'engine_oil_image') {
           this.teleHandlerForm.controls['engine_oil_image'].setValue(image);
         } else if (rowName == 'hydraulic_oil_image') {
@@ -451,20 +468,12 @@ export class TelehandlerAddFormPage implements OnInit {
     }
   }
 
+  //------------------------------------------------------------------ Images ----------------------------------------------------------------//
+
   onSubmit() {
     // this.loadingService.presentLoading();
     this.isSubmitted = true;
-    // let count = 0
-    // Object.values(this.teleHandlerForm.value).forEach(key => {
-    //   if (key == 'Faulty') {
-    //     count++;
-    //   }
-    // });
-    // if (count > 0) {
-    //   this.showMsg = true;
-    // } else {
-    //   this.showMsg = false;
-    // }
+
     if ((this.teleHandlerForm.value['data_plate'] == 'Faulty' && this.teleHandlerForm.value['data_plate_comment'] == '') ||
       (this.teleHandlerForm.value['engine_oil'] == 'Faulty' && this.teleHandlerForm.value['engine_oil_comment'] == '') ||
       (this.teleHandlerForm.value['hydraulic_oil'] == 'Faulty' && this.teleHandlerForm.value['hydraulic_oil_comment'] == '') ||
@@ -497,14 +506,21 @@ export class TelehandlerAddFormPage implements OnInit {
       (this.teleHandlerForm.value['fluid_leaks'] == 'Faulty' && this.teleHandlerForm.value['fluid_leaks_comment'] == '') ||
       (this.teleHandlerForm.value['first_aid_kit'] == 'Faulty' && this.teleHandlerForm.value['first_aid_kit_comment'] == '')) {
       // this.loadingService.dismissLoading();
+      this.toastService.toast('Please fill all required fields.', 'danger');
       return;
     } else {
       if (this.teleHandlerForm.valid) {
-        let formData = this.teleHandlerForm.value;
-        formData['user_id'] = this.loggedInUser.id
-        let data = { 'formData': formData };
-        this.globalService.postData('Telehandler/submit', data).subscribe(result => {
-          console.log('result', result);
+
+        let data = this.teleHandlerForm.value;
+        data['user_id'] = this.loggedInUser.id;
+
+        let formData = { 'formData': data };
+
+        if (this.url_id != '' && this.url_id != undefined) {
+          formData['id'] = this.teleHandlerForm['id'];
+        }
+
+        this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
           if (result && result['status']) {
             this.toastService.toast(result['message'], 'success');
             this.nav.back();
@@ -534,6 +550,14 @@ export class TelehandlerAddFormPage implements OnInit {
     }
   }
 
+  onRadioButtonChange(event, rowName) {
+    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    let comment = rowName + '_comment';
+    let image = rowName + '_image';
+    this.teleHandlerForm.controls[comment].setValue('');
+    this.teleHandlerForm.controls[image].setValue('');
+  }
+
   onProgressBar(event) {
     let count = 0;
     let formControlList = [];
@@ -546,6 +570,19 @@ export class TelehandlerAddFormPage implements OnInit {
       }
     })
     this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
+  }
+
+  loadData(id) {
+    this.globalService.getData('add_form/getSingleData?table_name=telehandler&id=' + id).subscribe(result => {
+      if (result && result['data'] && result['data'][0]) {
+        this.telehandlerData = result['data'][0];
+        this.teleHandlerForm.patchValue(this.telehandlerData);
+        this.onProgressBar('');
+        console.log('this.teleHandlerForm ', this.teleHandlerForm);
+      }
+    }), error => {
+      console.log(error);
+    }
   }
 
 }

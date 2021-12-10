@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { NavController } from '@ionic/angular';
-
+import { IonContent, NavController } from '@ionic/angular';
 
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
@@ -17,6 +16,9 @@ import { LoadingService } from 'src/app/services/loading-service/loading.service
 })
 
 export class CraneAddFormPage implements OnInit {
+
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild('target') myScrollContainer: ElementRef
 
   pName: String = 'Crane';
   craneNoList = [
@@ -61,6 +63,7 @@ export class CraneAddFormPage implements OnInit {
   form_percent: number = 0;
   url_id = '';
   craneData = [];
+  loggedInUser: any;
 
   constructor(
     private fb: FormBuilder,
@@ -73,28 +76,28 @@ export class CraneAddFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.url_id = params['id'];
-      console.log(' this.url_id ', this.url_id);
+      this.url_id = params['id'] != undefined ? params['id'] : '';
       if (this.url_id != '' && this.url_id != undefined) {
         this.loadData(this.url_id);
       }
     })
 
     this.craneForm = this.fb.group({
-      crane_number: [''],
-      operate_crane: [''],
-      swi: [''],
-      equipment_isolated: [''],
-      inspect_pendant: [''],
-      inspect_control_operation: [''],
-      directional_swl_sign: [''],
-      brakes_operational: [''],
-      limit_switches_operational: [''],
-      hook: [''],
-      hoist_chain_rope: [''],
-      mechanically_sound: [''],
-      passed_inspection: [''],
+      crane_number: ['', Validators.required],
+      operate_crane: ['', Validators.required],
+      swi: ['', Validators.required],
+      equipment_isolated: ['', Validators.required],
+      inspect_pendant: ['', Validators.required],
+      inspect_control_operation: ['', Validators.required],
+      directional_swl_sign: ['', Validators.required],
+      brakes_operational: ['', Validators.required],
+      limit_switches_operational: ['', Validators.required],
+      hook: ['', Validators.required],
+      hoist_chain_rope: ['', Validators.required],
+      mechanically_sound: ['', Validators.required],
+      passed_inspection: ['', Validators.required],
       comment: ['']
     })
   }
@@ -107,7 +110,14 @@ export class CraneAddFormPage implements OnInit {
 
   onSubmit() {
     this.loadingService.presentLoading();
-    let data = { 'formData': this.craneForm.value }
+    let formData = {};
+    formData = this.craneForm.value;
+    formData['user_id'] = this.loggedInUser.id;
+
+    if (this.url_id != '' && this.url_id != undefined) {
+      formData['id'] = this.craneData['id'];
+    }
+    let data ={formData : formData}
     this.globalService.postData('crane/submit', data).subscribe(result => {
       if (result && result['status']) {
         this.toastService.toast(result['message'], 'success');
@@ -124,6 +134,7 @@ export class CraneAddFormPage implements OnInit {
   }
 
   onProgressBar(event) {
+    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
     let count = 0;
     let formControlList = [];
     Object.keys(this.craneForm.controls).map(ele => formControlList.push(ele));
@@ -139,7 +150,9 @@ export class CraneAddFormPage implements OnInit {
     this.globalService.getData('add_form/getSingleData?table_name=crane&id=' + id).subscribe(result => {
       if (result && result['data'] && result['data'][0]) {
         this.craneData = result['data'][0];
+        console.log('this.craneData', this.craneData);
         this.craneForm.patchValue(this.craneData);
+        this.onProgressBar('');
         console.log('this.craneForm ', this.craneForm);
       }
     }), error => {

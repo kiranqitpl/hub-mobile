@@ -7,6 +7,16 @@
         <ion-item-sliding>
           <ion-item lines="none">
             <ion-label>
+
+              <ion-row>
+                <ion-col size="auto">
+                  <h2>Id :</h2>
+                </ion-col>
+                <ion-col>
+                  <h6> {{rowData.Id}} </h6>
+                </ion-col>
+              </ion-row>
+
               <ion-row>
                 <ion-col size="auto">
                   <h2>Form :</h2>
@@ -93,19 +103,19 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Form" prop="Form" [minWidth]="180" [resizeable]="true">
+      <ngx-datatable-column name="Form" prop="Form" [minWidth]="200" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Date" prop="Date" [minWidth]="80" [resizeable]="true">
+      <ngx-datatable-column name="Date" prop="Date" [minWidth]="180" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Name" prop="Name" [minWidth]="80" [resizeable]="true">
+      <ngx-datatable-column name="Name" prop="Name" [minWidth]="100" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Delegated" prop="Delegated" [minWidth]="80" [resizeable]="true">
+      <ngx-datatable-column name="Delegated" prop="Delegate" [minWidth]="180" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Status" prop="Status" [minWidth]="80" [resizeable]="true">
+      <ngx-datatable-column name="Status" prop="Status" [minWidth]="100" [resizeable]="true">
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
           <ion-text color="success" *ngIf="value == 'Completed'">{{value}}</ion-text>
           <ion-text color="warning" *ngIf="value == 'In progress'">{{value}}</ion-text>
