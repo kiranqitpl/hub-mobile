@@ -2012,6 +2012,11 @@ That's all.
 ion-content {
   font-family: "mon-bold";
 }
+ion-content .saveBtn {
+  position: absolute;
+  right: 0;
+  top: 30px;
+}
 ion-content .toolbar {
   background-color: var(--theme-blue-color);
   align-items: center;
@@ -2178,4 +2183,12 @@ ion-item-sliding {
 }
 ion-textarea {
   border: groove;
+}
+ion-progress-bar {
+  height: 20px;
+  border-radius: 40px;
+  --background: #ffd700;
+  --buffer-background: var(--background);
+  --progress-background: #ffa500;
+  background: var(--progress-background);
 }

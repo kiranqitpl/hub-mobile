@@ -8,7 +8,6 @@
         <ion-icon name="trash" (click)="onDelete()"></ion-icon>
       </ion-col>
     </ion-row>
-
     <ion-row *ngFor="let notification of notificationData; let i=index;">
       <ion-col size="2">
         <ion-checkbox (ionChange)="onDeleteDataSelect(notification.id)"></ion-checkbox>
@@ -18,6 +17,5 @@
         {{notification.message}}
       </ion-col>
     </ion-row>
-    
   </div>
 </ion-content>

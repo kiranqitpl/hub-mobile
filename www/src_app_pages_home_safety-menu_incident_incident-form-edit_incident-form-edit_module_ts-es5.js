@@ -185,7 +185,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -203,25 +203,25 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
 
 
-      var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/forms */
       3679);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -269,17 +269,7 @@
       /* harmony import */
 
 
-      var moment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-      /*! moment */
-      16738);
-      /* harmony import */
-
-
-      var moment__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_9__);
-      /* harmony import */
-
-
-      var _incident_form_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _incident_form_json__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! ../incident-form.json */
       79044);
 
@@ -404,7 +394,7 @@
             val: "West Wyalong Division",
             isChecked: false
           }];
-          this.injuryList = _incident_form_json__WEBPACK_IMPORTED_MODULE_10__[0].injuryList;
+          this.injuryList = _incident_form_json__WEBPACK_IMPORTED_MODULE_9__[0].injuryList;
         }
 
         _createClass(IncidentFormEditPage, [{
@@ -432,8 +422,8 @@
 
             });
             this.incidentDesForm = this.fb.group({
-              incident_description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
-              incident_description_action: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
+              incident_description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required],
+              incident_description_action: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required],
               seen_differently: [''],
               was_there_any_witness_of_the_incident: [''],
               incdesc_other_witness_details: this.fb.group({
@@ -452,7 +442,7 @@
 
             });
             this.classificationForm = this.fb.group({
-              classification_value: new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormArray([]),
+              classification_value: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormArray([]),
               date_of_incident: [''],
               time_of_incident: [''],
               date_reported: [''],
@@ -469,7 +459,7 @@
                 classification_supervisor_other_mobile_no: [''],
                 classification_supervisor_other_email: ['']
               }),
-              classification_manager: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
+              classification_manager: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required],
               classification_manager_other_details: this.fb.group({
                 classification_manager_other_name: [''],
                 classification_manager_other_mobile_no: [''],
@@ -493,11 +483,11 @@
               out_of_split_kit: ['']
             });
             this.reputationDesForm = this.fb.group({
-              reputation_option: new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormArray([]),
+              reputation_option: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormArray([]),
               individual_damage_value: [''],
               company_damage_value: [''],
               reputation_negative_effect: [''],
-              effected_department: new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormArray([]),
+              effected_department: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormArray([]),
               external_party: [''],
               name_of_witness: [''],
               other_witness_details: this.fb.group({
@@ -510,7 +500,7 @@
             });
             this.securityForm = this.fb.group({
               security_option: [''],
-              it_option_value: new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormArray([]),
+              it_option_value: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormArray([]),
               what_has_been_stolen_item: [''],
               approximate_value_of_stolen: [''],
               what_is_the_specific_securities_incident: ['']
@@ -775,7 +765,7 @@
                       _this8.classificationList.forEach(function (element) {
                         _this8.selectedTabList.find(function (ele) {
                           if (element.val == ele) {
-                            classificationValue.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(ele));
+                            classificationValue.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(ele));
                             element.isChecked = true;
                           }
                         });
@@ -908,7 +898,7 @@
                   _this8.reputationCheckBox.forEach(function (element) {
                     reputation_option.find(function (ele) {
                       if (element.val == ele) {
-                        reputationOption.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(ele));
+                        reputationOption.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(ele));
                         element.isChecked = true;
                       }
                     });
@@ -927,7 +917,7 @@
                   _this8.departmentEffect.forEach(function (element) {
                     effected_department.find(function (ele) {
                       if (element.val == ele) {
-                        effectedDepartment.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(ele));
+                        effectedDepartment.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(ele));
                         element.isChecked = true;
                       }
                     });
@@ -985,7 +975,7 @@
                   _this8.itSecurityList.forEach(function (ele) {
                     it_option_value.find(function (element) {
                       if (ele.val == element) {
-                        itOptionValue.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(element));
+                        itOptionValue.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(element));
                         ele.isChecked = true;
                       }
                     });
@@ -1007,7 +997,7 @@
           value: function setPersonDetails(person_details) {
             var _this9 = this;
 
-            var formArray = new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormArray([]);
+            var formArray = new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormArray([]);
             person_details.forEach(function (element) {
               formArray.push(_this9.fb.group({
                 injured_person_option: [element.injured_person_option],
@@ -1141,7 +1131,7 @@
         }, {
           key: "mobileUploads",
           value: function mobileUploads(tabName) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               var _this11 = this;
 
               var actionSheet;
@@ -1184,7 +1174,7 @@
         }, {
           key: "onPhotoGraphy",
           value: function onPhotoGraphy(event, type) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var _this12 = this;
 
               var i;
@@ -1391,7 +1381,7 @@
         }, {
           key: "onOpenIncidentModal",
           value: function onOpenIncidentModal() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
               var _this18 = this;
 
               var modal;
@@ -1435,7 +1425,7 @@
         }, {
           key: "onOpenIncDesModal",
           value: function onOpenIncDesModal() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
               var _this19 = this;
 
               var modal;
@@ -1479,7 +1469,7 @@
         }, {
           key: "onOpenClassiModal",
           value: function onOpenClassiModal(headerName) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
               var _this20 = this;
 
               var list, modal;
@@ -1559,7 +1549,7 @@
         }, {
           key: "onOpenInjuryModal",
           value: function onOpenInjuryModal(field, index) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
               var _this21 = this;
 
               var modal, data;
@@ -1634,7 +1624,7 @@
         }, {
           key: "onOpenReputationModal",
           value: function onOpenReputationModal() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
               var _this22 = this;
 
               var modal;
@@ -1680,7 +1670,7 @@
         }, {
           key: "onOpenPreview",
           value: function onOpenPreview(img) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
               var modal;
               return regeneratorRuntime.wrap(function _callee8$(_context8) {
                 while (1) {
@@ -1812,17 +1802,17 @@
             }
 
             if (val == 'submit' && validation || val == 'incomplete_submit' && validation == false) {
-              var fd = new FormData(); //--------------------------------------------------------- Incident -----------------------------------------------------------------// 
+              var fd = new FormData(); //---------------------------------------------------------- Incident ---------------------------------------------------------------------// 
 
               fd.append("incident_value", this.incidentForm.value['incident_value'] ? this.incidentForm.value['incident_value'] : ''); // required
-              // fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : '');
 
-              fd.append("incident_near_miss", this.incident_near_miss && this.incident_near_miss.employee_id ? this.incident_near_miss.employee_id : '');
-              fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : ''); //-------------------------------------------------------- Incident ------------------------------------------------------------------// 
-              //------------------------------------------------------- photography ----------------------------------------------------------------//
+              fd.append("incident_near_miss", this.incidentForm.value['incident_near_miss'] ? this.incidentForm.value['incident_near_miss'] : ''); // fd.append("incident_near_miss", this.incident_near_miss && this.incident_near_miss.employee_id ? this.incident_near_miss.employee_id : '');
 
-              fd.append("photography_image", this.photoGraphyObject ? JSON.stringify(this.photoGraphyObject) : ''); //------------------------------------------------------- photography ----------------------------------------------------------------//
-              //--------------------------------------------------- Incident Description -----------------------------------------------------------//
+              fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : ''); //----------------------------------------------------------- Incident --------------------------------------------------------------------// 
+              //---------------------------------------------------------- photography ------------------------------------------------------------------//
+
+              fd.append("photography_image", this.photoGraphyObject.length > 0 ? JSON.stringify(this.photoGraphyObject) : ''); //---------------------------------------------------------- photography ------------------------------------------------------------------//
+              //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
 
               fd.append("incident_description", this.incidentDesForm.value['incident_description'] ? this.incidentDesForm.value['incident_description'] : ''); //required
 
@@ -1835,95 +1825,97 @@
               fd.append("was_there_any_witness_of_the_incident", this.was_there_any_witness_of_the_incident && this.was_there_any_witness_of_the_incident.employee_id ? this.was_there_any_witness_of_the_incident.employee_id : ''); // fd.append("was_there_any_witness_of_the_incident", this.incidentDesForm.value['was_there_any_witness_of_the_incident']);
 
               fd.append("incdesc_other_witness_details", JSON.stringify(this.incidentDesForm.value['incdesc_other_witness_details']));
-              fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties']);
-              fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject)); // alcohal test image
+              fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties'] ? this.incidentDesForm.value['return_to_alternate_duties'] : '');
+              fd.append("alcohol_test_image", this.alcohalImagesObject.length > 0 ? JSON.stringify(this.alcohalImagesObject) : ''); // alcohal test image
 
-              fd.append("drug_test_image", JSON.stringify(this.drugTestImagesObject)); // drug_test_image
+              fd.append("drug_test_image", this.drugTestImagesObject.length > 0 ? JSON.stringify(this.drugTestImagesObject) : ''); // drug_test_image
 
-              fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject)); // return_to_alternate_duties_image 
-              //---------------------------------------------------- Incident Description -----------------------------------------------------------//
-              //------------------------------------------------------- Classification --------------------------------------------------------------//
+              fd.append("return_to_alternate_duties_image", this.alterDutyImagesObject.length > 0 ? JSON.stringify(this.alterDutyImagesObject) : ''); // return_to_alternate_duties_image 
+              //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
+              //-------------------------------------------------------- Classification -----------------------------------------------------------------//
+              // console.log('date_of_incident', this.classificationForm.value['date_of_incident']);
+              // console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
+              // console.log('date_reported', this.classificationForm.value['date_reported']);
+              // console.log('time_reported', this.classificationForm.value['time_reported']);
 
-              console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
-              console.log('time_reported', this.classificationForm.value['time_reported']);
-              fd.append("classification_value", this.classificationForm.value['classification_value'].join(','));
-              fd.append("date_of_incident", this.classificationForm.value['date_of_incident']);
-              fd.append("time_of_incident", this.classificationForm.value['time_of_incident'] != '' ? moment__WEBPACK_IMPORTED_MODULE_9___default()(this.classificationForm.value['time_of_incident']).format('HH:mm:ss') : '');
-              fd.append("date_reported", this.classificationForm.value['date_reported']);
-              fd.append("time_reported", this.classificationForm.value['time_reported'] != '' ? moment__WEBPACK_IMPORTED_MODULE_9___default()(this.classificationForm.value['time_reported']).format('HH:mm:ss') : '');
-              fd.append("classification_location_option", this.classificationForm.value['classification_location_option']);
+              fd.append("classification_value", this.classificationForm.value['classification_value'].length > 0 ? this.classificationForm.value['classification_value'].join(',') : '');
+              fd.append("date_of_incident", this.classificationForm.value['date_of_incident'] ? this.classificationForm.value['date_of_incident'] : '');
+              fd.append("time_of_incident", this.classificationForm.value['time_of_incident'] ? this.classificationForm.value['time_of_incident'] : '');
+              fd.append("date_reported", this.classificationForm.value['date_reported'] ? this.classificationForm.value['date_reported'] : '');
+              fd.append("time_reported", this.classificationForm.value['time_reported'] ? this.classificationForm.value['time_reported'] : '');
+              fd.append("classification_location_option", this.classificationForm.value['classification_location_option'] ? this.classificationForm.value['classification_location_option'] : '');
 
               if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
-                fd.append("classification_location_value", this.classificationForm.value['classification_location_value']);
+                fd.append("classification_location_value", this.classificationForm.value['classification_location_value'] ? this.classificationForm.value['classification_location_value'] : '');
               }
 
               if (this.classificationForm.value['classification_location_option'] == 'Choose Location') {
-                fd.append("classification_location_value", this.classificationForm.value['classification_location_value1']);
+                fd.append("classification_location_value", this.classificationForm.value['classification_location_value1'] ? this.classificationForm.value['classification_location_value1'] : '');
               }
 
-              fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type']);
+              fd.append("classification_shift_type", this.classificationForm.value['classification_shift_type'] ? this.classificationForm.value['classification_shift_type'] : '');
               fd.append("classification_supervisor", this.classification_supervisor && this.classification_supervisor.employee_id ? this.classification_supervisor.employee_id : '');
               fd.append("classification_supervisor_other_details", JSON.stringify(this.classificationForm.value['classification_supervisor_other_details'])); // fd.append("classification_supervisor", this.classificationForm.value['classification_supervisor']);
               // fd.append("classification_manager", this.classificationForm.value['classification_manager']);        // required
 
               fd.append("classification_manager", this.classification_manager && this.classification_manager.employee_id ? this.classification_manager.employee_id : '');
-              fd.append("classification_manager_other_details", JSON.stringify(this.classificationForm.value['classification_manager_other_details'])); //--------------------------------------------------------- Classification ------------------------------------------------------------//
-              //------------------------------------------------------------ Injury -----------------------------------------------------------------//
+              fd.append("classification_manager_other_details", JSON.stringify(this.classificationForm.value['classification_manager_other_details'])); //----------------------------------------------------------- Classification ---------------------------------------------------------------//
+              //------------------------------------------------------------- Injury ---------------------------------------------------------------------//
 
-              fd.append("injury_persons", this.injuryForm.value['injury_persons']); // form value
+              fd.append("injury_persons", this.injuryForm.value['injury_persons'] ? this.injuryForm.value['injury_persons'] : ''); // form value  
 
-              fd.append("person_details", JSON.stringify(this.injuryForm.value['person_details'])); //------------------------------------------------------------ Injury -----------------------------------------------------------------//
-              //----------------------------------------------------------- Enviornment -------------------------------------------------------------//
+              fd.append("person_details", JSON.stringify(this.injuryForm.value['person_details'])); //------------------------------------------------------------- Injury ---------------------------------------------------------------------//
+              //----------------------------------------------------------- Enviornment ------------------------------------------------------------------//
 
-              fd.append("environmental_description", this.enviornmentForm.value['environmental_description']); // required
+              fd.append("environmental_description", this.enviornmentForm.value['environmental_description'] ? this.enviornmentForm.value['environmental_description'] : ''); // required
 
-              fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split']); // chemical split value inner side query
+              fd.append("was_a_chemical_split", this.enviornmentForm.value['was_a_chemical_split'] ? this.enviornmentForm.value['was_a_chemical_split'] : ''); // chemical split value inner side query
 
               fd.append("chemical_details", JSON.stringify(this.enviornmentForm.value['chemical_details'])); // data with image
 
-              fd.append("emergency_spill_kit_used", this.enviornmentForm.value['emergency_spill_kit_used']);
-              fd.append("out_of_split_kit", this.enviornmentForm.value['out_of_split_kit']); //----------------------------------------------------------- Enviornment ------------------------------------------------------------//
-              //----------------------------------------------------------- Reputation -------------------------------------------------------------// 
+              fd.append("emergency_spill_kit_used", this.enviornmentForm.value['emergency_spill_kit_used'] ? this.enviornmentForm.value['emergency_spill_kit_used'] : '');
+              fd.append("out_of_split_kit", this.enviornmentForm.value['out_of_split_kit'] ? this.enviornmentForm.value['out_of_split_kit'] : ''); //------------------------------------------------------------ Enviornment ----------------------------------------------------------------//
+              //------------------------------------------------------------- Reputation ----------------------------------------------------------------// 
 
-              fd.append("reputation_option", this.reputationDesForm.value['reputation_option']);
-              fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value']);
-              fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value']);
-              fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect']);
-              fd.append("effected_department", this.reputationDesForm.value['effected_department']);
-              fd.append("external_party", this.reputationDesForm.value['external_party']); // fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
+              fd.append("reputation_option", this.reputationDesForm.value['reputation_option'] ? this.reputationDesForm.value['reputation_option'] : '');
+              fd.append("individual_damage_value", this.reputationDesForm.value['individual_damage_value'] ? this.reputationDesForm.value['individual_damage_value'] : '');
+              fd.append("company_damage_value", this.reputationDesForm.value['company_damage_value'] ? this.reputationDesForm.value['company_damage_value'] : '');
+              fd.append("reputation_negative_effect", this.reputationDesForm.value['reputation_negative_effect'] ? this.reputationDesForm.value['reputation_negative_effect'] : '');
+              fd.append("effected_department", this.reputationDesForm.value['effected_department'] ? this.reputationDesForm.value['effected_department'] : '');
+              fd.append("external_party", this.reputationDesForm.value['external_party'] ? this.reputationDesForm.value['external_party'] : ''); // fd.append("name_of_witness", this.reputationDesForm.value['name_of_witness']);
 
               fd.append("name_of_witness", this.name_of_witness && this.name_of_witness.employee_id ? this.name_of_witness.employee_id : '');
               fd.append("other_witness_details", JSON.stringify(this.reputationDesForm.value['other_witness_details']));
-              fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident']); // required
-              //----------------------------------------------------------- Reputation -------------------------------------------------------------//
-              //------------------------------------------------------------ Security --------------------------------------------------------------//
+              fd.append("possible_outcome_incident", this.reputationDesForm.value['possible_outcome_incident'] ? this.reputationDesForm.value['possible_outcome_incident'] : ''); // required
+              //-------------------------------------------------------------- Reputation ---------------------------------------------------------------//
+              //--------------------------------------------------------------- Security ----------------------------------------------------------------//
 
-              fd.append("security_option", this.securityForm.value['security_option']);
+              fd.append("security_option", this.securityForm.value['security_option'] ? this.securityForm.value['security_option'] : '');
 
               if (this.securityForm.value['security_option'] == 'IT') {
-                fd.append("it_option_value", this.securityForm.value['it_option_value'].join(',')); // chexkbox and inner value
+                fd.append("it_option_value", this.securityForm.value['it_option_value'].length > 0 ? this.securityForm.value['it_option_value'].join(',') : ''); // chexkbox and inner value
               }
 
-              fd.append("what_has_been_stolen_item", this.securityForm.value['what_has_been_stolen_item']);
-              fd.append("approximate_value_of_stolen", this.securityForm.value['approximate_value_of_stolen']);
-              fd.append("what_is_the_specific_securities_incident", this.securityForm.value['what_is_the_specific_securities_incident']); //----------------------------------------------------------- Security ---------------------------------------------------------------//
-              //------------------------------------------------------------ Asset -----------------------------------------------------------------//
+              fd.append("what_has_been_stolen_item", this.securityForm.value['what_has_been_stolen_item'] ? this.securityForm.value['what_has_been_stolen_item'] : '');
+              fd.append("approximate_value_of_stolen", this.securityForm.value['approximate_value_of_stolen'] ? this.securityForm.value['approximate_value_of_stolen'] : '');
+              fd.append("what_is_the_specific_securities_incident", this.securityForm.value['what_is_the_specific_securities_incident'] ? this.securityForm.value['what_is_the_specific_securities_incident'] : ''); //---------------------------------------------------------------- Security----------------------------------------------------------------//
+              //----------------------------------------------------------------- Asset ----------------------------------------------------------------//
 
-              fd.append("asset_description", this.assetDescriptionForm.value['asset_description']); // required
+              fd.append("asset_description", this.assetDescriptionForm.value['asset_description'] ? this.assetDescriptionForm.value['asset_description'] : ''); // required
 
-              fd.append("asset_has_number", this.assetDescriptionForm.value['asset_has_number']);
+              fd.append("asset_has_number", this.assetDescriptionForm.value['asset_has_number'] ? this.assetDescriptionForm.value['asset_has_number'] : '');
 
               if (this.assetDescriptionForm.value['asset_has_number'] == 'Yes') {
-                fd.append("asset_number", this.assetDescriptionForm.value['asset_number']);
+                fd.append("asset_number", this.assetDescriptionForm.value['asset_number'] ? this.assetDescriptionForm.value['asset_number'] : '');
               }
 
-              fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage']); // required
+              fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage'] ? this.assetDescriptionForm.value['extent_of_damage'] : ''); // required
 
-              fd.append("extent_damage_image", JSON.stringify(this.damageImagesObject)); // extent_damage_image
-              //---------------------------------------------------------- Asset -----------------------------------------------------------------//
-              //--------------------------------------------------------- Report -----------------------------------------------------------------//
+              fd.append("extent_damage_image", this.damageImagesObject.length > 0 ? JSON.stringify(this.damageImagesObject) : ''); // extent_damage_image
+              //----------------------------------------------------------------- Asset -----------------------------------------------------------------//
+              //---------------------------------------------------------------- Report -----------------------------------------------------------------//
 
-              fd.append("report", this.reportForm.value['report']); //--------------------------------------------------------- Report ------------------------------------------------------------------//
+              fd.append("report", this.reportForm.value['report'] ? this.reportForm.value['report'] : ''); //---------------------------------------------------------------- Report -----------------------------------------------------------------//
 
               fd.append('id', this.incidentDetails.id);
               fd.append('user_id', userDetails.id);
@@ -1949,7 +1941,7 @@
             var formArray = this.classificationForm.get('classification_value');
 
             if (event.target.checked) {
-              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(event.target.value));
+              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(event.target.value));
               this.classificationList.find(function (ele) {
                 if (ele.val == event.target.value) {
                   ele.isChecked = true;
@@ -2002,7 +1994,7 @@
             var formArray = this.securityForm.get('it_option_value');
 
             if (event.target.checked) {
-              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(event.target.value));
+              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(event.target.value));
               this.itSecurityList.find(function (ele) {
                 if (ele.val == event.target.value) {
                   ele.isChecked = true;
@@ -2034,7 +2026,7 @@
             var formArray = this.reputationDesForm.get('reputation_option');
 
             if (event.target.checked) {
-              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(event.target.value));
+              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(event.target.value));
               this.reputationCheckBox.find(function (ele) {
                 if (ele.val == event.target.value) {
                   ele.isChecked = true;
@@ -2175,7 +2167,7 @@
             var formArray = this.reputationDesForm.get('effected_department');
 
             if (event.detail.checked) {
-              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControl(event.detail.value));
+              formArray.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(event.detail.value));
               this.departmentEffect.find(function (ele) {
                 console.log('departmentEffect ele', ele);
 
@@ -2287,25 +2279,25 @@
         }, {
           type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_7__.SharedService
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__.ModalController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ModalController
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__.ActionSheetController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ActionSheetController
         }, {
           type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera
         }, {
-          type: _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder
+          type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.NavController
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_13__.Platform
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.Platform
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_14__.ActivatedRoute
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_13__.ActivatedRoute
         }, {
           type: src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_8__.LoadingService
         }];
       };
 
-      _IncidentFormEditPage = (0, tslib__WEBPACK_IMPORTED_MODULE_12__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_15__.Component)({
+      _IncidentFormEditPage = (0, tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_14__.Component)({
         selector: 'app-incident-form-edit',
         template: _raw_loader_incident_form_edit_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_incident_form_edit_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]

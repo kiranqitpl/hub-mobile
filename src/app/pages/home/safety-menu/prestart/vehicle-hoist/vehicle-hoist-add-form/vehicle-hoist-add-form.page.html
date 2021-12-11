@@ -1,24 +1,21 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
+  <!-- <app-header [pageName]="pName"></app-header> -->
+  <div class="toolbar">
+    <ion-text *ngIf="url_id == ''">Vehicle Hoist</ion-text>
+    <ion-text *ngIf="url_id != ''">Edit Vehicle Hoist</ion-text>
+    <ion-buttons class="back">
+      <ion-button (click)="navCtrl.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
   <div class="container" #target>
     <ion-card [formGroup]="vehicleHoistForm" (ionChange)="onProgressBar($event)">
-
-      <!-- <ion-grid class="progress-bar">
-        <ion-row>
-          <ion-col size="10.5">
-            Form progress bar
-          </ion-col>
-          <ion-col size="1.5">
-            {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="12">
-            <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
 
       <ion-grid>
         <ion-radio-group formControlName="vehicle_host_no" (ionChange)="onValueChange($event, 'vehicle_host_no')">
@@ -740,7 +737,6 @@
         </ion-grid>
       </ion-grid>
 
-
       <ion-grid class="progress-bar">
         <ion-row>
           <ion-col size="10.5">
@@ -757,11 +753,11 @@
         </ion-row>
       </ion-grid>
 
-      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit()"
+      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
         class="btn" [disabled]="vehicleHoistForm.invalid">SUBMIT
       </ion-button>
 
-      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit()"
+      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
         class="btn" [disabled]="vehicleHoistForm.invalid">Update
       </ion-button>
 

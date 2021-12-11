@@ -1,5 +1,21 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
+  <!-- <app-header [pageName]="pName"></app-header> -->
+
+  <div class="toolbar">
+    <ion-text *ngIf="url_id == ''">Crane</ion-text>
+    <ion-text *ngIf="url_id != ''">Edit Crane</ion-text>
+    <ion-buttons class="back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
   <div class="container" #target>
     <ion-card>
       <ion-grid [formGroup]="craneForm" (ionChange)="onProgressBar($event)">
@@ -321,7 +337,6 @@
             </ion-textarea>
           </ion-item>
         </ion-grid>
-
       </ion-grid>
 
       <ion-grid class="progress-bar">
@@ -340,11 +355,11 @@
         </ion-row>
       </ion-grid>
 
-      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit()"
+      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
         class="btn" [disabled]="craneForm.invalid">SUBMIT
       </ion-button>
 
-      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit()"
+      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
         class="btn" [disabled]="craneForm.invalid">Update
       </ion-button>
 

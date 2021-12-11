@@ -35,13 +35,13 @@ export class NotificationPage implements OnInit {
     // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
     this.globalService.presentLoading();
     this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
-      console.log('onNotificationLoad', result);
+      console.log('result', result);
       if (result && result['row_count'] > 0) {
         this.notificationData = result['data']
       } else {
         this.notificationData = [];
       }
-      // console.log('this.notificationData ', this.notificationData);
+      console.log('this.notificationData ', this.notificationData);
       this.globalService.dismissLoading();
     }), error => {
       this.globalService.dismissLoading();
@@ -98,9 +98,9 @@ export class NotificationPage implements OnInit {
   //----------------------------------- Re-direct on detail page --------------------------------------------------------//
 
   onNotificationDetaliPage(rowID, formId, formType, isSeen) {
+
     if (formType == this.globalService.formType_user) {
-      // this.nav.navigateForward('view/' + formId);
-      this.nav.navigateForward('incident-details/' + formId)
+      this.nav.navigateRoot("/home/safety-menu/incident-details/" + formId);
     } else if (formType == this.globalService.formType_investigator) {
       this.nav.navigateForward('investigation-view/' + formId);
     }

@@ -235,7 +235,8 @@ let ManagersPage = class ManagersPage {
             }
         });
         if (value == false && event != '') {
-            this.global.getData("user/getallemployee/?term" + event.detail.value).subscribe((res) => {
+            this.newList.next([]);
+            this.global.getData("user/getallemployee/?term=" + event.detail.value).subscribe((res) => {
                 if (res && res.data && res.data.length > 0) {
                     res.data.unshift({ full_name: "Other", employee_id: '0' });
                     this.newList.next(res.data);

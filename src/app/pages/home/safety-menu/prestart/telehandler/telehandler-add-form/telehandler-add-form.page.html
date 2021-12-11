@@ -1,22 +1,22 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
+  <!-- <app-header [pageName]="pName"></app-header> -->
+  <div class="toolbar">
+    <ion-text *ngIf="url_id == ''">Telehandler</ion-text>
+    <ion-text *ngIf="url_id != ''">Edit Telehandler</ion-text>
+    <ion-buttons class="back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
   <div class="container" #target>
     <ion-card>
-      <!-- <ion-grid class="progress-bar">
-        <ion-row>
-          <ion-col size="10.5">
-            Form progress bar
-          </ion-col>
-          <ion-col size="1.5">
-            {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
       <ion-grid [formGroup]="teleHandlerForm" (ionChange)="onProgressBar($event)">
 
         <ion-radio-group formControlName="competency" (ionChange)="onCompetency($event)">
@@ -2599,10 +2599,10 @@
           </ion-row>
         </ion-grid>
 
-        <ion-button *ngIf="url_id == '' && teleHandlerForm.invalid == false" (click)="onSubmit()" class="btn">SUBMIT
+        <ion-button *ngIf="url_id == '' && teleHandlerForm.invalid == false" (click)="onSubmit(1)" class="btn">SUBMIT
         </ion-button>
 
-        <ion-button *ngIf="url_id != '' && teleHandlerForm.invalid == false " (click)="onSubmit()" class="btn">Update
+        <ion-button *ngIf="url_id != '' && teleHandlerForm.invalid == false " (click)="onSubmit(1)" class="btn">Update
         </ion-button>
 
         <!-- <ion-button *ngIf="url_id == ''" (click)="onSubmit()"

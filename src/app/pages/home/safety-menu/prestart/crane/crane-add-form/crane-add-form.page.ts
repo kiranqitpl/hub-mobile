@@ -20,7 +20,7 @@ export class CraneAddFormPage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
   @ViewChild('target') myScrollContainer: ElementRef
 
-  pName: String = 'Crane';
+  // pName: String = 'Crane';
   craneNoList = [
     {
       id: 'OHC01',
@@ -108,16 +108,17 @@ export class CraneAddFormPage implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(complete_status) {
     this.loadingService.presentLoading();
     let formData = {};
     formData = this.craneForm.value;
     formData['user_id'] = this.loggedInUser.id;
+    formData['complete_status'] = complete_status;
 
     if (this.url_id != '' && this.url_id != undefined) {
       formData['id'] = this.craneData['id'];
     }
-    let data ={formData : formData}
+    let data = { formData: formData };
     this.globalService.postData('crane/submit', data).subscribe(result => {
       if (result && result['status']) {
         this.toastService.toast(result['message'], 'success');

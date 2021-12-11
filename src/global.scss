@@ -143,6 +143,11 @@
 ion-content {
     // font-family: pop-medium;
     font-family: "mon-bold";
+    .saveBtn {
+        position: absolute;
+        right: 0;
+        top: 30px;
+      }
     .toolbar {
         background-color: var(--theme-blue-color);
         align-items: center;

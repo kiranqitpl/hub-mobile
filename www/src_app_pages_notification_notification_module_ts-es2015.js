@@ -134,14 +134,14 @@ let NotificationPage = class NotificationPage {
             // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
             this.globalService.presentLoading();
             this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
-                console.log('onNotificationLoad', result);
+                console.log('result', result);
                 if (result && result['row_count'] > 0) {
                     this.notificationData = result['data'];
                 }
                 else {
                     this.notificationData = [];
                 }
-                // console.log('this.notificationData ', this.notificationData);
+                console.log('this.notificationData ', this.notificationData);
                 this.globalService.dismissLoading();
             }), error => {
                 this.globalService.dismissLoading();
@@ -193,8 +193,7 @@ let NotificationPage = class NotificationPage {
     //----------------------------------- Re-direct on detail page --------------------------------------------------------//
     onNotificationDetaliPage(rowID, formId, formType, isSeen) {
         if (formType == this.globalService.formType_user) {
-            // this.nav.navigateForward('view/' + formId);
-            this.nav.navigateForward('incident-details/' + formId);
+            this.nav.navigateRoot("/home/safety-menu/incident-details/" + formId);
         }
         else if (formType == this.globalService.formType_investigator) {
             this.nav.navigateForward('investigation-view/' + formId);
@@ -371,7 +370,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n    \n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n  </div>\n</ion-content>");
 
 /***/ })
 
