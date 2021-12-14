@@ -164,61 +164,65 @@ export class VehicleHoistAddFormPage implements OnInit {
     }
   }
 
-  validation() {
-    // if (this.vehicleHoistForm.valid) {
-    if ((this.vehicleHoistForm.value['inspection_certificate'] == 'Faulty' && this.vehicleHoistForm.value['inspection_certificate_comment'] == '') ||
-      (this.vehicleHoistForm.value['maintenance_instructions'] == 'Faulty' && this.vehicleHoistForm.value['maintenance_instructions_comment'] == '') ||
-      (this.vehicleHoistForm.value['data_plate'] == 'Faulty' && this.vehicleHoistForm.value['data_plate_comment'] == '') ||
-      (this.vehicleHoistForm.value['safty_devices'] == 'Faulty' && this.vehicleHoistForm.value['safty_devices_comment'] == '') ||
-      (this.vehicleHoistForm.value['locks_latches'] == 'Faulty' && this.vehicleHoistForm.value['locks_latches_comment'] == '') ||
-      (this.vehicleHoistForm.value['rubber_pad'] == 'Faulty' && this.vehicleHoistForm.value['rubber_pad_comment'] == '') ||
-      (this.vehicleHoistForm.value['safty_gaurds'] == 'Faulty' && this.vehicleHoistForm.value['safty_gaurds_comment'] == '') ||
-      (this.vehicleHoistForm.value['hydraulic_connections'] == 'Faulty' && this.vehicleHoistForm.value['hydraulic_connections_comment'] == '') ||
-      (this.vehicleHoistForm.value['chain_cable_connection'] == 'Faulty' && this.vehicleHoistForm.value['chain_cable_connection_comment'] == '') ||
-      (this.vehicleHoistForm.value['frayed_cables'] == 'Faulty' && this.vehicleHoistForm.value['frayed_cables_comment'] == '') ||
-      (this.vehicleHoistForm.value['snap_rings'] == 'Faulty' && this.vehicleHoistForm.value['snap_rings_comment'] == '') ||
-      (this.vehicleHoistForm.value['bolts_nuts'] == 'Faulty' && this.vehicleHoistForm.value['bolts_nuts_comment'] == '') ||
-      (this.vehicleHoistForm.value['electrical_switch'] == 'Faulty' && this.vehicleHoistForm.value['electrical_switch_comment'] == '') ||
-      (this.vehicleHoistForm.value['hoist_work_area'] == 'Faulty' && this.vehicleHoistForm.value['hoist_work_area_comment'] == '') ||
-      (this.vehicleHoistForm.value['anchor_bolts'] == 'Faulty' && this.vehicleHoistForm.value['anchor_bolts_comment'] == '') ||
-      (this.vehicleHoistForm.value['swing_arm'] == 'Faulty' && this.vehicleHoistForm.value['swing_arm_comment'] == '') ||
-      (this.vehicleHoistForm.value['hoist_controls'] == 'Faulty' && this.vehicleHoistForm.value['hoist_controls_comment'] == '')
-    ) {
-      this.toastService.toast('Please fill all required fields.', 'danger');
-      return;
+  validation(complete_status) {
+    if (this.vehicleHoistForm.valid) {
+      this.isSubmitted = true;
+      if ((this.vehicleHoistForm.value['inspection_certificate'] == 'Faulty' && this.vehicleHoistForm.value['inspection_certificate_comment'] == '') ||
+        (this.vehicleHoistForm.value['maintenance_instructions'] == 'Faulty' && this.vehicleHoistForm.value['maintenance_instructions_comment'] == '') ||
+        (this.vehicleHoistForm.value['data_plate'] == 'Faulty' && this.vehicleHoistForm.value['data_plate_comment'] == '') ||
+        (this.vehicleHoistForm.value['safty_devices'] == 'Faulty' && this.vehicleHoistForm.value['safty_devices_comment'] == '') ||
+        (this.vehicleHoistForm.value['locks_latches'] == 'Faulty' && this.vehicleHoistForm.value['locks_latches_comment'] == '') ||
+        (this.vehicleHoistForm.value['rubber_pad'] == 'Faulty' && this.vehicleHoistForm.value['rubber_pad_comment'] == '') ||
+        (this.vehicleHoistForm.value['safty_gaurds'] == 'Faulty' && this.vehicleHoistForm.value['safty_gaurds_comment'] == '') ||
+        (this.vehicleHoistForm.value['hydraulic_connections'] == 'Faulty' && this.vehicleHoistForm.value['hydraulic_connections_comment'] == '') ||
+        (this.vehicleHoistForm.value['chain_cable_connection'] == 'Faulty' && this.vehicleHoistForm.value['chain_cable_connection_comment'] == '') ||
+        (this.vehicleHoistForm.value['frayed_cables'] == 'Faulty' && this.vehicleHoistForm.value['frayed_cables_comment'] == '') ||
+        (this.vehicleHoistForm.value['snap_rings'] == 'Faulty' && this.vehicleHoistForm.value['snap_rings_comment'] == '') ||
+        (this.vehicleHoistForm.value['bolts_nuts'] == 'Faulty' && this.vehicleHoistForm.value['bolts_nuts_comment'] == '') ||
+        (this.vehicleHoistForm.value['electrical_switch'] == 'Faulty' && this.vehicleHoistForm.value['electrical_switch_comment'] == '') ||
+        (this.vehicleHoistForm.value['hoist_work_area'] == 'Faulty' && this.vehicleHoistForm.value['hoist_work_area_comment'] == '') ||
+        (this.vehicleHoistForm.value['anchor_bolts'] == 'Faulty' && this.vehicleHoistForm.value['anchor_bolts_comment'] == '') ||
+        (this.vehicleHoistForm.value['swing_arm'] == 'Faulty' && this.vehicleHoistForm.value['swing_arm_comment'] == '') ||
+        (this.vehicleHoistForm.value['hoist_controls'] == 'Faulty' && this.vehicleHoistForm.value['hoist_controls_comment'] == '')
+      ) {
+        this.toastService.toast('Please fill all required fields.', 'danger');
+        return;
+      }
+      this.submitDataInApi(complete_status);
     }
-    // }
   }
 
   onSubmit(complete_status) {
-    this.isSubmitted = true;
     if (complete_status == 1) {
-      this.validation();
+      this.validation(complete_status);
     } else {
-      this.loadingService.presentLoading();
-      let formData = {};
-      formData = this.vehicleHoistForm.value;
-      formData['user_id'] = this.loggedInUser.id;
-      formData['complete_status'] = complete_status;
-
-      let data = { formData: formData };
-      if (this.url_id != '' && this.url_id != undefined) {
-        formData['id'] = this.vehicleHoistSingleRecord['id'];
-      }
-      this.globalService.postData('prestart_vehicle/add_prestart_vehicle', data).subscribe(result => {
-        if (result && result['status']) {
-          this.navCtrl.back();
-          this.toastService.toast(result['message'], 'success');
-        } else {
-          this.toastService.toast(result['message'], 'danger');
-        }
-        this.loadingService.dismissLoading();
-      }, error => {
-        this.loadingService.dismissLoading();
-        console.log('error', error);
-      })
+      this.submitDataInApi(complete_status);
     }
+  }
 
+  submitDataInApi(complete_status) {
+    // this.loadingService.presentLoading();
+    let formData = {};
+    formData = this.vehicleHoistForm.value;
+    formData['user_id'] = this.loggedInUser.id;
+    formData['complete_status'] = complete_status;
+
+    let data = { formData: formData };
+    if (this.url_id != '' && this.url_id != undefined) {
+      formData['id'] = this.vehicleHoistSingleRecord['id'];
+    }
+    this.globalService.postData('prestart_vehicle/add_prestart_vehicle', data).subscribe(result => {
+      if (result && result['status']) {
+        this.navCtrl.back();
+        this.toastService.toast(result['message'], 'success');
+      } else {
+        this.toastService.toast(result['message'], 'danger');
+      }
+      // this.loadingService.dismissLoading();
+    }, error => {
+      // this.loadingService.dismissLoading();
+      console.log('error', error);
+    })
   }
 
   // onSubmit() {
@@ -288,15 +292,13 @@ export class VehicleHoistAddFormPage implements OnInit {
   onProgressBar(event) {
     let count = 0;
     let formControlList = [];
-    Object.keys(this.vehicleHoistForm.controls).map(ele => formControlList.push(ele));
+    Object.values(this.vehicleHoistForm.value).map(ele => formControlList.push(ele));
     formControlList.forEach(key => {
-      if (this.vehicleHoistForm.value[key] && this.vehicleHoistForm.value[key] != '' && this.vehicleHoistForm.value[key] == 'OK') {
-        count = (count + 2)
-      } else if (this.vehicleHoistForm.value[key] && this.vehicleHoistForm.value[key] != '' && this.vehicleHoistForm.value[key] != 'OK') {
+      if (key != '') {
         count = ++count;
       }
     })
-    this.form_percent = ((1 / Object.keys(this.vehicleHoistForm.controls).length) * count);
+    this.form_percent = ((1 / Object.values(this.vehicleHoistForm.value).length) * count);
   }
 
   loadData(id) {

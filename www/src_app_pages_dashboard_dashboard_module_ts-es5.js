@@ -239,7 +239,7 @@
           this.global = global;
           this.sharedService = sharedService;
           this.menu = [{
-            menuName: "Submitted Form",
+            menuName: "Submitted Forms",
             route: "/incident-form-list"
           }, {
             menuName: "Notification",
@@ -362,9 +362,9 @@
       /* harmony import */
 
 
-      var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @ionic-native/Camera/ngx */
-      67871);
+      var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @ionic-native/camera/ngx */
+      84267);
 
       var _SharedService = /*#__PURE__*/function () {
         function SharedService(globalService, actionSheetController, camera) {
@@ -506,7 +506,7 @@
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController
         }, {
-          type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera
+          type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera
         }];
       };
 
@@ -548,7 +548,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n\n\n  <!-- <ion-grid class=\"container\" >\n    <ion-row>\n      <ion-col class=\"addForm\" (click)=\"onAddForm()\" size=\"4\">\n        <img src=\"{{imageUrl + 'form.png'}}\" />\n        <p class=\" addF\">ADD FORM</p>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let tabVal of menu\">\n      <ion-col size=\"4\">\n        <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n          {{tabVal.menuName}}\n          <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n            color=\"danger\">\n            {{sharedService.notViewNotiCount}}</ion-badge>\n        </ion-button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col size=\"4\">\n        <ion-button class=\"btn logouts\" (click)=\"onLogOut()\"> Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid> -->\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn\">\n      <a href=\"https://logistics-devel.horts.com.au/index.php\" target=\"_blank\"> Test url </a>\n    </ion-button>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n\n\n  <!-- <ion-grid class=\"container\" >\n    <ion-row>\n      <ion-col class=\"addForm\" (click)=\"onAddForm()\" size=\"4\">\n        <img src=\"{{imageUrl + 'form.png'}}\" />\n        <p class=\" addF\">ADD FORM</p>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let tabVal of menu\">\n      <ion-col size=\"4\">\n        <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n          {{tabVal.menuName}}\n          <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n            color=\"danger\">\n            {{sharedService.notViewNotiCount}}</ion-badge>\n        </ion-button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col size=\"4\">\n        <ion-button class=\"btn logouts\" (click)=\"onLogOut()\"> Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid> -->\n</ion-content>";
       /***/
     }
   }]);

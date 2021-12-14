@@ -1,7 +1,7 @@
 import { Injectable, } from '@angular/core';
 import { GlobalService } from '../global-service/global.service';
 import { ActionSheetController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Injectable({
   providedIn: 'root'

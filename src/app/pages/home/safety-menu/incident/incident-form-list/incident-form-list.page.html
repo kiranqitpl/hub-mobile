@@ -8,21 +8,23 @@
           <ion-item lines="none">
             <ion-label>
 
-              <ion-row>
+              <!-- <ion-row>
                 <ion-col size="auto">
                   <h2>Id :</h2>
                 </ion-col>
                 <ion-col>
                   <h6> {{rowData.Id}} </h6>
                 </ion-col>
-              </ion-row>
+              </ion-row> -->
 
               <ion-row>
                 <ion-col size="auto">
                   <h2>Form :</h2>
                 </ion-col>
                 <ion-col>
-                  <h6> {{rowData.Form}} </h6>
+                  <ion-text color="primary">
+                    {{rowData.Form}}
+                  </ion-text>
                 </ion-col>
               </ion-row>
 
@@ -104,6 +106,9 @@
       </ngx-datatable-column>
 
       <ngx-datatable-column name="Form" prop="Form" [minWidth]="200" [resizeable]="true">
+        <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
+          <ion-text color="primary">{{value}}</ion-text>
+        </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column name="Date" prop="Date" [minWidth]="180" [resizeable]="true">
@@ -139,7 +144,8 @@
       </ngx-datatable-column>
 
       <div class="d-flex justify-content-center">
-        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next" (pageChange)="loadData($event, '', 'web')">
+        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
+          (pageChange)="loadData($event, '', 'web')">
         </pagination-controls>
       </div>
     </ngx-datatable>

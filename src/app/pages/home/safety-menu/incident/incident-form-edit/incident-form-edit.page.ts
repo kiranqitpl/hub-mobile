@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { NavController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 
 import { environment } from 'src/environments/environment';

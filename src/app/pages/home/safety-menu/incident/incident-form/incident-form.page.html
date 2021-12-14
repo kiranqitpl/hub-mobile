@@ -128,7 +128,7 @@
                 </ion-col>
                 <ion-col size="1">
                   <p class="question">
-                    <ion-icon name="close" (click)="onImageDelete(i, 'Photography')"></ion-icon>
+                    <ion-icon name="close" (click)="onImageDelete(i, 'photoGraphy')"></ion-icon>
                   </p>
                 </ion-col>
               </ion-row>
@@ -235,7 +235,7 @@
               <ion-button class="camera" expand="block" (click)="onAlcoholImage($event, 1)">Upload Image</ion-button>
             </div>
             <div *ngIf="globalService.platform === 'browser'">
-              <input type='file' value="incident_description_photo" multiple (change)="onAlcoholImage($event, 2)">
+              <input type='file' value="alcohol_test_image" multiple (change)="onAlcoholImage($event, 2)">
             </div>
 
             <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="alcohalImages.length > 0">
@@ -247,7 +247,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i ,'Alcohal Test')"></ion-icon>
+                        <ion-icon name="close" (click)="onImageDelete(i ,'alcohalImages')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -309,7 +309,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i,'Drug Test')"></ion-icon>
+                        <ion-icon name="close" (click)="onImageDelete(i,'drugTestImages')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -374,7 +374,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i,'Return to Alternate Duties')"></ion-icon>
+                        <ion-icon name="close" (click)="onImageDelete(i,'alterDutyImages')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -623,7 +623,7 @@
                 </ion-col>
                 <ion-col size="1">
                   <p class="question">
-                    <ion-icon name="close" (click)="onImageDelete(i, 'Asset')">
+                    <ion-icon name="close" (click)="onImageDelete(i, 'damageImages')">
                     </ion-icon>
                   </p>
                 </ion-col>
@@ -704,7 +704,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i,'Chemical Image')">
+                        <ion-icon name="close" (click)="onImageDelete(i,'chemicalImages')">
                         </ion-icon>
                       </p>
                     </ion-col>

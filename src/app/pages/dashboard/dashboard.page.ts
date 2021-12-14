@@ -12,11 +12,11 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
 export class DashboardPage implements OnInit {
   menu: any = [
     {
-      menuName: "Submitted Form", route: "/incident-form-list"
+      menuName: "Submitted Forms", route: "/incident-form-list"
     },
     {
       menuName: "Notification", route: "/notification"
-    },
+    }
   ];
 
   type: any = environment.allType;

@@ -471,9 +471,9 @@
       /* harmony import */
 
 
-      var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! @ionic-native/Camera/ngx */
-      67871);
+      var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @ionic-native/camera/ngx */
+      84267);
       /* harmony import */
 
 
@@ -525,7 +525,7 @@
           useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicRouteStrategy
         }, // StatusBar,
         // SplashScreen,
-        _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64, _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP, _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__.HeaderComponent],
+        _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera, _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File, _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64, _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP, _shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_6__.HeaderComponent],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent]
       })], _AppModule);
       /***/

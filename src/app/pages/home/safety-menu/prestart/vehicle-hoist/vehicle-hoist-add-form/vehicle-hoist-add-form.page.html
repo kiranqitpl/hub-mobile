@@ -753,11 +753,11 @@
         </ion-row>
       </ion-grid>
 
-      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
+      <ion-button *ngIf="url_id == '' && ((form_percent * 100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
         class="btn" [disabled]="vehicleHoistForm.invalid">SUBMIT
       </ion-button>
 
-      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
+      <ion-button *ngIf="url_id != ''  && ((form_percent * 100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
         class="btn" [disabled]="vehicleHoistForm.invalid">Update
       </ion-button>
 

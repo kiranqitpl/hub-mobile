@@ -16,8 +16,8 @@
   </div>
 
   <div class="container" #target>
-    <ion-card>
-      <ion-grid [formGroup]="teleHandlerForm" (ionChange)="onProgressBar($event)">
+    <ion-card (ionChange)="onProgressBar($event)">
+      <ion-grid [formGroup]="teleHandlerForm">
 
         <ion-radio-group formControlName="competency" (ionChange)="onCompetency($event)">
           <ion-row>
@@ -95,8 +95,7 @@
 
             <ion-row *ngIf="globalService.platform === 'cordova'">
               <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'data_plate_image')">Upload
-                Image
-              </ion-button>
+                Image</ion-button>
             </ion-row>
 
             <div *ngIf="globalService.platform === 'browser'">
@@ -110,25 +109,22 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['data_plate_image'] !=''">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="data_plate_image.length > 0">
+              <ion-slide *ngFor="let dataPlateImage of data_plate_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['data_plate_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['data_plate_image'])">
+                      <img [src]="dataPlateImage" tappable (click)="onOpenPreview(dataPlateImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('data_plate_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'data_plate_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-slide>
             </ion-slides>
-
           </div>
         </div>
 
@@ -183,24 +179,23 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['engine_oil_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="engine_oil_image.length > 0">
+              <ion-slide *ngFor="let engineOilImage of engine_oil_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['engine_oil_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['engine_oil_image'])">
+                      <img [src]="engineOilImage" tappable (click)="onOpenPreview(engineOilImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('engine_oil_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'engine_oil_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-slide>
             </ion-slides>
+
           </div>
         </div>
 
@@ -256,24 +251,23 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['hydraulic_oil_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="hydraulic_oil_image.length > 0">
+              <ion-slide *ngFor="let hydraulicOilImage of hydraulic_oil_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['hydraulic_oil_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['hydraulic_oil_image'])">
+                      <img [src]="hydraulicOilImage" tappable (click)="onOpenPreview(hydraulicOilImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('hydraulic_oil_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'hydraulic_oil_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-slide>
             </ion-slides>
+
           </div>
         </div>
 
@@ -360,18 +354,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['equipment_inspect_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="equipment_inspect_image.length > 0">
+              <ion-slide *ngFor="let equipmentInspectImage of equipment_inspect_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['equipment_inspect_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['equipment_inspect_image'])">
+                      <img [src]="equipmentInspectImage" tappable (click)="onOpenPreview(equipmentInspectImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('equipment_inspect_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'equipment_inspect_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -434,24 +426,23 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['coolant_level_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="coolant_level_image.length > 0">
+              <ion-slide *ngFor="let coolantLevelImage of coolant_level_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['coolant_level_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['coolant_level_image'])">
+                      <img [src]="coolantLevelImage" tappable (click)="onOpenPreview(coolantLevelImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('coolant_level_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'coolant_level_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-slide>
             </ion-slides>
+
           </div>
         </div>
 
@@ -509,25 +500,23 @@
                 (change)="onSelectImage($event, 2, 'belts_and_hoses_image')">
               </ion-input>
             </div>
-
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['belts_and_hoses_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="belts_and_hoses_image.length > 0">
+              <ion-slide *ngFor="let beltsAndHosesImage of belts_and_hoses_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['belts_and_hoses_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['belts_and_hoses_image'])">
+                      <img [src]="beltsAndHosesImage" tappable (click)="onOpenPreview(beltsAndHosesImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('belts_and_hoses_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'belts_and_hoses_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-slide>
             </ion-slides>
+
           </div>
         </div>
 
@@ -585,19 +574,16 @@
                 (change)="onSelectImage($event, 2, 'wheels_tyres_image')">
               </ion-input>
             </div>
-
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['wheels_tyres_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="wheels_tyres_image.length > 0">
+              <ion-slide *ngFor="let wheelsTyresImage of wheels_tyres_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['wheels_tyres_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['wheels_tyres_image'])">
+                      <img [src]="wheelsTyresImage" tappable (click)="onOpenPreview(wheelsTyresImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('wheels_tyres_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'wheels_tyres_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -664,18 +650,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['fire_extinguisher_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="fire_extinguisher_image.length > 0">
+              <ion-slide *ngFor="let fireExtinguisherImage of fire_extinguisher_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['fire_extinguisher_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['fire_extinguisher_image'])">
+                      <img [src]="fireExtinguisherImage" tappable (click)="onOpenPreview(fireExtinguisherImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('fire_extinguisher_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'fire_extinguisher_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -739,18 +723,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['fuel_flash_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="fuel_flash_image.length > 0">
+              <ion-slide *ngFor="let fuelFlashImage of fuel_flash_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['fuel_flash_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['fuel_flash_image'])">
+                      <img [src]="fuelFlashImage" tappable (click)="onOpenPreview(fuelFlashImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('fuel_flash_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'fuel_flash_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -819,18 +801,17 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['hydraulics_functional_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="hydraulics_functional_image.length > 0">
+              <ion-slide *ngFor="let hydraulicsFunctionalImage of hydraulics_functional_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['hydraulics_functional_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['hydraulics_functional_image'])">
+                      <img [src]="hydraulicsFunctionalImage" tappable
+                        (click)="onOpenPreview(hydraulicsFunctionalImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('hydraulics_functional_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'hydraulics_functional_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -895,18 +876,17 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['lift_arms_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="lift_arms_image.length > 0">
+              <ion-slide *ngFor="let liftArmsImage of lift_arms_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['lift_arms_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['lift_arms_image'])">
+                      <img [src]="liftArmsImage" tappable
+                        (click)="onOpenPreview(liftArmsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('lift_arms_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'lift_arms_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -920,7 +900,6 @@
           <ion-row>
             In place / Correctly Tensioned
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="chain_hose" (ionChange)="onRadioButtonChange($event, 'chain_hose')">
             <ion-row>
               <ion-col size="12">
@@ -940,7 +919,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.chain_hose.errors?.required">
             Please select value.
           </ion-item>
@@ -975,19 +953,16 @@
                 (change)="onSelectImage($event, 2, 'chain_hose_image')">
               </ion-input>
             </div>
-
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['chain_hose_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="chain_hose_image.length > 0">
+              <ion-slide *ngFor="let chainHoseImage of chain_hose_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['chain_hose_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['chain_hose_image'])">
+                      <img [src]="chainHoseImage" tappable (click)="onOpenPreview(chainHoseImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('chain_hose_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'chain_hose_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1001,7 +976,6 @@
           <ion-row>
             <ion-col> In place</ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="cap_bolts" (ionChange)="onRadioButtonChange($event, 'cap_bolts')">
             <ion-row>
               <ion-col size="12">
@@ -1021,7 +995,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.cap_bolts.errors?.required">
             Please select value.
           </ion-item>
@@ -1057,18 +1030,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['cap_bolts_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="cap_bolts_image.length > 0">
+              <ion-slide *ngFor="let capBoltsImage of cap_bolts_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['cap_bolts_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['cap_bolts_image'])">
+                      <img [src]="capBoltsImage" tappable (click)="onOpenPreview(capBoltsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('cap_bolts_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'cap_bolts_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1082,7 +1053,6 @@
           <ion-row>
             <ion-col size="12">In place and secure</ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="safety_stops" (ionChange)="onRadioButtonChange($event, 'safety_stops')">
             <ion-row>
               <ion-col size="12">
@@ -1102,7 +1072,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.safety_stops.errors?.required">
             Please select value.
           </ion-item>
@@ -1138,18 +1107,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['safety_stops_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="safety_stops_image.length > 0">
+              <ion-slide *ngFor="let safetyStopsImage of safety_stops_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['safety_stops_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['safety_stops_image'])">
+                      <img [src]="safetyStopsImage" tappable (click)="onOpenPreview(safetyStopsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('safety_stops_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'safety_stops_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1163,7 +1130,6 @@
           <ion-row>
             <ion-col size="12"> In place</ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="forks" (ionChange)="onRadioButtonChange($event, 'forks')">
             <ion-row>
               <ion-col size="12">
@@ -1183,7 +1149,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.forks.errors?.required">
             Please select value.
           </ion-item>
@@ -1218,19 +1183,16 @@
                 (change)="onSelectImage($event, 2, 'forks_image')">
               </ion-input>
             </div>
-
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['forks_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="forks_image.length > 0">
+              <ion-slide *ngFor="let forksImage of forks_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['forks_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['forks_image'])">
+                      <img [src]="forksImage" tappable (click)="onOpenPreview(forksImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('forks_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'forks_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1244,7 +1206,6 @@
           <ion-row>
             <ion-col size="12"> Condition / Tips Even</ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
 
           <ion-radio-group formControlName="overhead_guards"
             (ionChange)="onRadioButtonChange($event, 'overhead_guards')">
@@ -1267,7 +1228,6 @@
             </ion-row>
           </ion-radio-group>
 
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.overhead_guards.errors?.required">
             Please select value.
           </ion-item>
@@ -1304,18 +1264,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['overhead_guards_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="overhead_guards_image.length > 0">
+              <ion-slide *ngFor="let overheadGuardsImage of overhead_guards_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['overhead_guards_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['overhead_guards_image'])">
+                      <img [src]="overheadGuardsImage" tappable (click)="onOpenPreview(overheadGuardsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('overhead_guards_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'overhead_guards_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1331,7 +1289,6 @@
               In place / Condition
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="counterweight" (ionChange)="onRadioButtonChange($event, 'counterweight')">
             <ion-row>
               <ion-col size="12">
@@ -1351,7 +1308,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.counterweight.errors?.required">
             Please select value.
           </ion-item>
@@ -1388,18 +1344,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['counterweight_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="counterweight_image.length > 0">
+              <ion-slide *ngFor="let counterweightImage of counterweight_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['counterweight_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['counterweight_image'])">
+                      <img [src]="counterweightImage" tappable (click)="onOpenPreview(counterweightImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('counterweight_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'counterweight_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1415,7 +1369,6 @@
               Condition / Leaks
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="engine_bay_components"
             (ionChange)="onRadioButtonChange($event, 'engine_bay_components')">
             <ion-row>
@@ -1436,7 +1389,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error"
             *ngIf="isSubmitted && errorControls.engine_bay_components.errors?.required">
             Please select value.
@@ -1476,18 +1428,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['engine_bay_components_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="engine_bay_components_image.length > 0">
+              <ion-slide *ngFor="let engineBayComponentsImage of engine_bay_components_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['engine_bay_components_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['engine_bay_components_image'])">
+                      <img [src]="engineBayComponentsImage" tappable (click)="onOpenPreview(engineBayComponentsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('engine_bay_components_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'engine_bay_components_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1503,7 +1453,6 @@
               Operating
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="horn" (ionChange)="onRadioButtonChange($event, 'horn')">
             <ion-row>
               <ion-col size="12">
@@ -1523,7 +1472,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.horn.errors?.required">
             Please select value.
           </ion-item>
@@ -1559,17 +1507,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="teleHandlerForm.value['horn_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="horn_image.length > 0">
+              <ion-slide *ngFor="let hornImage of horn_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['horn_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['horn_image'])">
+                      <img [src]="hornImage" tappable (click)="onOpenPreview(hornImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('horn_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'horn_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1581,7 +1528,6 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['horn'] != ''">
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="audible" (ionChange)="onRadioButtonChange($event, 'audible')">
             <ion-row>
               <ion-col size="12">
@@ -1601,7 +1547,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.audible.errors?.required">
             Please select value.
           </ion-item>
@@ -1637,18 +1582,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['audible_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="audible_image.length > 0">
+              <ion-slide *ngFor="let audibleImage of audible_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['audible_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['audible_image'])">
+                      <img [src]="audibleImage" tappable (click)="onOpenPreview(audibleImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('audible_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'audible_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1659,7 +1602,6 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['audible'] != ''">
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="headlights" (ionChange)="onRadioButtonChange($event, 'headlights')">
             <ion-row>
               <ion-col size="12">
@@ -1679,7 +1621,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.headlights.errors?.required">
             Please select value.
           </ion-item>
@@ -1715,18 +1656,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['headlights_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="headlights_image.length > 0">
+              <ion-slide *ngFor="let headlightsImage of headlights_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['headlights_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['headlights_image'])">
+                      <img [src]="headlightsImage" tappable (click)="onOpenPreview(headlightsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('headlights_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'headlights_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1737,7 +1676,6 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['headlights'] != ''">
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="turn_signals" (ionChange)="onRadioButtonChange($event, 'turn_signals')">
             <ion-row>
               <ion-col size="12">
@@ -1757,7 +1695,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.turn_signals.errors?.required">
             Please select value.
           </ion-item>
@@ -1792,18 +1729,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['turn_signals_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="turn_signals_image.length > 0">
+              <ion-slide *ngFor="let turnSignalsImage of turn_signals_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['turn_signals_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['turn_signals_image'])">
+                      <img [src]="turnSignalsImage" tappable (click)="onOpenPreview(turnSignalsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('turn_signals_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'turn_signals_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1814,7 +1749,6 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['turn_signals'] != ''">
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="warning_brake_lights"
             (ionChange)="onRadioButtonChange($event, 'warning_brake_lights')">
             <ion-row>
@@ -1835,7 +1769,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error"
             *ngIf="isSubmitted && errorControls.warning_brake_lights.errors?.required">
             Please select value.
@@ -1874,18 +1807,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['warning_brake_lights_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="warning_brake_lights_image.length > 0">
+              <ion-slide *ngFor="let warningBrakeLightsImage of warning_brake_lights_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['warning_brake_lights_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['warning_brake_lights_image'])">
+                      <img [src]="warningBrakeLightsImage" tappable (click)="onOpenPreview(warningBrakeLightsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('warning_brake_lights_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'warning_brake_lights_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1896,7 +1827,6 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['warning_brake_lights'] != ''">
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="foot_brake" (ionChange)="onRadioButtonChange($event, 'foot_brake')">
             <ion-row>
               <ion-col size="12">
@@ -1916,7 +1846,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
 
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.foot_brake.errors?.required">
             Please select value.
@@ -1952,19 +1881,16 @@
                 (change)="onSelectImage($event, 2, 'foot_brake_image')">
               </ion-input>
             </div>
-
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['foot_brake_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="foot_brake_image.length > 0">
+              <ion-slide *ngFor="let footBrakeImage of foot_brake_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['foot_brake_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['foot_brake_image'])">
+                      <img [src]="footBrakeImage" tappable (click)="onOpenPreview(footBrakeImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('foot_brake_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'foot_brake_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -1980,7 +1906,6 @@
               Pedal Holds / Smooth Stop
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="parking_brake" (ionChange)="onRadioButtonChange($event, 'parking_brake')">
             <ion-row>
               <ion-col size="12">
@@ -2000,7 +1925,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.parking_brake.errors?.required">
             Please select value.
           </ion-item>
@@ -2037,18 +1961,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['parking_brake_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="parking_brake_image.length > 0">
+              <ion-slide *ngFor="let parkingBrakeImage of parking_brake_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['parking_brake_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['parking_brake_image'])">
+                      <img [src]="parkingBrakeImage" tappable (click)="onOpenPreview(parkingBrakeImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('parking_brake_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'parking_brake_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2064,7 +1986,6 @@
               Holds against Accelerator
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="clutch_gear_shift"
             (ionChange)="onRadioButtonChange($event, 'clutch_gear_shift')">
             <ion-row>
@@ -2085,7 +2006,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.clutch_gear_shift.errors?.required">
             Please select value.
           </ion-item>
@@ -2122,18 +2042,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['clutch_gear_shift_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="clutch_gear_shift_image.length > 0">
+              <ion-slide *ngFor="let clutchGearShiftImage of clutch_gear_shift_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['clutch_gear_shift_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['clutch_gear_shift_image'])">
+                      <img [src]="clutchGearShiftImage" tappable (click)="onOpenPreview(clutchGearShiftImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('clutch_gear_shift_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'clutch_gear_shift_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2149,7 +2067,6 @@
               Smooth operation
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="engine_noise" (ionChange)="onRadioButtonChange($event, 'engine_noise')">
             <ion-row>
               <ion-col size="12">
@@ -2169,7 +2086,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.engine_noise.errors?.required">
             Please select value.
           </ion-item>
@@ -2205,18 +2121,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['engine_noise_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="engine_noise_image.length > 0">
+              <ion-slide *ngFor="let engineNoiseImage of engine_noise_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['engine_noise_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['engine_noise_image'])">
+                      <img [src]="engineNoiseImage" tappable (click)="onOpenPreview(engineNoiseImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('engine_noise_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'engine_noise_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2232,7 +2146,6 @@
               Sounds Normal
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="dash_gauges" (ionChange)="onRadioButtonChange($event, 'dash_gauges')">
             <ion-row>
               <ion-col size="12">
@@ -2252,7 +2165,6 @@
               </ion-col>
             </ion-row>
           </ion-radio-group>
-          <!-- </ion-item> -->
           <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.dash_gauges.errors?.required">
             Please select value.
           </ion-item>
@@ -2289,18 +2201,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['dash_gauges_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="dash_gauges_image.length > 0">
+              <ion-slide *ngFor="let dashGaugesImage of dash_gauges_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['dash_gauges_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['dash_gauges_image'])">
+                      <img [src]="dashGaugesImage" tappable (click)="onOpenPreview(dashGaugesImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('dash_gauges_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'dash_gauges_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2311,7 +2221,6 @@
         </div>
 
         <div *ngIf="teleHandlerForm.value['dash_gauges'] != ''">
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="operational_controls"
             (ionChange)="onRadioButtonChange($event, 'operational_controls')">
             <ion-row>
@@ -2371,18 +2280,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['operational_controls_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="operational_controls_image.length > 0">
+              <ion-slide *ngFor="let operationalControlsImage of operational_controls_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['operational_controls_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['operational_controls_image'])">
+                      <img [src]="operationalControlsImage" tappable (click)="onOpenPreview(operationalControlsImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('operational_controls_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'operational_controls_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2398,7 +2305,6 @@
               Smooth operation
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="fluid_leaks" (ionChange)="onRadioButtonChange($event, 'fluid_leaks')">
             <ion-row>
               <ion-col size="12">
@@ -2455,18 +2361,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['fluid_leaks_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="fluid_leaks_image.length > 0">
+              <ion-slide *ngFor="let fluidLeaksImage of fluid_leaks_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['fluid_leaks_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['fluid_leaks_image'])">
+                      <img [src]="fluidLeaksImage" tappable (click)="onOpenPreview(fluidLeaksImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('fluid_leaks_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'fluid_leaks_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2482,7 +2386,6 @@
               Under truck and Near Hoses
             </ion-col>
           </ion-row>
-          <!-- <ion-item lines="none"> -->
           <ion-radio-group formControlName="first_aid_kit" (ionChange)="onRadioButtonChange($event, 'first_aid_kit')">
             <ion-row>
               <ion-col size="12">
@@ -2538,18 +2441,16 @@
               </ion-input>
             </div>
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="teleHandlerForm.value['first_aid_kit_image'] !='' ">
-              <ion-slide>
+            <ion-slides [options]="sliderOpts" class="preview-slides" *ngIf="first_aid_kit_image.length > 0">
+              <ion-slide *ngFor="let firstAidKitImage of first_aid_kit_image; let i=index">
                 <ion-grid>
                   <ion-row>
                     <ion-col size="11">
-                      <img [src]="teleHandlerForm.value['first_aid_kit_image']" tappable
-                        (click)="onOpenPreview(teleHandlerForm.value['first_aid_kit_image'])">
+                      <img [src]="firstAidKitImage" tappable (click)="onOpenPreview(firstAidKitImage)">
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onDeleteImage('first_aid_kit_image')"></ion-icon>
+                        <ion-icon name="close" (click)="onDeleteImage(i, 'first_aid_kit_image')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -2581,8 +2482,6 @@
           </p>
         </div>
 
-        <!-- <ion-button class="btn" (click)="onSubmit()" [disabled]="teleHandlerForm.invalid">SUBMIT</ion-button> -->
-
         <ion-grid class="progress-bar">
           <ion-row>
             <ion-col size="10.5">
@@ -2599,19 +2498,11 @@
           </ion-row>
         </ion-grid>
 
-        <ion-button *ngIf="url_id == '' && teleHandlerForm.invalid == false" (click)="onSubmit(1)" class="btn">SUBMIT
-        </ion-button>
+        <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
+          class="btn">SUBMIT </ion-button>
 
-        <ion-button *ngIf="url_id != '' && teleHandlerForm.invalid == false " (click)="onSubmit(1)" class="btn">Update
-        </ion-button>
-
-        <!-- <ion-button *ngIf="url_id == ''" (click)="onSubmit()"
-          class="btn" [disabled]="teleHandlerForm.invalid">SUBMIT
-        </ion-button>
-
-        <ion-button *ngIf="url_id != '' " (click)="onSubmit()"  
-          class="btn" [disabled]="teleHandlerForm.invalid">Update
-        </ion-button> -->
+        <ion-button *ngIf="url_id != '' && ((form_percent*100) | number : '1.0-0') == 100 " (click)="onSubmit(1)"
+          class="btn">Update</ion-button>
 
       </ion-grid>
     </ion-card>

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { NavController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 
 import { environment } from 'src/environments/environment';
@@ -14,7 +14,6 @@ import { LoadingService } from 'src/app/services/loading-service/loading.service
 
 import IncidentJson from '../incident-form.json';
 import moment from 'moment';
-
 
 @Component({
   selector: 'app-incident-form',
@@ -240,9 +239,10 @@ export class IncidentFormPage implements OnInit {
           incdesc_other_witness_mobile_no: [''],
           incdesc_other_witness_email: ['']
         }),
-      incident_description_photo: [''],                         // incident description images
 
+      // incident_description_photo: [''],                         // incident description images
       // alcohol_test_completed: [''],
+
       incident_description_alcohol_test: [''],
       alcohol_test_image: [''],                                 // alcohal images
 
@@ -693,31 +693,31 @@ export class IncidentFormPage implements OnInit {
     }
   }
 
-  onImageDelete(index, tabName) {
+  onImageDelete(index, variableName) {
+    this[variableName].splice(index, 1);
+    //   if (variableName == 'Photography') {
+    //     this.photoGraphy.splice(index, 1);
+    //   }
 
-    if (tabName == 'Photography') {
-      this.photoGraphy.splice(index, 1);
-    }
+    //   if (variableName == 'Alcohal Test') {
+    //     this.alcohalImages.splice(index, 1);
+    //   }
 
-    if (tabName == 'Alcohal Test') {
-      this.alcohalImages.splice(index, 1);
-    }
+    //   if (variableName == 'Drug Test') {
+    //     this.drugTestImages.splice(index, 1);
+    //   }
 
-    if (tabName == 'Drug Test') {
-      this.drugTestImages.splice(index, 1);
-    }
+    //   if (variableName == 'Return to Alternate Duties') {
+    //     this.alterDutyImages.splice(index, 1);
+    //   }
 
-    if (tabName == 'Return to Alternate Duties') {
-      this.alterDutyImages.splice(index, 1);
-    }
+    //   if (variableName == 'Asset') {
+    //     this.damageImages.splice(index, 1);
+    //   }
 
-    if (tabName == 'Asset') {
-      this.damageImages.splice(index, 1);
-    }
-
-    if (tabName == 'Chemical Image') {
-      this.chemicalImages.splice(index, 1);
-    }
+    //   if (variableName == 'Chemical Image') {
+    //     this.chemicalImages.splice(index, 1);
+    //   }
   }
 
   //----------------------------------------------------------- Images ----------------------------------------------------------------------//
@@ -1282,7 +1282,7 @@ export class IncidentFormPage implements OnInit {
         }
       }
     })
-    if (evt && evt.detail && evt.detail.value && evt.detail.value != 'Near Miss') {
+    if (val == 'Incident' && evt && evt.detail && evt.detail.value && evt.detail.value != 'Near Miss') {
       this.incidentForm.controls['incident_near_miss'].setValue('');
       this.incidentForm.controls['incident_near_miss_other'].setValue('');
     }
@@ -1375,37 +1375,72 @@ export class IncidentFormPage implements OnInit {
   }
 
   onProgressBar(event, tabName) {
+
+    // Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
+    // Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
+    // // Object.keys(this.injuryForm.value.person_details).map(ele => formControlList.push(ele));
+    // Object.keys(this.assetDescriptionForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.enviornmentForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.enviornmentForm.value.chemical_details).map(ele => formControlList.push(ele));
+    // Object.keys(this.reputationDesForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.reputationDesForm.value.other_witness_details).map(ele => formControlList.push(ele));
+    // Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
+    // Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
+
     let count = 0;
+
+
     let formControlList = [];
-
     Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
-    Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.injuryForm.value.person_details).map(ele => formControlList.push(ele));
-    Object.keys(this.assetDescriptionForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.enviornmentForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.enviornmentForm.value.chemical_details).map(ele => formControlList.push(ele));
-    Object.keys(this.reputationDesForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.reputationDesForm.value.other_witness_details).map(ele => formControlList.push(ele));
-    Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
-    Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
 
-    console.log('formControlList', formControlList);
+    let formControlValue = [];
+    Object.values(this.incidentForm.value).map(ele => formControlValue.push(ele));
 
+    if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != '') {
+
+      // Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
+      // Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
+
+      Object.values(this.photoGraphyForm.value).map(ele => formControlValue.push(ele));
+      Object.values(this.incidentDesForm.value).map(ele => {
+        if (typeof (ele) != 'object') {
+          formControlValue.push(ele)
+        }
+      });
+
+      console.log('formControlValue 1', formControlValue);
+
+      Object.values(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlValue.push(ele));
+
+      console.log('formControlValue 2', formControlValue);
+
+      console.log();
+    }
+
+    formControlValue.forEach(key => {
+      if (key != '') {
+        count = ++count;
+      }
+    })
+
+    // let formControlList = [];
+    // Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
     // if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != '') {
 
     //   Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
-
     //   Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
+    //   Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
 
-    //   Object.keys(this.incidentDesForm.controls.incdesc_other_witness_details).map(ele => formControlList.push(ele));
+    //   Object.keys(this.incidentForm.controls).map(ele => formControlValue.push(ele));
 
-    //   if (this.classificationForm.valid) {
-    //     Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
-    //   }
+
+    //   // if (this.classificationForm.valid) {
+    //   //   Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
+    //   // }
+
     //   // Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
     //   // console.log('this.injuryForm.controls', this.injuryForm.controls);
     //   // Object.keys(this.injuryForm.controls.person_details).map(ele => formControlList.push(ele));
@@ -1419,19 +1454,25 @@ export class IncidentFormPage implements OnInit {
     //   // Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
     //   // Object.keys(this.assetDescriptionForm.controls).map(ele => formControlList.push(ele));
     //   // Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
-
     // }
-    
-    formControlList.forEach(key => {
-      if (tabName == 'Incident') {
-        if (this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] != 'Near Miss') {
-          count = count + 2;
-        } else if (this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] == 'Near Miss') {
-          count = ++count;
-        }
-      }
-    })
-    this.form_percent = ((1 / formControlList.length) * count);
+
+    // formControlList.forEach(key => {
+    //   console.log('formControlList 1', formControlList);
+    //   console.log('formControlList 2', formControlList.length);
+    //   // if (tabName == 'Incident') {
+    //   if (this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] != 'Near Miss') {
+    //     count = count + 3;
+    //   } else if ((this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] == 'Near Miss') ||
+    //     this.photoGraphyForm.value[key] != ''
+    //   ) {
+    //     count = ++count;
+    //   }
+    // }
+    // })
+
+
+    this.form_percent = ((1 / formControlValue.length) * count);
+    console.log(' this.form_percent', this.form_percent);
   }
 
   onImmediateTreatment(event, index) {

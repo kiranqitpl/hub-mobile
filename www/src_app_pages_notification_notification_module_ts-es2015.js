@@ -242,7 +242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../global-service/global.service */ 89985);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
+/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/camera/ngx */ 84267);
 
 
 
@@ -338,7 +338,7 @@ let SharedService = class SharedService {
 SharedService.ctorParameters = () => [
     { type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController },
-    { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
+    { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
 ];
 SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({

@@ -102,7 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 39895);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ 3679);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
+/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic-native/camera/ngx */ 84267);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ 92340);
 /* harmony import */ var src_app_modals_managers_managers_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/modals/managers/managers.page */ 58127);
 /* harmony import */ var src_app_modals_image_modal_image_modal_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/modals/image-modal/image-modal.page */ 91681);
@@ -1762,7 +1762,7 @@ IncidentFormEditPage.ctorParameters = () => [
     { type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_7__.SharedService },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ModalController },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ActionSheetController },
-    { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera },
+    { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.NavController },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.Platform },

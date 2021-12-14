@@ -227,9 +227,9 @@
       /* harmony import */
 
 
-      var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @ionic-native/Camera/ngx */
-      67871);
+      var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic-native/camera/ngx */
+      84267);
       /* harmony import */
 
 
@@ -2283,7 +2283,7 @@
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ActionSheetController
         }, {
-          type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera
+          type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera
         }, {
           type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder
         }, {
