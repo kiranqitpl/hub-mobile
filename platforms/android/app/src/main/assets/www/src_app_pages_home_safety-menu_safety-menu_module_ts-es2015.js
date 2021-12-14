@@ -30,28 +30,52 @@ const routes = [
     },
     {
         path: 'incident-form',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form/incident-form.module */ 96394)).then(m => m.IncidentFormPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form/incident-form.module */ 96394)).then(m => m.IncidentFormPageModule)
+    },
+    {
+        path: 'incident-form-edit/:incident_id',
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
     },
     {
         path: 'incident-details/:incident_id',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_incident_incident-details_incident-details_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-details/incident-details.module */ 22641)).then(m => m.IncidentDetailsPageModule)
     },
     {
-        path: 'incident-form-edit/:incident_id',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
-    },
-    {
-        path: 'vehicle-hoist-add-form',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */ 79496)).then(m => m.VehicleHoistAddFormPageModule)
-    },
-    {
         path: 'telehandler-add-form',
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_telehandler_telehandler-add-form_telehandler-add-form-b0535c")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/telehandler/telehandler-add-form/telehandler-add-form.module */ 4459)).then(m => m.TelehandlerAddFormPageModule)
     },
     {
+        path: 'telehandler-add-form/:id',
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_telehandler_telehandler-add-form_telehandler-add-form-b0535c")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/telehandler/telehandler-add-form/telehandler-add-form.module */ 4459)).then(m => m.TelehandlerAddFormPageModule)
+    },
+    {
+        path: 'telehandler-view-detail/:id',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_prestart_telehandler_telehandler-view-detail_telehandler-view--8e57a8").then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/telehandler/telehandler-view-detail/telehandler-view-detail.module */ 75656)).then(m => m.TelehandlerViewDetailPageModule)
+    },
+    {
         path: 'crane-add-form',
         loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_crane_crane-add-form_crane-add-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/crane/crane-add-form/crane-add-form.module */ 96614)).then(m => m.CraneAddFormPageModule)
-    }
+    },
+    {
+        path: 'crane-add-form/:id',
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_crane_crane-add-form_crane-add-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/crane/crane-add-form/crane-add-form.module */ 96614)).then(m => m.CraneAddFormPageModule)
+    },
+    {
+        path: 'crane-view-detail/:id',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_prestart_crane_crane-view-detail_crane-view-detail_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/crane/crane-view-detail/crane-view-detail.module */ 35718)).then(m => m.CraneViewDetailPageModule)
+    },
+    {
+        path: 'vehicle-hoist-add-form',
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */ 79496)).then(m => m.VehicleHoistAddFormPageModule)
+    },
+    {
+        path: 'vehicle-hoist-add-form/:id',
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-hoist-add-form_vehicle-hoist-ad-634e0e")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/vehicle-hoist/vehicle-hoist-add-form/vehicle-hoist-add-form.module */ 79496)).then(m => m.VehicleHoistAddFormPageModule)
+    },
+    {
+        path: 'vehicle-host-view-detail/:id',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_prestart_vehicle-hoist_vehicle-host-view-detail_vehicle-host-v-1b091b").then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/vehicle-hoist/vehicle-host-view-detail/vehicle-host-view-detail.module */ 89304)).then(m => m.VehicleHostViewDetailPageModule)
+    },
 ];
 let SafetyMenuPageRoutingModule = class SafetyMenuPageRoutingModule {
 };

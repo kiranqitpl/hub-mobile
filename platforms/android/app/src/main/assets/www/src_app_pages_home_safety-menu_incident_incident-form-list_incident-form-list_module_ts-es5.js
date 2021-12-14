@@ -501,7 +501,7 @@
         "id": function id() {
           return (
             /* binding */
-            _id
+            _id2
           );
         },
 
@@ -1745,35 +1745,35 @@
         }, {
           key: "onVisibilityChange",
           value: function onVisibilityChange() {
-            var _this = this;
+            var _this2 = this;
 
             // trigger zone recalc for columns
             this.zone.run(function () {
-              _this.isVisible = true;
+              _this2.isVisible = true;
 
-              _this.visible.emit(true);
+              _this2.visible.emit(true);
             });
           }
         }, {
           key: "runCheck",
           value: function runCheck() {
-            var _this2 = this;
+            var _this3 = this;
 
             var check = function check() {
               // https://davidwalsh.name/offsetheight-visibility
-              var _this2$element$native = _this2.element.nativeElement,
-                  offsetHeight = _this2$element$native.offsetHeight,
-                  offsetWidth = _this2$element$native.offsetWidth;
+              var _this3$element$native = _this3.element.nativeElement,
+                  offsetHeight = _this3$element$native.offsetHeight,
+                  offsetWidth = _this3$element$native.offsetWidth;
 
               if (offsetHeight && offsetWidth) {
-                clearTimeout(_this2.timeout);
+                clearTimeout(_this3.timeout);
 
-                _this2.onVisibilityChange();
+                _this3.onVisibilityChange();
               } else {
-                clearTimeout(_this2.timeout);
+                clearTimeout(_this3.timeout);
 
-                _this2.zone.runOutsideAngular(function () {
-                  _this2.timeout = setTimeout(function () {
+                _this3.zone.runOutsideAngular(function () {
+                  _this3.timeout = setTimeout(function () {
                     return check();
                   }, 50);
                 });
@@ -1878,7 +1878,7 @@
         }, {
           key: "onMousedown",
           value: function onMousedown(event) {
-            var _this3 = this;
+            var _this4 = this;
 
             // we only want to drag the inner header text
             var isDragElm = event.target.classList.contains('draggable');
@@ -1892,10 +1892,10 @@
               };
               var mouseup = (0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mouseup');
               this.subscription = mouseup.subscribe(function (ev) {
-                return _this3.onMouseup(ev);
+                return _this4.onMouseup(ev);
               });
               var mouseMoveSub = (0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mousemove').pipe((0, rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.takeUntil)(mouseup)).subscribe(function (ev) {
-                return _this3.move(ev, mouseDownPos);
+                return _this4.move(ev, mouseDownPos);
               });
               this.subscription.add(mouseMoveSub);
               this.dragStart.emit({
@@ -2034,7 +2034,7 @@
         }, {
           key: "onMousedown",
           value: function onMousedown(event) {
-            var _this4 = this;
+            var _this5 = this;
 
             var isHandle = event.target.classList.contains('resize-handle');
             var initialWidth = this.element.clientWidth;
@@ -2045,10 +2045,10 @@
               this.resizing = true;
               var mouseup = (0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mouseup');
               this.subscription = mouseup.subscribe(function (ev) {
-                return _this4.onMouseup();
+                return _this5.onMouseup();
               });
               var mouseMoveSub = (0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mousemove').pipe((0, rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.takeUntil)(mouseup)).subscribe(function (e) {
-                return _this4.move(e, initialWidth, mouseDownScreenX);
+                return _this5.move(e, initialWidth, mouseDownScreenX);
               });
               this.subscription.add(mouseMoveSub);
             }
@@ -2163,7 +2163,7 @@
         }, {
           key: "updateSubscriptions",
           value: function updateSubscriptions() {
-            var _this5 = this;
+            var _this6 = this;
 
             var diffs = this.differ.diff(this.createMapDiffs());
 
@@ -2176,9 +2176,9 @@
                 });
 
                 if (currentValue) {
-                  currentValue.dragStart.subscribe(_this5.onDragStart.bind(_this5));
-                  currentValue.dragging.subscribe(_this5.onDragging.bind(_this5));
-                  currentValue.dragEnd.subscribe(_this5.onDragEnd.bind(_this5));
+                  currentValue.dragStart.subscribe(_this6.onDragStart.bind(_this6));
+                  currentValue.dragging.subscribe(_this6.onDragging.bind(_this6));
+                  currentValue.dragEnd.subscribe(_this6.onDragEnd.bind(_this6));
                 }
               };
 
@@ -2273,7 +2273,7 @@
         }, {
           key: "isTarget",
           value: function isTarget(model, event) {
-            var _this6 = this;
+            var _this7 = this;
 
             var i = 0;
             var x = event.x || event.clientX;
@@ -2282,7 +2282,7 @@
 
             var _loop = function _loop(prop) {
               // current column position which throws event.
-              var pos = _this6.positions[prop]; // since we drag the inner span, we need to find it in the elements at the cursor
+              var pos = _this7.positions[prop]; // since we drag the inner span, we need to find it in the elements at the cursor
 
               if (model.prop !== prop && targets.find(function (el) {
                 return el === pos.element;
@@ -2394,7 +2394,7 @@
         }, {
           key: "onMouseDown",
           value: function onMouseDown(event) {
-            var _this7 = this;
+            var _this8 = this;
 
             // don't do right/middle clicks
             if (event.which !== 1 || !this.pressEnabled) return; // don't start drag if its on resize handle
@@ -2407,21 +2407,21 @@
             this.isLongPressing = false;
             var mouseup = (0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mouseup');
             this.subscription = mouseup.subscribe(function (ev) {
-              return _this7.onMouseup();
+              return _this8.onMouseup();
             });
             this.timeout = setTimeout(function () {
-              _this7.isLongPressing = true;
+              _this8.isLongPressing = true;
 
-              _this7.longPressStart.emit({
+              _this8.longPressStart.emit({
                 event: event,
-                model: _this7.pressModel
+                model: _this8.pressModel
               });
 
-              _this7.subscription.add((0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mousemove').pipe((0, rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.takeUntil)(mouseup)).subscribe(function (mouseEvent) {
-                return _this7.onMouseMove(mouseEvent);
+              _this8.subscription.add((0, rxjs__WEBPACK_IMPORTED_MODULE_3__.fromEvent)(document, 'mousemove').pipe((0, rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.takeUntil)(mouseup)).subscribe(function (mouseEvent) {
+                return _this8.onMouseMove(mouseEvent);
               }));
 
-              _this7.loop(event);
+              _this8.loop(event);
             }, this.duration);
             this.loop(event);
           }
@@ -2440,16 +2440,16 @@
         }, {
           key: "loop",
           value: function loop(event) {
-            var _this8 = this;
+            var _this9 = this;
 
             if (this.isLongPressing) {
               this.timeout = setTimeout(function () {
-                _this8.longPressing.emit({
+                _this9.longPressing.emit({
                   event: event,
-                  model: _this8.pressModel
+                  model: _this9.pressModel
                 });
 
-                _this8.loop(event);
+                _this9.loop(event);
               }, 50);
             }
           }
@@ -2598,14 +2598,14 @@
         }, {
           key: "onScrolled",
           value: function onScrolled(event) {
-            var _this9 = this;
+            var _this10 = this;
 
             var dom = event.currentTarget;
             requestAnimationFrame(function () {
-              _this9.scrollYPos = dom.scrollTop;
-              _this9.scrollXPos = dom.scrollLeft;
+              _this10.scrollYPos = dom.scrollTop;
+              _this10.scrollXPos = dom.scrollLeft;
 
-              _this9.updateOffset();
+              _this10.updateOffset();
             });
           }
         }, {
@@ -3109,7 +3109,7 @@
        */
 
 
-      function _id() {
+      function _id2() {
         return ('0000' + (Math.random() * Math.pow(36, 4) << 0).toString(36)).slice(-4);
       }
       /**
@@ -3132,7 +3132,7 @@
             var column = _step2.value;
 
             if (!column.$$id) {
-              column.$$id = _id();
+              column.$$id = _id2();
             } // prop can be numeric; zero is valid not a missing prop
             // translate name => prop
 
@@ -4124,7 +4124,7 @@
          * Creates an instance of DataTableBodyComponent.
          */
         function _DataTableBodyComponent(cd) {
-          var _this10 = this;
+          var _this11 = this;
 
           _classCallCheck(this, _DataTableBodyComponent);
 
@@ -4148,20 +4148,20 @@
            */
 
           this.getDetailRowHeight = function (row, index) {
-            if (!_this10.rowDetail) {
+            if (!_this11.rowDetail) {
               return 0;
             }
 
-            var rowHeight = _this10.rowDetail.rowHeight;
+            var rowHeight = _this11.rowDetail.rowHeight;
             return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
           }; // declare fn here so we can get access to the `this` property
 
 
           this.rowTrackingFn = function (index, row) {
-            var idx = _this10.getRowIndex(row);
+            var idx = _this11.getRowIndex(row);
 
-            if (_this10.trackByProp) {
-              return row[_this10.trackByProp];
+            if (_this11.trackByProp) {
+              return row[_this11.trackByProp];
             } else {
               return idx;
             }
@@ -4271,7 +4271,7 @@
         }, {
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this11 = this;
+            var _this12 = this;
 
             if (this.rowDetail) {
               this.listener = this.rowDetail.toggle.subscribe(function (_ref5) {
@@ -4279,20 +4279,20 @@
                     value = _ref5.value;
 
                 if (type === 'row') {
-                  _this11.toggleRowExpansion(value);
+                  _this12.toggleRowExpansion(value);
                 }
 
                 if (type === 'all') {
-                  _this11.toggleAllRows(value);
+                  _this12.toggleAllRows(value);
                 } // Refresh rows after toggle
                 // Fixes #883
 
 
-                _this11.updateIndexes();
+                _this12.updateIndexes();
 
-                _this11.updateRows();
+                _this12.updateRows();
 
-                _this11.cd.markForCheck();
+                _this12.cd.markForCheck();
               });
             }
 
@@ -4302,20 +4302,20 @@
                     value = _ref6.value;
 
                 if (type === 'group') {
-                  _this11.toggleRowExpansion(value);
+                  _this12.toggleRowExpansion(value);
                 }
 
                 if (type === 'all') {
-                  _this11.toggleAllRows(value);
+                  _this12.toggleAllRows(value);
                 } // Refresh rows after toggle
                 // Fixes #883
 
 
-                _this11.updateIndexes();
+                _this12.updateIndexes();
 
-                _this11.updateRows();
+                _this12.updateRows();
 
-                _this11.cd.markForCheck();
+                _this12.cd.markForCheck();
               });
             }
           }
@@ -4405,7 +4405,7 @@
         }, {
           key: "updateRows",
           value: function updateRows() {
-            var _this12 = this;
+            var _this13 = this;
 
             var _this$indexes = this.indexes,
                 first = _this$indexes.first,
@@ -4434,7 +4434,7 @@
                   group.value.forEach(function (g, i) {
                     var _idx = "".concat(rowIndex, "-").concat(i);
 
-                    _this12.rowIndexes.set(g, _idx);
+                    _this13.rowIndexes.set(g, _idx);
                   });
                 }
 
@@ -4591,10 +4591,10 @@
         }, {
           key: "hideIndicator",
           value: function hideIndicator() {
-            var _this13 = this;
+            var _this14 = this;
 
             setTimeout(function () {
-              return _this13.loadingIndicator = false;
+              return _this14.loadingIndicator = false;
             }, 500);
           }
           /**
@@ -4850,12 +4850,12 @@
         }, {
           key: "getRowExpandedIdx",
           value: function getRowExpandedIdx(row, expanded) {
-            var _this14 = this;
+            var _this15 = this;
 
             if (!expanded || !expanded.length) return -1;
             var rowId = this.rowIdentity(row);
             return expanded.findIndex(function (r) {
-              var id = _this14.rowIdentity(r);
+              var id = _this15.rowIdentity(r);
 
               return id === rowId;
             });
@@ -5150,16 +5150,16 @@
             return this._innerWidth;
           },
           set: function set(val) {
-            var _this15 = this;
+            var _this16 = this;
 
             this._innerWidth = val;
             setTimeout(function () {
-              if (_this15._columns) {
-                var colByPin = _columnsByPin(_this15._columns);
+              if (_this16._columns) {
+                var colByPin = _columnsByPin(_this16._columns);
 
-                _this15._columnGroupWidths = _columnGroupWidths(colByPin, _this15._columns);
+                _this16._columnGroupWidths = _columnGroupWidths(colByPin, _this16._columns);
 
-                _this15.setStylesByGroup();
+                _this16.setStylesByGroup();
               }
             });
           }
@@ -5181,7 +5181,7 @@
             return this._columns;
           },
           set: function set(val) {
-            var _this16 = this;
+            var _this17 = this;
 
             this._columns = val;
 
@@ -5189,9 +5189,9 @@
 
             this._columnsByPin = _columnsByPinArr(val);
             setTimeout(function () {
-              _this16._columnGroupWidths = _columnGroupWidths(colsByPin, val);
+              _this17._columnGroupWidths = _columnGroupWidths(colsByPin, val);
 
-              _this16.setStylesByGroup();
+              _this17.setStylesByGroup();
             });
           }
         }, {
@@ -5219,7 +5219,7 @@
         }, {
           key: "onLongPressEnd",
           value: function onLongPressEnd(_ref8) {
-            var _this17 = this;
+            var _this18 = this;
 
             var event = _ref8.event,
                 model = _ref8.model;
@@ -5229,7 +5229,7 @@
             setTimeout(function () {
               // datatable component creates copies from columns on reorder
               // set dragging to false on new objects
-              var column = _this17._columns.find(function (c) {
+              var column = _this18._columns.find(function (c) {
                 return c.$$id === model.$$id;
               });
 
@@ -6018,7 +6018,7 @@
 
       var _DatatableComponent = /*#__PURE__*/function () {
         function _DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs, columnChangesService, configuration) {
-          var _this18 = this;
+          var _this19 = this;
 
           _classCallCheck(this, _DatatableComponent);
 
@@ -6234,7 +6234,7 @@
            */
 
           this.rowIdentity = function (x) {
-            if (_this18._groupRowsBy) {
+            if (_this19._groupRowsBy) {
               // each group in groupedRows are stored as {key, value: [rows]},
               // where key is the groupRowsBy index
               return x.key;
@@ -6543,7 +6543,7 @@
         }, {
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
-            var _this19 = this;
+            var _this20 = this;
 
             if (!this.externalSorting) {
               this.sortInternalRows();
@@ -6556,14 +6556,14 @@
             }
 
             requestAnimationFrame(function () {
-              _this19.recalculate(); // emit page for virtual server-side kickoff
+              _this20.recalculate(); // emit page for virtual server-side kickoff
 
 
-              if (_this19.externalPaging && _this19.scrollbarV) {
-                _this19.page.emit({
-                  count: _this19.count,
-                  pageSize: _this19.pageSize,
-                  limit: _this19.limit,
+              if (_this20.externalPaging && _this20.scrollbarV) {
+                _this20.page.emit({
+                  count: _this20.count,
+                  pageSize: _this20.pageSize,
+                  limit: _this20.limit,
                   offset: 0
                 });
               }
@@ -6577,10 +6577,10 @@
         }, {
           key: "ngAfterContentInit",
           value: function ngAfterContentInit() {
-            var _this20 = this;
+            var _this21 = this;
 
             this.columnTemplates.changes.subscribe(function (v) {
-              return _this20.translateColumns(v);
+              return _this21.translateColumns(v);
             });
             this.listenForColumnInputChanges();
           }
@@ -7057,12 +7057,12 @@
         }, {
           key: "onTreeAction",
           value: function onTreeAction(event) {
-            var _this21 = this;
+            var _this22 = this;
 
             var row = event.row; // TODO: For duplicated items this will not work
 
             var rowIndex = this._rows.findIndex(function (r) {
-              return r[_this21.treeToRelation] === event.row[_this21.treeToRelation];
+              return r[_this22.treeToRelation] === event.row[_this22.treeToRelation];
             });
 
             this.treeAction.emit({
@@ -7085,11 +7085,11 @@
         }, {
           key: "listenForColumnInputChanges",
           value: function listenForColumnInputChanges() {
-            var _this22 = this;
+            var _this23 = this;
 
             this._subscriptions.push(this.columnChangesService.columnInputChanges$.subscribe(function () {
-              if (_this22.columnTemplates) {
-                _this22.columnTemplates.notifyOnChanges();
+              if (_this23.columnTemplates) {
+                _this23.columnTemplates.notifyOnChanges();
               }
             }));
           }
@@ -8664,11 +8664,11 @@
         }, {
           key: "calcSortDir",
           value: function calcSortDir(sorts) {
-            var _this23 = this;
+            var _this24 = this;
 
             if (sorts && this.column) {
               var sort = sorts.find(function (s) {
-                return s.prop === _this23.column.prop;
+                return s.prop === _this24.column.prop;
               });
               if (sort) return sort.dir;
             }
@@ -10496,14 +10496,14 @@
         }, {
           key: "calcSortDir",
           value: function calcSortDir(sorts) {
-            var _this24 = this;
+            var _this25 = this;
 
             if (!sorts) {
               return;
             }
 
             var sort = sorts.find(function (s) {
-              return s.prop === _this24.column.prop;
+              return s.prop === _this25.column.prop;
             });
 
             if (sort) {
@@ -11011,12 +11011,12 @@
         }, {
           key: "getRowSelectedIdx",
           value: function getRowSelectedIdx(row, selected) {
-            var _this25 = this;
+            var _this26 = this;
 
             if (!selected || !selected.length) return -1;
             var rowId = this.rowIdentity(row);
             return selected.findIndex(function (r) {
-              var id = _this25.rowIdentity(r);
+              var id = _this26.rowIdentity(r);
 
               return id === rowId;
             });
@@ -11176,19 +11176,19 @@
         }, {
           key: "updateValues",
           value: function updateValues() {
-            var _this26 = this;
+            var _this27 = this;
 
             this.summaryRow = {};
             this.columns.filter(function (col) {
               return !col.summaryTemplate;
             }).forEach(function (col) {
-              var cellsFromSingleColumn = _this26.rows.map(function (row) {
+              var cellsFromSingleColumn = _this27.rows.map(function (row) {
                 return row[col.prop];
               });
 
-              var sumFunc = _this26.getSummaryFunction(col);
+              var sumFunc = _this27.getSummaryFunction(col);
 
-              _this26.summaryRow[col.prop] = col.pipe ? col.pipe.transform(sumFunc(cellsFromSingleColumn)) : sumFunc(cellsFromSingleColumn);
+              _this27.summaryRow[col.prop] = col.pipe ? col.pipe.transform(sumFunc(cellsFromSingleColumn)) : sumFunc(cellsFromSingleColumn);
             });
           }
         }, {
@@ -11416,6 +11416,1380 @@
     },
 
     /***/
+    72533:
+    /*!*************************************************************************!*\
+      !*** ./node_modules/ngx-pagination/__ivy_ngcc__/dist/ngx-pagination.js ***!
+      \*************************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "ɵb": function ɵb() {
+          return (
+            /* binding */
+            DEFAULT_STYLES
+          );
+        },
+
+        /* harmony export */
+        "ɵa": function ɵa() {
+          return (
+            /* binding */
+            DEFAULT_TEMPLATE
+          );
+        },
+
+        /* harmony export */
+        "NgxPaginationModule": function NgxPaginationModule() {
+          return (
+            /* binding */
+            _NgxPaginationModule
+          );
+        },
+
+        /* harmony export */
+        "PaginationService": function PaginationService() {
+          return (
+            /* binding */
+            _PaginationService
+          );
+        },
+
+        /* harmony export */
+        "PaginationControlsComponent": function PaginationControlsComponent() {
+          return (
+            /* binding */
+            _PaginationControlsComponent
+          );
+        },
+
+        /* harmony export */
+        "PaginationControlsDirective": function PaginationControlsDirective() {
+          return (
+            /* binding */
+            _PaginationControlsDirective
+          );
+        },
+
+        /* harmony export */
+        "PaginatePipe": function PaginatePipe() {
+          return (
+            /* binding */
+            _PaginatePipe
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/common */
+      38583);
+
+      function PaginationControlsComponent_ul_2_li_1_a_1_Template(rf, ctx) {
+        if (rf & 1) {
+          var _r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keyup.enter", function PaginationControlsComponent_ul_2_li_1_a_1_Template_a_keyup_enter_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r8);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+            var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+            return _r0.previous();
+          })("click", function PaginationControlsComponent_ul_2_li_1_a_1_Template_a_click_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r8);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+            var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+            return _r0.previous();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "span", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("aria-label", ctx_r5.previousLabel + " " + ctx_r5.screenReaderPageLabel);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r5.previousLabel, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r5.screenReaderPageLabel);
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_1_span_2_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "span");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "span", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r6.previousLabel, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r6.screenReaderPageLabel);
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_1_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, PaginationControlsComponent_ul_2_li_1_a_1_Template, 4, 3, "a", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, PaginationControlsComponent_ul_2_li_1_span_2_Template, 4, 2, "span", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+          var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("disabled", _r0.isFirstPage());
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", 1 < _r0.getCurrent());
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", _r0.isFirstPage());
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_4_a_1_Template(rf, ctx) {
+        if (rf & 1) {
+          var _r15 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keyup.enter", function PaginationControlsComponent_ul_2_li_4_a_1_Template_a_keyup_enter_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15);
+
+            var page_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+            var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+            return _r0.setCurrent(page_r10.value);
+          })("click", function PaginationControlsComponent_ul_2_li_4_a_1_Template_a_click_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15);
+
+            var page_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+            var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+            return _r0.setCurrent(page_r10.value);
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "span", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "span");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](5, "number");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var page_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+          var ctx_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r11.screenReaderPageLabel, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](page_r10.label === "..." ? page_r10.label : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](5, 2, page_r10.label, ""));
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_4_ng_container_2_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "span", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "span");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](5, "number");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+        }
+
+        if (rf & 2) {
+          var page_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+          var ctx_r12 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r12.screenReaderCurrentLabel, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](page_r10.label === "..." ? page_r10.label : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](5, 2, page_r10.label, ""));
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_4_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, PaginationControlsComponent_ul_2_li_4_a_1_Template, 6, 5, "a", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, PaginationControlsComponent_ul_2_li_4_ng_container_2_Template, 6, 5, "ng-container", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var page_r10 = ctx.$implicit;
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+          var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("current", _r0.getCurrent() === page_r10.value)("ellipsis", page_r10.label === "...");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", _r0.getCurrent() !== page_r10.value);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", _r0.getCurrent() === page_r10.value);
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_5_a_1_Template(rf, ctx) {
+        if (rf & 1) {
+          var _r23 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("keyup.enter", function PaginationControlsComponent_ul_2_li_5_a_1_Template_a_keyup_enter_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r23);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+            var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+            return _r0.next();
+          })("click", function PaginationControlsComponent_ul_2_li_5_a_1_Template_a_click_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r23);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+            var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+            return _r0.next();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "span", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r20 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("aria-label", ctx_r20.nextLabel + " " + ctx_r20.screenReaderPageLabel);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r20.nextLabel, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r20.screenReaderPageLabel);
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_5_span_2_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "span");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "span", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r21 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r21.nextLabel, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r21.screenReaderPageLabel);
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_li_5_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, PaginationControlsComponent_ul_2_li_5_a_1_Template, 4, 3, "a", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, PaginationControlsComponent_ul_2_li_5_span_2_Template, 4, 2, "span", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+          var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("disabled", _r0.isLastPage());
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !_r0.isLastPage());
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", _r0.isLastPage());
+        }
+      }
+
+      function PaginationControlsComponent_ul_2_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "ul", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, PaginationControlsComponent_ul_2_li_1_Template, 3, 4, "li", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "li", 5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, PaginationControlsComponent_ul_2_li_4_Template, 3, 6, "li", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, PaginationControlsComponent_ul_2_li_5_Template, 3, 4, "li", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("responsive", ctx_r1.responsive);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("aria-label", ctx_r1.screenReaderPaginationLabel);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.directionLinks);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"](" ", _r0.getCurrent(), " / ", _r0.getLastPage(), " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _r0.pages)("ngForTrackBy", ctx_r1.trackByIndex);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.directionLinks);
+        }
+      }
+
+      var _PaginationService =
+      /** @class */
+      function () {
+        function PaginationService() {
+          this.change = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+          this.instances = {};
+          this.DEFAULT_ID = 'DEFAULT_PAGINATION_ID';
+        }
+
+        PaginationService.prototype.defaultId = function () {
+          return this.DEFAULT_ID;
+        };
+        /**
+         * Register a PaginationInstance with this service. Returns a
+         * boolean value signifying whether the instance is new or
+         * updated (true = new or updated, false = unchanged).
+         */
+
+
+        PaginationService.prototype.register = function (instance) {
+          if (instance.id == null) {
+            instance.id = this.DEFAULT_ID;
+          }
+
+          if (!this.instances[instance.id]) {
+            this.instances[instance.id] = instance;
+            return true;
+          } else {
+            return this.updateInstance(instance);
+          }
+        };
+        /**
+         * Check each property of the instance and update any that have changed. Return
+         * true if any changes were made, else return false.
+         */
+
+
+        PaginationService.prototype.updateInstance = function (instance) {
+          var changed = false;
+
+          for (var prop in this.instances[instance.id]) {
+            if (instance[prop] !== this.instances[instance.id][prop]) {
+              this.instances[instance.id][prop] = instance[prop];
+              changed = true;
+            }
+          }
+
+          return changed;
+        };
+        /**
+         * Returns the current page number.
+         */
+
+
+        PaginationService.prototype.getCurrentPage = function (id) {
+          if (this.instances[id]) {
+            return this.instances[id].currentPage;
+          }
+        };
+        /**
+         * Sets the current page number.
+         */
+
+
+        PaginationService.prototype.setCurrentPage = function (id, page) {
+          if (this.instances[id]) {
+            var instance = this.instances[id];
+            var maxPage = Math.ceil(instance.totalItems / instance.itemsPerPage);
+
+            if (page <= maxPage && 1 <= page) {
+              this.instances[id].currentPage = page;
+              this.change.emit(id);
+            }
+          }
+        };
+        /**
+         * Sets the value of instance.totalItems
+         */
+
+
+        PaginationService.prototype.setTotalItems = function (id, totalItems) {
+          if (this.instances[id] && 0 <= totalItems) {
+            this.instances[id].totalItems = totalItems;
+            this.change.emit(id);
+          }
+        };
+        /**
+         * Sets the value of instance.itemsPerPage.
+         */
+
+
+        PaginationService.prototype.setItemsPerPage = function (id, itemsPerPage) {
+          if (this.instances[id]) {
+            this.instances[id].itemsPerPage = itemsPerPage;
+            this.change.emit(id);
+          }
+        };
+        /**
+         * Returns a clone of the pagination instance object matching the id. If no
+         * id specified, returns the instance corresponding to the default id.
+         */
+
+
+        PaginationService.prototype.getInstance = function (id) {
+          if (id === void 0) {
+            id = this.DEFAULT_ID;
+          }
+
+          if (this.instances[id]) {
+            return this.clone(this.instances[id]);
+          }
+
+          return {};
+        };
+        /**
+         * Perform a shallow clone of an object.
+         */
+
+
+        PaginationService.prototype.clone = function (obj) {
+          var target = {};
+
+          for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+              target[i] = obj[i];
+            }
+          }
+
+          return target;
+        };
+
+        PaginationService.ɵfac = function PaginationService_Factory(t) {
+          return new (t || PaginationService)();
+        };
+
+        PaginationService.ɵprov = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+          token: PaginationService,
+          factory: function factory(t) {
+            return PaginationService.ɵfac(t);
+          }
+        });
+        return PaginationService;
+      }();
+
+      var __decorate$1 = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+        var c = arguments.length,
+            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+            d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+          if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        }
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+      };
+
+      var __metadata = undefined && undefined.__metadata || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+      };
+
+      var LARGE_NUMBER = Number.MAX_SAFE_INTEGER;
+
+      var _PaginatePipe =
+      /** @class */
+      function () {
+        function PaginatePipe(service) {
+          this.service = service; // store the values from the last time the pipe was invoked
+
+          this.state = {};
+        }
+
+        PaginatePipe.prototype.transform = function (collection, args) {
+          // When an observable is passed through the AsyncPipe, it will output
+          // `null` until the subscription resolves. In this case, we want to
+          // use the cached data from the `state` object to prevent the NgFor
+          // from flashing empty until the real values arrive.
+          if (!(collection instanceof Array)) {
+            var _id = args.id || this.service.defaultId();
+
+            if (this.state[_id]) {
+              return this.state[_id].slice;
+            } else {
+              return collection;
+            }
+          }
+
+          var serverSideMode = args.totalItems && args.totalItems !== collection.length;
+          var instance = this.createInstance(collection, args);
+          var id = instance.id;
+          var start, end;
+          var perPage = instance.itemsPerPage;
+          var emitChange = this.service.register(instance);
+
+          if (!serverSideMode && collection instanceof Array) {
+            perPage = +perPage || LARGE_NUMBER;
+            start = (instance.currentPage - 1) * perPage;
+            end = start + perPage;
+            var isIdentical = this.stateIsIdentical(id, collection, start, end);
+
+            if (isIdentical) {
+              return this.state[id].slice;
+            } else {
+              var slice = collection.slice(start, end);
+              this.saveState(id, collection, slice, start, end);
+              this.service.change.emit(id);
+              return slice;
+            }
+          } else {
+            if (emitChange) {
+              this.service.change.emit(id);
+            } // save the state for server-side collection to avoid null
+            // flash as new data loads.
+
+
+            this.saveState(id, collection, collection, start, end);
+            return collection;
+          }
+        };
+        /**
+         * Create an PaginationInstance object, using defaults for any optional properties not supplied.
+         */
+
+
+        PaginatePipe.prototype.createInstance = function (collection, config) {
+          this.checkConfig(config);
+          return {
+            id: config.id != null ? config.id : this.service.defaultId(),
+            itemsPerPage: +config.itemsPerPage || 0,
+            currentPage: +config.currentPage || 1,
+            totalItems: +config.totalItems || collection.length
+          };
+        };
+        /**
+         * Ensure the argument passed to the filter contains the required properties.
+         */
+
+
+        PaginatePipe.prototype.checkConfig = function (config) {
+          var required = ['itemsPerPage', 'currentPage'];
+          var missing = required.filter(function (prop) {
+            return !(prop in config);
+          });
+
+          if (0 < missing.length) {
+            throw new Error("PaginatePipe: Argument is missing the following required properties: " + missing.join(', '));
+          }
+        };
+        /**
+         * To avoid returning a brand new array each time the pipe is run, we store the state of the sliced
+         * array for a given id. This means that the next time the pipe is run on this collection & id, we just
+         * need to check that the collection, start and end points are all identical, and if so, return the
+         * last sliced array.
+         */
+
+
+        PaginatePipe.prototype.saveState = function (id, collection, slice, start, end) {
+          this.state[id] = {
+            collection: collection,
+            size: collection.length,
+            slice: slice,
+            start: start,
+            end: end
+          };
+        };
+        /**
+         * For a given id, returns true if the collection, size, start and end values are identical.
+         */
+
+
+        PaginatePipe.prototype.stateIsIdentical = function (id, collection, start, end) {
+          var state = this.state[id];
+
+          if (!state) {
+            return false;
+          }
+
+          var isMetaDataIdentical = state.size === collection.length && state.start === start && state.end === end;
+
+          if (!isMetaDataIdentical) {
+            return false;
+          }
+
+          return state.slice.every(function (element, index) {
+            return element === collection[start + index];
+          });
+        };
+
+        PaginatePipe = __decorate$1([__metadata("design:paramtypes", [_PaginationService])], PaginatePipe);
+
+        PaginatePipe.ɵfac = function PaginatePipe_Factory(t) {
+          return new (t || PaginatePipe)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_PaginationService, 16));
+        };
+
+        PaginatePipe.ɵpipe = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefinePipe"]({
+          name: "paginate",
+          type: PaginatePipe,
+          pure: false
+        });
+
+        (function () {
+          (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](PaginatePipe, [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Pipe,
+            args: [{
+              name: 'paginate',
+              pure: false
+            }]
+          }], function () {
+            return [{
+              type: _PaginationService
+            }];
+          }, null);
+        })();
+
+        return PaginatePipe;
+      }();
+      /**
+       * The default template and styles for the pagination links are borrowed directly
+       * from Zurb Foundation 6: http://foundation.zurb.com/sites/docs/pagination.html
+       */
+
+
+      var DEFAULT_TEMPLATE = "\n    <pagination-template  #p=\"paginationApi\"\n                         [id]=\"id\"\n                         [maxSize]=\"maxSize\"\n                         (pageChange)=\"pageChange.emit($event)\"\n                         (pageBoundsCorrection)=\"pageBoundsCorrection.emit($event)\">\n    <ul class=\"ngx-pagination\"\n        [attr.aria-label]=\"screenReaderPaginationLabel\" \n        [class.responsive]=\"responsive\"\n        *ngIf=\"!(autoHide && p.pages.length <= 1)\">\n\n        <li class=\"pagination-previous\" [class.disabled]=\"p.isFirstPage()\" *ngIf=\"directionLinks\"> \n            <a tabindex=\"0\" *ngIf=\"1 < p.getCurrent()\" (keyup.enter)=\"p.previous()\" (click)=\"p.previous()\" [attr.aria-label]=\"previousLabel + ' ' + screenReaderPageLabel\">\n                {{ previousLabel }} <span class=\"show-for-sr\">{{ screenReaderPageLabel }}</span>\n            </a>\n            <span *ngIf=\"p.isFirstPage()\">\n                {{ previousLabel }} <span class=\"show-for-sr\">{{ screenReaderPageLabel }}</span>\n            </span>\n        </li> \n\n        <li class=\"small-screen\">\n            {{ p.getCurrent() }} / {{ p.getLastPage() }}\n        </li>\n\n        <li [class.current]=\"p.getCurrent() === page.value\" \n            [class.ellipsis]=\"page.label === '...'\"\n            *ngFor=\"let page of p.pages; trackBy: trackByIndex\">\n            <a tabindex=\"0\" (keyup.enter)=\"p.setCurrent(page.value)\" (click)=\"p.setCurrent(page.value)\" *ngIf=\"p.getCurrent() !== page.value\">\n                <span class=\"show-for-sr\">{{ screenReaderPageLabel }} </span>\n                <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>\n            </a>\n            <ng-container *ngIf=\"p.getCurrent() === page.value\">\n                <span class=\"show-for-sr\">{{ screenReaderCurrentLabel }} </span>\n                <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span> \n            </ng-container>\n        </li>\n\n        <li class=\"pagination-next\" [class.disabled]=\"p.isLastPage()\" *ngIf=\"directionLinks\">\n            <a tabindex=\"0\" *ngIf=\"!p.isLastPage()\" (keyup.enter)=\"p.next()\" (click)=\"p.next()\" [attr.aria-label]=\"nextLabel + ' ' + screenReaderPageLabel\">\n                 {{ nextLabel }} <span class=\"show-for-sr\">{{ screenReaderPageLabel }}</span>\n            </a>\n            <span *ngIf=\"p.isLastPage()\">\n                 {{ nextLabel }} <span class=\"show-for-sr\">{{ screenReaderPageLabel }}</span>\n            </span>\n        </li>\n\n    </ul>\n    </pagination-template>\n    ";
+      var DEFAULT_STYLES = "\n.ngx-pagination {\n  margin-left: 0;\n  margin-bottom: 1rem; }\n  .ngx-pagination::before, .ngx-pagination::after {\n    content: ' ';\n    display: table; }\n  .ngx-pagination::after {\n    clear: both; }\n  .ngx-pagination li {\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    margin-right: 0.0625rem;\n    border-radius: 0; }\n  .ngx-pagination li {\n    display: inline-block; }\n  .ngx-pagination a,\n  .ngx-pagination button {\n    color: #0a0a0a; \n    display: block;\n    padding: 0.1875rem 0.625rem;\n    border-radius: 0; }\n    .ngx-pagination a:hover,\n    .ngx-pagination button:hover {\n      background: #e6e6e6; }\n  .ngx-pagination .current {\n    padding: 0.1875rem 0.625rem;\n    background: #2199e8;\n    color: #fefefe;\n    cursor: default; }\n  .ngx-pagination .disabled {\n    padding: 0.1875rem 0.625rem;\n    color: #cacaca;\n    cursor: default; } \n    .ngx-pagination .disabled:hover {\n      background: transparent; }\n  .ngx-pagination a, .ngx-pagination button {\n    cursor: pointer; }\n\n.ngx-pagination .pagination-previous a::before,\n.ngx-pagination .pagination-previous.disabled::before { \n  content: '\xAB';\n  display: inline-block;\n  margin-right: 0.5rem; }\n\n.ngx-pagination .pagination-next a::after,\n.ngx-pagination .pagination-next.disabled::after {\n  content: '\xBB';\n  display: inline-block;\n  margin-left: 0.5rem; }\n\n.ngx-pagination .show-for-sr {\n  position: absolute !important;\n  width: 1px;\n  height: 1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0); }\n.ngx-pagination .small-screen {\n  display: none; }\n@media screen and (max-width: 601px) {\n  .ngx-pagination.responsive .small-screen {\n    display: inline-block; } \n  .ngx-pagination.responsive li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {\n    display: none; }\n}\n  ";
+
+      var __decorate$2 = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+        var c = arguments.length,
+            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+            d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+          if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        }
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+      };
+
+      var __metadata$1 = undefined && undefined.__metadata || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+      };
+
+      function coerceToBoolean(input) {
+        return !!input && input !== 'false';
+      }
+      /**
+       * The default pagination controls component. Actually just a default implementation of a custom template.
+       */
+
+
+      var _PaginationControlsComponent =
+      /** @class */
+      function () {
+        function PaginationControlsComponent() {
+          this.maxSize = 7;
+          this.previousLabel = 'Previous';
+          this.nextLabel = 'Next';
+          this.screenReaderPaginationLabel = 'Pagination';
+          this.screenReaderPageLabel = 'page';
+          this.screenReaderCurrentLabel = "You're on page";
+          this.pageChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+          this.pageBoundsCorrection = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+          this._directionLinks = true;
+          this._autoHide = false;
+          this._responsive = false;
+        }
+
+        Object.defineProperty(PaginationControlsComponent.prototype, "directionLinks", {
+          get: function get() {
+            return this._directionLinks;
+          },
+          set: function set(value) {
+            this._directionLinks = coerceToBoolean(value);
+          },
+          enumerable: true,
+          configurable: true
+        });
+        Object.defineProperty(PaginationControlsComponent.prototype, "autoHide", {
+          get: function get() {
+            return this._autoHide;
+          },
+          set: function set(value) {
+            this._autoHide = coerceToBoolean(value);
+          },
+          enumerable: true,
+          configurable: true
+        });
+        Object.defineProperty(PaginationControlsComponent.prototype, "responsive", {
+          get: function get() {
+            return this._responsive;
+          },
+          set: function set(value) {
+            this._responsive = coerceToBoolean(value);
+          },
+          enumerable: true,
+          configurable: true
+        });
+
+        PaginationControlsComponent.prototype.trackByIndex = function (index) {
+          return index;
+        };
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", String)], PaginationControlsComponent.prototype, "id", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", Number)], PaginationControlsComponent.prototype, "maxSize", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", Boolean), __metadata$1("design:paramtypes", [Boolean])], PaginationControlsComponent.prototype, "directionLinks", null);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", Boolean), __metadata$1("design:paramtypes", [Boolean])], PaginationControlsComponent.prototype, "autoHide", null);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", Boolean), __metadata$1("design:paramtypes", [Boolean])], PaginationControlsComponent.prototype, "responsive", null);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", String)], PaginationControlsComponent.prototype, "previousLabel", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", String)], PaginationControlsComponent.prototype, "nextLabel", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", String)], PaginationControlsComponent.prototype, "screenReaderPaginationLabel", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", String)], PaginationControlsComponent.prototype, "screenReaderPageLabel", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$1("design:type", String)], PaginationControlsComponent.prototype, "screenReaderCurrentLabel", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output)(), __metadata$1("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter)], PaginationControlsComponent.prototype, "pageChange", void 0);
+
+        __decorate$2([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output)(), __metadata$1("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter)], PaginationControlsComponent.prototype, "pageBoundsCorrection", void 0);
+
+        PaginationControlsComponent.ɵfac = function PaginationControlsComponent_Factory(t) {
+          return new (t || PaginationControlsComponent)();
+        };
+
+        PaginationControlsComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+          type: PaginationControlsComponent,
+          selectors: [["pagination-controls"]],
+          inputs: {
+            maxSize: "maxSize",
+            previousLabel: "previousLabel",
+            nextLabel: "nextLabel",
+            screenReaderPaginationLabel: "screenReaderPaginationLabel",
+            screenReaderPageLabel: "screenReaderPageLabel",
+            screenReaderCurrentLabel: "screenReaderCurrentLabel",
+            directionLinks: "directionLinks",
+            autoHide: "autoHide",
+            responsive: "responsive",
+            id: "id"
+          },
+          outputs: {
+            pageChange: "pageChange",
+            pageBoundsCorrection: "pageBoundsCorrection"
+          },
+          decls: 3,
+          vars: 3,
+          consts: [[3, "id", "maxSize", "pageChange", "pageBoundsCorrection"], ["p", "paginationApi"], ["class", "ngx-pagination", 3, "responsive", 4, "ngIf"], [1, "ngx-pagination"], ["class", "pagination-previous", 3, "disabled", 4, "ngIf"], [1, "small-screen"], [3, "current", "ellipsis", 4, "ngFor", "ngForOf", "ngForTrackBy"], ["class", "pagination-next", 3, "disabled", 4, "ngIf"], [1, "pagination-previous"], ["tabindex", "0", 3, "keyup.enter", "click", 4, "ngIf"], [4, "ngIf"], ["tabindex", "0", 3, "keyup.enter", "click"], [1, "show-for-sr"], [1, "pagination-next"]],
+          template: function PaginationControlsComponent_Template(rf, ctx) {
+            if (rf & 1) {
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "pagination-template", 0, 1);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("pageChange", function PaginationControlsComponent_Template_pagination_template_pageChange_0_listener($event) {
+                return ctx.pageChange.emit($event);
+              })("pageBoundsCorrection", function PaginationControlsComponent_Template_pagination_template_pageBoundsCorrection_0_listener($event) {
+                return ctx.pageBoundsCorrection.emit($event);
+              });
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, PaginationControlsComponent_ul_2_Template, 6, 9, "ul", 2);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+            }
+
+            if (rf & 2) {
+              var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("id", ctx.id)("maxSize", ctx.maxSize);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !(ctx.autoHide && _r0.pages.length <= 1));
+            }
+          },
+          directives: function directives() {
+            return [_PaginationControlsDirective, _angular_common__WEBPACK_IMPORTED_MODULE_1__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_1__.NgForOf];
+          },
+          pipes: function pipes() {
+            return [_angular_common__WEBPACK_IMPORTED_MODULE_1__.DecimalPipe];
+          },
+          styles: ["\n.ngx-pagination {\n  margin-left: 0;\n  margin-bottom: 1rem; }\n  .ngx-pagination::before, .ngx-pagination::after {\n    content: ' ';\n    display: table; }\n  .ngx-pagination::after {\n    clear: both; }\n  .ngx-pagination li {\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    margin-right: 0.0625rem;\n    border-radius: 0; }\n  .ngx-pagination li {\n    display: inline-block; }\n  .ngx-pagination a,\n  .ngx-pagination button {\n    color: #0a0a0a; \n    display: block;\n    padding: 0.1875rem 0.625rem;\n    border-radius: 0; }\n    .ngx-pagination a:hover,\n    .ngx-pagination button:hover {\n      background: #e6e6e6; }\n  .ngx-pagination .current {\n    padding: 0.1875rem 0.625rem;\n    background: #2199e8;\n    color: #fefefe;\n    cursor: default; }\n  .ngx-pagination .disabled {\n    padding: 0.1875rem 0.625rem;\n    color: #cacaca;\n    cursor: default; } \n    .ngx-pagination .disabled:hover {\n      background: transparent; }\n  .ngx-pagination a, .ngx-pagination button {\n    cursor: pointer; }\n\n.ngx-pagination .pagination-previous a::before,\n.ngx-pagination .pagination-previous.disabled::before { \n  content: '\xAB';\n  display: inline-block;\n  margin-right: 0.5rem; }\n\n.ngx-pagination .pagination-next a::after,\n.ngx-pagination .pagination-next.disabled::after {\n  content: '\xBB';\n  display: inline-block;\n  margin-left: 0.5rem; }\n\n.ngx-pagination .show-for-sr {\n  position: absolute !important;\n  width: 1px;\n  height: 1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0); }\n.ngx-pagination .small-screen {\n  display: none; }\n@media screen and (max-width: 601px) {\n  .ngx-pagination.responsive .small-screen {\n    display: inline-block; } \n  .ngx-pagination.responsive li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {\n    display: none; }\n}\n  "],
+          encapsulation: 2,
+          changeDetection: 0
+        });
+
+        (function () {
+          (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](PaginationControlsComponent, [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Component,
+            args: [{
+              selector: 'pagination-controls',
+              template: DEFAULT_TEMPLATE,
+              styles: [DEFAULT_STYLES],
+              changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ChangeDetectionStrategy.OnPush,
+              encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ViewEncapsulation.None
+            }]
+          }], function () {
+            return [];
+          }, {
+            maxSize: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            previousLabel: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            nextLabel: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            screenReaderPaginationLabel: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            screenReaderPageLabel: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            screenReaderCurrentLabel: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            pageChange: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+            }],
+            pageBoundsCorrection: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+            }],
+            directionLinks: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            autoHide: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            responsive: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            id: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }]
+          });
+        })();
+
+        return PaginationControlsComponent;
+      }();
+
+      var __decorate$3 = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+        var c = arguments.length,
+            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+            d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+          if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        }
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+      };
+
+      var __metadata$2 = undefined && undefined.__metadata || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+      };
+      /**
+       * This directive is what powers all pagination controls components, including the default one.
+       * It exposes an API which is hooked up to the PaginationService to keep the PaginatePipe in sync
+       * with the pagination controls.
+       */
+
+
+      var _PaginationControlsDirective =
+      /** @class */
+      function () {
+        function PaginationControlsDirective(service, changeDetectorRef) {
+          var _this = this;
+
+          this.service = service;
+          this.changeDetectorRef = changeDetectorRef;
+          this.maxSize = 7;
+          this.pageChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+          this.pageBoundsCorrection = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+          this.pages = [];
+          this.changeSub = this.service.change.subscribe(function (id) {
+            if (_this.id === id) {
+              _this.updatePageLinks();
+
+              _this.changeDetectorRef.markForCheck();
+
+              _this.changeDetectorRef.detectChanges();
+            }
+          });
+        }
+
+        PaginationControlsDirective.prototype.ngOnInit = function () {
+          if (this.id === undefined) {
+            this.id = this.service.defaultId();
+          }
+
+          this.updatePageLinks();
+        };
+
+        PaginationControlsDirective.prototype.ngOnChanges = function (changes) {
+          this.updatePageLinks();
+        };
+
+        PaginationControlsDirective.prototype.ngOnDestroy = function () {
+          this.changeSub.unsubscribe();
+        };
+        /**
+         * Go to the previous page
+         */
+
+
+        PaginationControlsDirective.prototype.previous = function () {
+          this.checkValidId();
+          this.setCurrent(this.getCurrent() - 1);
+        };
+        /**
+         * Go to the next page
+         */
+
+
+        PaginationControlsDirective.prototype.next = function () {
+          this.checkValidId();
+          this.setCurrent(this.getCurrent() + 1);
+        };
+        /**
+         * Returns true if current page is first page
+         */
+
+
+        PaginationControlsDirective.prototype.isFirstPage = function () {
+          return this.getCurrent() === 1;
+        };
+        /**
+         * Returns true if current page is last page
+         */
+
+
+        PaginationControlsDirective.prototype.isLastPage = function () {
+          return this.getLastPage() === this.getCurrent();
+        };
+        /**
+         * Set the current page number.
+         */
+
+
+        PaginationControlsDirective.prototype.setCurrent = function (page) {
+          this.pageChange.emit(page);
+        };
+        /**
+         * Get the current page number.
+         */
+
+
+        PaginationControlsDirective.prototype.getCurrent = function () {
+          return this.service.getCurrentPage(this.id);
+        };
+        /**
+         * Returns the last page number
+         */
+
+
+        PaginationControlsDirective.prototype.getLastPage = function () {
+          var inst = this.service.getInstance(this.id);
+
+          if (inst.totalItems < 1) {
+            // when there are 0 or fewer (an error case) items, there are no "pages" as such,
+            // but it makes sense to consider a single, empty page as the last page.
+            return 1;
+          }
+
+          return Math.ceil(inst.totalItems / inst.itemsPerPage);
+        };
+
+        PaginationControlsDirective.prototype.getTotalItems = function () {
+          return this.service.getInstance(this.id).totalItems;
+        };
+
+        PaginationControlsDirective.prototype.checkValidId = function () {
+          if (this.service.getInstance(this.id).id == null) {
+            console.warn("PaginationControlsDirective: the specified id \"" + this.id + "\" does not match any registered PaginationInstance");
+          }
+        };
+        /**
+         * Updates the page links and checks that the current page is valid. Should run whenever the
+         * PaginationService.change stream emits a value matching the current ID, or when any of the
+         * input values changes.
+         */
+
+
+        PaginationControlsDirective.prototype.updatePageLinks = function () {
+          var _this = this;
+
+          var inst = this.service.getInstance(this.id);
+          var correctedCurrentPage = this.outOfBoundCorrection(inst);
+
+          if (correctedCurrentPage !== inst.currentPage) {
+            setTimeout(function () {
+              _this.pageBoundsCorrection.emit(correctedCurrentPage);
+
+              _this.pages = _this.createPageArray(inst.currentPage, inst.itemsPerPage, inst.totalItems, _this.maxSize);
+            });
+          } else {
+            this.pages = this.createPageArray(inst.currentPage, inst.itemsPerPage, inst.totalItems, this.maxSize);
+          }
+        };
+        /**
+         * Checks that the instance.currentPage property is within bounds for the current page range.
+         * If not, return a correct value for currentPage, or the current value if OK.
+         */
+
+
+        PaginationControlsDirective.prototype.outOfBoundCorrection = function (instance) {
+          var totalPages = Math.ceil(instance.totalItems / instance.itemsPerPage);
+
+          if (totalPages < instance.currentPage && 0 < totalPages) {
+            return totalPages;
+          } else if (instance.currentPage < 1) {
+            return 1;
+          }
+
+          return instance.currentPage;
+        };
+        /**
+         * Returns an array of Page objects to use in the pagination controls.
+         */
+
+
+        PaginationControlsDirective.prototype.createPageArray = function (currentPage, itemsPerPage, totalItems, paginationRange) {
+          // paginationRange could be a string if passed from attribute, so cast to number.
+          paginationRange = +paginationRange;
+          var pages = []; // Return 1 as default page number
+          // Make sense to show 1 instead of empty when there are no items
+
+          var totalPages = Math.max(Math.ceil(totalItems / itemsPerPage), 1);
+          var halfWay = Math.ceil(paginationRange / 2);
+          var isStart = currentPage <= halfWay;
+          var isEnd = totalPages - halfWay < currentPage;
+          var isMiddle = !isStart && !isEnd;
+          var ellipsesNeeded = paginationRange < totalPages;
+          var i = 1;
+
+          while (i <= totalPages && i <= paginationRange) {
+            var label = void 0;
+            var pageNumber = this.calculatePageNumber(i, currentPage, paginationRange, totalPages);
+            var openingEllipsesNeeded = i === 2 && (isMiddle || isEnd);
+            var closingEllipsesNeeded = i === paginationRange - 1 && (isMiddle || isStart);
+
+            if (ellipsesNeeded && (openingEllipsesNeeded || closingEllipsesNeeded)) {
+              label = '...';
+            } else {
+              label = pageNumber;
+            }
+
+            pages.push({
+              label: label,
+              value: pageNumber
+            });
+            i++;
+          }
+
+          return pages;
+        };
+        /**
+         * Given the position in the sequence of pagination links [i],
+         * figure out what page number corresponds to that position.
+         */
+
+
+        PaginationControlsDirective.prototype.calculatePageNumber = function (i, currentPage, paginationRange, totalPages) {
+          var halfWay = Math.ceil(paginationRange / 2);
+
+          if (i === paginationRange) {
+            return totalPages;
+          } else if (i === 1) {
+            return i;
+          } else if (paginationRange < totalPages) {
+            if (totalPages - halfWay < currentPage) {
+              return totalPages - paginationRange + i;
+            } else if (halfWay < currentPage) {
+              return currentPage - halfWay + i;
+            } else {
+              return i;
+            }
+          } else {
+            return i;
+          }
+        };
+
+        __decorate$3([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$2("design:type", String)], PaginationControlsDirective.prototype, "id", void 0);
+
+        __decorate$3([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input)(), __metadata$2("design:type", Number)], PaginationControlsDirective.prototype, "maxSize", void 0);
+
+        __decorate$3([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output)(), __metadata$2("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter)], PaginationControlsDirective.prototype, "pageChange", void 0);
+
+        __decorate$3([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output)(), __metadata$2("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter)], PaginationControlsDirective.prototype, "pageBoundsCorrection", void 0);
+
+        PaginationControlsDirective = __decorate$3([__metadata$2("design:paramtypes", [_PaginationService, _angular_core__WEBPACK_IMPORTED_MODULE_0__.ChangeDetectorRef])], PaginationControlsDirective);
+
+        PaginationControlsDirective.ɵfac = function PaginationControlsDirective_Factory(t) {
+          return new (t || PaginationControlsDirective)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_PaginationService), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.ChangeDetectorRef));
+        };
+
+        PaginationControlsDirective.ɵdir = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineDirective"]({
+          type: PaginationControlsDirective,
+          selectors: [["pagination-template"], ["", "pagination-template", ""]],
+          inputs: {
+            maxSize: "maxSize",
+            id: "id"
+          },
+          outputs: {
+            pageChange: "pageChange",
+            pageBoundsCorrection: "pageBoundsCorrection"
+          },
+          exportAs: ["paginationApi"],
+          features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]]
+        });
+
+        (function () {
+          (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](PaginationControlsDirective, [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Directive,
+            args: [{
+              selector: 'pagination-template,[pagination-template]',
+              exportAs: 'paginationApi'
+            }]
+          }], function () {
+            return [{
+              type: _PaginationService
+            }, {
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ChangeDetectorRef
+            }];
+          }, {
+            maxSize: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }],
+            pageChange: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+            }],
+            pageBoundsCorrection: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+            }],
+            id: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+            }]
+          });
+        })();
+
+        return PaginationControlsDirective;
+      }();
+
+      var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+        var c = arguments.length,
+            r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+            d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+          if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        }
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+      };
+
+      var _NgxPaginationModule =
+      /** @class */
+      function () {
+        function NgxPaginationModule() {}
+
+        NgxPaginationModule.ɵfac = function NgxPaginationModule_Factory(t) {
+          return new (t || NgxPaginationModule)();
+        };
+
+        NgxPaginationModule.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({
+          type: NgxPaginationModule
+        });
+        NgxPaginationModule.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+          providers: [_PaginationService],
+          imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__.CommonModule]]
+        });
+
+        (function () {
+          (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](NgxPaginationModule, [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.NgModule,
+            args: [{
+              imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__.CommonModule],
+              declarations: [_PaginatePipe, _PaginationControlsComponent, _PaginationControlsDirective],
+              providers: [_PaginationService],
+              exports: [_PaginatePipe, _PaginationControlsComponent, _PaginationControlsDirective]
+            }]
+          }], function () {
+            return [];
+          }, null);
+        })();
+
+        (function () {
+          (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](NgxPaginationModule, {
+            declarations: function declarations() {
+              return [_PaginatePipe, _PaginationControlsComponent, _PaginationControlsDirective];
+            },
+            imports: function imports() {
+              return [_angular_common__WEBPACK_IMPORTED_MODULE_1__.CommonModule];
+            },
+            exports: function exports() {
+              return [_PaginatePipe, _PaginationControlsComponent, _PaginationControlsDirective];
+            }
+          });
+        })();
+
+        return NgxPaginationModule;
+      }();
+      /**
+       * Generated bundle index. Do not edit.
+       */
+      //# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmd4LXBhZ2luYXRpb24uanMiLCJzb3VyY2VzIjpbIm5neC1wYWdpbmF0aW9uLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7O0FBQU07QUFDTjtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxpQ0FLTztBQUNQOzs7Ozs7Ozs7MkVBQXFCO0FBQ3JCO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztvQkFTb0M7QUFDcEM7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsZ0RBS087QUFDUDtBQUNBOzs7Ozs7Ozs7Ozs7Ozs7OztvQkFBb0M7QUFDcEM7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7Ozs7Ozs7Ozs7Ozs7Ozt1WUFZNEI7QUFDNUI7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENoYW5nZURldGVjdGlvblN0cmF0ZWd5LCBDaGFuZ2VEZXRlY3RvclJlZiwgQ29tcG9uZW50LCBEaXJlY3RpdmUsIEV2ZW50RW1pdHRlciwgSW5wdXQsIE5nTW9kdWxlLCBPdXRwdXQsIFBpcGUsIFZpZXdFbmNhcHN1bGF0aW9uIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuXG52YXIgUGFnaW5hdGlvblNlcnZpY2UgPSAvKiogQGNsYXNzICovIChmdW5jdGlvbiAoKSB7XHJcbiAgICBmdW5jdGlvbiBQYWdpbmF0aW9uU2VydmljZSgpIHtcclxuICAgICAgICB0aGlzLmNoYW5nZSA9IG5ldyBFdmVudEVtaXR0ZXIoKTtcclxuICAgICAgICB0aGlzLmluc3RhbmNlcyA9IHt9O1xyXG4gICAgICAgIHRoaXMuREVGQVVMVF9JRCA9ICdERUZBVUxUX1BBR0lOQVRJT05fSUQnO1xyXG4gICAgfVxyXG4gICAgUGFnaW5hdGlvblNlcnZpY2UucHJvdG90eXBlLmRlZmF1bHRJZCA9IGZ1bmN0aW9uICgpIHsgcmV0dXJuIHRoaXMuREVGQVVMVF9JRDsgfTtcclxuICAgIC8qKlxyXG4gICAgICogUmVnaXN0ZXIgYSBQYWdpbmF0aW9uSW5zdGFuY2Ugd2l0aCB0aGlzIHNlcnZpY2UuIFJldHVybnMgYVxyXG4gICAgICogYm9vbGVhbiB2YWx1ZSBzaWduaWZ5aW5nIHdoZXRoZXIgdGhlIGluc3RhbmNlIGlzIG5ldyBvclxyXG4gICAgICogdXBkYXRlZCAodHJ1ZSA9IG5ldyBvciB1cGRhdGVkLCBmYWxzZSA9IHVuY2hhbmdlZCkuXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25TZXJ2aWNlLnByb3RvdHlwZS5yZWdpc3RlciA9IGZ1bmN0aW9uIChpbnN0YW5jZSkge1xyXG4gICAgICAgIGlmIChpbnN0YW5jZS5pZCA9PSBudWxsKSB7XHJcbiAgICAgICAgICAgIGluc3RhbmNlLmlkID0gdGhpcy5ERUZBVUxUX0lEO1xyXG4gICAgICAgIH1cclxuICAgICAgICBpZiAoIXRoaXMuaW5zdGFuY2VzW2luc3RhbmNlLmlkXSkge1xyXG4gICAgICAgICAgICB0aGlzLmluc3RhbmNlc1tpbnN0YW5jZS5pZF0gPSBpbnN0YW5jZTtcclxuICAgICAgICAgICAgcmV0dXJuIHRydWU7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGVsc2Uge1xyXG4gICAgICAgICAgICByZXR1cm4gdGhpcy51cGRhdGVJbnN0YW5jZShpbnN0YW5jZSk7XHJcbiAgICAgICAgfVxyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogQ2hlY2sgZWFjaCBwcm9wZXJ0eSBvZiB0aGUgaW5zdGFuY2UgYW5kIHVwZGF0ZSBhbnkgdGhhdCBoYXZlIGNoYW5nZWQuIFJldHVyblxyXG4gICAgICogdHJ1ZSBpZiBhbnkgY2hhbmdlcyB3ZXJlIG1hZGUsIGVsc2UgcmV0dXJuIGZhbHNlLlxyXG4gICAgICovXHJcbiAgICBQYWdpbmF0aW9uU2VydmljZS5wcm90b3R5cGUudXBkYXRlSW5zdGFuY2UgPSBmdW5jdGlvbiAoaW5zdGFuY2UpIHtcclxuICAgICAgICB2YXIgY2hhbmdlZCA9IGZhbHNlO1xyXG4gICAgICAgIGZvciAodmFyIHByb3AgaW4gdGhpcy5pbnN0YW5jZXNbaW5zdGFuY2UuaWRdKSB7XHJcbiAgICAgICAgICAgIGlmIChpbnN0YW5jZVtwcm9wXSAhPT0gdGhpcy5pbnN0YW5jZXNbaW5zdGFuY2UuaWRdW3Byb3BdKSB7XHJcbiAgICAgICAgICAgICAgICB0aGlzLmluc3RhbmNlc1tpbnN0YW5jZS5pZF1bcHJvcF0gPSBpbnN0YW5jZVtwcm9wXTtcclxuICAgICAgICAgICAgICAgIGNoYW5nZWQgPSB0cnVlO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgIHJldHVybiBjaGFuZ2VkO1xyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogUmV0dXJucyB0aGUgY3VycmVudCBwYWdlIG51bWJlci5cclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvblNlcnZpY2UucHJvdG90eXBlLmdldEN1cnJlbnRQYWdlID0gZnVuY3Rpb24gKGlkKSB7XHJcbiAgICAgICAgaWYgKHRoaXMuaW5zdGFuY2VzW2lkXSkge1xyXG4gICAgICAgICAgICByZXR1cm4gdGhpcy5pbnN0YW5jZXNbaWRdLmN1cnJlbnRQYWdlO1xyXG4gICAgICAgIH1cclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIFNldHMgdGhlIGN1cnJlbnQgcGFnZSBudW1iZXIuXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25TZXJ2aWNlLnByb3RvdHlwZS5zZXRDdXJyZW50UGFnZSA9IGZ1bmN0aW9uIChpZCwgcGFnZSkge1xyXG4gICAgICAgIGlmICh0aGlzLmluc3RhbmNlc1tpZF0pIHtcclxuICAgICAgICAgICAgdmFyIGluc3RhbmNlID0gdGhpcy5pbnN0YW5jZXNbaWRdO1xyXG4gICAgICAgICAgICB2YXIgbWF4UGFnZSA9IE1hdGguY2VpbChpbnN0YW5jZS50b3RhbEl0ZW1zIC8gaW5zdGFuY2UuaXRlbXNQZXJQYWdlKTtcclxuICAgICAgICAgICAgaWYgKHBhZ2UgPD0gbWF4UGFnZSAmJiAxIDw9IHBhZ2UpIHtcclxuICAgICAgICAgICAgICAgIHRoaXMuaW5zdGFuY2VzW2lkXS5jdXJyZW50UGFnZSA9IHBhZ2U7XHJcbiAgICAgICAgICAgICAgICB0aGlzLmNoYW5nZS5lbWl0KGlkKTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIFNldHMgdGhlIHZhbHVlIG9mIGluc3RhbmNlLnRvdGFsSXRlbXNcclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvblNlcnZpY2UucHJvdG90eXBlLnNldFRvdGFsSXRlbXMgPSBmdW5jdGlvbiAoaWQsIHRvdGFsSXRlbXMpIHtcclxuICAgICAgICBpZiAodGhpcy5pbnN0YW5jZXNbaWRdICYmIDAgPD0gdG90YWxJdGVtcykge1xyXG4gICAgICAgICAgICB0aGlzLmluc3RhbmNlc1tpZF0udG90YWxJdGVtcyA9IHRvdGFsSXRlbXM7XHJcbiAgICAgICAgICAgIHRoaXMuY2hhbmdlLmVtaXQoaWQpO1xyXG4gICAgICAgIH1cclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIFNldHMgdGhlIHZhbHVlIG9mIGluc3RhbmNlLml0ZW1zUGVyUGFnZS5cclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvblNlcnZpY2UucHJvdG90eXBlLnNldEl0ZW1zUGVyUGFnZSA9IGZ1bmN0aW9uIChpZCwgaXRlbXNQZXJQYWdlKSB7XHJcbiAgICAgICAgaWYgKHRoaXMuaW5zdGFuY2VzW2lkXSkge1xyXG4gICAgICAgICAgICB0aGlzLmluc3RhbmNlc1tpZF0uaXRlbXNQZXJQYWdlID0gaXRlbXNQZXJQYWdlO1xyXG4gICAgICAgICAgICB0aGlzLmNoYW5nZS5lbWl0KGlkKTtcclxuICAgICAgICB9XHJcbiAgICB9O1xyXG4gICAgLyoqXHJcbiAgICAgKiBSZXR1cm5zIGEgY2xvbmUgb2YgdGhlIHBhZ2luYXRpb24gaW5zdGFuY2Ugb2JqZWN0IG1hdGNoaW5nIHRoZSBpZC4gSWYgbm9cclxuICAgICAqIGlkIHNwZWNpZmllZCwgcmV0dXJucyB0aGUgaW5zdGFuY2UgY29ycmVzcG9uZGluZyB0byB0aGUgZGVmYXVsdCBpZC5cclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvblNlcnZpY2UucHJvdG90eXBlLmdldEluc3RhbmNlID0gZnVuY3Rpb24gKGlkKSB7XHJcbiAgICAgICAgaWYgKGlkID09PSB2b2lkIDApIHsgaWQgPSB0aGlzLkRFRkFVTFRfSUQ7IH1cclxuICAgICAgICBpZiAodGhpcy5pbnN0YW5jZXNbaWRdKSB7XHJcbiAgICAgICAgICAgIHJldHVybiB0aGlzLmNsb25lKHRoaXMuaW5zdGFuY2VzW2lkXSk7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIHJldHVybiB7fTtcclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIFBlcmZvcm0gYSBzaGFsbG93IGNsb25lIG9mIGFuIG9iamVjdC5cclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvblNlcnZpY2UucHJvdG90eXBlLmNsb25lID0gZnVuY3Rpb24gKG9iaikge1xyXG4gICAgICAgIHZhciB0YXJnZXQgPSB7fTtcclxuICAgICAgICBmb3IgKHZhciBpIGluIG9iaikge1xyXG4gICAgICAgICAgICBpZiAob2JqLmhhc093blByb3BlcnR5KGkpKSB7XHJcbiAgICAgICAgICAgICAgICB0YXJnZXRbaV0gPSBvYmpbaV07XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgcmV0dXJuIHRhcmdldDtcclxuICAgIH07XHJcbiAgICByZXR1cm4gUGFnaW5hdGlvblNlcnZpY2U7XHJcbn0oKSk7XG5cbnZhciBfX2RlY29yYXRlJDEgPSAodW5kZWZpbmVkICYmIHVuZGVmaW5lZC5fX2RlY29yYXRlKSB8fCBmdW5jdGlvbiAoZGVjb3JhdG9ycywgdGFyZ2V0LCBrZXksIGRlc2MpIHtcclxuICAgIHZhciBjID0gYXJndW1lbnRzLmxlbmd0aCwgciA9IGMgPCAzID8gdGFyZ2V0IDogZGVzYyA9PT0gbnVsbCA/IGRlc2MgPSBPYmplY3QuZ2V0T3duUHJvcGVydHlEZXNjcmlwdG9yKHRhcmdldCwga2V5KSA6IGRlc2MsIGQ7XHJcbiAgICBpZiAodHlwZW9mIFJlZmxlY3QgPT09IFwib2JqZWN0XCIgJiYgdHlwZW9mIFJlZmxlY3QuZGVjb3JhdGUgPT09IFwiZnVuY3Rpb25cIikgciA9IFJlZmxlY3QuZGVjb3JhdGUoZGVjb3JhdG9ycywgdGFyZ2V0LCBrZXksIGRlc2MpO1xyXG4gICAgZWxzZSBmb3IgKHZhciBpID0gZGVjb3JhdG9ycy5sZW5ndGggLSAxOyBpID49IDA7IGktLSkgaWYgKGQgPSBkZWNvcmF0b3JzW2ldKSByID0gKGMgPCAzID8gZChyKSA6IGMgPiAzID8gZCh0YXJnZXQsIGtleSwgcikgOiBkKHRhcmdldCwga2V5KSkgfHwgcjtcclxuICAgIHJldHVybiBjID4gMyAmJiByICYmIE9iamVjdC5kZWZpbmVQcm9wZXJ0eSh0YXJnZXQsIGtleSwgciksIHI7XHJcbn07XHJcbnZhciBfX21ldGFkYXRhID0gKHVuZGVmaW5lZCAmJiB1bmRlZmluZWQuX19tZXRhZGF0YSkgfHwgZnVuY3Rpb24gKGssIHYpIHtcclxuICAgIGlmICh0eXBlb2YgUmVmbGVjdCA9PT0gXCJvYmplY3RcIiAmJiB0eXBlb2YgUmVmbGVjdC5tZXRhZGF0YSA9PT0gXCJmdW5jdGlvblwiKSByZXR1cm4gUmVmbGVjdC5tZXRhZGF0YShrLCB2KTtcclxufTtcclxudmFyIExBUkdFX05VTUJFUiA9IE51bWJlci5NQVhfU0FGRV9JTlRFR0VSO1xyXG52YXIgUGFnaW5hdGVQaXBlID0gLyoqIEBjbGFzcyAqLyAoZnVuY3Rpb24gKCkge1xyXG4gICAgZnVuY3Rpb24gUGFnaW5hdGVQaXBlKHNlcnZpY2UpIHtcclxuICAgICAgICB0aGlzLnNlcnZpY2UgPSBzZXJ2aWNlO1xyXG4gICAgICAgIC8vIHN0b3JlIHRoZSB2YWx1ZXMgZnJvbSB0aGUgbGFzdCB0aW1lIHRoZSBwaXBlIHdhcyBpbnZva2VkXHJcbiAgICAgICAgdGhpcy5zdGF0ZSA9IHt9O1xyXG4gICAgfVxyXG4gICAgUGFnaW5hdGVQaXBlLnByb3RvdHlwZS50cmFuc2Zvcm0gPSBmdW5jdGlvbiAoY29sbGVjdGlvbiwgYXJncykge1xyXG4gICAgICAgIC8vIFdoZW4gYW4gb2JzZXJ2YWJsZSBpcyBwYXNzZWQgdGhyb3VnaCB0aGUgQXN5bmNQaXBlLCBpdCB3aWxsIG91dHB1dFxyXG4gICAgICAgIC8vIGBudWxsYCB1bnRpbCB0aGUgc3Vic2NyaXB0aW9uIHJlc29sdmVzLiBJbiB0aGlzIGNhc2UsIHdlIHdhbnQgdG9cclxuICAgICAgICAvLyB1c2UgdGhlIGNhY2hlZCBkYXRhIGZyb20gdGhlIGBzdGF0ZWAgb2JqZWN0IHRvIHByZXZlbnQgdGhlIE5nRm9yXHJcbiAgICAgICAgLy8gZnJvbSBmbGFzaGluZyBlbXB0eSB1bnRpbCB0aGUgcmVhbCB2YWx1ZXMgYXJyaXZlLlxyXG4gICAgICAgIGlmICghKGNvbGxlY3Rpb24gaW5zdGFuY2VvZiBBcnJheSkpIHtcclxuICAgICAgICAgICAgdmFyIF9pZCA9IGFyZ3MuaWQgfHwgdGhpcy5zZXJ2aWNlLmRlZmF1bHRJZCgpO1xyXG4gICAgICAgICAgICBpZiAodGhpcy5zdGF0ZVtfaWRdKSB7XHJcbiAgICAgICAgICAgICAgICByZXR1cm4gdGhpcy5zdGF0ZVtfaWRdLnNsaWNlO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIGVsc2Uge1xyXG4gICAgICAgICAgICAgICAgcmV0dXJuIGNvbGxlY3Rpb247XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgdmFyIHNlcnZlclNpZGVNb2RlID0gYXJncy50b3RhbEl0ZW1zICYmIGFyZ3MudG90YWxJdGVtcyAhPT0gY29sbGVjdGlvbi5sZW5ndGg7XHJcbiAgICAgICAgdmFyIGluc3RhbmNlID0gdGhpcy5jcmVhdGVJbnN0YW5jZShjb2xsZWN0aW9uLCBhcmdzKTtcclxuICAgICAgICB2YXIgaWQgPSBpbnN0YW5jZS5pZDtcclxuICAgICAgICB2YXIgc3RhcnQsIGVuZDtcclxuICAgICAgICB2YXIgcGVyUGFnZSA9IGluc3RhbmNlLml0ZW1zUGVyUGFnZTtcclxuICAgICAgICB2YXIgZW1pdENoYW5nZSA9IHRoaXMuc2VydmljZS5yZWdpc3RlcihpbnN0YW5jZSk7XHJcbiAgICAgICAgaWYgKCFzZXJ2ZXJTaWRlTW9kZSAmJiBjb2xsZWN0aW9uIGluc3RhbmNlb2YgQXJyYXkpIHtcclxuICAgICAgICAgICAgcGVyUGFnZSA9ICtwZXJQYWdlIHx8IExBUkdFX05VTUJFUjtcclxuICAgICAgICAgICAgc3RhcnQgPSAoaW5zdGFuY2UuY3VycmVudFBhZ2UgLSAxKSAqIHBlclBhZ2U7XHJcbiAgICAgICAgICAgIGVuZCA9IHN0YXJ0ICsgcGVyUGFnZTtcclxuICAgICAgICAgICAgdmFyIGlzSWRlbnRpY2FsID0gdGhpcy5zdGF0ZUlzSWRlbnRpY2FsKGlkLCBjb2xsZWN0aW9uLCBzdGFydCwgZW5kKTtcclxuICAgICAgICAgICAgaWYgKGlzSWRlbnRpY2FsKSB7XHJcbiAgICAgICAgICAgICAgICByZXR1cm4gdGhpcy5zdGF0ZVtpZF0uc2xpY2U7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgZWxzZSB7XHJcbiAgICAgICAgICAgICAgICB2YXIgc2xpY2UgPSBjb2xsZWN0aW9uLnNsaWNlKHN0YXJ0LCBlbmQpO1xyXG4gICAgICAgICAgICAgICAgdGhpcy5zYXZlU3RhdGUoaWQsIGNvbGxlY3Rpb24sIHNsaWNlLCBzdGFydCwgZW5kKTtcclxuICAgICAgICAgICAgICAgIHRoaXMuc2VydmljZS5jaGFuZ2UuZW1pdChpZCk7XHJcbiAgICAgICAgICAgICAgICByZXR1cm4gc2xpY2U7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgZWxzZSB7XHJcbiAgICAgICAgICAgIGlmIChlbWl0Q2hhbmdlKSB7XHJcbiAgICAgICAgICAgICAgICB0aGlzLnNlcnZpY2UuY2hhbmdlLmVtaXQoaWQpO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIC8vIHNhdmUgdGhlIHN0YXRlIGZvciBzZXJ2ZXItc2lkZSBjb2xsZWN0aW9uIHRvIGF2b2lkIG51bGxcclxuICAgICAgICAgICAgLy8gZmxhc2ggYXMgbmV3IGRhdGEgbG9hZHMuXHJcbiAgICAgICAgICAgIHRoaXMuc2F2ZVN0YXRlKGlkLCBjb2xsZWN0aW9uLCBjb2xsZWN0aW9uLCBzdGFydCwgZW5kKTtcclxuICAgICAgICAgICAgcmV0dXJuIGNvbGxlY3Rpb247XHJcbiAgICAgICAgfVxyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogQ3JlYXRlIGFuIFBhZ2luYXRpb25JbnN0YW5jZSBvYmplY3QsIHVzaW5nIGRlZmF1bHRzIGZvciBhbnkgb3B0aW9uYWwgcHJvcGVydGllcyBub3Qgc3VwcGxpZWQuXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRlUGlwZS5wcm90b3R5cGUuY3JlYXRlSW5zdGFuY2UgPSBmdW5jdGlvbiAoY29sbGVjdGlvbiwgY29uZmlnKSB7XHJcbiAgICAgICAgdGhpcy5jaGVja0NvbmZpZyhjb25maWcpO1xyXG4gICAgICAgIHJldHVybiB7XHJcbiAgICAgICAgICAgIGlkOiBjb25maWcuaWQgIT0gbnVsbCA/IGNvbmZpZy5pZCA6IHRoaXMuc2VydmljZS5kZWZhdWx0SWQoKSxcclxuICAgICAgICAgICAgaXRlbXNQZXJQYWdlOiArY29uZmlnLml0ZW1zUGVyUGFnZSB8fCAwLFxyXG4gICAgICAgICAgICBjdXJyZW50UGFnZTogK2NvbmZpZy5jdXJyZW50UGFnZSB8fCAxLFxyXG4gICAgICAgICAgICB0b3RhbEl0ZW1zOiArY29uZmlnLnRvdGFsSXRlbXMgfHwgY29sbGVjdGlvbi5sZW5ndGhcclxuICAgICAgICB9O1xyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogRW5zdXJlIHRoZSBhcmd1bWVudCBwYXNzZWQgdG8gdGhlIGZpbHRlciBjb250YWlucyB0aGUgcmVxdWlyZWQgcHJvcGVydGllcy5cclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGVQaXBlLnByb3RvdHlwZS5jaGVja0NvbmZpZyA9IGZ1bmN0aW9uIChjb25maWcpIHtcclxuICAgICAgICB2YXIgcmVxdWlyZWQgPSBbJ2l0ZW1zUGVyUGFnZScsICdjdXJyZW50UGFnZSddO1xyXG4gICAgICAgIHZhciBtaXNzaW5nID0gcmVxdWlyZWQuZmlsdGVyKGZ1bmN0aW9uIChwcm9wKSB7IHJldHVybiAhKHByb3AgaW4gY29uZmlnKTsgfSk7XHJcbiAgICAgICAgaWYgKDAgPCBtaXNzaW5nLmxlbmd0aCkge1xyXG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoXCJQYWdpbmF0ZVBpcGU6IEFyZ3VtZW50IGlzIG1pc3NpbmcgdGhlIGZvbGxvd2luZyByZXF1aXJlZCBwcm9wZXJ0aWVzOiBcIiArIG1pc3Npbmcuam9pbignLCAnKSk7XHJcbiAgICAgICAgfVxyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogVG8gYXZvaWQgcmV0dXJuaW5nIGEgYnJhbmQgbmV3IGFycmF5IGVhY2ggdGltZSB0aGUgcGlwZSBpcyBydW4sIHdlIHN0b3JlIHRoZSBzdGF0ZSBvZiB0aGUgc2xpY2VkXHJcbiAgICAgKiBhcnJheSBmb3IgYSBnaXZlbiBpZC4gVGhpcyBtZWFucyB0aGF0IHRoZSBuZXh0IHRpbWUgdGhlIHBpcGUgaXMgcnVuIG9uIHRoaXMgY29sbGVjdGlvbiAmIGlkLCB3ZSBqdXN0XHJcbiAgICAgKiBuZWVkIHRvIGNoZWNrIHRoYXQgdGhlIGNvbGxlY3Rpb24sIHN0YXJ0IGFuZCBlbmQgcG9pbnRzIGFyZSBhbGwgaWRlbnRpY2FsLCBhbmQgaWYgc28sIHJldHVybiB0aGVcclxuICAgICAqIGxhc3Qgc2xpY2VkIGFycmF5LlxyXG4gICAgICovXHJcbiAgICBQYWdpbmF0ZVBpcGUucHJvdG90eXBlLnNhdmVTdGF0ZSA9IGZ1bmN0aW9uIChpZCwgY29sbGVjdGlvbiwgc2xpY2UsIHN0YXJ0LCBlbmQpIHtcclxuICAgICAgICB0aGlzLnN0YXRlW2lkXSA9IHtcclxuICAgICAgICAgICAgY29sbGVjdGlvbjogY29sbGVjdGlvbixcclxuICAgICAgICAgICAgc2l6ZTogY29sbGVjdGlvbi5sZW5ndGgsXHJcbiAgICAgICAgICAgIHNsaWNlOiBzbGljZSxcclxuICAgICAgICAgICAgc3RhcnQ6IHN0YXJ0LFxyXG4gICAgICAgICAgICBlbmQ6IGVuZFxyXG4gICAgICAgIH07XHJcbiAgICB9O1xyXG4gICAgLyoqXHJcbiAgICAgKiBGb3IgYSBnaXZlbiBpZCwgcmV0dXJucyB0cnVlIGlmIHRoZSBjb2xsZWN0aW9uLCBzaXplLCBzdGFydCBhbmQgZW5kIHZhbHVlcyBhcmUgaWRlbnRpY2FsLlxyXG4gICAgICovXHJcbiAgICBQYWdpbmF0ZVBpcGUucHJvdG90eXBlLnN0YXRlSXNJZGVudGljYWwgPSBmdW5jdGlvbiAoaWQsIGNvbGxlY3Rpb24sIHN0YXJ0LCBlbmQpIHtcclxuICAgICAgICB2YXIgc3RhdGUgPSB0aGlzLnN0YXRlW2lkXTtcclxuICAgICAgICBpZiAoIXN0YXRlKSB7XHJcbiAgICAgICAgICAgIHJldHVybiBmYWxzZTtcclxuICAgICAgICB9XHJcbiAgICAgICAgdmFyIGlzTWV0YURhdGFJZGVudGljYWwgPSBzdGF0ZS5zaXplID09PSBjb2xsZWN0aW9uLmxlbmd0aCAmJlxyXG4gICAgICAgICAgICBzdGF0ZS5zdGFydCA9PT0gc3RhcnQgJiZcclxuICAgICAgICAgICAgc3RhdGUuZW5kID09PSBlbmQ7XHJcbiAgICAgICAgaWYgKCFpc01ldGFEYXRhSWRlbnRpY2FsKSB7XHJcbiAgICAgICAgICAgIHJldHVybiBmYWxzZTtcclxuICAgICAgICB9XHJcbiAgICAgICAgcmV0dXJuIHN0YXRlLnNsaWNlLmV2ZXJ5KGZ1bmN0aW9uIChlbGVtZW50LCBpbmRleCkgeyByZXR1cm4gZWxlbWVudCA9PT0gY29sbGVjdGlvbltzdGFydCArIGluZGV4XTsgfSk7XHJcbiAgICB9O1xyXG4gICAgUGFnaW5hdGVQaXBlID0gX19kZWNvcmF0ZSQxKFtcclxuICAgICAgICBQaXBlKHtcclxuICAgICAgICAgICAgbmFtZTogJ3BhZ2luYXRlJyxcclxuICAgICAgICAgICAgcHVyZTogZmFsc2VcclxuICAgICAgICB9KSxcclxuICAgICAgICBfX21ldGFkYXRhKFwiZGVzaWduOnBhcmFtdHlwZXNcIiwgW1BhZ2luYXRpb25TZXJ2aWNlXSlcclxuICAgIF0sIFBhZ2luYXRlUGlwZSk7XHJcbiAgICByZXR1cm4gUGFnaW5hdGVQaXBlO1xyXG59KCkpO1xuXG4vKipcclxuICogVGhlIGRlZmF1bHQgdGVtcGxhdGUgYW5kIHN0eWxlcyBmb3IgdGhlIHBhZ2luYXRpb24gbGlua3MgYXJlIGJvcnJvd2VkIGRpcmVjdGx5XHJcbiAqIGZyb20gWnVyYiBGb3VuZGF0aW9uIDY6IGh0dHA6Ly9mb3VuZGF0aW9uLnp1cmIuY29tL3NpdGVzL2RvY3MvcGFnaW5hdGlvbi5odG1sXHJcbiAqL1xyXG52YXIgREVGQVVMVF9URU1QTEFURSA9IFwiXFxuICAgIDxwYWdpbmF0aW9uLXRlbXBsYXRlICAjcD1cXFwicGFnaW5hdGlvbkFwaVxcXCJcXG4gICAgICAgICAgICAgICAgICAgICAgICAgW2lkXT1cXFwiaWRcXFwiXFxuICAgICAgICAgICAgICAgICAgICAgICAgIFttYXhTaXplXT1cXFwibWF4U2l6ZVxcXCJcXG4gICAgICAgICAgICAgICAgICAgICAgICAgKHBhZ2VDaGFuZ2UpPVxcXCJwYWdlQ2hhbmdlLmVtaXQoJGV2ZW50KVxcXCJcXG4gICAgICAgICAgICAgICAgICAgICAgICAgKHBhZ2VCb3VuZHNDb3JyZWN0aW9uKT1cXFwicGFnZUJvdW5kc0NvcnJlY3Rpb24uZW1pdCgkZXZlbnQpXFxcIj5cXG4gICAgPHVsIGNsYXNzPVxcXCJuZ3gtcGFnaW5hdGlvblxcXCJcXG4gICAgICAgIFthdHRyLmFyaWEtbGFiZWxdPVxcXCJzY3JlZW5SZWFkZXJQYWdpbmF0aW9uTGFiZWxcXFwiIFxcbiAgICAgICAgW2NsYXNzLnJlc3BvbnNpdmVdPVxcXCJyZXNwb25zaXZlXFxcIlxcbiAgICAgICAgKm5nSWY9XFxcIiEoYXV0b0hpZGUgJiYgcC5wYWdlcy5sZW5ndGggPD0gMSlcXFwiPlxcblxcbiAgICAgICAgPGxpIGNsYXNzPVxcXCJwYWdpbmF0aW9uLXByZXZpb3VzXFxcIiBbY2xhc3MuZGlzYWJsZWRdPVxcXCJwLmlzRmlyc3RQYWdlKClcXFwiICpuZ0lmPVxcXCJkaXJlY3Rpb25MaW5rc1xcXCI+IFxcbiAgICAgICAgICAgIDxhIHRhYmluZGV4PVxcXCIwXFxcIiAqbmdJZj1cXFwiMSA8IHAuZ2V0Q3VycmVudCgpXFxcIiAoa2V5dXAuZW50ZXIpPVxcXCJwLnByZXZpb3VzKClcXFwiIChjbGljayk9XFxcInAucHJldmlvdXMoKVxcXCIgW2F0dHIuYXJpYS1sYWJlbF09XFxcInByZXZpb3VzTGFiZWwgKyAnICcgKyBzY3JlZW5SZWFkZXJQYWdlTGFiZWxcXFwiPlxcbiAgICAgICAgICAgICAgICB7eyBwcmV2aW91c0xhYmVsIH19IDxzcGFuIGNsYXNzPVxcXCJzaG93LWZvci1zclxcXCI+e3sgc2NyZWVuUmVhZGVyUGFnZUxhYmVsIH19PC9zcGFuPlxcbiAgICAgICAgICAgIDwvYT5cXG4gICAgICAgICAgICA8c3BhbiAqbmdJZj1cXFwicC5pc0ZpcnN0UGFnZSgpXFxcIj5cXG4gICAgICAgICAgICAgICAge3sgcHJldmlvdXNMYWJlbCB9fSA8c3BhbiBjbGFzcz1cXFwic2hvdy1mb3Itc3JcXFwiPnt7IHNjcmVlblJlYWRlclBhZ2VMYWJlbCB9fTwvc3Bhbj5cXG4gICAgICAgICAgICA8L3NwYW4+XFxuICAgICAgICA8L2xpPiBcXG5cXG4gICAgICAgIDxsaSBjbGFzcz1cXFwic21hbGwtc2NyZWVuXFxcIj5cXG4gICAgICAgICAgICB7eyBwLmdldEN1cnJlbnQoKSB9fSAvIHt7IHAuZ2V0TGFzdFBhZ2UoKSB9fVxcbiAgICAgICAgPC9saT5cXG5cXG4gICAgICAgIDxsaSBbY2xhc3MuY3VycmVudF09XFxcInAuZ2V0Q3VycmVudCgpID09PSBwYWdlLnZhbHVlXFxcIiBcXG4gICAgICAgICAgICBbY2xhc3MuZWxsaXBzaXNdPVxcXCJwYWdlLmxhYmVsID09PSAnLi4uJ1xcXCJcXG4gICAgICAgICAgICAqbmdGb3I9XFxcImxldCBwYWdlIG9mIHAucGFnZXM7IHRyYWNrQnk6IHRyYWNrQnlJbmRleFxcXCI+XFxuICAgICAgICAgICAgPGEgdGFiaW5kZXg9XFxcIjBcXFwiIChrZXl1cC5lbnRlcik9XFxcInAuc2V0Q3VycmVudChwYWdlLnZhbHVlKVxcXCIgKGNsaWNrKT1cXFwicC5zZXRDdXJyZW50KHBhZ2UudmFsdWUpXFxcIiAqbmdJZj1cXFwicC5nZXRDdXJyZW50KCkgIT09IHBhZ2UudmFsdWVcXFwiPlxcbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzcz1cXFwic2hvdy1mb3Itc3JcXFwiPnt7IHNjcmVlblJlYWRlclBhZ2VMYWJlbCB9fSA8L3NwYW4+XFxuICAgICAgICAgICAgICAgIDxzcGFuPnt7IChwYWdlLmxhYmVsID09PSAnLi4uJykgPyBwYWdlLmxhYmVsIDogKHBhZ2UubGFiZWwgfCBudW1iZXI6JycpIH19PC9zcGFuPlxcbiAgICAgICAgICAgIDwvYT5cXG4gICAgICAgICAgICA8bmctY29udGFpbmVyICpuZ0lmPVxcXCJwLmdldEN1cnJlbnQoKSA9PT0gcGFnZS52YWx1ZVxcXCI+XFxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzPVxcXCJzaG93LWZvci1zclxcXCI+e3sgc2NyZWVuUmVhZGVyQ3VycmVudExhYmVsIH19IDwvc3Bhbj5cXG4gICAgICAgICAgICAgICAgPHNwYW4+e3sgKHBhZ2UubGFiZWwgPT09ICcuLi4nKSA/IHBhZ2UubGFiZWwgOiAocGFnZS5sYWJlbCB8IG51bWJlcjonJykgfX08L3NwYW4+IFxcbiAgICAgICAgICAgIDwvbmctY29udGFpbmVyPlxcbiAgICAgICAgPC9saT5cXG5cXG4gICAgICAgIDxsaSBjbGFzcz1cXFwicGFnaW5hdGlvbi1uZXh0XFxcIiBbY2xhc3MuZGlzYWJsZWRdPVxcXCJwLmlzTGFzdFBhZ2UoKVxcXCIgKm5nSWY9XFxcImRpcmVjdGlvbkxpbmtzXFxcIj5cXG4gICAgICAgICAgICA8YSB0YWJpbmRleD1cXFwiMFxcXCIgKm5nSWY9XFxcIiFwLmlzTGFzdFBhZ2UoKVxcXCIgKGtleXVwLmVudGVyKT1cXFwicC5uZXh0KClcXFwiIChjbGljayk9XFxcInAubmV4dCgpXFxcIiBbYXR0ci5hcmlhLWxhYmVsXT1cXFwibmV4dExhYmVsICsgJyAnICsgc2NyZWVuUmVhZGVyUGFnZUxhYmVsXFxcIj5cXG4gICAgICAgICAgICAgICAgIHt7IG5leHRMYWJlbCB9fSA8c3BhbiBjbGFzcz1cXFwic2hvdy1mb3Itc3JcXFwiPnt7IHNjcmVlblJlYWRlclBhZ2VMYWJlbCB9fTwvc3Bhbj5cXG4gICAgICAgICAgICA8L2E+XFxuICAgICAgICAgICAgPHNwYW4gKm5nSWY9XFxcInAuaXNMYXN0UGFnZSgpXFxcIj5cXG4gICAgICAgICAgICAgICAgIHt7IG5leHRMYWJlbCB9fSA8c3BhbiBjbGFzcz1cXFwic2hvdy1mb3Itc3JcXFwiPnt7IHNjcmVlblJlYWRlclBhZ2VMYWJlbCB9fTwvc3Bhbj5cXG4gICAgICAgICAgICA8L3NwYW4+XFxuICAgICAgICA8L2xpPlxcblxcbiAgICA8L3VsPlxcbiAgICA8L3BhZ2luYXRpb24tdGVtcGxhdGU+XFxuICAgIFwiO1xyXG52YXIgREVGQVVMVF9TVFlMRVMgPSBcIlxcbi5uZ3gtcGFnaW5hdGlvbiB7XFxuICBtYXJnaW4tbGVmdDogMDtcXG4gIG1hcmdpbi1ib3R0b206IDFyZW07IH1cXG4gIC5uZ3gtcGFnaW5hdGlvbjo6YmVmb3JlLCAubmd4LXBhZ2luYXRpb246OmFmdGVyIHtcXG4gICAgY29udGVudDogJyAnO1xcbiAgICBkaXNwbGF5OiB0YWJsZTsgfVxcbiAgLm5neC1wYWdpbmF0aW9uOjphZnRlciB7XFxuICAgIGNsZWFyOiBib3RoOyB9XFxuICAubmd4LXBhZ2luYXRpb24gbGkge1xcbiAgICAtbW96LXVzZXItc2VsZWN0OiBub25lO1xcbiAgICAtd2Via2l0LXVzZXItc2VsZWN0OiBub25lO1xcbiAgICAtbXMtdXNlci1zZWxlY3Q6IG5vbmU7XFxuICAgIG1hcmdpbi1yaWdodDogMC4wNjI1cmVtO1xcbiAgICBib3JkZXItcmFkaXVzOiAwOyB9XFxuICAubmd4LXBhZ2luYXRpb24gbGkge1xcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IH1cXG4gIC5uZ3gtcGFnaW5hdGlvbiBhLFxcbiAgLm5neC1wYWdpbmF0aW9uIGJ1dHRvbiB7XFxuICAgIGNvbG9yOiAjMGEwYTBhOyBcXG4gICAgZGlzcGxheTogYmxvY2s7XFxuICAgIHBhZGRpbmc6IDAuMTg3NXJlbSAwLjYyNXJlbTtcXG4gICAgYm9yZGVyLXJhZGl1czogMDsgfVxcbiAgICAubmd4LXBhZ2luYXRpb24gYTpob3ZlcixcXG4gICAgLm5neC1wYWdpbmF0aW9uIGJ1dHRvbjpob3ZlciB7XFxuICAgICAgYmFja2dyb3VuZDogI2U2ZTZlNjsgfVxcbiAgLm5neC1wYWdpbmF0aW9uIC5jdXJyZW50IHtcXG4gICAgcGFkZGluZzogMC4xODc1cmVtIDAuNjI1cmVtO1xcbiAgICBiYWNrZ3JvdW5kOiAjMjE5OWU4O1xcbiAgICBjb2xvcjogI2ZlZmVmZTtcXG4gICAgY3Vyc29yOiBkZWZhdWx0OyB9XFxuICAubmd4LXBhZ2luYXRpb24gLmRpc2FibGVkIHtcXG4gICAgcGFkZGluZzogMC4xODc1cmVtIDAuNjI1cmVtO1xcbiAgICBjb2xvcjogI2NhY2FjYTtcXG4gICAgY3Vyc29yOiBkZWZhdWx0OyB9IFxcbiAgICAubmd4LXBhZ2luYXRpb24gLmRpc2FibGVkOmhvdmVyIHtcXG4gICAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDsgfVxcbiAgLm5neC1wYWdpbmF0aW9uIGEsIC5uZ3gtcGFnaW5hdGlvbiBidXR0b24ge1xcbiAgICBjdXJzb3I6IHBvaW50ZXI7IH1cXG5cXG4ubmd4LXBhZ2luYXRpb24gLnBhZ2luYXRpb24tcHJldmlvdXMgYTo6YmVmb3JlLFxcbi5uZ3gtcGFnaW5hdGlvbiAucGFnaW5hdGlvbi1wcmV2aW91cy5kaXNhYmxlZDo6YmVmb3JlIHsgXFxuICBjb250ZW50OiAnXFx1MDBBQic7XFxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XFxuICBtYXJnaW4tcmlnaHQ6IDAuNXJlbTsgfVxcblxcbi5uZ3gtcGFnaW5hdGlvbiAucGFnaW5hdGlvbi1uZXh0IGE6OmFmdGVyLFxcbi5uZ3gtcGFnaW5hdGlvbiAucGFnaW5hdGlvbi1uZXh0LmRpc2FibGVkOjphZnRlciB7XFxuICBjb250ZW50OiAnXFx1MDBCQic7XFxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XFxuICBtYXJnaW4tbGVmdDogMC41cmVtOyB9XFxuXFxuLm5neC1wYWdpbmF0aW9uIC5zaG93LWZvci1zciB7XFxuICBwb3NpdGlvbjogYWJzb2x1dGUgIWltcG9ydGFudDtcXG4gIHdpZHRoOiAxcHg7XFxuICBoZWlnaHQ6IDFweDtcXG4gIG92ZXJmbG93OiBoaWRkZW47XFxuICBjbGlwOiByZWN0KDAsIDAsIDAsIDApOyB9XFxuLm5neC1wYWdpbmF0aW9uIC5zbWFsbC1zY3JlZW4ge1xcbiAgZGlzcGxheTogbm9uZTsgfVxcbkBtZWRpYSBzY3JlZW4gYW5kIChtYXgtd2lkdGg6IDYwMXB4KSB7XFxuICAubmd4LXBhZ2luYXRpb24ucmVzcG9uc2l2ZSAuc21hbGwtc2NyZWVuIHtcXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrOyB9IFxcbiAgLm5neC1wYWdpbmF0aW9uLnJlc3BvbnNpdmUgbGk6bm90KC5zbWFsbC1zY3JlZW4pOm5vdCgucGFnaW5hdGlvbi1wcmV2aW91cyk6bm90KC5wYWdpbmF0aW9uLW5leHQpIHtcXG4gICAgZGlzcGxheTogbm9uZTsgfVxcbn1cXG4gIFwiO1xuXG52YXIgX19kZWNvcmF0ZSQyID0gKHVuZGVmaW5lZCAmJiB1bmRlZmluZWQuX19kZWNvcmF0ZSkgfHwgZnVuY3Rpb24gKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKSB7XHJcbiAgICB2YXIgYyA9IGFyZ3VtZW50cy5sZW5ndGgsIHIgPSBjIDwgMyA/IHRhcmdldCA6IGRlc2MgPT09IG51bGwgPyBkZXNjID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcih0YXJnZXQsIGtleSkgOiBkZXNjLCBkO1xyXG4gICAgaWYgKHR5cGVvZiBSZWZsZWN0ID09PSBcIm9iamVjdFwiICYmIHR5cGVvZiBSZWZsZWN0LmRlY29yYXRlID09PSBcImZ1bmN0aW9uXCIpIHIgPSBSZWZsZWN0LmRlY29yYXRlKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKTtcclxuICAgIGVsc2UgZm9yICh2YXIgaSA9IGRlY29yYXRvcnMubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIGlmIChkID0gZGVjb3JhdG9yc1tpXSkgciA9IChjIDwgMyA/IGQocikgOiBjID4gMyA/IGQodGFyZ2V0LCBrZXksIHIpIDogZCh0YXJnZXQsIGtleSkpIHx8IHI7XHJcbiAgICByZXR1cm4gYyA+IDMgJiYgciAmJiBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBrZXksIHIpLCByO1xyXG59O1xyXG52YXIgX19tZXRhZGF0YSQxID0gKHVuZGVmaW5lZCAmJiB1bmRlZmluZWQuX19tZXRhZGF0YSkgfHwgZnVuY3Rpb24gKGssIHYpIHtcclxuICAgIGlmICh0eXBlb2YgUmVmbGVjdCA9PT0gXCJvYmplY3RcIiAmJiB0eXBlb2YgUmVmbGVjdC5tZXRhZGF0YSA9PT0gXCJmdW5jdGlvblwiKSByZXR1cm4gUmVmbGVjdC5tZXRhZGF0YShrLCB2KTtcclxufTtcclxuZnVuY3Rpb24gY29lcmNlVG9Cb29sZWFuKGlucHV0KSB7XHJcbiAgICByZXR1cm4gISFpbnB1dCAmJiBpbnB1dCAhPT0gJ2ZhbHNlJztcclxufVxyXG4vKipcclxuICogVGhlIGRlZmF1bHQgcGFnaW5hdGlvbiBjb250cm9scyBjb21wb25lbnQuIEFjdHVhbGx5IGp1c3QgYSBkZWZhdWx0IGltcGxlbWVudGF0aW9uIG9mIGEgY3VzdG9tIHRlbXBsYXRlLlxyXG4gKi9cclxudmFyIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudCA9IC8qKiBAY2xhc3MgKi8gKGZ1bmN0aW9uICgpIHtcclxuICAgIGZ1bmN0aW9uIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudCgpIHtcclxuICAgICAgICB0aGlzLm1heFNpemUgPSA3O1xyXG4gICAgICAgIHRoaXMucHJldmlvdXNMYWJlbCA9ICdQcmV2aW91cyc7XHJcbiAgICAgICAgdGhpcy5uZXh0TGFiZWwgPSAnTmV4dCc7XHJcbiAgICAgICAgdGhpcy5zY3JlZW5SZWFkZXJQYWdpbmF0aW9uTGFiZWwgPSAnUGFnaW5hdGlvbic7XHJcbiAgICAgICAgdGhpcy5zY3JlZW5SZWFkZXJQYWdlTGFiZWwgPSAncGFnZSc7XHJcbiAgICAgICAgdGhpcy5zY3JlZW5SZWFkZXJDdXJyZW50TGFiZWwgPSBcIllvdSdyZSBvbiBwYWdlXCI7XHJcbiAgICAgICAgdGhpcy5wYWdlQ2hhbmdlID0gbmV3IEV2ZW50RW1pdHRlcigpO1xyXG4gICAgICAgIHRoaXMucGFnZUJvdW5kc0NvcnJlY3Rpb24gPSBuZXcgRXZlbnRFbWl0dGVyKCk7XHJcbiAgICAgICAgdGhpcy5fZGlyZWN0aW9uTGlua3MgPSB0cnVlO1xyXG4gICAgICAgIHRoaXMuX2F1dG9IaWRlID0gZmFsc2U7XHJcbiAgICAgICAgdGhpcy5fcmVzcG9uc2l2ZSA9IGZhbHNlO1xyXG4gICAgfVxyXG4gICAgT2JqZWN0LmRlZmluZVByb3BlcnR5KFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwiZGlyZWN0aW9uTGlua3NcIiwge1xyXG4gICAgICAgIGdldDogZnVuY3Rpb24gKCkge1xyXG4gICAgICAgICAgICByZXR1cm4gdGhpcy5fZGlyZWN0aW9uTGlua3M7XHJcbiAgICAgICAgfSxcclxuICAgICAgICBzZXQ6IGZ1bmN0aW9uICh2YWx1ZSkge1xyXG4gICAgICAgICAgICB0aGlzLl9kaXJlY3Rpb25MaW5rcyA9IGNvZXJjZVRvQm9vbGVhbih2YWx1ZSk7XHJcbiAgICAgICAgfSxcclxuICAgICAgICBlbnVtZXJhYmxlOiB0cnVlLFxyXG4gICAgICAgIGNvbmZpZ3VyYWJsZTogdHJ1ZVxyXG4gICAgfSk7XHJcbiAgICBPYmplY3QuZGVmaW5lUHJvcGVydHkoUGFnaW5hdGlvbkNvbnRyb2xzQ29tcG9uZW50LnByb3RvdHlwZSwgXCJhdXRvSGlkZVwiLCB7XHJcbiAgICAgICAgZ2V0OiBmdW5jdGlvbiAoKSB7XHJcbiAgICAgICAgICAgIHJldHVybiB0aGlzLl9hdXRvSGlkZTtcclxuICAgICAgICB9LFxyXG4gICAgICAgIHNldDogZnVuY3Rpb24gKHZhbHVlKSB7XHJcbiAgICAgICAgICAgIHRoaXMuX2F1dG9IaWRlID0gY29lcmNlVG9Cb29sZWFuKHZhbHVlKTtcclxuICAgICAgICB9LFxyXG4gICAgICAgIGVudW1lcmFibGU6IHRydWUsXHJcbiAgICAgICAgY29uZmlndXJhYmxlOiB0cnVlXHJcbiAgICB9KTtcclxuICAgIE9iamVjdC5kZWZpbmVQcm9wZXJ0eShQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQucHJvdG90eXBlLCBcInJlc3BvbnNpdmVcIiwge1xyXG4gICAgICAgIGdldDogZnVuY3Rpb24gKCkge1xyXG4gICAgICAgICAgICByZXR1cm4gdGhpcy5fcmVzcG9uc2l2ZTtcclxuICAgICAgICB9LFxyXG4gICAgICAgIHNldDogZnVuY3Rpb24gKHZhbHVlKSB7XHJcbiAgICAgICAgICAgIHRoaXMuX3Jlc3BvbnNpdmUgPSBjb2VyY2VUb0Jvb2xlYW4odmFsdWUpO1xyXG4gICAgICAgIH0sXHJcbiAgICAgICAgZW51bWVyYWJsZTogdHJ1ZSxcclxuICAgICAgICBjb25maWd1cmFibGU6IHRydWVcclxuICAgIH0pO1xyXG4gICAgUGFnaW5hdGlvbkNvbnRyb2xzQ29tcG9uZW50LnByb3RvdHlwZS50cmFja0J5SW5kZXggPSBmdW5jdGlvbiAoaW5kZXgpIHtcclxuICAgICAgICByZXR1cm4gaW5kZXg7XHJcbiAgICB9O1xyXG4gICAgX19kZWNvcmF0ZSQyKFtcclxuICAgICAgICBJbnB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjp0eXBlXCIsIFN0cmluZylcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwiaWRcIiwgdm9pZCAwKTtcclxuICAgIF9fZGVjb3JhdGUkMihbXHJcbiAgICAgICAgSW5wdXQoKSxcclxuICAgICAgICBfX21ldGFkYXRhJDEoXCJkZXNpZ246dHlwZVwiLCBOdW1iZXIpXHJcbiAgICBdLCBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQucHJvdG90eXBlLCBcIm1heFNpemVcIiwgdm9pZCAwKTtcclxuICAgIF9fZGVjb3JhdGUkMihbXHJcbiAgICAgICAgSW5wdXQoKSxcclxuICAgICAgICBfX21ldGFkYXRhJDEoXCJkZXNpZ246dHlwZVwiLCBCb29sZWFuKSxcclxuICAgICAgICBfX21ldGFkYXRhJDEoXCJkZXNpZ246cGFyYW10eXBlc1wiLCBbQm9vbGVhbl0pXHJcbiAgICBdLCBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQucHJvdG90eXBlLCBcImRpcmVjdGlvbkxpbmtzXCIsIG51bGwpO1xyXG4gICAgX19kZWNvcmF0ZSQyKFtcclxuICAgICAgICBJbnB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjp0eXBlXCIsIEJvb2xlYW4pLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjpwYXJhbXR5cGVzXCIsIFtCb29sZWFuXSlcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwiYXV0b0hpZGVcIiwgbnVsbCk7XHJcbiAgICBfX2RlY29yYXRlJDIoW1xyXG4gICAgICAgIElucHV0KCksXHJcbiAgICAgICAgX19tZXRhZGF0YSQxKFwiZGVzaWduOnR5cGVcIiwgQm9vbGVhbiksXHJcbiAgICAgICAgX19tZXRhZGF0YSQxKFwiZGVzaWduOnBhcmFtdHlwZXNcIiwgW0Jvb2xlYW5dKVxyXG4gICAgXSwgUGFnaW5hdGlvbkNvbnRyb2xzQ29tcG9uZW50LnByb3RvdHlwZSwgXCJyZXNwb25zaXZlXCIsIG51bGwpO1xyXG4gICAgX19kZWNvcmF0ZSQyKFtcclxuICAgICAgICBJbnB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjp0eXBlXCIsIFN0cmluZylcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwicHJldmlvdXNMYWJlbFwiLCB2b2lkIDApO1xyXG4gICAgX19kZWNvcmF0ZSQyKFtcclxuICAgICAgICBJbnB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjp0eXBlXCIsIFN0cmluZylcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwibmV4dExhYmVsXCIsIHZvaWQgMCk7XHJcbiAgICBfX2RlY29yYXRlJDIoW1xyXG4gICAgICAgIElucHV0KCksXHJcbiAgICAgICAgX19tZXRhZGF0YSQxKFwiZGVzaWduOnR5cGVcIiwgU3RyaW5nKVxyXG4gICAgXSwgUGFnaW5hdGlvbkNvbnRyb2xzQ29tcG9uZW50LnByb3RvdHlwZSwgXCJzY3JlZW5SZWFkZXJQYWdpbmF0aW9uTGFiZWxcIiwgdm9pZCAwKTtcclxuICAgIF9fZGVjb3JhdGUkMihbXHJcbiAgICAgICAgSW5wdXQoKSxcclxuICAgICAgICBfX21ldGFkYXRhJDEoXCJkZXNpZ246dHlwZVwiLCBTdHJpbmcpXHJcbiAgICBdLCBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQucHJvdG90eXBlLCBcInNjcmVlblJlYWRlclBhZ2VMYWJlbFwiLCB2b2lkIDApO1xyXG4gICAgX19kZWNvcmF0ZSQyKFtcclxuICAgICAgICBJbnB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjp0eXBlXCIsIFN0cmluZylcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwic2NyZWVuUmVhZGVyQ3VycmVudExhYmVsXCIsIHZvaWQgMCk7XHJcbiAgICBfX2RlY29yYXRlJDIoW1xyXG4gICAgICAgIE91dHB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMShcImRlc2lnbjp0eXBlXCIsIEV2ZW50RW1pdHRlcilcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudC5wcm90b3R5cGUsIFwicGFnZUNoYW5nZVwiLCB2b2lkIDApO1xyXG4gICAgX19kZWNvcmF0ZSQyKFtcclxuICAgICAgICBPdXRwdXQoKSxcclxuICAgICAgICBfX21ldGFkYXRhJDEoXCJkZXNpZ246dHlwZVwiLCBFdmVudEVtaXR0ZXIpXHJcbiAgICBdLCBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQucHJvdG90eXBlLCBcInBhZ2VCb3VuZHNDb3JyZWN0aW9uXCIsIHZvaWQgMCk7XHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQgPSBfX2RlY29yYXRlJDIoW1xyXG4gICAgICAgIENvbXBvbmVudCh7XHJcbiAgICAgICAgICAgIHNlbGVjdG9yOiAncGFnaW5hdGlvbi1jb250cm9scycsXHJcbiAgICAgICAgICAgIHRlbXBsYXRlOiBERUZBVUxUX1RFTVBMQVRFLFxyXG4gICAgICAgICAgICBzdHlsZXM6IFtERUZBVUxUX1NUWUxFU10sXHJcbiAgICAgICAgICAgIGNoYW5nZURldGVjdGlvbjogQ2hhbmdlRGV0ZWN0aW9uU3RyYXRlZ3kuT25QdXNoLFxyXG4gICAgICAgICAgICBlbmNhcHN1bGF0aW9uOiBWaWV3RW5jYXBzdWxhdGlvbi5Ob25lXHJcbiAgICAgICAgfSlcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudCk7XHJcbiAgICByZXR1cm4gUGFnaW5hdGlvbkNvbnRyb2xzQ29tcG9uZW50O1xyXG59KCkpO1xuXG52YXIgX19kZWNvcmF0ZSQzID0gKHVuZGVmaW5lZCAmJiB1bmRlZmluZWQuX19kZWNvcmF0ZSkgfHwgZnVuY3Rpb24gKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKSB7XHJcbiAgICB2YXIgYyA9IGFyZ3VtZW50cy5sZW5ndGgsIHIgPSBjIDwgMyA/IHRhcmdldCA6IGRlc2MgPT09IG51bGwgPyBkZXNjID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcih0YXJnZXQsIGtleSkgOiBkZXNjLCBkO1xyXG4gICAgaWYgKHR5cGVvZiBSZWZsZWN0ID09PSBcIm9iamVjdFwiICYmIHR5cGVvZiBSZWZsZWN0LmRlY29yYXRlID09PSBcImZ1bmN0aW9uXCIpIHIgPSBSZWZsZWN0LmRlY29yYXRlKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKTtcclxuICAgIGVsc2UgZm9yICh2YXIgaSA9IGRlY29yYXRvcnMubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIGlmIChkID0gZGVjb3JhdG9yc1tpXSkgciA9IChjIDwgMyA/IGQocikgOiBjID4gMyA/IGQodGFyZ2V0LCBrZXksIHIpIDogZCh0YXJnZXQsIGtleSkpIHx8IHI7XHJcbiAgICByZXR1cm4gYyA+IDMgJiYgciAmJiBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBrZXksIHIpLCByO1xyXG59O1xyXG52YXIgX19tZXRhZGF0YSQyID0gKHVuZGVmaW5lZCAmJiB1bmRlZmluZWQuX19tZXRhZGF0YSkgfHwgZnVuY3Rpb24gKGssIHYpIHtcclxuICAgIGlmICh0eXBlb2YgUmVmbGVjdCA9PT0gXCJvYmplY3RcIiAmJiB0eXBlb2YgUmVmbGVjdC5tZXRhZGF0YSA9PT0gXCJmdW5jdGlvblwiKSByZXR1cm4gUmVmbGVjdC5tZXRhZGF0YShrLCB2KTtcclxufTtcclxuLyoqXHJcbiAqIFRoaXMgZGlyZWN0aXZlIGlzIHdoYXQgcG93ZXJzIGFsbCBwYWdpbmF0aW9uIGNvbnRyb2xzIGNvbXBvbmVudHMsIGluY2x1ZGluZyB0aGUgZGVmYXVsdCBvbmUuXHJcbiAqIEl0IGV4cG9zZXMgYW4gQVBJIHdoaWNoIGlzIGhvb2tlZCB1cCB0byB0aGUgUGFnaW5hdGlvblNlcnZpY2UgdG8ga2VlcCB0aGUgUGFnaW5hdGVQaXBlIGluIHN5bmNcclxuICogd2l0aCB0aGUgcGFnaW5hdGlvbiBjb250cm9scy5cclxuICovXHJcbnZhciBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUgPSAvKiogQGNsYXNzICovIChmdW5jdGlvbiAoKSB7XHJcbiAgICBmdW5jdGlvbiBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUoc2VydmljZSwgY2hhbmdlRGV0ZWN0b3JSZWYpIHtcclxuICAgICAgICB2YXIgX3RoaXMgPSB0aGlzO1xyXG4gICAgICAgIHRoaXMuc2VydmljZSA9IHNlcnZpY2U7XHJcbiAgICAgICAgdGhpcy5jaGFuZ2VEZXRlY3RvclJlZiA9IGNoYW5nZURldGVjdG9yUmVmO1xyXG4gICAgICAgIHRoaXMubWF4U2l6ZSA9IDc7XHJcbiAgICAgICAgdGhpcy5wYWdlQ2hhbmdlID0gbmV3IEV2ZW50RW1pdHRlcigpO1xyXG4gICAgICAgIHRoaXMucGFnZUJvdW5kc0NvcnJlY3Rpb24gPSBuZXcgRXZlbnRFbWl0dGVyKCk7XHJcbiAgICAgICAgdGhpcy5wYWdlcyA9IFtdO1xyXG4gICAgICAgIHRoaXMuY2hhbmdlU3ViID0gdGhpcy5zZXJ2aWNlLmNoYW5nZVxyXG4gICAgICAgICAgICAuc3Vic2NyaWJlKGZ1bmN0aW9uIChpZCkge1xyXG4gICAgICAgICAgICBpZiAoX3RoaXMuaWQgPT09IGlkKSB7XHJcbiAgICAgICAgICAgICAgICBfdGhpcy51cGRhdGVQYWdlTGlua3MoKTtcclxuICAgICAgICAgICAgICAgIF90aGlzLmNoYW5nZURldGVjdG9yUmVmLm1hcmtGb3JDaGVjaygpO1xyXG4gICAgICAgICAgICAgICAgX3RoaXMuY2hhbmdlRGV0ZWN0b3JSZWYuZGV0ZWN0Q2hhbmdlcygpO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfSk7XHJcbiAgICB9XHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLm5nT25Jbml0ID0gZnVuY3Rpb24gKCkge1xyXG4gICAgICAgIGlmICh0aGlzLmlkID09PSB1bmRlZmluZWQpIHtcclxuICAgICAgICAgICAgdGhpcy5pZCA9IHRoaXMuc2VydmljZS5kZWZhdWx0SWQoKTtcclxuICAgICAgICB9XHJcbiAgICAgICAgdGhpcy51cGRhdGVQYWdlTGlua3MoKTtcclxuICAgIH07XHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLm5nT25DaGFuZ2VzID0gZnVuY3Rpb24gKGNoYW5nZXMpIHtcclxuICAgICAgICB0aGlzLnVwZGF0ZVBhZ2VMaW5rcygpO1xyXG4gICAgfTtcclxuICAgIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUubmdPbkRlc3Ryb3kgPSBmdW5jdGlvbiAoKSB7XHJcbiAgICAgICAgdGhpcy5jaGFuZ2VTdWIudW5zdWJzY3JpYmUoKTtcclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIEdvIHRvIHRoZSBwcmV2aW91cyBwYWdlXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUucHJldmlvdXMgPSBmdW5jdGlvbiAoKSB7XHJcbiAgICAgICAgdGhpcy5jaGVja1ZhbGlkSWQoKTtcclxuICAgICAgICB0aGlzLnNldEN1cnJlbnQodGhpcy5nZXRDdXJyZW50KCkgLSAxKTtcclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIEdvIHRvIHRoZSBuZXh0IHBhZ2VcclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLnByb3RvdHlwZS5uZXh0ID0gZnVuY3Rpb24gKCkge1xyXG4gICAgICAgIHRoaXMuY2hlY2tWYWxpZElkKCk7XHJcbiAgICAgICAgdGhpcy5zZXRDdXJyZW50KHRoaXMuZ2V0Q3VycmVudCgpICsgMSk7XHJcbiAgICB9O1xyXG4gICAgLyoqXHJcbiAgICAgKiBSZXR1cm5zIHRydWUgaWYgY3VycmVudCBwYWdlIGlzIGZpcnN0IHBhZ2VcclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLnByb3RvdHlwZS5pc0ZpcnN0UGFnZSA9IGZ1bmN0aW9uICgpIHtcclxuICAgICAgICByZXR1cm4gdGhpcy5nZXRDdXJyZW50KCkgPT09IDE7XHJcbiAgICB9O1xyXG4gICAgLyoqXHJcbiAgICAgKiBSZXR1cm5zIHRydWUgaWYgY3VycmVudCBwYWdlIGlzIGxhc3QgcGFnZVxyXG4gICAgICovXHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLmlzTGFzdFBhZ2UgPSBmdW5jdGlvbiAoKSB7XHJcbiAgICAgICAgcmV0dXJuIHRoaXMuZ2V0TGFzdFBhZ2UoKSA9PT0gdGhpcy5nZXRDdXJyZW50KCk7XHJcbiAgICB9O1xyXG4gICAgLyoqXHJcbiAgICAgKiBTZXQgdGhlIGN1cnJlbnQgcGFnZSBudW1iZXIuXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUuc2V0Q3VycmVudCA9IGZ1bmN0aW9uIChwYWdlKSB7XHJcbiAgICAgICAgdGhpcy5wYWdlQ2hhbmdlLmVtaXQocGFnZSk7XHJcbiAgICB9O1xyXG4gICAgLyoqXHJcbiAgICAgKiBHZXQgdGhlIGN1cnJlbnQgcGFnZSBudW1iZXIuXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUuZ2V0Q3VycmVudCA9IGZ1bmN0aW9uICgpIHtcclxuICAgICAgICByZXR1cm4gdGhpcy5zZXJ2aWNlLmdldEN1cnJlbnRQYWdlKHRoaXMuaWQpO1xyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogUmV0dXJucyB0aGUgbGFzdCBwYWdlIG51bWJlclxyXG4gICAgICovXHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLmdldExhc3RQYWdlID0gZnVuY3Rpb24gKCkge1xyXG4gICAgICAgIHZhciBpbnN0ID0gdGhpcy5zZXJ2aWNlLmdldEluc3RhbmNlKHRoaXMuaWQpO1xyXG4gICAgICAgIGlmIChpbnN0LnRvdGFsSXRlbXMgPCAxKSB7XHJcbiAgICAgICAgICAgIC8vIHdoZW4gdGhlcmUgYXJlIDAgb3IgZmV3ZXIgKGFuIGVycm9yIGNhc2UpIGl0ZW1zLCB0aGVyZSBhcmUgbm8gXCJwYWdlc1wiIGFzIHN1Y2gsXHJcbiAgICAgICAgICAgIC8vIGJ1dCBpdCBtYWtlcyBzZW5zZSB0byBjb25zaWRlciBhIHNpbmdsZSwgZW1wdHkgcGFnZSBhcyB0aGUgbGFzdCBwYWdlLlxyXG4gICAgICAgICAgICByZXR1cm4gMTtcclxuICAgICAgICB9XHJcbiAgICAgICAgcmV0dXJuIE1hdGguY2VpbChpbnN0LnRvdGFsSXRlbXMgLyBpbnN0Lml0ZW1zUGVyUGFnZSk7XHJcbiAgICB9O1xyXG4gICAgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLnByb3RvdHlwZS5nZXRUb3RhbEl0ZW1zID0gZnVuY3Rpb24gKCkge1xyXG4gICAgICAgIHJldHVybiB0aGlzLnNlcnZpY2UuZ2V0SW5zdGFuY2UodGhpcy5pZCkudG90YWxJdGVtcztcclxuICAgIH07XHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLmNoZWNrVmFsaWRJZCA9IGZ1bmN0aW9uICgpIHtcclxuICAgICAgICBpZiAodGhpcy5zZXJ2aWNlLmdldEluc3RhbmNlKHRoaXMuaWQpLmlkID09IG51bGwpIHtcclxuICAgICAgICAgICAgY29uc29sZS53YXJuKFwiUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlOiB0aGUgc3BlY2lmaWVkIGlkIFxcXCJcIiArIHRoaXMuaWQgKyBcIlxcXCIgZG9lcyBub3QgbWF0Y2ggYW55IHJlZ2lzdGVyZWQgUGFnaW5hdGlvbkluc3RhbmNlXCIpO1xyXG4gICAgICAgIH1cclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIFVwZGF0ZXMgdGhlIHBhZ2UgbGlua3MgYW5kIGNoZWNrcyB0aGF0IHRoZSBjdXJyZW50IHBhZ2UgaXMgdmFsaWQuIFNob3VsZCBydW4gd2hlbmV2ZXIgdGhlXHJcbiAgICAgKiBQYWdpbmF0aW9uU2VydmljZS5jaGFuZ2Ugc3RyZWFtIGVtaXRzIGEgdmFsdWUgbWF0Y2hpbmcgdGhlIGN1cnJlbnQgSUQsIG9yIHdoZW4gYW55IG9mIHRoZVxyXG4gICAgICogaW5wdXQgdmFsdWVzIGNoYW5nZXMuXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUudXBkYXRlUGFnZUxpbmtzID0gZnVuY3Rpb24gKCkge1xyXG4gICAgICAgIHZhciBfdGhpcyA9IHRoaXM7XHJcbiAgICAgICAgdmFyIGluc3QgPSB0aGlzLnNlcnZpY2UuZ2V0SW5zdGFuY2UodGhpcy5pZCk7XHJcbiAgICAgICAgdmFyIGNvcnJlY3RlZEN1cnJlbnRQYWdlID0gdGhpcy5vdXRPZkJvdW5kQ29ycmVjdGlvbihpbnN0KTtcclxuICAgICAgICBpZiAoY29ycmVjdGVkQ3VycmVudFBhZ2UgIT09IGluc3QuY3VycmVudFBhZ2UpIHtcclxuICAgICAgICAgICAgc2V0VGltZW91dChmdW5jdGlvbiAoKSB7XHJcbiAgICAgICAgICAgICAgICBfdGhpcy5wYWdlQm91bmRzQ29ycmVjdGlvbi5lbWl0KGNvcnJlY3RlZEN1cnJlbnRQYWdlKTtcclxuICAgICAgICAgICAgICAgIF90aGlzLnBhZ2VzID0gX3RoaXMuY3JlYXRlUGFnZUFycmF5KGluc3QuY3VycmVudFBhZ2UsIGluc3QuaXRlbXNQZXJQYWdlLCBpbnN0LnRvdGFsSXRlbXMsIF90aGlzLm1heFNpemUpO1xyXG4gICAgICAgICAgICB9KTtcclxuICAgICAgICB9XHJcbiAgICAgICAgZWxzZSB7XHJcbiAgICAgICAgICAgIHRoaXMucGFnZXMgPSB0aGlzLmNyZWF0ZVBhZ2VBcnJheShpbnN0LmN1cnJlbnRQYWdlLCBpbnN0Lml0ZW1zUGVyUGFnZSwgaW5zdC50b3RhbEl0ZW1zLCB0aGlzLm1heFNpemUpO1xyXG4gICAgICAgIH1cclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIENoZWNrcyB0aGF0IHRoZSBpbnN0YW5jZS5jdXJyZW50UGFnZSBwcm9wZXJ0eSBpcyB3aXRoaW4gYm91bmRzIGZvciB0aGUgY3VycmVudCBwYWdlIHJhbmdlLlxyXG4gICAgICogSWYgbm90LCByZXR1cm4gYSBjb3JyZWN0IHZhbHVlIGZvciBjdXJyZW50UGFnZSwgb3IgdGhlIGN1cnJlbnQgdmFsdWUgaWYgT0suXHJcbiAgICAgKi9cclxuICAgIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUub3V0T2ZCb3VuZENvcnJlY3Rpb24gPSBmdW5jdGlvbiAoaW5zdGFuY2UpIHtcclxuICAgICAgICB2YXIgdG90YWxQYWdlcyA9IE1hdGguY2VpbChpbnN0YW5jZS50b3RhbEl0ZW1zIC8gaW5zdGFuY2UuaXRlbXNQZXJQYWdlKTtcclxuICAgICAgICBpZiAodG90YWxQYWdlcyA8IGluc3RhbmNlLmN1cnJlbnRQYWdlICYmIDAgPCB0b3RhbFBhZ2VzKSB7XHJcbiAgICAgICAgICAgIHJldHVybiB0b3RhbFBhZ2VzO1xyXG4gICAgICAgIH1cclxuICAgICAgICBlbHNlIGlmIChpbnN0YW5jZS5jdXJyZW50UGFnZSA8IDEpIHtcclxuICAgICAgICAgICAgcmV0dXJuIDE7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIHJldHVybiBpbnN0YW5jZS5jdXJyZW50UGFnZTtcclxuICAgIH07XHJcbiAgICAvKipcclxuICAgICAqIFJldHVybnMgYW4gYXJyYXkgb2YgUGFnZSBvYmplY3RzIHRvIHVzZSBpbiB0aGUgcGFnaW5hdGlvbiBjb250cm9scy5cclxuICAgICAqL1xyXG4gICAgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLnByb3RvdHlwZS5jcmVhdGVQYWdlQXJyYXkgPSBmdW5jdGlvbiAoY3VycmVudFBhZ2UsIGl0ZW1zUGVyUGFnZSwgdG90YWxJdGVtcywgcGFnaW5hdGlvblJhbmdlKSB7XHJcbiAgICAgICAgLy8gcGFnaW5hdGlvblJhbmdlIGNvdWxkIGJlIGEgc3RyaW5nIGlmIHBhc3NlZCBmcm9tIGF0dHJpYnV0ZSwgc28gY2FzdCB0byBudW1iZXIuXHJcbiAgICAgICAgcGFnaW5hdGlvblJhbmdlID0gK3BhZ2luYXRpb25SYW5nZTtcclxuICAgICAgICB2YXIgcGFnZXMgPSBbXTtcclxuICAgICAgICAvLyBSZXR1cm4gMSBhcyBkZWZhdWx0IHBhZ2UgbnVtYmVyXHJcbiAgICAgICAgLy8gTWFrZSBzZW5zZSB0byBzaG93IDEgaW5zdGVhZCBvZiBlbXB0eSB3aGVuIHRoZXJlIGFyZSBubyBpdGVtc1xyXG4gICAgICAgIHZhciB0b3RhbFBhZ2VzID0gTWF0aC5tYXgoTWF0aC5jZWlsKHRvdGFsSXRlbXMgLyBpdGVtc1BlclBhZ2UpLCAxKTtcclxuICAgICAgICB2YXIgaGFsZldheSA9IE1hdGguY2VpbChwYWdpbmF0aW9uUmFuZ2UgLyAyKTtcclxuICAgICAgICB2YXIgaXNTdGFydCA9IGN1cnJlbnRQYWdlIDw9IGhhbGZXYXk7XHJcbiAgICAgICAgdmFyIGlzRW5kID0gdG90YWxQYWdlcyAtIGhhbGZXYXkgPCBjdXJyZW50UGFnZTtcclxuICAgICAgICB2YXIgaXNNaWRkbGUgPSAhaXNTdGFydCAmJiAhaXNFbmQ7XHJcbiAgICAgICAgdmFyIGVsbGlwc2VzTmVlZGVkID0gcGFnaW5hdGlvblJhbmdlIDwgdG90YWxQYWdlcztcclxuICAgICAgICB2YXIgaSA9IDE7XHJcbiAgICAgICAgd2hpbGUgKGkgPD0gdG90YWxQYWdlcyAmJiBpIDw9IHBhZ2luYXRpb25SYW5nZSkge1xyXG4gICAgICAgICAgICB2YXIgbGFiZWwgPSB2b2lkIDA7XHJcbiAgICAgICAgICAgIHZhciBwYWdlTnVtYmVyID0gdGhpcy5jYWxjdWxhdGVQYWdlTnVtYmVyKGksIGN1cnJlbnRQYWdlLCBwYWdpbmF0aW9uUmFuZ2UsIHRvdGFsUGFnZXMpO1xyXG4gICAgICAgICAgICB2YXIgb3BlbmluZ0VsbGlwc2VzTmVlZGVkID0gKGkgPT09IDIgJiYgKGlzTWlkZGxlIHx8IGlzRW5kKSk7XHJcbiAgICAgICAgICAgIHZhciBjbG9zaW5nRWxsaXBzZXNOZWVkZWQgPSAoaSA9PT0gcGFnaW5hdGlvblJhbmdlIC0gMSAmJiAoaXNNaWRkbGUgfHwgaXNTdGFydCkpO1xyXG4gICAgICAgICAgICBpZiAoZWxsaXBzZXNOZWVkZWQgJiYgKG9wZW5pbmdFbGxpcHNlc05lZWRlZCB8fCBjbG9zaW5nRWxsaXBzZXNOZWVkZWQpKSB7XHJcbiAgICAgICAgICAgICAgICBsYWJlbCA9ICcuLi4nO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIGVsc2Uge1xyXG4gICAgICAgICAgICAgICAgbGFiZWwgPSBwYWdlTnVtYmVyO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIHBhZ2VzLnB1c2goe1xyXG4gICAgICAgICAgICAgICAgbGFiZWw6IGxhYmVsLFxyXG4gICAgICAgICAgICAgICAgdmFsdWU6IHBhZ2VOdW1iZXJcclxuICAgICAgICAgICAgfSk7XHJcbiAgICAgICAgICAgIGkrKztcclxuICAgICAgICB9XHJcbiAgICAgICAgcmV0dXJuIHBhZ2VzO1xyXG4gICAgfTtcclxuICAgIC8qKlxyXG4gICAgICogR2l2ZW4gdGhlIHBvc2l0aW9uIGluIHRoZSBzZXF1ZW5jZSBvZiBwYWdpbmF0aW9uIGxpbmtzIFtpXSxcclxuICAgICAqIGZpZ3VyZSBvdXQgd2hhdCBwYWdlIG51bWJlciBjb3JyZXNwb25kcyB0byB0aGF0IHBvc2l0aW9uLlxyXG4gICAgICovXHJcbiAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLmNhbGN1bGF0ZVBhZ2VOdW1iZXIgPSBmdW5jdGlvbiAoaSwgY3VycmVudFBhZ2UsIHBhZ2luYXRpb25SYW5nZSwgdG90YWxQYWdlcykge1xyXG4gICAgICAgIHZhciBoYWxmV2F5ID0gTWF0aC5jZWlsKHBhZ2luYXRpb25SYW5nZSAvIDIpO1xyXG4gICAgICAgIGlmIChpID09PSBwYWdpbmF0aW9uUmFuZ2UpIHtcclxuICAgICAgICAgICAgcmV0dXJuIHRvdGFsUGFnZXM7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGVsc2UgaWYgKGkgPT09IDEpIHtcclxuICAgICAgICAgICAgcmV0dXJuIGk7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGVsc2UgaWYgKHBhZ2luYXRpb25SYW5nZSA8IHRvdGFsUGFnZXMpIHtcclxuICAgICAgICAgICAgaWYgKHRvdGFsUGFnZXMgLSBoYWxmV2F5IDwgY3VycmVudFBhZ2UpIHtcclxuICAgICAgICAgICAgICAgIHJldHVybiB0b3RhbFBhZ2VzIC0gcGFnaW5hdGlvblJhbmdlICsgaTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICBlbHNlIGlmIChoYWxmV2F5IDwgY3VycmVudFBhZ2UpIHtcclxuICAgICAgICAgICAgICAgIHJldHVybiBjdXJyZW50UGFnZSAtIGhhbGZXYXkgKyBpO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIGVsc2Uge1xyXG4gICAgICAgICAgICAgICAgcmV0dXJuIGk7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgZWxzZSB7XHJcbiAgICAgICAgICAgIHJldHVybiBpO1xyXG4gICAgICAgIH1cclxuICAgIH07XHJcbiAgICBfX2RlY29yYXRlJDMoW1xyXG4gICAgICAgIElucHV0KCksXHJcbiAgICAgICAgX19tZXRhZGF0YSQyKFwiZGVzaWduOnR5cGVcIiwgU3RyaW5nKVxyXG4gICAgXSwgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLnByb3RvdHlwZSwgXCJpZFwiLCB2b2lkIDApO1xyXG4gICAgX19kZWNvcmF0ZSQzKFtcclxuICAgICAgICBJbnB1dCgpLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMihcImRlc2lnbjp0eXBlXCIsIE51bWJlcilcclxuICAgIF0sIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZS5wcm90b3R5cGUsIFwibWF4U2l6ZVwiLCB2b2lkIDApO1xyXG4gICAgX19kZWNvcmF0ZSQzKFtcclxuICAgICAgICBPdXRwdXQoKSxcclxuICAgICAgICBfX21ldGFkYXRhJDIoXCJkZXNpZ246dHlwZVwiLCBFdmVudEVtaXR0ZXIpXHJcbiAgICBdLCBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmUucHJvdG90eXBlLCBcInBhZ2VDaGFuZ2VcIiwgdm9pZCAwKTtcclxuICAgIF9fZGVjb3JhdGUkMyhbXHJcbiAgICAgICAgT3V0cHV0KCksXHJcbiAgICAgICAgX19tZXRhZGF0YSQyKFwiZGVzaWduOnR5cGVcIiwgRXZlbnRFbWl0dGVyKVxyXG4gICAgXSwgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLnByb3RvdHlwZSwgXCJwYWdlQm91bmRzQ29ycmVjdGlvblwiLCB2b2lkIDApO1xyXG4gICAgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlID0gX19kZWNvcmF0ZSQzKFtcclxuICAgICAgICBEaXJlY3RpdmUoe1xyXG4gICAgICAgICAgICBzZWxlY3RvcjogJ3BhZ2luYXRpb24tdGVtcGxhdGUsW3BhZ2luYXRpb24tdGVtcGxhdGVdJyxcclxuICAgICAgICAgICAgZXhwb3J0QXM6ICdwYWdpbmF0aW9uQXBpJ1xyXG4gICAgICAgIH0pLFxyXG4gICAgICAgIF9fbWV0YWRhdGEkMihcImRlc2lnbjpwYXJhbXR5cGVzXCIsIFtQYWdpbmF0aW9uU2VydmljZSxcclxuICAgICAgICAgICAgQ2hhbmdlRGV0ZWN0b3JSZWZdKVxyXG4gICAgXSwgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlKTtcclxuICAgIHJldHVybiBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmU7XHJcbn0oKSk7XG5cbnZhciBfX2RlY29yYXRlID0gKHVuZGVmaW5lZCAmJiB1bmRlZmluZWQuX19kZWNvcmF0ZSkgfHwgZnVuY3Rpb24gKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKSB7XHJcbiAgICB2YXIgYyA9IGFyZ3VtZW50cy5sZW5ndGgsIHIgPSBjIDwgMyA/IHRhcmdldCA6IGRlc2MgPT09IG51bGwgPyBkZXNjID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcih0YXJnZXQsIGtleSkgOiBkZXNjLCBkO1xyXG4gICAgaWYgKHR5cGVvZiBSZWZsZWN0ID09PSBcIm9iamVjdFwiICYmIHR5cGVvZiBSZWZsZWN0LmRlY29yYXRlID09PSBcImZ1bmN0aW9uXCIpIHIgPSBSZWZsZWN0LmRlY29yYXRlKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKTtcclxuICAgIGVsc2UgZm9yICh2YXIgaSA9IGRlY29yYXRvcnMubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIGlmIChkID0gZGVjb3JhdG9yc1tpXSkgciA9IChjIDwgMyA/IGQocikgOiBjID4gMyA/IGQodGFyZ2V0LCBrZXksIHIpIDogZCh0YXJnZXQsIGtleSkpIHx8IHI7XHJcbiAgICByZXR1cm4gYyA+IDMgJiYgciAmJiBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBrZXksIHIpLCByO1xyXG59O1xyXG52YXIgTmd4UGFnaW5hdGlvbk1vZHVsZSA9IC8qKiBAY2xhc3MgKi8gKGZ1bmN0aW9uICgpIHtcclxuICAgIGZ1bmN0aW9uIE5neFBhZ2luYXRpb25Nb2R1bGUoKSB7XHJcbiAgICB9XHJcbiAgICBOZ3hQYWdpbmF0aW9uTW9kdWxlID0gX19kZWNvcmF0ZShbXHJcbiAgICAgICAgTmdNb2R1bGUoe1xyXG4gICAgICAgICAgICBpbXBvcnRzOiBbQ29tbW9uTW9kdWxlXSxcclxuICAgICAgICAgICAgZGVjbGFyYXRpb25zOiBbXHJcbiAgICAgICAgICAgICAgICBQYWdpbmF0ZVBpcGUsXHJcbiAgICAgICAgICAgICAgICBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQsXHJcbiAgICAgICAgICAgICAgICBQYWdpbmF0aW9uQ29udHJvbHNEaXJlY3RpdmVcclxuICAgICAgICAgICAgXSxcclxuICAgICAgICAgICAgcHJvdmlkZXJzOiBbUGFnaW5hdGlvblNlcnZpY2VdLFxyXG4gICAgICAgICAgICBleHBvcnRzOiBbUGFnaW5hdGVQaXBlLCBQYWdpbmF0aW9uQ29udHJvbHNDb21wb25lbnQsIFBhZ2luYXRpb25Db250cm9sc0RpcmVjdGl2ZV1cclxuICAgICAgICB9KVxyXG4gICAgXSwgTmd4UGFnaW5hdGlvbk1vZHVsZSk7XHJcbiAgICByZXR1cm4gTmd4UGFnaW5hdGlvbk1vZHVsZTtcclxufSgpKTtcblxuLyoqXHJcbiAqIEdlbmVyYXRlZCBidW5kbGUgaW5kZXguIERvIG5vdCBlZGl0LlxyXG4gKi9cblxuZXhwb3J0IHsgREVGQVVMVF9TVFlMRVMgYXMgybViLCBERUZBVUxUX1RFTVBMQVRFIGFzIMm1YSwgTmd4UGFnaW5hdGlvbk1vZHVsZSwgUGFnaW5hdGlvblNlcnZpY2UsIFBhZ2luYXRpb25Db250cm9sc0NvbXBvbmVudCwgUGFnaW5hdGlvbkNvbnRyb2xzRGlyZWN0aXZlLCBQYWdpbmF0ZVBpcGUgfTtcbiJdfQ==
+
+      /***/
+
+    },
+
+    /***/
     46782:
     /*!********************************************************************!*\
       !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
@@ -11484,13 +12858,13 @@
         var _super = _createSuper(TakeUntilSubscriber);
 
         function TakeUntilSubscriber(destination) {
-          var _this27;
+          var _this28;
 
           _classCallCheck(this, TakeUntilSubscriber);
 
-          _this27 = _super.call(this, destination);
-          _this27.seenValue = false;
-          return _this27;
+          _this28 = _super.call(this, destination);
+          _this28.seenValue = false;
+          return _this28;
         }
 
         _createClass(TakeUntilSubscriber, [{
@@ -11605,31 +12979,31 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/common */
       38583);
       /* harmony import */
 
 
-      var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/forms */
       3679);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -11647,7 +13021,7 @@
       /* harmony import */
 
 
-      var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @swimlane/ngx-datatable */
       38550);
       /* harmony import */
@@ -11656,15 +13030,21 @@
       var src_app_shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! src/app/shared-component/header/header.component */
       13998);
+      /* harmony import */
+
+
+      var ngx_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ngx-pagination */
+      72533);
 
       var _IncidentFormListPageModule = function IncidentFormListPageModule() {
         _classCallCheck(this, IncidentFormListPageModule);
       };
 
-      _IncidentFormListPageModule = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule, _incident_form_list_routing_module__WEBPACK_IMPORTED_MODULE_0__.IncidentFormListPageRoutingModule, _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_8__.NgxDatatableModule],
+      _IncidentFormListPageModule = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule, _incident_form_list_routing_module__WEBPACK_IMPORTED_MODULE_0__.IncidentFormListPageRoutingModule, _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_9__.NgxDatatableModule, ngx_pagination__WEBPACK_IMPORTED_MODULE_3__.NgxPaginationModule],
         declarations: [_incident_form_list_page__WEBPACK_IMPORTED_MODULE_1__.IncidentFormListPage, src_app_shared_component_header_header_component__WEBPACK_IMPORTED_MODULE_2__.HeaderComponent],
-        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_4__.CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_5__.CUSTOM_ELEMENTS_SCHEMA]
       })], _IncidentFormListPageModule);
       /***/
     },
@@ -11762,68 +13142,134 @@
           this.toastService = toastService;
           this.loadingService = loadingService;
           this.pName = 'Submitted Forms';
-          this.rows = [];
+          this.allSubmittedFormlist = [];
+          this.newList = [];
           this.listOfUsers = [];
+          this.size = 10;
+          this.totalElements = 0;
+          this.totalPages = 0;
+          this.pageNumber = 0;
+          this.offset = 0;
         }
 
         _createClass(IncidentFormListPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            this.userDetails = JSON.parse(localStorage.getItem('userDetails')); // this.getInvestigatorDetails();
+            this.onResize(window); // this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
-            console.log('screen', screen);
-            console.log('screen', screen.availWidth);
-            this.getScreenWidth = window.innerWidth;
-            console.log('this.getScreenWidth', typeof this.getScreenWidth);
-            console.log('this.getScreenWidth 1', window.innerWidth);
-            this.loadData();
-          } // getInvestigatorDetails() {
-          //   this.global.getData("Investigator/getInvestigator").subscribe((result: any) => {
-          //     if (result && result.data && result.data.length > 0) {
-          //       this.listOfUsers = result.data;
-          //     }
-          //   }, err => {
-          //     console.log(err)
-          //   });
-          // }
+            this.setValueOnLoadData();
+          }
+        }, {
+          key: "onResize",
+          value: function onResize(event) {
+            this.getScreenWidth = event.innerWidth ? event.innerWidth : event.target.innerWidth;
+          }
+        }, {
+          key: "setValueOnLoadData",
+          value: function setValueOnLoadData() {
+            var screen = this.getScreenWidth < 1080 ? 'mobile' : 'web';
 
+            if (screen == 'mobile') {
+              this.loadData('', 1, screen);
+            } else {
+              var object = {
+                count: 60,
+                limit: 10,
+                offset: 0,
+                pageSize: 10
+              };
+              this.loadData(object, '', screen);
+            }
+          }
         }, {
           key: "loadData",
-          value: function loadData() {
-            var _this28 = this;
+          value: function loadData(event, pageNo, screen) {
+            var _this29 = this;
 
-            // this.loadingService.presentLoading();
-            var data = JSON.parse(localStorage.getItem('userDetails'));
-            this.global.getData('add_form/getIncidentFormlist/' + data.id).subscribe(function (result) {
-              var _a;
+            if (screen == 'mobile') {
+              this.pageNumber = event == 'newList' ? ++pageNo : pageNo;
+            }
 
-              if (result && result.data && result.data.length > 0) {
-                (_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.forEach(function (el, index) {
-                  el.created_date = moment__WEBPACK_IMPORTED_MODULE_5___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY");
-                  el.created_time = moment__WEBPACK_IMPORTED_MODULE_5___default()(el.created_at, "YYYY-MM-DD HH:m:ss").format("h:mm a");
-                  el.complete_status = el.complete_status == 0 ? 'Incomplete' : el.complete_status == 1 ? 'Complete' : '';
+            if (screen == 'web') {
+              this.pageNumber = event.offset + 1;
+              this.offset = event.offset;
+            }
 
-                  if (el.investigators && el.investigators.investigator_id && el.investigators.investigator_id !== null) {
-                    el.ivalue = el.investigators.investigator_id;
+            if (this.pageNumber != 0) {
+              // this.loadingService.presentLoading();
+              this.global.getData('add_form/get/?page_no=' + this.pageNumber).subscribe(function (result) {
+                if (result && result.data && result.data.mforms_add_form && result.data.mforms_add_form.length > 0) {
+                  result.data.mforms_add_form.sort(function (a, b) {
+                    var keyA = new Date(a.Date),
+                        keyB = new Date(b.Date);
+                    if (keyA > keyB) return -1;
+                    if (keyA < keyB) return 1;
+                    return 0;
+                  });
+                  result.data.mforms_add_form.forEach(function (el) {
+                    if (el.Form == 'mforms_add_form') {
+                      el.Form = 'Incident';
+                    } else if (el.Form == 'mforms_telehandler') {
+                      el.Form = 'Telehandler Prestarts';
+                    } else if (el.Form == 'mforms_crane') {
+                      el.Form = 'Crane Prestarts';
+                    } else if (el.Form == 'mforms_prestart_vehicle_hoist') {
+                      el.Form = 'Vehicle Hoist Prestarts';
+                    }
+
+                    el.Date = moment__WEBPACK_IMPORTED_MODULE_5___default()(el.Date).format("DD-MM-YYYY hh:mm"); // el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY hh:mm:ss");
+
+                    el.Status = el.Status == 0 ? 'In progress' : el.Status == 1 ? 'Completed' : el.Status == 2 ? 'Cancel' : '';
+                  });
+                  _this29.totalPages = result.total_pages;
+                  _this29.totalElements = result.row_count;
+
+                  if (screen == 'mobile') {
+                    if (_this29.allSubmittedFormlist.length == 0) {
+                      _this29.allSubmittedFormlist = result.data.mforms_add_form;
+                    } else {
+                      _this29.newList = _this29.allSubmittedFormlist;
+                      _this29.allSubmittedFormlist = _this29.newList.concat(result.data.mforms_add_form);
+                    }
                   }
-                });
-                _this28.rows = result.data; // console.log('this.rows', this.rows);
-              } // this.loadingService.dismissLoading();
 
-            }, function (err) {
-              // this.loadingService.dismissLoading();
-              console.log(err);
-            });
+                  if (screen == 'web') {
+                    _this29.allSubmittedFormlist = result.data.mforms_add_form;
+                  } // console.log(' this.allSubmittedFormlist ', this.allSubmittedFormlist);
+
+                } // this.loadingService.dismissLoading();
+
+              }, function (err) {
+                // this.loadingService.dismissLoading();
+                console.log(err);
+              });
+            }
           }
         }, {
           key: "onGoToEdit",
           value: function onGoToEdit(rowData) {
-            this.nav.navigateRoot("/home/safety-menu/incident-form-edit/" + rowData.id);
+            if (rowData && rowData.Form == 'Incident') {
+              this.nav.navigateRoot("/home/safety-menu/incident-form-edit/" + rowData.Id);
+            } else if (rowData && rowData.Form == 'Telehandler Prestarts') {
+              this.nav.navigateRoot("/home/safety-menu/telehandler-add-form/" + rowData.Id);
+            } else if (rowData && rowData.Form == 'Crane Prestarts') {
+              this.nav.navigateRoot("/home/safety-menu/crane-add-form/" + rowData.Id);
+            } else if (rowData && rowData.Form == 'Vehicle Hoist Prestarts') {
+              this.nav.navigateRoot("/home/safety-menu/vehicle-hoist-add-form/" + rowData.Id);
+            }
           }
         }, {
           key: "onGoToDetails",
-          value: function onGoToDetails(rowId) {
-            this.nav.navigateRoot("/home/safety-menu/incident-details/" + rowId);
+          value: function onGoToDetails(rowData) {
+            if (rowData && rowData.Form == 'Incident') {
+              this.nav.navigateRoot("/home/safety-menu/incident-details/" + rowData.Id);
+            } else if (rowData && rowData.Form == 'Telehandler Prestarts') {
+              this.nav.navigateRoot("/home/safety-menu/telehandler-view-detail/" + rowData.Id);
+            } else if (rowData && rowData.Form == 'Crane Prestarts') {
+              this.nav.navigateRoot("/home/safety-menu/crane-view-detail/" + rowData.Id);
+            } else if (rowData && rowData.Form == 'Vehicle Hoist Prestarts') {
+              this.nav.navigateRoot("/home/safety-menu/vehicle-host-view-detail/" + rowData.Id);
+            }
           }
         }]);
 
@@ -11979,7 +13425,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = ".icon-disabled {\n  color: grey;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluY2lkZW50LWZvcm0tbGlzdC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxXQUFBO0FBQ0oiLCJmaWxlIjoiaW5jaWRlbnQtZm9ybS1saXN0LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5pY29uLWRpc2FibGVkIHtcclxuICAgIGNvbG9yOiBncmV5O1xyXG59XHJcbiJdfQ== */";
+      __webpack_exports__["default"] = ".icon-disabled {\n  color: grey;\n}\n\n.item-option {\n  background: white;\n  color: #1c6afe !important;\n  font-size: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluY2lkZW50LWZvcm0tbGlzdC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxXQUFBO0FBQ0o7O0FBRUE7RUFDSSxpQkFBQTtFQUNBLHlCQUFBO0VBQ0EsZUFBQTtBQUNKIiwiZmlsZSI6ImluY2lkZW50LWZvcm0tbGlzdC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaWNvbi1kaXNhYmxlZCB7XHJcbiAgICBjb2xvcjogZ3JleTtcclxufVxyXG5cclxuLml0ZW0tb3B0aW9uIHtcclxuICAgIGJhY2tncm91bmQ6IHdoaXRlO1xyXG4gICAgY29sb3I6ICMxYzZhZmUgIWltcG9ydGFudDtcclxuICAgIGZvbnQtc2l6ZTogMTBweDtcclxufVxyXG4iXX0= */";
       /***/
     },
 
@@ -11997,7 +13443,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n\n  <app-header [pageName]=\"pName\"></app-header>\n\n  <div class=\"container\">\n    <!-- <div class=\"ion-margin-top ion-margin-bottom\"> -->\n\n      {{window}}\n    <ion-list *ngIf=\"getScreenWidth < 1366\">\n      <ion-item-sliding>\n        <ion-item>\n          <ion-label>\n\n            <ion-row>\n              <ion-col>\n                <ion-label>Form :</ion-label>\n              </ion-col>\n              <ion-col>\n\n              </ion-col>\n            </ion-row>\n\n            <ion-row>\n              <ion-col>\n                <ion-label>Date :</ion-label>\n              </ion-col>\n              <ion-col>\n              </ion-col>\n            </ion-row>\n\n            <ion-row>\n              <ion-col>\n                <ion-label>Name :</ion-label>\n              </ion-col>\n              <ion-col>\n              </ion-col>\n            </ion-row>\n\n            <ion-row>\n              <ion-col>\n                <ion-label>Delegated :</ion-label>\n              </ion-col>\n              <ion-col>\n              </ion-col>\n            </ion-row>\n\n            <ion-row>\n              <ion-col>\n                <ion-label>Status :</ion-label>\n              </ion-col>\n              <ion-col>\n              </ion-col>\n            </ion-row>\n\n          </ion-label>\n        </ion-item>\n\n        <ion-item-options side=\"end\">\n\n          <ion-item-option>\n            <ion-icon slot=\"icon-only\" (click)=\"onGoToDetails()\" name=\"eye-outline\"></ion-icon>\n          </ion-item-option>\n\n          <ion-item-option>\n            <ion-icon slot=\"icon-only\" (click)=\"onGoToEdit()\" name=\"create-outline\"></ion-icon>\n          </ion-item-option>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n    <ngx-datatable [scrollbarH]=\"true\" class=\"material\" [limit]=\"10\" [rows]=\"rows\" [rowHeight]=\"50\"\n      [columnMode]=\"'force'\" [headerHeight]=\"50\" [footerHeight]=\"50\" *ngIf=\"getScreenWidth >= 1366\">\n\n      <ngx-datatable-column name=\"Sr.No\" [width]=\"80\" [resizeable]=\"true\">\n        <ng-template let-rowIndex=\"rowIndex\" let-value=\"rows\" ngx-datatable-cell-template>{{ (rowIndex+1) }}\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Form\" prop=\"incident_value\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Date\" prop=\"created_date\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Name\" prop=\"created_time\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Delegated\" prop=\"classification_manager\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Status\" prop=\"complete_status\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template>\n          <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"onGoToDetails(value)\"></ion-icon>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"edit_status\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>Edit</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-icon *ngIf=\"value == false\" class=\"view icon-disabled\" slot=\"icon-only\" name=\"create-outline\">\n          </ion-icon>\n          <ion-icon *ngIf=\"value == true\" class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"onGoToEdit(row)\">\n          </ion-icon>\n        </ng-template>\n      </ngx-datatable-column>\n    </ngx-datatable>\n\n    <!-- <ngx-datatable [scrollbarH]=\"true\" class=\"material\" [limit]=\"10\" [rows]=\"rows\" [rowHeight]=\"50\"\n        [columnMode]=\"'force'\" [headerHeight]=\"50\" [footerHeight]=\"50\" (activate)=\"onActivate($event)\">\n\n        <ngx-datatable-column name=\"Sr.No\" [width]=\"80\" [resizeable]=\"true\">\n          <ng-template let-rowIndex=\"rowIndex\" let-value=\"rows\" ngx-datatable-cell-template>{{ (rowIndex+1) }}\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"Incident Type\" prop=\"incident_value\" [minWidth]=\"150\" [resizeable]=\"true\">\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"Incident Date\" [minWidth]=\"150\" [resizeable]=\"true\" prop=\"created_date\">\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"Incident Time\" prop=\"created_time\" [minWidth]=\"150\" [resizeable]=\"true\">\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"Assigned Manager\" prop=\"classification_manager\" [minWidth]=\"150\"\n          [resizeable]=\"true\">\n        </ngx-datatable-column>\n\n        <ngx-datatable-column name=\"Status\" prop=\"complete_status\" [minWidth]=\"150\" [resizeable]=\"true\">\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"id\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template>\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"onGoToDetails(value)\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"edit_status\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Edit</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n            <ion-icon *ngIf=\"value == false\" class=\"view icon-disabled\" slot=\"icon-only\" name=\"create-outline\">\n            </ion-icon>\n            <ion-icon *ngIf=\"value == true\" class=\"view\" slot=\"icon-only\" name=\"create-outline\"\n              (click)=\"onGoToEdit(row)\">\n            </ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"230\" [resizeable]=\"true\" prop=\"ivalue\" [resizeable]=\"true\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Assign Investigator</ng-template>\n          <ng-template let-row=\"row\" let-value=\"value\" ngx-datatable-cell-template>\n            <ion-item *ngIf=\"row.assign_investigator_status == true\" class=\"ion-no-padding ion-no-margin dropDownStyle\"\n              lines=\"none\">\n              <ion-select placeholder=\"Select Investigator\" value={{value}}\n                (ionChange)=\"onAssignInvestigator($event, row)\">\n                <ion-select-option value=\"{{item?.employee_id}}\" *ngFor=\"let item of listOfUsers\">{{item?.full_name}}\n                </ion-select-option>\n              </ion-select>\n            </ion-item>\n\n            <ion-item *ngIf=\"row.assign_investigator_status == false\" disabled=\"true\"\n              class=\"ion-no-padding ion-no-margin dropDownStyle\" lines=\"none\">\n              <ion-select placeholder=\"Select Investigator\" value={{value}}>\n                <ion-select-option value=\"{{item?.employee_id}}\" *ngFor=\"let item of listOfUsers\">{{item?.full_name}}\n                </ion-select-option>\n              </ion-select>\n            </ion-item>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"id\" prop=\"investigation_form_status\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Investigation</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n            <ion-icon *ngIf=\"value == false\" class=\"view icon-disabled\" slot=\"icon-only\" name=\"create-outline\">\n            </ion-icon>\n            <ion-icon *ngIf=\"value == true\" class=\"view\" slot=\"icon-only\" name=\"create-outline\"\n              (click)=\"onGoToInvestigation(row)\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"150\" [resizeable]=\"true\" prop=\"view_investigation_status\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>View Investigation</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n            <ion-icon *ngIf=\"value == false\" class=\"view icon-disabled\" slot=\"icon-only\" name=\"eye-outline\">\n            </ion-icon>\n            <ion-icon *ngIf=\"value == true\" class=\"view\" slot=\"icon-only\" name=\"eye-outline\"\n              (click)=\"onViewInvestigation(row)\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"actions_status\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template>Actions</ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n            <ion-icon *ngIf=\"value == false\" class=\"view icon-disabled\" slot=\"icon-only\" name=\"create-outline\">\n            </ion-icon>\n            <ion-icon *ngIf=\"value == true\" class=\"view\" slot=\"icon-only\" name=\"create-outline\"\n              (click)=\"onGoToActions(row)\"></ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n\n        <ngx-datatable-column [minWidth]=\"50\" [resizeable]=\"true\" prop=\"view_actions_status\">\n          <ng-template let-column=\"column\" ngx-datatable-header-template> View Actions </ng-template>\n          <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n            <ion-icon *ngIf=\"value == false\" class=\"view icon-disabled\" slot=\"icon-only\" name=\"eye-outline\">\n            </ion-icon>\n            <ion-icon *ngIf=\"value == true\" class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"onViewAction(row)\">\n            </ion-icon>\n          </ng-template>\n        </ngx-datatable-column>\n      </ngx-datatable> -->\n    <!-- </div> -->\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content (window:resize)=\"onResize($event)\">\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n\n    <ion-list *ngIf=\"getScreenWidth < 1080\">\n      <ion-card *ngFor=\"let rowData of allSubmittedFormlist ; let index=i\">\n        <ion-item-sliding>\n          <ion-item lines=\"none\">\n            <ion-label>\n\n              <!-- <ion-row>\n                <ion-col size=\"auto\">\n                  <h2>Id :</h2>\n                </ion-col>\n                <ion-col>\n                  <h6> {{rowData.Id}} </h6>\n                </ion-col>\n              </ion-row> -->\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <h2>Form :</h2>\n                </ion-col>\n                <ion-col>\n                  <ion-text color=\"primary\">\n                    {{rowData.Form}}\n                  </ion-text>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Date :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\">\n                    {{rowData.Date}}\n                  </p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Name :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\"> {{rowData.Name}}</p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Delegated :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\"> {{rowData.Delegate}}</p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Status :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\" *ngIf=\"rowData.Status == 'Completed'\">\n                    <ion-text color=\"success\">{{rowData.Status}}</ion-text>\n                  </p>\n                  <p class=\"value\" *ngIf=\"rowData.Status == 'In progress'\">\n                    <ion-text color=\"warning\">{{rowData.Status}}</ion-text>\n                  </p>\n                  <p class=\"value\" *ngIf=\"rowData.Status == 'Cancel'\">\n                    <ion-text color=\"danger\">{{rowData.Status}}</ion-text>\n                  </p>\n                </ion-col>\n              </ion-row>\n            </ion-label>\n          </ion-item>\n\n          <ion-item-options side=\"end\">\n            <ion-item-option class=\"item-option\">\n              <ion-icon slot=\"icon-only\" (click)=\"onGoToDetails(rowData)\" name=\"eye-outline\"></ion-icon>\n            </ion-item-option>\n\n            <ion-item-option class=\"item-option\">\n              <ion-icon slot=\"icon-only\" (click)=\"onGoToEdit(rowData)\" name=\"create-outline\"></ion-icon>\n            </ion-item-option>\n          </ion-item-options>\n        </ion-item-sliding>\n      </ion-card>\n\n      <span *ngIf=\" totalElements != ((pageNumber - 1) * size + index +1)\">\n        <div *ngIf=\"allSubmittedFormlist.length > 0\" class=\"ion-margin-top ion-text-center\">\n          <a href=\"javascript:void(0)\" (click)=\"loadData('newList', pageNumber, 'mobile')\">Load More </a>\n        </div>\n      </span>\n    </ion-list>\n\n    <ngx-datatable class=\"material\" [rows]=\"allSubmittedFormlist\" [columnMode]=\"force\" [headerHeight]=\"50\"\n      [footerHeight]=\"50\" rowHeight=\"auto\" [externalPaging]=\"true\" [count]=\"totalElements\" [offset]=\"offset\"\n      [limit]=\"size\" (page)=\"loadData($event, '','web')\" *ngIf=\"getScreenWidth >= 1080\">\n\n      <ngx-datatable-column name=\"Sr.No\" [width]=\"80\" [resizeable]=\"true\">\n        <ng-template let-rowIndex=\"rowIndex\" let-value=\"rows\" ngx-datatable-cell-template>{{ (pageNumber - 1) * size +\n          rowIndex +1 }}\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Form\" prop=\"Form\" [minWidth]=\"200\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-text color=\"primary\">{{value}}</ion-text>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Date\" prop=\"Date\" [minWidth]=\"180\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Name\" prop=\"Name\" [minWidth]=\"100\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Delegated\" prop=\"Delegate\" [minWidth]=\"180\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Status\" prop=\"Status\" [minWidth]=\"100\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-text color=\"success\" *ngIf=\"value == 'Completed'\">{{value}}</ion-text>\n          <ion-text color=\"warning\" *ngIf=\"value == 'In progress'\">{{value}}</ion-text>\n          <ion-text color=\"danger\" *ngIf=\"value == 'Cancel'\">{{value}}</ion-text>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"20\" [resizeable]=\"true\" prop=\"Id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" (click)=\"onGoToDetails(row)\"></ion-icon>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"20\" [resizeable]=\"true\" prop=\"Id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>Edit</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" (click)=\"onGoToEdit(row)\">\n          </ion-icon>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <div class=\"d-flex justify-content-center\">\n        <pagination-controls responsive=\"true\" previousLabel=\"Prev\" nextLabel=\"Next\"\n          (pageChange)=\"loadData($event, '', 'web')\">\n        </pagination-controls>\n      </div>\n    </ngx-datatable>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

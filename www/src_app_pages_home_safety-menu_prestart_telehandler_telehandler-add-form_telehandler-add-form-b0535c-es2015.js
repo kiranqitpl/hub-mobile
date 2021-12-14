@@ -383,7 +383,13 @@ let TelehandlerAddFormPage = class TelehandlerAddFormPage {
             };
             this.camera.getPicture(options).then((imageData) => {
                 image = imageData != '' ? 'data:image/jpeg;base64,' + imageData : '';
-                this.teleHandlerForm.controls[rowName].setValue(image);
+                if (this[rowName].length > 0) {
+                    this[rowName].unshift(image);
+                }
+                else {
+                    this[rowName].push(image);
+                }
+                this.teleHandlerForm.controls[rowName].setValue(this[rowName]);
             }, (err) => {
                 console.log("errOf Image ", err);
             });
@@ -429,6 +435,8 @@ let TelehandlerAddFormPage = class TelehandlerAddFormPage {
                         else {
                             this[rowName].push(image);
                         }
+                        console.log('rowName', this[rowName]);
+                        this.teleHandlerForm.controls[rowName].setValue(this[rowName]);
                         // this.teleHandlerForm.controls[rowName].setValue(image);
                     }).catch(error => {
                         console.log('error', error);
@@ -494,17 +502,17 @@ let TelehandlerAddFormPage = class TelehandlerAddFormPage {
         if (this.url_id != '' && this.url_id != undefined) {
             formData['id'] = this.teleHandlerForm['id'];
         }
-        this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
-            if (result && result['status']) {
-                this.toastService.toast(result['message'], 'success');
-                this.nav.back();
-            }
-            else {
-                this.toastService.toast(result['message'], 'danger');
-            }
-        }, error => {
-            console.log('error', error);
-        });
+        console.log('formData', formData);
+        // this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
+        //   if (result && result['status']) {
+        //     this.toastService.toast(result['message'], 'success');
+        //     this.nav.back();
+        //   } else {
+        //     this.toastService.toast(result['message'], 'danger');
+        //   }
+        // }, error => {
+        //   console.log('error', error);
+        // })
     }
     onSubmit(complete_status) {
         if (complete_status == 1) {
@@ -534,22 +542,23 @@ let TelehandlerAddFormPage = class TelehandlerAddFormPage {
     onProgressBar(event) {
         let count = 0;
         let formControlList = [];
-        // Object.keys(this.teleHandlerForm.controls).map(ele => formControlList.push(ele));
-        // formControlList.forEach(key => {
-        //   if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] == 'Ok') {
-        //     count = (count + 3);
-        //   } else if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] != 'Ok') {
-        //     count = ++count;
-        //   }
-        // })
-        // this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
-        Object.values(this.teleHandlerForm.value).map(ele => formControlList.push(ele));
+        Object.keys(this.teleHandlerForm.controls).map(ele => formControlList.push(ele));
         formControlList.forEach(key => {
-            if (key != '') {
+            if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] == 'Ok') {
+                count = (count + 3);
+            }
+            else if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] != 'Ok') {
                 count = ++count;
             }
         });
-        this.form_percent = ((1 / Object.values(this.teleHandlerForm.value).length) * count);
+        this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
+        // Object.values(this.teleHandlerForm.value).map(ele => formControlList.push(ele));
+        // formControlList.forEach(key => {
+        //   if (key != '') {
+        //     count = ++count;
+        //   }
+        // })
+        // this.form_percent = ((1 / Object.values(this.teleHandlerForm.value).length) * count);
     }
     loadData(id) {
         this.globalService.getData('add_form/getSingleData?table_name=telehandler&id=' + id).subscribe(result => {

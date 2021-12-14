@@ -631,7 +631,13 @@
                       this.camera.getPicture(options).then(function (imageData) {
                         image = imageData != '' ? 'data:image/jpeg;base64,' + imageData : '';
 
-                        _this2.teleHandlerForm.controls[rowName].setValue(image);
+                        if (_this2[rowName].length > 0) {
+                          _this2[rowName].unshift(image);
+                        } else {
+                          _this2[rowName].push(image);
+                        }
+
+                        _this2.teleHandlerForm.controls[rowName].setValue(_this2[rowName]);
                       }, function (err) {
                         console.log("errOf Image ", err);
                       });
@@ -707,7 +713,11 @@
                               _this4[rowName].unshift(image);
                             } else {
                               _this4[rowName].push(image);
-                            } // this.teleHandlerForm.controls[rowName].setValue(image);
+                            }
+
+                            console.log('rowName', _this4[rowName]);
+
+                            _this4.teleHandlerForm.controls[rowName].setValue(_this4[rowName]); // this.teleHandlerForm.controls[rowName].setValue(image);
 
                           })["catch"](function (error) {
                             console.log('error', error);
@@ -750,8 +760,6 @@
         }, {
           key: "submitApi",
           value: function submitApi(complete_status) {
-            var _this5 = this;
-
             var data = this.teleHandlerForm.value;
             data['user_id'] = this.loggedInUser.id;
             data['complete_status'] = complete_status;
@@ -763,17 +771,16 @@
               formData['id'] = this.teleHandlerForm['id'];
             }
 
-            this.globalService.postData('Telehandler/submit', formData).subscribe(function (result) {
-              if (result && result['status']) {
-                _this5.toastService.toast(result['message'], 'success');
-
-                _this5.nav.back();
-              } else {
-                _this5.toastService.toast(result['message'], 'danger');
-              }
-            }, function (error) {
-              console.log('error', error);
-            });
+            console.log('formData', formData); // this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
+            //   if (result && result['status']) {
+            //     this.toastService.toast(result['message'], 'success');
+            //     this.nav.back();
+            //   } else {
+            //     this.toastService.toast(result['message'], 'danger');
+            //   }
+            // }, error => {
+            //   console.log('error', error);
+            // })
           }
         }, {
           key: "onSubmit",
@@ -810,26 +817,27 @@
         }, {
           key: "onProgressBar",
           value: function onProgressBar(event) {
-            var count = 0;
-            var formControlList = []; // Object.keys(this.teleHandlerForm.controls).map(ele => formControlList.push(ele));
-            // formControlList.forEach(key => {
-            //   if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] == 'Ok') {
-            //     count = (count + 3);
-            //   } else if (this.teleHandlerForm.value[key] && this.teleHandlerForm.value[key] != '' && this.teleHandlerForm.value[key] != 'Ok') {
-            //     count = ++count;
-            //   }
-            // })
-            // this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
+            var _this5 = this;
 
-            Object.values(this.teleHandlerForm.value).map(function (ele) {
+            var count = 0;
+            var formControlList = [];
+            Object.keys(this.teleHandlerForm.controls).map(function (ele) {
               return formControlList.push(ele);
             });
             formControlList.forEach(function (key) {
-              if (key != '') {
+              if (_this5.teleHandlerForm.value[key] && _this5.teleHandlerForm.value[key] != '' && _this5.teleHandlerForm.value[key] == 'Ok') {
+                count = count + 3;
+              } else if (_this5.teleHandlerForm.value[key] && _this5.teleHandlerForm.value[key] != '' && _this5.teleHandlerForm.value[key] != 'Ok') {
                 count = ++count;
               }
             });
-            this.form_percent = 1 / Object.values(this.teleHandlerForm.value).length * count;
+            this.form_percent = 1 / Object.keys(this.teleHandlerForm.controls).length * count; // Object.values(this.teleHandlerForm.value).map(ele => formControlList.push(ele));
+            // formControlList.forEach(key => {
+            //   if (key != '') {
+            //     count = ++count;
+            //   }
+            // })
+            // this.form_percent = ((1 / Object.values(this.teleHandlerForm.value).length) * count);
           }
         }, {
           key: "loadData",

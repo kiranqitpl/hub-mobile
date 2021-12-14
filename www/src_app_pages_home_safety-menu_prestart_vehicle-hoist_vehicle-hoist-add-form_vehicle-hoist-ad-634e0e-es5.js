@@ -501,30 +501,45 @@
         }, {
           key: "onProgressBar",
           value: function onProgressBar(event) {
+            var _this3 = this;
+
             var count = 0;
             var formControlList = [];
-            Object.values(this.vehicleHoistForm.value).map(function (ele) {
+            Object.keys(this.vehicleHoistForm.controls).map(function (ele) {
               return formControlList.push(ele);
             });
             formControlList.forEach(function (key) {
-              if (key != '') {
+              if (_this3.vehicleHoistForm.value[key] && _this3.vehicleHoistForm.value[key] != '' && _this3.vehicleHoistForm.value[key] == 'OK') {
+                count = count + 2;
+              } else if (_this3.vehicleHoistForm.value[key] && _this3.vehicleHoistForm.value[key] != '' && _this3.vehicleHoistForm.value[key] != 'OK') {
                 count = ++count;
               }
             });
-            this.form_percent = 1 / Object.values(this.vehicleHoistForm.value).length * count;
-          }
+            this.form_percent = 1 / Object.keys(this.vehicleHoistForm.controls).length * count;
+          } // onProgressBar(event) {
+          //   let count = 0;
+          //   let formControlList = [];
+          //   Object.values(this.vehicleHoistForm.value).map(ele => formControlList.push(ele));
+          //   formControlList.forEach(key => {
+          //     if (key != '') {
+          //       count = ++count;
+          //     }
+          //   })
+          //   this.form_percent = ((1 / Object.values(this.vehicleHoistForm.value).length) * count);
+          // }
+
         }, {
           key: "loadData",
           value: function loadData(id) {
-            var _this3 = this;
+            var _this4 = this;
 
             this.globalService.getData('add_form/getSingleData?table_name=prestart&id=' + id).subscribe(function (result) {
               if (result && result['data'] && result['data'][0]) {
-                _this3.vehicleHoistSingleRecord = result['data'][0];
+                _this4.vehicleHoistSingleRecord = result['data'][0];
 
-                _this3.vehicleHoistForm.patchValue(_this3.vehicleHoistSingleRecord);
+                _this4.vehicleHoistForm.patchValue(_this4.vehicleHoistSingleRecord);
 
-                _this3.onProgressBar('');
+                _this4.onProgressBar('');
               }
             }), function (error) {
               console.log(error);

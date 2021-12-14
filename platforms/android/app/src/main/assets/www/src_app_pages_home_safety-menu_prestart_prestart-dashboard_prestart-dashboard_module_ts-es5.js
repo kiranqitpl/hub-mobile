@@ -217,19 +217,19 @@
 
           this.pName = 'Prestart';
           this.menu = [{
-            menuName: 'LV Prestart',
+            menuName: 'LV',
             route: '#'
           }, {
-            menuName: 'Forklift Prestart',
+            menuName: 'Forklift',
             route: '#'
           }, {
-            menuName: 'Telehandler Prestart',
+            menuName: 'Telehandler',
             route: '/home/safety-menu/telehandler-add-form'
           }, {
-            menuName: 'Crane Prestart',
+            menuName: 'Crane',
             route: '/home/safety-menu/crane-add-form'
           }, {
-            menuName: 'Vehicle Hoist Prestart',
+            menuName: 'Vehicle Hoist',
             route: '/home/safety-menu/vehicle-hoist-add-form'
           }];
         }

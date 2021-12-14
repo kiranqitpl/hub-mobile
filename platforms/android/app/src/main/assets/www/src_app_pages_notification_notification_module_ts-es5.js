@@ -265,14 +265,15 @@
                       // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
                       this.globalService.presentLoading();
                       this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(function (result) {
-                        console.log('onNotificationLoad', result);
+                        console.log('result', result);
 
                         if (result && result['row_count'] > 0) {
                           _this.notificationData = result['data'];
                         } else {
                           _this.notificationData = [];
-                        } // console.log('this.notificationData ', this.notificationData);
+                        }
 
+                        console.log('this.notificationData ', _this.notificationData);
 
                         _this.globalService.dismissLoading();
                       }), function (error) {
@@ -348,8 +349,7 @@
             var _this3 = this;
 
             if (formType == this.globalService.formType_user) {
-              // this.nav.navigateForward('view/' + formId);
-              this.nav.navigateForward('incident-details/' + formId);
+              this.nav.navigateRoot("/home/safety-menu/incident-details/" + formId);
             } else if (formType == this.globalService.formType_investigator) {
               this.nav.navigateForward('investigation-view/' + formId);
             }
@@ -439,9 +439,9 @@
       /* harmony import */
 
 
-      var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @ionic-native/Camera/ngx */
-      67871);
+      var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @ionic-native/camera/ngx */
+      84267);
 
       var _SharedService = /*#__PURE__*/function () {
         function SharedService(globalService, actionSheetController, camera) {
@@ -583,7 +583,7 @@
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController
         }, {
-          type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera
+          type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera
         }];
       };
 
@@ -625,7 +625,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n    \n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

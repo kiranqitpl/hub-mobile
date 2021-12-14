@@ -102,8 +102,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard.page.scss */ 24494);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ 92340);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 92340);
+/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/global-service/global.service */ 89985);
 /* harmony import */ var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/shared-service/shared.service */ 49481);
 
 
@@ -120,14 +120,14 @@ let DashboardPage = class DashboardPage {
         this.sharedService = sharedService;
         this.menu = [
             {
-                menuName: "Submitted Form", route: "/incident-form-list"
+                menuName: "Submitted Forms", route: "/incident-form-list"
             },
             {
                 menuName: "Notification", route: "/notification"
-            },
+            }
         ];
-        this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.allType;
-        this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__.environment.imageUrl;
+        this.type = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.allType;
+        this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.imageUrl;
     }
     ngOnInit() {
         this.loggedInUserDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -138,9 +138,7 @@ let DashboardPage = class DashboardPage {
         this.nav.navigateRoot("login");
     }
     onNotificationLoad() {
-        console.log('here');
         this.global.getData('notification/getNotificationList/' + this.loggedInUserDetails.id).subscribe(result => {
-            console.log('getNotificationList', result);
             if (result && result['row_count'] > 0) {
                 let count = 0;
                 result['data'].forEach(element => {
@@ -163,7 +161,7 @@ let DashboardPage = class DashboardPage {
 };
 DashboardPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController },
-    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService },
+    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService },
     { type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService }
 ];
 DashboardPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
@@ -193,7 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../global-service/global.service */ 89985);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
+/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/camera/ngx */ 84267);
 
 
 
@@ -289,7 +287,7 @@ let SharedService = class SharedService {
 SharedService.ctorParameters = () => [
     { type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController },
-    { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
+    { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
 ];
 SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
@@ -321,7 +319,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <div class=\"toolbar\">\n    <ion-text>Dashboard</ion-text>\n    <ion-buttons class='logout' slot=\"end\">\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"addForm\" (click)=\"onAddForm()\">\n      <img src=\"{{imageUrl + 'form.png'}}\" />\n      <p class=\" addF\">ADD FORM</p>\n    </div>\n    <div *ngFor=\"let tabVal of menu\">\n      <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n        {{tabVal.menuName}}\n        <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n          color=\"danger\">\n          {{sharedService.notViewNotiCount}}</ion-badge>\n      </ion-button>\n    </div>\n    <!-- <ion-button class=\"btn\">\n      <a href=\"https://logistics-devel.horts.com.au/index.php\" target=\"_blank\"> Test url </a>\n    </ion-button> -->\n    <ion-button class=\"btn logouts\" (click)=\"onLogOut()\">\n      Logout\n    </ion-button>\n  </div>\n\n\n  <!-- <ion-grid class=\"container\" >\n    <ion-row>\n      <ion-col class=\"addForm\" (click)=\"onAddForm()\" size=\"4\">\n        <img src=\"{{imageUrl + 'form.png'}}\" />\n        <p class=\" addF\">ADD FORM</p>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let tabVal of menu\">\n      <ion-col size=\"4\">\n        <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n          {{tabVal.menuName}}\n          <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n            color=\"danger\">\n            {{sharedService.notViewNotiCount}}</ion-badge>\n        </ion-button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col size=\"4\">\n        <ion-button class=\"btn logouts\" (click)=\"onLogOut()\"> Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid> -->\n</ion-content>");
 
 /***/ })
 

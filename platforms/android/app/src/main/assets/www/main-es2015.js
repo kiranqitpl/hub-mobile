@@ -219,6 +219,7 @@ AppComponent.ctorParameters = () => [
     { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService }
 ];
 AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.HostListener)('window:resize', ['$event']),
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -248,7 +249,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ 91841);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 3679);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
+/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/camera/ngx */ 84267);
 /* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/file/ngx */ 20138);
 /* harmony import */ var _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic-native/base64/ngx */ 31531);
 /* harmony import */ var _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/http/ngx */ 68589);
@@ -290,7 +291,7 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
             },
             // StatusBar,
             // SplashScreen,
-            _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera,
+            _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_0__.Camera,
             _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File,
             _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64,
             _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP,
@@ -388,19 +389,11 @@ let GlobalService = class GlobalService {
     // --------------------------------------------------New Services ---------------------------------------------//
     postData(url, data) {
         let headers = this.setHeader();
-        // if (this.platform == 'cordova') {
-        //   return this.http.post(this.baseUrl + url, data, { headers: headers });
-        // } else {
         return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
-        // }
     }
     getData(url) {
         let headers = this.setHeader();
-        // if (this.platform == 'cordova') {
-        //   return this.http.get(this.baseUrl + url, '', { headers: headers });
-        // } else {
         return this.httpClient.get(this.baseUrl + url, { headers: headers });
-        // }
         // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
         //   map((response) => {
         //     console.log('response', response);
@@ -806,7 +799,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-router-outlet></ion-router-outlet>\n</ion-app>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-router-outlet ></ion-router-outlet>\n</ion-app>\n");
 
 /***/ }),
 

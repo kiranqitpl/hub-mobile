@@ -402,7 +402,7 @@
             this.loadSuperwiser(); // this.findValueInWitness();
 
             this.incidentForm = this.fb.group({
-              incident_value: [''],
+              incident_value: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required],
               incident_near_miss: [''],
               incident_near_miss_other: ['']
             });
@@ -420,14 +420,14 @@
                 incdesc_other_witness_mobile_no: [''],
                 incdesc_other_witness_email: ['']
               }),
-              // incident_description_photo: [''],                         // incident description images
+              // incident_description_photo: [''],                      // incident description images
               // alcohol_test_completed: [''],
               incident_description_alcohol_test: [''],
               alcohol_test_image: [''],
               drug_test_completed: [''],
               drug_test_image: [''],
               return_to_alternate_duties: [''],
-              return_to_alternate_duties_image: [''] //return to alternate duties image
+              return_to_alternate_duties_image: [''] // return to alternate duties image
 
             });
             this.classificationForm = this.fb.group({
@@ -478,6 +478,9 @@
               injury_persons: [''],
               person_details: this.fb.array([])
             });
+            this.reportForm = this.fb.group({
+              report: ['']
+            });
             this.reputationDesForm = this.fb.group({
               reputation_option: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormArray([]),
               individual_damage_value: [''],
@@ -500,10 +503,7 @@
               what_has_been_stolen_item: [''],
               approximate_value_of_stolen: [''],
               what_is_the_specific_securities_incident: ['']
-            });
-            this.reportForm = this.fb.group({
-              report: ['']
-            });
+            }); // this.onProgressBar('', '');
           }
         }, {
           key: "loadEmployee",
@@ -711,6 +711,8 @@
                   }
                 }
 
+                _this8.onProgressBar('', '');
+
                 _this8.loadingService.dismissLoading();
               } else {
                 console.log('Error in image processing.');
@@ -789,6 +791,8 @@
                             }
 
                             _this10.photoGraphyForm.controls['photography_image'].setValue(_this10.photoGraphy);
+
+                            _this10.onProgressBar('', '');
                           })["catch"](function (error) {
                             console.log('error', error);
                           });
@@ -820,6 +824,8 @@
                   }
 
                   _this11.incidentDesForm.controls['alcohol_test_image'].setValue(_this11.alcohalImages);
+
+                  _this11.onProgressBar('', '');
                 })["catch"](function (error) {
                   console.log('error', error);
                 });
@@ -850,6 +856,8 @@
                   }
 
                   _this12.incidentDesForm.controls['drug_test_image'].setValue(_this12.drugTestImages);
+
+                  _this12.onProgressBar('', '');
                 })["catch"](function (error) {
                   console.log('error', error);
                 });
@@ -880,6 +888,8 @@
                   }
 
                   _this13.incidentDesForm.controls['return_to_alternate_duties_image'].setValue(_this13.alterDutyImages);
+
+                  _this13.onProgressBar('', '');
                 })["catch"](function (error) {
                   console.log('error', error);
                 });
@@ -913,7 +923,9 @@
                     chemical_photo: _this14.chemicalImages
                   };
 
-                  _this14.enviornmentForm.controls['chemical_details'].patchValue(image); // this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
+                  _this14.enviornmentForm.controls['chemical_details'].patchValue(image);
+
+                  _this14.onProgressBar('', ''); // this.enviornmentForm.get('chemical_details').value.chemical_photo = this.chemicalImagesObject;
 
                 })["catch"](function (error) {
                   console.log('error', error);
@@ -945,6 +957,8 @@
                   }
 
                   _this15.assetDescriptionForm.controls['extent_damage_image'].setValue(_this15.damageImages);
+
+                  _this15.onProgressBar('', '');
                 })["catch"](function (error) {
                   console.log('error', error);
                 });
@@ -954,24 +968,8 @@
         }, {
           key: "onImageDelete",
           value: function onImageDelete(index, variableName) {
-            this[variableName].splice(index, 1); //   if (variableName == 'Photography') {
-            //     this.photoGraphy.splice(index, 1);
-            //   }
-            //   if (variableName == 'Alcohal Test') {
-            //     this.alcohalImages.splice(index, 1);
-            //   }
-            //   if (variableName == 'Drug Test') {
-            //     this.drugTestImages.splice(index, 1);
-            //   }
-            //   if (variableName == 'Return to Alternate Duties') {
-            //     this.alterDutyImages.splice(index, 1);
-            //   }
-            //   if (variableName == 'Asset') {
-            //     this.damageImages.splice(index, 1);
-            //   }
-            //   if (variableName == 'Chemical Image') {
-            //     this.chemicalImages.splice(index, 1);
-            //   }
+            this[variableName].splice(index, 1);
+            this.onProgressBar('', '');
           } //----------------------------------------------------------- Images ----------------------------------------------------------------------//
           //----------------------------------------------------------- Modals ----------------------------------------------------------------------//
 
@@ -1369,6 +1367,8 @@
               this.photoGraphyObject = Object.assign({}, this.photoGraphy);
             }
 
+            console.log('photoGraphyObject ', this.photoGraphyObject);
+
             if (this.alcohalImages.length > 0) {
               this.alcohalImagesObject = Object.assign({}, this.alcohalImages);
             }
@@ -1406,7 +1406,7 @@
               fd.append("incident_near_miss_other", this.incidentForm.value['incident_near_miss_other'] ? this.incidentForm.value['incident_near_miss_other'] : ''); //----------------------------------------------------------- Incident --------------------------------------------------------------------// 
               //---------------------------------------------------------- photography ------------------------------------------------------------------//
 
-              fd.append("photography_image", this.photoGraphyObject.length > 0 ? JSON.stringify(this.photoGraphyObject) : ''); //---------------------------------------------------------- photography ------------------------------------------------------------------//
+              fd.append("photography_image", JSON.stringify(this.photoGraphyObject)); //---------------------------------------------------------- photography ------------------------------------------------------------------//
               //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
 
               fd.append("incident_description", this.incidentDesForm.value['incident_description'] ? this.incidentDesForm.value['incident_description'] : ''); //required
@@ -1421,11 +1421,11 @@
 
               fd.append("incdesc_other_witness_details", JSON.stringify(this.incidentDesForm.value['incdesc_other_witness_details']));
               fd.append("return_to_alternate_duties", this.incidentDesForm.value['return_to_alternate_duties'] ? this.incidentDesForm.value['return_to_alternate_duties'] : '');
-              fd.append("alcohol_test_image", this.alcohalImagesObject.length > 0 ? JSON.stringify(this.alcohalImagesObject) : ''); // alcohal test image
+              fd.append("alcohol_test_image", JSON.stringify(this.alcohalImagesObject)); // alcohal test image
 
-              fd.append("drug_test_image", this.drugTestImagesObject.length > 0 ? JSON.stringify(this.drugTestImagesObject) : ''); // drug_test_image
+              fd.append("drug_test_image", JSON.stringify(this.drugTestImagesObject)); // drug_test_image
 
-              fd.append("return_to_alternate_duties_image", this.alterDutyImagesObject.length > 0 ? JSON.stringify(this.alterDutyImagesObject) : ''); // return_to_alternate_duties_image 
+              fd.append("return_to_alternate_duties_image", JSON.stringify(this.alterDutyImagesObject)); // return_to_alternate_duties_image 
               //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
               //-------------------------------------------------------- Classification -----------------------------------------------------------------//
               // console.log('date_of_incident', this.classificationForm.value['date_of_incident']);
@@ -1506,7 +1506,7 @@
 
               fd.append("extent_of_damage", this.assetDescriptionForm.value['extent_of_damage'] ? this.assetDescriptionForm.value['extent_of_damage'] : ''); // required
 
-              fd.append("extent_damage_image", this.damageImagesObject.length > 0 ? JSON.stringify(this.damageImagesObject) : ''); // extent_damage_image
+              fd.append("extent_damage_image", JSON.stringify(this.damageImagesObject)); // extent_damage_image
               //----------------------------------------------------------------- Asset -----------------------------------------------------------------//
               //---------------------------------------------------------------- Report -----------------------------------------------------------------//
 
@@ -1674,6 +1674,8 @@
 
             this.tabList.find(function (ele) {
               if (val == 'Incident' && _this22.incidentForm.valid) {
+                _this22.onProgressBar('', '');
+
                 if (ele.val != 'Classification') {
                   ele.tabDisable = false;
                 }
@@ -1789,7 +1791,7 @@
 
             this.employeeList.filter(function (ele) {
               if (ele.employee_id == event.detail.value) {
-                _this23.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email; // this.injuryForm.value['person_details'].controls[index]['immediate_treatment_person_number'].setValue(ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email);
+                _this23.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
               }
             });
             console.log(' this.injuryForm.value', this.injuryForm.value['person_details']);
@@ -1804,6 +1806,8 @@
         }, {
           key: "onProgressBar",
           value: function onProgressBar(event, tabName) {
+            var _this24 = this;
+
             // Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
             // Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
             // Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
@@ -1818,75 +1822,236 @@
             // Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
             // Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
             var count = 0;
-            var formControlList = [];
+            var formControlList = []; // Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
+            // let formControlValue = [];
+            //----------------------------------------------------------- Incident Form -------------------------------------------------------------//  
+
             Object.keys(this.incidentForm.controls).map(function (ele) {
               return formControlList.push(ele);
             });
-            var formControlValue = [];
-            Object.values(this.incidentForm.value).map(function (ele) {
-              return formControlValue.push(ele);
-            });
 
-            if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != '') {
-              // Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
-              // Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
-              Object.values(this.photoGraphyForm.value).map(function (ele) {
-                return formControlValue.push(ele);
+            if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != 'Near Miss') {
+              for (var i = 0; i < formControlList.length; i++) {
+                if (formControlList[i] === 'incident_near_miss') {
+                  formControlList.splice(i, 1);
+                }
+
+                if (formControlList[i] === 'incident_near_miss_other') {
+                  formControlList.splice(i, 1);
+                }
+              }
+            } //----------------------------------------------------------- Incident Form ------------------------------------------------------------//  
+
+
+            if (this.incidentForm.valid) {
+              //----------------------------------------------------------- PhotoGraphy Form ---------------------------------------------------------//  
+              Object.keys(this.photoGraphyForm.controls).map(function (ele) {
+                return formControlList.push(ele);
+              }); //----------------------------------------------------------- PhotoGraphy Form ---------------------------------------------------------//  
+              //----------------------------------------------------------- Incident Desc Form -------------------------------------------------------//  
+
+              Object.keys(this.incidentDesForm.value).map(function (ele) {
+                return formControlList.push(ele);
               });
-              Object.values(this.incidentDesForm.value).map(function (ele) {
-                if (typeof ele != 'object') {
-                  formControlValue.push(ele);
+
+              for (var i = 0; i < formControlList.length; i++) {
+                if (formControlList[i] === 'incdesc_other_witness_details') {
+                  formControlList.splice(i, 1);
+                }
+
+                if ((this.incidentDesForm.value['incident_description_alcohol_test'] != '' || this.incidentDesForm.value['incident_description_alcohol_test'] != 'Yes') && formControlList[i] === 'alcohol_test_image') {
+                  formControlList.splice(i, 1);
+                }
+
+                if ((this.incidentDesForm.value['drug_test_completed'] != '' || this.incidentDesForm.value['drug_test_completed'] != 'Yes') && formControlList[i] === 'drug_test_image') {
+                  formControlList.splice(i, 1);
+                }
+
+                if ((this.incidentDesForm.value['return_to_alternate_duties'] != '' || this.incidentDesForm.value['return_to_alternate_duties'] != 'Yes') && formControlList[i] === 'return_to_alternate_duties_image') {
+                  formControlList.splice(i, 1);
+                }
+              }
+
+              if (this.incidentDesForm.value['was_there_any_witness_of_the_incident'] == 'Other') {
+                formControlList.push('incdesc_other_witness_name');
+                formControlList.push('incdesc_other_witness_mobile_no');
+                formControlList.push('incdesc_other_witness_email');
+              } //----------------------------------------------------------- Incident Desc Form  -------------------------------------------------------//  
+
+            } //----------------------------------------------------------- Classification Form -------------------------------------------------------//  
+
+
+            if (this.incidentDesForm.valid) {
+              Object.keys(this.classificationForm.value).map(function (ele) {
+                return formControlList.push(ele);
+              });
+
+              for (var i = 0; i < formControlList.length; i++) {
+                if (formControlList[i] === 'classification_supervisor_other_details') {
+                  formControlList.splice(i, 1);
+                }
+
+                if (formControlList[i] === 'classification_manager_other_details') {
+                  formControlList.splice(i, 1);
+                }
+
+                if (formControlList[i] === 'classification_location_value') {
+                  formControlList.splice(i, 1);
+                }
+
+                if (formControlList[i] === 'classification_location_value1') {
+                  formControlList.splice(i, 1);
+                }
+              }
+
+              if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
+                formControlList.push('classification_location_value');
+              } else if (this.classificationForm.value['classification_location_option'] == 'Choose Location') {
+                formControlList.push('classification_location_value1');
+              }
+
+              if (this.classificationForm.value['classification_supervisor'] == 'Other') {
+                formControlList.push('classification_supervisor_other_name');
+                formControlList.push('classification_supervisor_other_mobile_no');
+                formControlList.push('classification_supervisor_other_email');
+              }
+
+              if (this.classificationForm.value['classification_manager'] == 'Other') {
+                formControlList.push('classification_manager_other_name');
+                formControlList.push('classification_manager_other_mobile_no');
+                formControlList.push('classification_manager_other_email');
+              }
+            } //----------------------------------------------------------- Classification Form -------------------------------------------------------//  
+
+
+            if (this.incidentDesForm.valid) {
+              this.classificationList.forEach(function (element) {
+                if (element.val == 'Asset' && element.isChecked) {
+                  Object.keys(_this24.assetDescriptionForm.controls).map(function (ele) {
+                    formControlList.push(ele);
+                  });
+                }
+
+                if (element.val == 'Environmental' && element.isChecked) {
+                  Object.keys(_this24.enviornmentForm.controls).map(function (ele) {
+                    formControlList.push(ele);
+                  });
+                }
+
+                if (element.val == 'Injury' && element.isChecked) {
+                  Object.keys(_this24.injuryForm.controls).map(function (ele) {
+                    formControlList.push(ele);
+                  });
+                }
+
+                if (element.val == "Report" && element.isChecked) {
+                  Object.keys(_this24.reportForm.controls).map(function (ele) {
+                    formControlList.push(ele);
+                  });
+                }
+
+                if (element.val == "Reputation" && element.isChecked) {
+                  Object.keys(_this24.reputationDesForm.controls).map(function (ele) {
+                    formControlList.push(ele);
+                  });
+                }
+
+                if (element.val == "Security" && element.isChecked) {
+                  Object.keys(_this24.securityForm.controls).map(function (ele) {
+                    formControlList.push(ele);
+                  });
                 }
               });
-              console.log('formControlValue 1', formControlValue);
-              Object.values(this.incidentDesForm.value.incdesc_other_witness_details).map(function (ele) {
-                return formControlValue.push(ele);
+
+              for (var i = 0; i < formControlList.length; i++) {
+                //--------------------------------------------------------- Asset Form ----------------------------------------------------------------//  
+                if (this.assetDescriptionForm.value['asset_has_number'] != 'Yes') {
+                  if (formControlList[i] === 'asset_number') {
+                    formControlList.splice(i, 1);
+                  }
+                } //-------------------------------------------------------- Asset Form -----------------------------------------------------------------//  
+                //-------------------------------------------------------- Enviornment Form ----------------------------------------------------------//  
+
+
+                if (formControlList[i] === 'chemical_details') {
+                  formControlList.splice(i, 1);
+                }
+
+                if (formControlList[i] === 'out_of_split_kit') {
+                  formControlList.splice(i, 1);
+                }
+              }
+
+              if (this.enviornmentForm.value['was_a_chemical_split'] == 'Yes') {
+                formControlList.push('chemical_name');
+                formControlList.push('approximate_quantity');
+                console.log('insertPhotoCheckBox', this.enviornmentForm.value['chemical_details'].insertPhotoCheckBox);
+
+                if (this.enviornmentForm.value['chemical_details'].insertPhotoCheckBox) {
+                  formControlList.push('chemical_photo');
+                }
+              }
+
+              if (this.enviornmentForm.value['emergency_spill_kit_used'] == 'Yes') {
+                formControlList.push('out_of_split_kit');
+              } //-------------------------------------------------------- Enviornment Form ------------------------------------------------------------//  
+              //-------------------------------------------------------- Report Form -----------------------------------------------------------------//  
+
+
+              Object.keys(this.reportForm.value).map(function (ele) {
+                return formControlList.push(ele);
+              }); //-------------------------------------------------------- Report Form -----------------------------------------------------------------//  
+              //-------------------------------------------------------- Reputation Des Form -----------------------------------------------------------------//  
+
+              Object.keys(this.reputationDesForm.value).map(function (ele) {
+                return formControlList.push(ele);
               });
-              console.log('formControlValue 2', formControlValue);
-              console.log();
+
+              for (var i = 0; i < formControlList.length; i++) {
+                if (formControlList[i] === 'other_witness_details') {
+                  formControlList.splice(i, 1);
+                }
+              }
+
+              if (this.reputationDesForm.value['name_of_witness'] == 'Other') {
+                formControlList.push('other_witness_name');
+                formControlList.push('other_witness_mobile_no');
+                formControlList.push('other_witness_email');
+              } //-------------------------------------------------------- Reputation Des Form -----------------------------------------------------------------//  
+              //-------------------------------------------------------- Security Form -----------------------------------------------------------------//  
+
+
+              Object.keys(this.securityForm.value).map(function (ele) {
+                return formControlList.push(ele);
+              });
+              formControlList.push('security_option');
+
+              if (this.securityForm.value['security_option'] == 'IT') {
+                formControlList.push('it_option_value');
+              }
+
+              if (this.securityForm.value['security_option'] == 'Theft') {
+                formControlList.push('what_has_been_stolen_item');
+                formControlList.push('approximate_value_of_stolen');
+              }
+
+              if (this.securityForm.value['security_option'] == 'Other') {
+                formControlList.push('what_is_the_specific_securities_incident');
+              } //-------------------------------------------------------- Security Form -----------------------------------------------------------------//  
+
             }
 
-            formControlValue.forEach(function (key) {
-              if (key != '') {
+            console.log('formControlList', formControlList);
+            formControlList.forEach(function (key) {
+              if (_this24.incidentForm.value[key] != '' || _this24.photoGraphyForm.value[key] != '' || _this24.incidentDesForm.value[key] != '' || _this24.classificationForm.value[key] != '' || _this24.assetDescriptionForm.value[key] != '' || _this24.enviornmentForm.value[key] != '' || _this24.reportForm.value[key] != '' || _this24.reputationDesForm.value[key] != '' || _this24.securityForm.value[key] != '') {
                 count = ++count;
-              }
-            }); // let formControlList = [];
-            // Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
-            // if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != '') {
-            //   Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
-            //   Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
-            //   Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
-            //   Object.keys(this.incidentForm.controls).map(ele => formControlValue.push(ele));
-            //   // if (this.classificationForm.valid) {
-            //   //   Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
-            //   // }
-            //   // Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
-            //   // console.log('this.injuryForm.controls', this.injuryForm.controls);
-            //   // Object.keys(this.injuryForm.controls.person_details).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.enviornmentForm.controls).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.enviornmentForm.value.chemical_details).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.reputationDesForm.controls).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.reputationDesForm.value.other_witness_details).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.assetDescriptionForm.controls).map(ele => formControlList.push(ele));
-            //   // Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
-            // }
-            // formControlList.forEach(key => {
-            //   console.log('formControlList 1', formControlList);
-            //   console.log('formControlList 2', formControlList.length);
-            //   // if (tabName == 'Incident') {
-            //   if (this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] != 'Near Miss') {
-            //     count = count + 3;
-            //   } else if ((this.incidentForm.value[key] && this.incidentForm.value[key] != '' && this.incidentForm.value[key] == 'Near Miss') ||
-            //     this.photoGraphyForm.value[key] != ''
-            //   ) {
-            //     count = ++count;
-            //   }
-            // }
-            // })
+              } // if (key != '' && key != null) {
+              //   count = ++count;
+              // }
 
-            this.form_percent = 1 / formControlValue.length * count;
-            console.log(' this.form_percent', this.form_percent);
+            });
+            console.log('count', count);
+            this.form_percent = 1 / formControlList.length * count;
           }
         }, {
           key: "onImmediateTreatment",

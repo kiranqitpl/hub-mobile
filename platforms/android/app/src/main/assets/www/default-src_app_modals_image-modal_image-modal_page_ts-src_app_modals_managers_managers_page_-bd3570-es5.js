@@ -241,7 +241,8 @@
             });
 
             if (value == false && event != '') {
-              this.global.getData("user/getallemployee/" + event.detail.value).subscribe(function (res) {
+              this.newList.next([]);
+              this.global.getData("user/getallemployee/?term=" + event.detail.value).subscribe(function (res) {
                 if (res && res.data && res.data.length > 0) {
                   res.data.unshift({
                     full_name: "Other",
@@ -460,9 +461,9 @@
       /* harmony import */
 
 
-      var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! @ionic-native/Camera/ngx */
-      67871);
+      var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @ionic-native/camera/ngx */
+      84267);
 
       var _SharedService = /*#__PURE__*/function () {
         function SharedService(globalService, actionSheetController, camera) {
@@ -604,7 +605,7 @@
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController
         }, {
-          type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera
+          type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera
         }];
       };
 

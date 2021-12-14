@@ -134,14 +134,14 @@ let NotificationPage = class NotificationPage {
             // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
             this.globalService.presentLoading();
             this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
-                console.log('onNotificationLoad', result);
+                console.log('result', result);
                 if (result && result['row_count'] > 0) {
                     this.notificationData = result['data'];
                 }
                 else {
                     this.notificationData = [];
                 }
-                // console.log('this.notificationData ', this.notificationData);
+                console.log('this.notificationData ', this.notificationData);
                 this.globalService.dismissLoading();
             }), error => {
                 this.globalService.dismissLoading();
@@ -193,8 +193,7 @@ let NotificationPage = class NotificationPage {
     //----------------------------------- Re-direct on detail page --------------------------------------------------------//
     onNotificationDetaliPage(rowID, formId, formType, isSeen) {
         if (formType == this.globalService.formType_user) {
-            // this.nav.navigateForward('view/' + formId);
-            this.nav.navigateForward('incident-details/' + formId);
+            this.nav.navigateRoot("/home/safety-menu/incident-details/" + formId);
         }
         else if (formType == this.globalService.formType_investigator) {
             this.nav.navigateForward('investigation-view/' + formId);
@@ -243,7 +242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../global-service/global.service */ 89985);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/Camera/ngx */ 67871);
+/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic-native/camera/ngx */ 84267);
 
 
 
@@ -339,7 +338,7 @@ let SharedService = class SharedService {
 SharedService.ctorParameters = () => [
     { type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController },
-    { type: _ionic_native_Camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
+    { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_1__.Camera }
 ];
 SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
@@ -371,7 +370,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n    \n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size=\"10\">\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row>\n  </div>\n</ion-content>");
 
 /***/ })
 

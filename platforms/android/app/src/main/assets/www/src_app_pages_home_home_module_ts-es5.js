@@ -234,7 +234,7 @@
             menuName: "Admin",
             route: "#"
           }, {
-            menuName: "Company",
+            menuName: "HR",
             route: "#"
           }, {
             menuName: "Projects",

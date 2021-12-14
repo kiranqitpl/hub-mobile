@@ -292,14 +292,28 @@ export class VehicleHoistAddFormPage implements OnInit {
   onProgressBar(event) {
     let count = 0;
     let formControlList = [];
-    Object.values(this.vehicleHoistForm.value).map(ele => formControlList.push(ele));
+    Object.keys(this.vehicleHoistForm.controls).map(ele => formControlList.push(ele));
     formControlList.forEach(key => {
-      if (key != '') {
+      if (this.vehicleHoistForm.value[key] && this.vehicleHoistForm.value[key] != '' && this.vehicleHoistForm.value[key] == 'OK') {
+        count = (count + 2)
+      } else if (this.vehicleHoistForm.value[key] && this.vehicleHoistForm.value[key] != '' && this.vehicleHoistForm.value[key] != 'OK') {
         count = ++count;
       }
     })
-    this.form_percent = ((1 / Object.values(this.vehicleHoistForm.value).length) * count);
+    this.form_percent = ((1 / Object.keys(this.vehicleHoistForm.controls).length) * count);
   }
+
+  // onProgressBar(event) {
+  //   let count = 0;
+  //   let formControlList = [];
+  //   Object.values(this.vehicleHoistForm.value).map(ele => formControlList.push(ele));
+  //   formControlList.forEach(key => {
+  //     if (key != '') {
+  //       count = ++count;
+  //     }
+  //   })
+  //   this.form_percent = ((1 / Object.values(this.vehicleHoistForm.value).length) * count);
+  // }
 
   loadData(id) {
     this.globalService.getData('add_form/getSingleData?table_name=prestart&id=' + id).subscribe(result => {
