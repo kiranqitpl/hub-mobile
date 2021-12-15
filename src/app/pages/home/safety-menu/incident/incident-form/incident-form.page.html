@@ -466,7 +466,6 @@
           </ion-item>
         </div>
 
-        <!-- <ion-item class="ra" lines="none"> -->
         <p class="question">Shift :</p>
         <ion-select placeholder="Please select shift Type" interface="action-sheet"
           formControlName="classification_shift_type">
@@ -474,9 +473,7 @@
             {{shiftItem?.shift_type}}
           </ion-select-option>
         </ion-select>
-        <!-- </ion-item> -->
 
-        <!-- <ion-item class="ra" lines="none"> -->
         <p class="question">Supervisor :</p>
         <ion-item class="ra" lines="none" (click)="onOpenClassiModal('Supervisor List')">
           <ion-input placeholder="Please select supervisor" formControlName="classification_supervisor">
@@ -1053,18 +1050,15 @@
 
               <div *ngIf="injuryForm.value['person_details'][j].was_immediate_treatment == 'No'">
                 <ion-row>
-                  <!-- <ion-item lines="none"> -->
                   <ion-item class="ra" lines="none">
                     <span class="error">* </span>
                     <ion-label> Explain why immediate treatment was not given : </ion-label>
                   </ion-item>
                 </ion-row>
                 <ion-row>
-                  <!-- <ion-item lines="none"> -->
                   <ion-textarea placeholder="Enter Comment" autoGrow="true"
                     formControlName="was_immediate_treatment_comment">
                   </ion-textarea>
-                  <!-- </ion-item> -->
                 </ion-row>
               </div>
             </div>
@@ -1264,7 +1258,6 @@
               </ion-item>
             </ion-col>
           </ion-row>
-
         </div>
         <div *ngIf="securityForm.value['security_option']=='Theft'">
           <p class="question">

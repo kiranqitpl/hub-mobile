@@ -1220,6 +1220,7 @@ export class IncidentFormPage implements OnInit {
         }
       })
     }
+    this.onProgressBar('', '');
   }
 
   onDepartmentEffectCheckBox(event) {
@@ -1246,12 +1247,12 @@ export class IncidentFormPage implements OnInit {
         }
       })
     }
+    this.onProgressBar('', '');
   }
 
   onInput(evt, val) {
     this.tabList.find(ele => {
       if (val == 'Incident' && this.incidentForm.valid) {
-        this.onProgressBar('', '');
         if (ele.val != 'Classification') {
           ele.tabDisable = false;
         }
@@ -1270,6 +1271,7 @@ export class IncidentFormPage implements OnInit {
           this.reportForm.reset();
         }
       }
+      this.onProgressBar('', '');
     })
     if (val == 'Incident' && evt && evt.detail && evt.detail.value && evt.detail.value != 'Near Miss') {
       this.incidentForm.controls['incident_near_miss'].setValue('');
@@ -1339,6 +1341,7 @@ export class IncidentFormPage implements OnInit {
     } else if (evt.detail.value == "External") {
       this.reputationDesForm.controls['effected_department'].setValue('');
     }
+    this.onProgressBar('', '');
   }
 
   onWitnessChange(event) {
@@ -1364,262 +1367,312 @@ export class IncidentFormPage implements OnInit {
 
   onProgressBar(event, tabName) {
 
-    // Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.incidentDesForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.incidentDesForm.value.incdesc_other_witness_details).map(ele => formControlList.push(ele));
-    // Object.keys(this.classificationForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.injuryForm.controls).map(ele => formControlList.push(ele));
-    // // Object.keys(this.injuryForm.value.person_details).map(ele => formControlList.push(ele));
-    // Object.keys(this.assetDescriptionForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.enviornmentForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.enviornmentForm.value.chemical_details).map(ele => formControlList.push(ele));
-    // Object.keys(this.reputationDesForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.reputationDesForm.value.other_witness_details).map(ele => formControlList.push(ele));
-    // Object.keys(this.reportForm.controls).map(ele => formControlList.push(ele));
-    // Object.keys(this.securityForm.controls).map(ele => formControlList.push(ele));
-
     let count = 0;
-    let formControlList = [];
-
-    // Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
-    // let formControlValue = [];
+    let formControlKeys = [];
+    let formControlValue = [];
 
     //----------------------------------------------------------- Incident Form -------------------------------------------------------------//  
 
-    Object.keys(this.incidentForm.controls).map(ele => formControlList.push(ele));
-
-    if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != 'Near Miss') {
-      for (var i = 0; i < formControlList.length; i++) {
-        if (formControlList[i] === 'incident_near_miss') {
-          formControlList.splice(i, 1);
-        }
-        if (formControlList[i] === 'incident_near_miss_other') {
-          formControlList.splice(i, 1);
-        }
-      }
-    }
-    //----------------------------------------------------------- Incident Form ------------------------------------------------------------//  
+    Object.keys(this.incidentForm.controls).map(ele => formControlKeys.push(ele));
+    Object.values(this.incidentForm.value).map(ele => formControlValue.push(ele));
 
     if (this.incidentForm.valid) {
+      if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != 'Near Miss') {
+        for (var i = 0; i < formControlKeys.length; i++) {
+          if (formControlKeys[i] === 'incident_near_miss') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'incident_near_miss_other') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+        }
+      }
+
+      //----------------------------------------------------------- Incident Form ------------------------------------------------------------//  
 
       //----------------------------------------------------------- PhotoGraphy Form ---------------------------------------------------------//  
 
-      Object.keys(this.photoGraphyForm.controls).map(ele => formControlList.push(ele));
+      Object.keys(this.photoGraphyForm.controls).map(ele => formControlKeys.push(ele));
+      Object.values(this.photoGraphyForm.value).map(ele => formControlValue.push(ele));
 
       //----------------------------------------------------------- PhotoGraphy Form ---------------------------------------------------------//  
 
       //----------------------------------------------------------- Incident Desc Form -------------------------------------------------------//  
-      Object.keys(this.incidentDesForm.value).map(ele => formControlList.push(ele));
 
-      for (var i = 0; i < formControlList.length; i++) {
+      Object.keys(this.incidentDesForm.controls).map(ele => formControlKeys.push(ele));
+      Object.values(this.incidentDesForm.value).map(ele => formControlValue.push(ele));
 
-        if (formControlList[i] === 'incdesc_other_witness_details') {
-          formControlList.splice(i, 1);
+      for (var i = 0; i <= formControlKeys.length; i++) {
+        if (formControlKeys[i] === 'incdesc_other_witness_details') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
         }
 
-        if ((this.incidentDesForm.value['incident_description_alcohol_test'] != '' || this.incidentDesForm.value['incident_description_alcohol_test'] != 'Yes') &&
-          formControlList[i] === 'alcohol_test_image') {
-          formControlList.splice(i, 1);
+        if ((this.incidentDesForm.value['incident_description_alcohol_test'] == '' ||
+          this.incidentDesForm.value['incident_description_alcohol_test'] != 'Yes') && formControlKeys[i] === 'alcohol_test_image') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
         }
 
-        if ((this.incidentDesForm.value['drug_test_completed'] != '' || this.incidentDesForm.value['drug_test_completed'] != 'Yes') &&
-          formControlList[i] === 'drug_test_image') {
-          formControlList.splice(i, 1);
+        if ((this.incidentDesForm.value['drug_test_completed'] == '' || this.incidentDesForm.value['drug_test_completed'] != 'Yes') &&
+          formControlKeys[i] === 'drug_test_image') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
         }
 
-        if ((this.incidentDesForm.value['return_to_alternate_duties'] != '' ||
-          this.incidentDesForm.value['return_to_alternate_duties'] != 'Yes') && formControlList[i] === 'return_to_alternate_duties_image') {
-          formControlList.splice(i, 1);
+        if ((this.incidentDesForm.value['return_to_alternate_duties'] == '' ||
+          this.incidentDesForm.value['return_to_alternate_duties'] != 'Yes') && formControlKeys[i] === 'return_to_alternate_duties_image') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
         }
-        
       }
 
       if (this.incidentDesForm.value['was_there_any_witness_of_the_incident'] == 'Other') {
-        formControlList.push('incdesc_other_witness_name');
-        formControlList.push('incdesc_other_witness_mobile_no');
-        formControlList.push('incdesc_other_witness_email');
+
+        formControlKeys.push('incdesc_other_witness_name');
+        formControlKeys.push('incdesc_other_witness_mobile_no');
+        formControlKeys.push('incdesc_other_witness_email');
+
+        formControlValue.push(this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_name != undefined ? this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_name : '');
+        formControlValue.push(this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_mobile_no != undefined ? this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_mobile_no : '');
+        formControlValue.push(this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_email != undefined ? this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_email : '');
       }
 
-      //----------------------------------------------------------- Incident Desc Form  -------------------------------------------------------//  
-    }
+      //--------------------------------------------------------- Incident Desc Form  -------------------------------------------------------//  
 
-    //----------------------------------------------------------- Classification Form -------------------------------------------------------//  
+      if (this.incidentDesForm.valid) {
 
-    if (this.incidentDesForm.valid) {
-      Object.keys(this.classificationForm.value).map(ele => formControlList.push(ele));
+        //------------------------------------------- ----------- Classification Form -------------------------------------------------------//  
 
-      for (var i = 0; i < formControlList.length; i++) {
-        if (formControlList[i] === 'classification_supervisor_other_details') {
-          formControlList.splice(i, 1);
-        }
-        if (formControlList[i] === 'classification_manager_other_details') {
-          formControlList.splice(i, 1);
-        }
-        if (formControlList[i] === 'classification_location_value') {
-          formControlList.splice(i, 1);
-        }
-        if (formControlList[i] === 'classification_location_value1') {
-          formControlList.splice(i, 1);
-        }
-      }
+        Object.keys(this.classificationForm.value).map(ele => formControlKeys.push(ele));
+        Object.values(this.classificationForm.value).map(ele => formControlValue.push(ele));
 
-      if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
-        formControlList.push('classification_location_value');
-      } else if (this.classificationForm.value['classification_location_option'] == 'Choose Location') {
-        formControlList.push('classification_location_value1');
-      }
-
-      if (this.classificationForm.value['classification_supervisor'] == 'Other') {
-        formControlList.push('classification_supervisor_other_name');
-        formControlList.push('classification_supervisor_other_mobile_no');
-        formControlList.push('classification_supervisor_other_email');
-      }
-
-      if (this.classificationForm.value['classification_manager'] == 'Other') {
-        formControlList.push('classification_manager_other_name');
-        formControlList.push('classification_manager_other_mobile_no');
-        formControlList.push('classification_manager_other_email');
-      }
-    }
-
-    //----------------------------------------------------------- Classification Form -------------------------------------------------------//  
-
-    if (this.incidentDesForm.valid) {
-      this.classificationList.forEach(element => {
-        if (element.val == 'Asset' && element.isChecked) {
-          Object.keys(this.assetDescriptionForm.controls).map(ele => {
-            formControlList.push(ele);
-          });
-        }
-        if (element.val == 'Environmental' && element.isChecked) {
-          Object.keys(this.enviornmentForm.controls).map(ele => {
-            formControlList.push(ele);
-          });
-        }
-        if (element.val == 'Injury' && element.isChecked) {
-          Object.keys(this.injuryForm.controls).map(ele => {
-            formControlList.push(ele);
-          });
-        }
-        if (element.val == "Report" && element.isChecked) {
-          Object.keys(this.reportForm.controls).map(ele => {
-            formControlList.push(ele);
-          });
-        }
-
-        if (element.val == "Reputation" && element.isChecked) {
-          Object.keys(this.reputationDesForm.controls).map(ele => {
-            formControlList.push(ele);
-          });
-        }
-
-        if (element.val == "Security" && element.isChecked) {
-          Object.keys(this.securityForm.controls).map(ele => {
-            formControlList.push(ele);
-          });
-        }
-      });
-
-      for (var i = 0; i < formControlList.length; i++) {
-
-        //--------------------------------------------------------- Asset Form ----------------------------------------------------------------//  
-
-        if (this.assetDescriptionForm.value['asset_has_number'] != 'Yes') {
-          if (formControlList[i] === 'asset_number') {
-            formControlList.splice(i, 1);
+        for (var i = 0; i < formControlKeys.length; i++) {
+          if (formControlKeys[i] === 'classification_supervisor_other_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'classification_manager_other_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'classification_location_value') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'classification_location_value1') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
           }
         }
 
-        //-------------------------------------------------------- Asset Form -----------------------------------------------------------------//  
-
-        //-------------------------------------------------------- Enviornment Form ----------------------------------------------------------//  
-
-        if (formControlList[i] === 'chemical_details') {
-          formControlList.splice(i, 1);
+        if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
+          formControlKeys.push('classification_location_value');
+          formControlValue.push(this.classificationForm.value['classification_location_value']);
+        } else if (this.classificationForm.value['classification_location_option'] == 'Choose Location') {
+          formControlKeys.push('classification_location_value1');
+          formControlValue.push(this.classificationForm.value['classification_location_value1']);
         }
-        if (formControlList[i] === 'out_of_split_kit') {
-          formControlList.splice(i, 1);
+
+        if (this.classificationForm.value['classification_supervisor'] == 'Other') {
+          formControlKeys.push('classification_supervisor_other_name');
+          formControlValue.push(this.classificationForm.value['classification_supervisor_other_name']);
+          formControlKeys.push('classification_supervisor_other_mobile_no');
+          formControlValue.push(this.classificationForm.value['classification_supervisor_other_mobile_no']);
+          formControlKeys.push('classification_supervisor_other_email');
+          formControlValue.push(this.classificationForm.value['classification_supervisor_other_email']);
         }
-      }
 
-      if (this.enviornmentForm.value['was_a_chemical_split'] == 'Yes') {
-        formControlList.push('chemical_name');
-        formControlList.push('approximate_quantity');
-        console.log('insertPhotoCheckBox', this.enviornmentForm.value['chemical_details'].insertPhotoCheckBox);
-        if (this.enviornmentForm.value['chemical_details'].insertPhotoCheckBox) {
-          formControlList.push('chemical_photo');
+        if (this.classificationForm.value['classification_manager'] == 'Other') {
+          formControlKeys.push('classification_manager_other_name');
+          formControlValue.push(this.classificationForm.value['classification_manager_other_name']);
+          formControlKeys.push('classification_manager_other_mobile_no');
+          formControlValue.push(this.classificationForm.value['classification_manager_other_mobile_no']);
+          formControlKeys.push('classification_manager_other_email');
+          formControlValue.push(this.classificationForm.value['classification_manager_other_email']);
         }
-      }
 
-      if (this.enviornmentForm.value['emergency_spill_kit_used'] == 'Yes') {
-        formControlList.push('out_of_split_kit');
-      }
+        //------------------------------------------------------- Classification Form -------------------------------------------------------//  
 
-      //-------------------------------------------------------- Enviornment Form ------------------------------------------------------------//  
+        this.classificationList.forEach(element => {
 
-      //-------------------------------------------------------- Report Form -----------------------------------------------------------------//  
+          if (element.val == 'Asset' && element.isChecked) {
+            Object.keys(this.assetDescriptionForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.assetDescriptionForm.value).map(ele => formControlValue.push(ele));
+          }
 
-      Object.keys(this.reportForm.value).map(ele => formControlList.push(ele));
+          if (element.val == 'Environmental' && element.isChecked) {
+            Object.keys(this.enviornmentForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.enviornmentForm.value).map(ele => formControlValue.push(ele));
+          }
 
-      //-------------------------------------------------------- Report Form -----------------------------------------------------------------//  
+          if (element.val == 'Injury' && element.isChecked) {
+            Object.keys(this.injuryForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.injuryForm.value).map(ele => formControlValue.push(ele));
+          }
 
+          if (element.val == "Report" && element.isChecked) {
+            Object.keys(this.reportForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.reportForm.value).map(ele => formControlValue.push(ele));
+          }
 
-      //-------------------------------------------------------- Reputation Des Form -----------------------------------------------------------------//  
+          if (element.val == "Reputation" && element.isChecked) {
+            Object.keys(this.reputationDesForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.reputationDesForm.value).map(ele => formControlValue.push(ele));
+          }
 
-      Object.keys(this.reputationDesForm.value).map(ele => formControlList.push(ele));
+          if (element.val == "Security" && element.isChecked) {
+            //   Object.keys(this.securityForm.controls).map(ele => formControlKeys.push(ele));
+            //   Object.values(this.securityForm.value).map(ele => formControlValue.push(ele));
 
-      for (var i = 0; i < formControlList.length; i++) {
-        if (formControlList[i] === 'other_witness_details') {
-          formControlList.splice(i, 1);
+            //--------------------------------------------------- Security Form ----------------------------------------------------------------//  
+
+            formControlKeys.push('security_option');
+            formControlValue.push(this.securityForm.value['security_option']);
+            if (this.securityForm.value['security_option'] == 'IT') {
+              formControlKeys.push('it_option_value');
+              formControlValue.push(this.securityForm.value['it_option_value']);
+            }
+
+            if (this.securityForm.value['security_option'] == 'Theft') {
+              formControlKeys.push('what_has_been_stolen_item');
+              formControlValue.push(this.securityForm.value['what_has_been_stolen_item']);
+
+              formControlKeys.push('approximate_value_of_stolen');
+              formControlValue.push(this.securityForm.value['approximate_value_of_stolen']);
+            }
+
+            if (this.securityForm.value['security_option'] == 'Other') {
+              formControlKeys.push('what_is_the_specific_securities_incident');
+              formControlValue.push(this.securityForm.value['what_is_the_specific_securities_incident']);
+            }
+            //---------------------------------------------------- Security Form ----------------------------------------------------------------//  
+          }
+        });
+
+        for (var i = 0; i < formControlKeys.length; i++) {
+
+          //----------------------------------------------------- Asset Form ----------------------------------------------------------------//  
+
+          if (this.assetDescriptionForm.value['asset_has_number'] != 'Yes') {
+            if (formControlKeys[i] === 'asset_number') {
+              formControlKeys.splice(i, 1);
+              formControlValue.splice(i, 1);
+            }
+          }
+
+          //---------------------------------------------------- Asset Form -----------------------------------------------------------------//  
+
+          //------------------------------------------------- Enviornment Form --------------------------------------------------------------//  
+
+          if (formControlKeys[i] === 'chemical_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'out_of_split_kit') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
         }
+
+        if (this.enviornmentForm.value['was_a_chemical_split'] == 'Yes') {
+          formControlKeys.push('chemical_name');
+          formControlValue.push(this.enviornmentForm.value['chemical_details'].chemical_name);
+          formControlKeys.push('approximate_quantity');
+          formControlValue.push(this.enviornmentForm.value['chemical_details'].approximate_quantity);
+
+          if (this.enviornmentForm.value['chemical_details'].insertPhotoCheckBox) {
+            formControlKeys.push('chemical_photo');
+            formControlValue.push(this.enviornmentForm.value['chemical_details'].chemical_photo);
+          }
+        }
+
+        if (this.enviornmentForm.value['emergency_spill_kit_used'] == 'Yes') {
+          formControlKeys.push('out_of_split_kit');
+          formControlValue.push(this.enviornmentForm.value['out_of_split_kit']);
+        }
+
+        //---------------------------------------------------- Enviornment Form -------------------------------------------------------------// 
+
+        //--------------------------------------------------- Reputation Des Form -----------------------------------------------------------//  
+
+        console.log('reputationDesForm', this.reputationDesForm.value);
+        console.log('reputationDesForm 1', this.reputationDesForm.value['reputation_option']);
+
+        for (var i = 0; i < formControlKeys.length; i++) {
+
+          // if (formControlKeys[i] == 'individual_damage_value' &&
+          //   (this.reputationDesForm.value['reputation_option'].length == 0 ||
+          //     (this.reputationDesForm.value['reputation_option'][0] && this.reputationDesForm.value['reputation_option'][0] != 'Individual') ||
+          //     (this.reputationDesForm.value['reputation_option'][1] && this.reputationDesForm.value['reputation_option'][1] != 'Individual')
+          //   )
+          // ) {
+          //   formControlKeys.splice(i, 1);
+          //   formControlValue.splice(i, 1);
+          // }
+
+          // if (formControlKeys[i] == 'company_damage_value' &&
+          //   (this.reputationDesForm.value['reputation_option'].length == 0 ||
+          //     (this.reputationDesForm.value['reputation_option'][0] && this.reputationDesForm.value['reputation_option'][0] != 'Company') ||
+          //     (this.reputationDesForm.value['reputation_option'][1] && this.reputationDesForm.value['reputation_option'][1] != 'Company')
+          //   )
+          // ) {
+          //   formControlKeys.splice(i, 1);
+          //   formControlValue.splice(i, 1);
+          // }
+
+          if (this.reputationDesForm.value['reputation_negative_effect'] == '') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+
+          if ((this.reputationDesForm.value['reputation_negative_effect'] == '' ||
+            this.reputationDesForm.value['reputation_negative_effect'] != 'Internal' ||
+            this.reputationDesForm.value['reputation_negative_effect'] != 'Both')
+            && formControlKeys[i] == 'effected_department') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+
+          if ((this.reputationDesForm.value['reputation_negative_effect'] == '' ||
+            this.reputationDesForm.value['reputation_negative_effect'] != 'External' ||
+            this.reputationDesForm.value['reputation_negative_effect'] != 'Both')
+            && formControlKeys[i] == 'external_party') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+
+          if (formControlKeys[i] === 'other_witness_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          
+        }
+
+        if (this.reputationDesForm.value['name_of_witness'] == 'Other') {
+          formControlKeys.push('other_witness_name');
+          formControlValue.push(this.reputationDesForm.value['other_witness_name']);
+          formControlKeys.push('other_witness_mobile_no');
+          formControlValue.push(this.reputationDesForm.value['other_witness_mobile_no']);
+          formControlKeys.push('other_witness_email');
+          formControlValue.push(this.reputationDesForm.value['other_witness_email']);
+        }
+        //----------------------------------------------- Reputation Des Form ---------------------------------------------------------------//  
       }
-
-      if (this.reputationDesForm.value['name_of_witness'] == 'Other') {
-        formControlList.push('other_witness_name');
-        formControlList.push('other_witness_mobile_no');
-        formControlList.push('other_witness_email');
-      }
-      //-------------------------------------------------------- Reputation Des Form -----------------------------------------------------------------//  
-
-
-      //-------------------------------------------------------- Security Form -----------------------------------------------------------------//  
-
-      Object.keys(this.securityForm.value).map(ele => formControlList.push(ele));
-
-      formControlList.push('security_option');
-
-      if (this.securityForm.value['security_option'] == 'IT') {
-        formControlList.push('it_option_value');
-      }
-
-      if (this.securityForm.value['security_option'] == 'Theft') {
-        formControlList.push('what_has_been_stolen_item');
-        formControlList.push('approximate_value_of_stolen');
-      }
-
-      if (this.securityForm.value['security_option'] == 'Other') {
-        formControlList.push('what_is_the_specific_securities_incident');
-      }
-
-      //-------------------------------------------------------- Security Form -----------------------------------------------------------------//  
     }
 
+    console.log('formControlKeys 1', formControlKeys);
+    console.log('formControlValue 1', formControlValue);
 
-    console.log('formControlList', formControlList);
-    formControlList.forEach(key => {
-      if (this.incidentForm.value[key] != '' || this.photoGraphyForm.value[key] != '' || this.incidentDesForm.value[key] != '' ||
-        this.classificationForm.value[key] != '' || this.assetDescriptionForm.value[key] != '' || this.enviornmentForm.value[key] != ''
-        || this.reportForm.value[key] != '' || this.reputationDesForm.value[key] != '' || this.securityForm.value[key] != '') {
+    formControlKeys.forEach((key, index) => {
+      if (formControlValue[index] != '' && formControlValue[index] != null && formControlValue[index] != undefined &&
+        formControlValue[index].length > 0) {
         count = ++count;
       }
-
-      // if (key != '' && key != null) {
-      //   count = ++count;
-      // }
     })
-
-    console.log('count', count)
-    this.form_percent = ((1 / formControlList.length) * count);
+    this.form_percent = ((1 / formControlKeys.length) * count);
   }
 
   onImmediateTreatment(event, index) {
