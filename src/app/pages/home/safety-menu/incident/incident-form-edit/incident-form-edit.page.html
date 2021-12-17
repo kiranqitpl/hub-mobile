@@ -20,12 +20,12 @@
 
   <div class="ion-padding-start ion-padding-end">
 
-    <!-- <div class="activeBackground">
+    <div class="activeBackground">
       <ion-row>
-        <ion-col size="10">
+        <ion-col size-lg="11" size-md="11" size-sm="11" size-Xl="11" size-Xs="10">
           <div class="headerTitle">Form progress bar</div>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size-lg="1" size-md="1" size-sm="1" size-Xl="1" size-Xs="2">
           {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
         </ion-col>
       </ion-row>
@@ -35,7 +35,7 @@
           <ion-progress-bar [value]="form_percent"></ion-progress-bar>
         </ion-col>
       </ion-row>
-    </div> -->
+    </div>
 
     <div *ngFor=" let tabItem of tabList">
       <ion-button class="incident" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
@@ -51,7 +51,7 @@
           <img (click)="onDeSelectTabItem(tabItem.val)" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
-        <div [formGroup]="incidentForm">
+        <div [formGroup]="incidentForm" (ionChange)="onProgressBar($event, 'Incident')">
           <ion-radio-group formControlName="incident_value" (ionChange)="onInput($event,'Incident')">
             <ion-row>
               <ion-col size="6">
@@ -101,7 +101,7 @@
 
       <!-------------------------------------------------------- Photography ----------------------------------------------------------------->
       <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem=='Photography'" class="activeBackground"
-        [formGroup]="photoGraphyForm">
+        [formGroup]="photoGraphyForm" (ionChange)="onProgressBar($event, 'Photography')">
         <div class="headerTitle">
           <p>{{tabItem.val }}</p>
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -127,7 +127,7 @@
                 </ion-col>
                 <ion-col size="1">
                   <p class="question">
-                    <ion-icon name="close" (click)="onImageDelete(i, 'Photography')"></ion-icon>
+                    <ion-icon name="close" (click)="onImageDelete(i, 'photoGraphy')"></ion-icon>
                   </p>
                 </ion-col>
               </ion-row>
@@ -141,7 +141,7 @@
       <!----------------------------------------------------- Incident Description ----------------------------------------------------------->
 
       <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem=='Incident Description'" class="activeBackground">
-        <div class="headerTitle">
+        <div class="headerTitle" (ionChange)="onProgressBar($event, 'Incident Description')">
           <p>{{tabItem.val }}</p>
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
@@ -246,7 +246,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i ,'Alcohal Test')"></ion-icon>
+                        <ion-icon name="close" (click)="onImageDelete(i ,'alcohalImages')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -308,7 +308,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i,'Drug Test')"></ion-icon>
+                        <ion-icon name="close" (click)="onImageDelete(i,'drugTestImages')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -373,7 +373,7 @@
                     </ion-col>
                     <ion-col size="1">
                       <p class="question">
-                        <ion-icon name="close" (click)="onImageDelete(i,'Return to Alternate Duties')"></ion-icon>
+                        <ion-icon name="close" (click)="onImageDelete(i,'alterDutyImageses')"></ion-icon>
                       </p>
                     </ion-col>
                   </ion-row>
@@ -392,7 +392,7 @@
       <!----------------------------------------------------- Classification ----------------------------------------------------------------->
 
       <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem =='Classification'" [formGroup]='classificationForm'
-        class="activeBackground">
+        class="activeBackground" (ionChange)="onProgressBar($event, 'Classification')">
         <div class="headerTitle">
           <p>{{tabItem.val }}</p>
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -578,7 +578,7 @@
         <!------------------------------------------------------- Asset ------------------------------------------------------------------------>
 
         <div *ngIf=" selectedTabItem == classification && classification =='Asset'" class="activeBackground"
-          [formGroup]="assetDescriptionForm">
+          [formGroup]="assetDescriptionForm" (ionChange)="onProgressBar($event, 'Asset')">
           <div class="headerTitle">
             <p>{{classification}}</p>
             <img (click)="onDeSelectTabItem(classification)" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -636,7 +636,7 @@
                   </ion-col>
                   <ion-col size="1">
                     <p class="question">
-                      <ion-icon name="close" (click)="onImageDelete(i, 'Asset')">
+                      <ion-icon name="close" (click)="onImageDelete(i, 'damageImages')">
                       </ion-icon>
                     </p>
                   </ion-col>
@@ -650,7 +650,7 @@
         <!----------------------------------------------------- Environmental ------------------------------------------------------------------>
 
         <div *ngIf="selectedTabItem == classification && classification =='Environmental'" class="activeBackground"
-          [formGroup]="enviornmentForm">
+          [formGroup]="enviornmentForm" (ionChange)="onProgressBar($event, 'Environmental')">
           <div class="headerTitle">
             <p>{{classification}}</p>
             <img (click)="onDeSelectTabItem(classification)" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -717,7 +717,7 @@
                       </ion-col>
                       <ion-col size="1">
                         <p class="question">
-                          <ion-icon name="close" (click)="onImageDelete(i,'Chemical Image')">
+                          <ion-icon name="close" (click)="onImageDelete(i,'chemicalImages')">
                           </ion-icon>
                         </p>
                       </ion-col>
@@ -770,7 +770,7 @@
         <!-------------------------------------------------------- Injury ----------------------------------------------------------------------->
 
         <div *ngIf="selectedTabItem == classification && classification =='Injury'" class="activeBackground"
-          [formGroup]="injuryForm">
+          [formGroup]="injuryForm" (ionChange)="onProgressBar($event, 'Injury')">
           <div class="headerTitle">
             <p>{{classification}}</p>
             <img (click)="onDeSelectTabItem(tabItem)" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -1094,7 +1094,7 @@
         <!------------------------------------------------------  Report ----------------------------------------------------------------------->
 
         <div *ngIf=" selectedTabItem == classification && classification =='Report'" class="activeBackground"
-          [formGroup]="reportForm">
+          [formGroup]="reportForm" (ionChange)="onProgressBar($event, 'Report')">
           <div class="headerTitle">
             <p>{{classification}}</p>
             <img (click)="onDeSelectTabItem(classification)" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -1110,7 +1110,7 @@
         <!------------------------------------------------------ Reputation -------------------------------------------------------------------->
 
         <div *ngIf="selectedTabItem == classification && classification =='Reputation'" class="activeBackground"
-          [formGroup]="reputationDesForm">
+          [formGroup]="reputationDesForm" (ionChange)="onProgressBar($event, 'Reputation')">
           <div class="headerTitle">
             <p>{{classification}}</p>
             <img (click)="onDeSelectTabItem(classification)" class="plus" src="{{imagePath+'minus.png'}}" />
@@ -1239,7 +1239,7 @@
         <!------------------------------------------------------ Security ---------------------------------------------------------------------->
 
         <div *ngIf="selectedTabItem == classification && classification =='Security'" class="activeBackground"
-          [formGroup]="securityForm">
+          [formGroup]="securityForm" (ionChange)="onProgressBar($event, 'Security')">
           <div class="headerTitle">
             <p>{{classification}}</p>
             <img (click)="onDeSelectTabItem(classification)" class="plus" src="{{imagePath+'minus.png'}}" />

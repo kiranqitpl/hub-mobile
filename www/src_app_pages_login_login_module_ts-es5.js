@@ -276,30 +276,7 @@
               // this.global.presentLoading();
               var fd = new FormData();
               fd.append("email", this.ionicForm.value.email);
-              fd.append("password", this.ionicForm.value.password); // if (this.global.platform == 'cordova') {
-              //   console.log('this.global.platform 1', this.global.platform);
-              //   let header = new HttpHeaders()
-              //     .set('apikey', 'as*37486a*()HGY')
-              //   let data =  {'email': 'joedy.frape@horts.com.au', 'password': 'Password'};
-              //   this.http.post("https://mforms-api-devel.horts.com.au/api/user/login", data, {header:header}).then((res: any) => {
-              //     console.log('login', res);
-              //     if (res && res.status) {
-              //       localStorage.setItem("userDetails", JSON.stringify(res.data));
-              //       this.nav.navigateRoot('dashboard')
-              //       // this.global.dismissLoading();
-              //       this.toastService.toast(res.message, 'success');
-              //     } else {
-              //       // this.global.dismissLoading();
-              //       this.toastService.toast(res.message, 'danger');
-              //     }
-              //   }).catch(error => {
-              //     console.log('fff1', error.status);
-              //     console.log('fff2', error.error); // error message as string
-              //     console.log('fff3', error.headers);
-              //   });
-              // } else {
-
-              console.log('this.global.platform 2', this.global.platform);
+              fd.append("password", this.ionicForm.value.password);
               this.global.postData("user/login", fd).subscribe(function (res) {
                 console.log('login', res);
 

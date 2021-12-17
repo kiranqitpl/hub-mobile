@@ -18,14 +18,14 @@
     <p class="question">ReacIncident report</p>
   </div>
 
-  <div class="ion-padding-start ion-padding-end">
 
+  <div class="ion-padding-start ion-padding-end">
     <div class="activeBackground">
       <ion-row>
-        <ion-col size="10.5">
+        <ion-col size-lg="11" size-md="11" size-sm="11" size-Xl="11" size-Xs="10">
           <div class="headerTitle">Form progress bar</div>
         </ion-col>
-        <ion-col size="1.5">
+        <ion-col size-lg="1" size-md="1" size-sm="1" size-Xl="1" size-Xs="2">
           {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
         </ion-col>
       </ion-row>
@@ -36,19 +36,19 @@
         </ion-col>
       </ion-row>
     </div>
-
     <div *ngFor=" let tabItem of tabList">
       <ion-button class="incident" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
         [disabled]="tabItem.tabDisable">
-        <p>{{tabItem.val}} </p>
+        <p>{{tabItem.val}}</p>
         <img class="plus" src="{{imagePath+'add.png'}}" />
       </ion-button>
 
       <!--------------------------------------------------------- Incident ------------------------------------------------------------------->
-      <div *ngIf="selectedTabItem==tabItem.val && selectedTabItem =='Incident'" class="activeBackground"
-        (ionChange)="onProgressBar($event, 'Incident')">
+      <div *ngIf="selectedTabItem==tabItem.val && selectedTabItem =='Incident'" class="activeBackground">
         <div class="headerTitle">
-          <p>{{tabItem.val}}</p>
+          <p>{{tabItem.val}}
+
+          </p>
           <img (click)="onDeSelectTabItem(tabItem.val)" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
@@ -141,13 +141,14 @@
 
       <!----------------------------------------------------- Incident Description ----------------------------------------------------------->
 
-      <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem=='Incident Description'" class="activeBackground">
+      <div *ngIf="selectedTabItem==tabItem.val  && selectedTabItem=='Incident Description'" class="activeBackground"
+        (ionChange)="onProgressBar($event, 'Incident Description')">
         <div class="headerTitle">
           <p>{{tabItem.val }}</p>
           <img (click)="onDeSelectTabItem(tabItem.val )" class="plus" src="{{imagePath+'minus.png'}}" />
         </div>
         <hr />
-        <div [formGroup]="incidentDesForm" (ionChange)="onProgressBar($event, 'Incident Description')">
+        <div [formGroup]="incidentDesForm">
           <p class="question">
             Description of incident :
           </p>
@@ -555,7 +556,7 @@
     <div *ngFor="let classification of selectedTabList; let i = index">
 
       <ion-button class="incident" *ngIf="selectedTabItem != classification" (click)="onSelectTabItem(classification)">
-        <p>{{classification}} </p>
+        <p>{{classification}}</p>
         <img class="plus" src="{{imagePath+'add.png'}}" />
       </ion-button>
 

@@ -40,6 +40,7 @@ export class IncidentFormEditPage implements OnInit {
   individualChecked: any;
   companyChecked: any;
   disabledTab: boolean;
+  form_percent: number = 0;
 
   //-------------------------------------------------- Dropdowns variables---------------------------------------------------------------//
 
@@ -751,6 +752,7 @@ export class IncidentFormEditPage implements OnInit {
             });
             //------------------------------------------------------------- securityForm -------------------------------------------------------------//
           }
+          this.onProgressBar('', '');
           // this.loadingService.dismissLoading();
         }), error => {
           // this.loadingService.dismissLoading();
@@ -878,7 +880,7 @@ export class IncidentFormEditPage implements OnInit {
               this.damageImages.unshift(image);
             }
           }
-
+          this.onProgressBar('', '');
           this.loadingService.dismissLoading();
         } else {
           console.log('Error in image processing.');
@@ -932,6 +934,8 @@ export class IncidentFormEditPage implements OnInit {
             } else {
               this.photoGraphy.unshift(image);
             }
+            this.photoGraphyForm.controls['photography_image'].setValue(this.photoGraphy);
+            this.onProgressBar('', '');
           }).catch(error => {
             console.log('error', error);
           });
@@ -952,6 +956,8 @@ export class IncidentFormEditPage implements OnInit {
             } else {
               this.alcohalImages.unshift(data);
             }
+            this.incidentDesForm.controls['alcohol_test_image'].setValue(this.alcohalImages);
+            this.onProgressBar('', '');
           }).catch(error => {
             console.log('error', error);
           });
@@ -979,6 +985,8 @@ export class IncidentFormEditPage implements OnInit {
             } else {
               this.drugTestImages.unshift(data);
             }
+            this.incidentDesForm.controls['drug_test_image'].setValue(this.drugTestImages);
+            this.onProgressBar('', '');
           }).catch(error => {
             console.log('error', error);
           });
@@ -1006,6 +1014,7 @@ export class IncidentFormEditPage implements OnInit {
             } else {
               this.alterDutyImages.unshift(data);
             }
+            this.onProgressBar('', '');
           }).catch(error => {
             console.log('error', error);
           });
@@ -1034,6 +1043,8 @@ export class IncidentFormEditPage implements OnInit {
             } else {
               this.damageImages.unshift(data);
             }
+            this.assetDescriptionForm.controls['extent_damage_image'].setValue(this.damageImages);
+            this.onProgressBar('', '');
           }).catch(error => {
             console.log('error', error);
           });
@@ -1054,6 +1065,8 @@ export class IncidentFormEditPage implements OnInit {
             } else {
               this.chemicalImages.unshift(data);
             }
+            this.enviornmentForm.controls['chemical_details'].patchValue(image);
+            this.onProgressBar('', '');
           }).catch(error => {
             console.log('error', error);
           });
@@ -1075,30 +1088,33 @@ export class IncidentFormEditPage implements OnInit {
     }
   }
 
-  onImageDelete(index, tabName) {
-    if (tabName == 'Photography') {
-      this.photoGraphy.splice(index, 1);
-    }
+  onImageDelete(index, variableName) {
+    // if (tabName == 'Photography') {
+    //   this.photoGraphy.splice(index, 1);
+    // }
 
-    if (tabName == 'Alcohal Test') {
-      this.alcohalImages.splice(index, 1);
-    }
+    // if (tabName == 'Alcohal Test') {
+    //   this.alcohalImages.splice(index, 1);
+    // }
 
-    if (tabName == 'Drug Test') {
-      this.drugTestImages.splice(index, 1);
-    }
+    // if (tabName == 'Drug Test') {
+    //   this.drugTestImages.splice(index, 1);
+    // }
 
-    if (tabName == 'Return to Alternate Duties') {
-      this.alterDutyImages.splice(index, 1);
-    }
+    // if (tabName == 'Return to Alternate Duties') {
+    //   this.alterDutyImages.splice(index, 1);
+    // }
 
-    if (tabName == 'Asset') {
-      this.damageImages.splice(index, 1);
-    }
+    // if (tabName == 'Asset') {
+    //   this.damageImages.splice(index, 1);
+    // }
 
-    if (tabName == 'Chemical Image') {
-      this.chemicalImages.splice(index, 1);
-    }
+    // if (tabName == 'Chemical Image') {
+    //   this.chemicalImages.splice(index, 1);
+    // }
+
+    this[variableName].splice(index, 1);
+    this.onProgressBar('', '');
   }
 
   async onOpenIncidentModal() {
@@ -1618,6 +1634,7 @@ export class IncidentFormEditPage implements OnInit {
         }
       })
     }
+    this.onProgressBar('', '');
   }
 
   onInput(evt, val) {
@@ -1641,6 +1658,7 @@ export class IncidentFormEditPage implements OnInit {
           this.reportForm.reset();
         }
       }
+      this.onProgressBar('', '');
     })
     if (evt && evt.detail && evt.detail.value && evt.detail.value != 'Near Miss') {
       this.incidentForm.controls['incident_near_miss'].setValue('');
@@ -1714,6 +1732,7 @@ export class IncidentFormEditPage implements OnInit {
     } else if (evt.detail.value == "External") {
       this.reputationDesForm.controls['effected_department'].setValue('');
     }
+    this.onProgressBar('', '');
   }
 
   onDepartmentEffectCheckBox(event) {
@@ -1742,8 +1761,7 @@ export class IncidentFormEditPage implements OnInit {
         }
       })
     }
-    console.log('this.departmentEffect', this.departmentEffect);
-    console.log('this.reputationDesForm', this.reputationDesForm);
+    this.onProgressBar('', '');
   }
 
   onWitnessChange(event) {
@@ -1810,4 +1828,367 @@ export class IncidentFormEditPage implements OnInit {
       this.injuryPersonDetails.controls[index].patchValue(data);
     }
   }
+
+  onProgressBar(event, tabName) {
+
+    let count = 0;
+    let formControlKeys = [];
+    let formControlValue = [];
+
+    //----------------------------------------------------------- Incident Form -------------------------------------------------------------//  
+
+    Object.keys(this.incidentForm.controls).map(ele => formControlKeys.push(ele));
+    Object.values(this.incidentForm.value).map(ele => formControlValue.push(ele));
+
+    if (this.incidentForm.valid) {
+
+      if (this.incidentForm.value['incident_value'] && this.incidentForm.value['incident_value'] != 'Near Miss') {
+        for (var i = 0; i < formControlKeys.length; i++) {
+          if (formControlKeys[i] === 'incident_near_miss') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'incident_near_miss_other') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+        }
+      }
+
+      //----------------------------------------------------------- Incident Form ------------------------------------------------------------//  
+
+      //----------------------------------------------------------- PhotoGraphy Form ---------------------------------------------------------//  
+
+      Object.keys(this.photoGraphyForm.controls).map(ele => formControlKeys.push(ele));
+      Object.values(this.photoGraphyForm.value).map(ele => formControlValue.push(ele));
+
+      //----------------------------------------------------------- PhotoGraphy Form ---------------------------------------------------------//  
+
+      //----------------------------------------------------------- Incident Desc Form -------------------------------------------------------//  
+
+      Object.keys(this.incidentDesForm.controls).map(ele => formControlKeys.push(ele));
+      Object.values(this.incidentDesForm.value).map(ele => formControlValue.push(ele));
+
+      for (var i = 0; i <= formControlKeys.length; i++) {
+        if (formControlKeys[i] === 'incdesc_other_witness_details') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
+        }
+
+        if ((this.incidentDesForm.value['incident_description_alcohol_test'] == '' ||
+          this.incidentDesForm.value['incident_description_alcohol_test'] != 'Yes') && formControlKeys[i] === 'alcohol_test_image') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
+        }
+
+        if ((this.incidentDesForm.value['drug_test_completed'] == '' || this.incidentDesForm.value['drug_test_completed'] != 'Yes') &&
+          formControlKeys[i] === 'drug_test_image') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
+        }
+
+        if ((this.incidentDesForm.value['return_to_alternate_duties'] == '' ||
+          this.incidentDesForm.value['return_to_alternate_duties'] != 'Yes') && formControlKeys[i] === 'return_to_alternate_duties_image') {
+          formControlKeys.splice(i, 1);
+          formControlValue.splice(i, 1);
+        }
+      }
+
+      if (this.incidentDesForm.value['was_there_any_witness_of_the_incident'] == 'Other') {
+        formControlKeys.push('incdesc_other_witness_name');
+        formControlValue.push(this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_name != undefined ? this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_name : '');
+        formControlKeys.push('incdesc_other_witness_mobile_no');
+        formControlValue.push(this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_mobile_no != undefined ? this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_mobile_no : '');
+        formControlKeys.push('incdesc_other_witness_email');
+        formControlValue.push(this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_email != undefined ? this.incidentDesForm.value['incdesc_other_witness_details'].incdesc_other_witness_email : '');
+      }
+
+      //--------------------------------------------------------- Incident Desc Form  -------------------------------------------------------//  
+
+      if (this.incidentDesForm.valid) {
+
+        //------------------------------------------- ----------- Classification Form -------------------------------------------------------//  
+
+        Object.keys(this.classificationForm.value).map(ele => formControlKeys.push(ele));
+        Object.values(this.classificationForm.value).map(ele => formControlValue.push(ele));
+
+        for (var i = 0; i < formControlKeys.length; i++) {
+          if (formControlKeys[i] === 'classification_supervisor_other_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'classification_manager_other_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'classification_location_value') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'classification_location_value1') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+        }
+
+        if (this.classificationForm.value['classification_location_option'] == 'Add Location') {
+          formControlKeys.push('classification_location_value');
+          formControlValue.push(this.classificationForm.value['classification_location_value']);
+        } else if (this.classificationForm.value['classification_location_option'] == 'Choose Location') {
+          formControlKeys.push('classification_location_value1');
+          formControlValue.push(this.classificationForm.value['classification_location_value1']);
+        }
+
+        if (this.classificationForm.value['classification_supervisor'] == 'Other') {
+          formControlKeys.push('classification_supervisor_other_name');
+          formControlValue.push(this.classificationForm.value['classification_supervisor_other_details'].classification_supervisor_other_name);
+          formControlKeys.push('classification_supervisor_other_mobile_no');
+          formControlValue.push(this.classificationForm.value['classification_supervisor_other_details'].classification_supervisor_other_mobile_no);
+          formControlKeys.push('classification_supervisor_other_email');
+          formControlValue.push(this.classificationForm.value['classification_supervisor_other_details'].classification_supervisor_other_email);
+        }
+
+        if (this.classificationForm.value['classification_manager'] == 'Other') {
+          formControlKeys.push('classification_manager_other_name');
+          formControlValue.push(this.classificationForm.value['classification_manager_other_details'].classification_manager_other_name);
+          formControlKeys.push('classification_manager_other_mobile_no');
+          formControlValue.push(this.classificationForm.value['classification_manager_other_details'].classification_manager_other_mobile_no);
+          formControlKeys.push('classification_manager_other_email');
+          formControlValue.push(this.classificationForm.value['classification_manager_other_details'].classification_manager_other_email);
+        }
+
+        //------------------------------------------------------- Classification Form -------------------------------------------------------//  
+
+        this.classificationList.forEach(element => {
+
+          if (element.val == 'Asset' && element.isChecked) {
+            Object.keys(this.assetDescriptionForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.assetDescriptionForm.value).map(ele => formControlValue.push(ele));
+          }
+
+          if (element.val == 'Environmental' && element.isChecked) {
+            Object.keys(this.enviornmentForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.enviornmentForm.value).map(ele => formControlValue.push(ele));
+          }
+
+          if (element.val == 'Injury' && element.isChecked) {
+            formControlKeys.push('injury_persons');
+            formControlValue.push(this.injuryForm.value['injury_persons']);
+          }
+
+          if (element.val == "Report" && element.isChecked) {
+            Object.keys(this.reportForm.controls).map(ele => formControlKeys.push(ele));
+            Object.values(this.reportForm.value).map(ele => formControlValue.push(ele));
+          }
+
+          //--------------------------------------------------- Reputation Des Form -----------------------------------------------------------//  
+          if (element.val == "Reputation" && element.isChecked) {
+            // Object.keys(this.reputationDesForm.controls).map(ele => formControlKeys.push(ele));
+            // Object.values(this.reputationDesForm.value).map(ele => formControlValue.push(ele));
+
+            formControlKeys.push('reputation_option');
+            formControlValue.push(this.reputationDesForm.value['reputation_option']);
+            formControlKeys.push('reputation_negative_effect');
+            formControlValue.push(this.reputationDesForm.value['reputation_negative_effect']);
+            formControlKeys.push('name_of_witness');
+            formControlValue.push(this.reputationDesForm.value['name_of_witness']);
+            formControlKeys.push('possible_outcome_incident');
+            formControlValue.push(this.reputationDesForm.value['possible_outcome_incident']);
+
+            if (this.reputationDesForm.value['reputation_option'] && this.reputationDesForm.value['reputation_option'].length > 0) {
+              if (this.reputationDesForm.value['reputation_option'][0] == "Company" ||
+                this.reputationDesForm.value['reputation_option'][1] == "Company") {
+                formControlKeys.push('company_damage_value');
+                formControlValue.push(this.reputationDesForm.value['company_damage_value']);
+              }
+
+              if (this.reputationDesForm.value['reputation_option'][0] == "Individual" ||
+                this.reputationDesForm.value['reputation_option'][1] == "Individual") {
+                formControlKeys.push('individual_damage_value');
+                formControlValue.push(this.reputationDesForm.value['individual_damage_value']);
+              }
+            }
+
+            if (this.reputationDesForm.value['reputation_negative_effect'] != '' &&
+              this.reputationDesForm.value['reputation_negative_effect'] == 'Internal') {
+              formControlKeys.push('effected_department');
+              formControlValue.push(this.reputationDesForm.value['effected_department']);
+            } else if (this.reputationDesForm.value['reputation_negative_effect'] != '' &&
+              this.reputationDesForm.value['reputation_negative_effect'] == "External") {
+              formControlKeys.push('external_party');
+              formControlValue.push(this.reputationDesForm.value['external_party']);
+            } else if (this.reputationDesForm.value['reputation_negative_effect'] == 'Both') {
+              formControlKeys.push('effected_department');
+              formControlValue.push(this.reputationDesForm.value['effected_department']);
+              formControlKeys.push('external_party');
+              formControlValue.push(this.reputationDesForm.value['external_party']);
+
+            }
+
+            if (this.reputationDesForm.value['name_of_witness'] == 'Other') {
+              formControlKeys.push('other_witness_name');
+              formControlValue.push(this.reputationDesForm.value['other_witness_details'].other_witness_name);
+              formControlKeys.push('other_witness_mobile_no');
+              formControlValue.push(this.reputationDesForm.value['other_witness_details'].other_witness_mobile_no);
+              formControlKeys.push('other_witness_email');
+              formControlValue.push(this.reputationDesForm.value['other_witness_details'].other_witness_email);
+            }
+          }
+          //----------------------------------------------- Reputation Des Form ---------------------------------------------------------------//
+
+          if (element.val == "Security" && element.isChecked) {
+
+            //--------------------------------------------------- Security Form ----------------------------------------------------------------//  
+
+            formControlKeys.push('security_option');
+            formControlValue.push(this.securityForm.value['security_option']);
+            if (this.securityForm.value['security_option'] == 'IT') {
+              formControlKeys.push('it_option_value');
+              formControlValue.push(this.securityForm.value['it_option_value']);
+            }
+
+            if (this.securityForm.value['security_option'] == 'Theft') {
+              formControlKeys.push('what_has_been_stolen_item');
+              formControlValue.push(this.securityForm.value['what_has_been_stolen_item']);
+
+              formControlKeys.push('approximate_value_of_stolen');
+              formControlValue.push(this.securityForm.value['approximate_value_of_stolen']);
+            }
+
+            if (this.securityForm.value['security_option'] == 'Other') {
+              formControlKeys.push('what_is_the_specific_securities_incident');
+              formControlValue.push(this.securityForm.value['what_is_the_specific_securities_incident']);
+            }
+            //---------------------------------------------------- Security Form ----------------------------------------------------------------//  
+          }
+        });
+
+        for (var i = 0; i < formControlKeys.length; i++) {
+
+          //----------------------------------------------------- Asset Form ----------------------------------------------------------------//  
+
+          if (this.assetDescriptionForm.value['asset_has_number'] != 'Yes') {
+            if (formControlKeys[i] === 'asset_number') {
+              formControlKeys.splice(i, 1);
+              formControlValue.splice(i, 1);
+            }
+          }
+
+          //---------------------------------------------------- Asset Form -----------------------------------------------------------------//  
+
+          //------------------------------------------------- Enviornment Form --------------------------------------------------------------//  
+
+          if (formControlKeys[i] === 'chemical_details') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+          if (formControlKeys[i] === 'out_of_split_kit') {
+            formControlKeys.splice(i, 1);
+            formControlValue.splice(i, 1);
+          }
+        }
+
+        if (this.enviornmentForm.value['was_a_chemical_split'] == 'Yes') {
+          formControlKeys.push('chemical_name');
+          formControlValue.push(this.enviornmentForm.value['chemical_details'].chemical_name);
+          formControlKeys.push('approximate_quantity');
+          formControlValue.push(this.enviornmentForm.value['chemical_details'].approximate_quantity);
+
+          if (this.enviornmentForm.value['chemical_details'].insertPhotoCheckBox) {
+            formControlKeys.push('chemical_photo');
+            formControlValue.push(this.enviornmentForm.value['chemical_details'].chemical_photo);
+          }
+        }
+
+        if (this.enviornmentForm.value['emergency_spill_kit_used'] == 'Yes') {
+          formControlKeys.push('out_of_split_kit');
+          formControlValue.push(this.enviornmentForm.value['out_of_split_kit']);
+        }
+
+        //---------------------------------------------------- Enviornment Form -------------------------------------------------------------// 
+
+        //------------------------------------------------------- Injury Form ---------------------------------------------------------------// 
+
+        if (this.injuryForm.value['injury_persons'] != '' && this.injuryForm.value['injury_persons'] != null) {
+          for (let i = 0; i < this.injuryForm.value['injury_persons']; i++) {
+
+            Object.keys(this.injuryForm.value['person_details'][i]).forEach((ele, j) => {
+
+              if (ele != 'injured_person_option_id' && ele != 'injured_person_option_other_details' &&
+                ele != 'normal_duties_explanation' && ele != 'duties_explanation' &&
+                ele != 'immediate_treatment_person_name_id' && ele != 'immediate_treatment_given_explanation' &&
+                ele != 'immediate_treatment_person_name' && ele != 'immediate_treatment_other_person_detail' &&
+                ele != 'was_immediate_treatment_comment') {
+                formControlKeys.push(ele + '_' + i);
+                formControlValue.push(Object.values(this.injuryForm.value['person_details'][i])[j]);
+              }
+
+              if (ele == 'injured_person_option' && this.injuryForm.value['person_details'][i].injured_person_option == 'Other') {
+
+                formControlKeys.push('injured_person_option_other_name' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['injured_person_option_other_details'].injured_person_option_other_name);
+
+                formControlKeys.push('injured_person_option_other_mobile_no' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['injured_person_option_other_details'].injured_person_option_other_mobile_no);
+
+                formControlKeys.push('injured_person_option_other_email' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['injured_person_option_other_details'].injured_person_option_other_email);
+
+              }
+
+              if (ele == 'normal_duties' && this.injuryForm.value['person_details'][i].normal_duties == 'No') {
+                formControlKeys.push('normal_duties_explanation' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['normal_duties_explanation']);
+              }
+
+              if (ele == 'alternate_duties' && this.injuryForm.value['person_details'][i].alternate_duties == 'No') {
+                formControlKeys.push('duties_explanation' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['duties_explanation']);
+              }
+
+              if (ele == 'was_immediate_treatment' && this.injuryForm.value['person_details'][i].was_immediate_treatment == 'Yes') {
+
+                formControlKeys.push('immediate_treatment_given_explanation' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i].immediate_treatment_given_explanation);
+
+                formControlKeys.push('immediate_treatment_person_name' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i].immediate_treatment_person_name);
+
+                if (this.injuryForm.value['person_details'][i]['immediate_treatment_person_name'] == 'Other') {
+                  formControlKeys.push('immediate_treatment_other_name' + '_' + i);
+                  formControlValue.push(this.injuryForm.value['person_details'][i]['immediate_treatment_other_person_detail'].immediate_treatment_other_name);
+                }
+
+                formControlKeys.push('immediate_treatment_person_number' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['immediate_treatment_other_person_detail'].immediate_treatment_person_number);
+
+                formControlKeys.push('immediate_treatment_other_email' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i]['immediate_treatment_other_person_detail'].immediate_treatment_other_email);
+              }
+
+              if (ele == 'was_immediate_treatment' && this.injuryForm.value['person_details'][i].was_immediate_treatment == 'No') {
+                formControlKeys.push('was_immediate_treatment_comment' + '_' + i);
+                formControlValue.push(this.injuryForm.value['person_details'][i].was_immediate_treatment_comment);
+              }
+            })
+          }
+        }
+
+        //------------------------------------------------------- Injury Form ---------------------------------------------------------------//    
+      }
+    }
+
+    console.log('formControlKeys', formControlKeys);
+    console.log('formControlValue', formControlValue);
+
+    formControlKeys.forEach((key, index) => {
+      if (formControlValue[index] != '' && formControlValue[index] != null && formControlValue[index] != undefined &&
+        formControlValue[index].length > 0) {
+        count = ++count;
+      }
+    })
+
+    this.form_percent = ((1 / formControlKeys.length) * count);
+  }
+
 }
