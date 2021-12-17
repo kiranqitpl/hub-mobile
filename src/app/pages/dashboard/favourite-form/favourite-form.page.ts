@@ -20,7 +20,7 @@ export class FavouriteFormPage implements OnInit {
   onRemoveFavourite(tabname) {
     this.sharedService.prestartMenu.filter(ele => {
       if (ele.menuName == tabname) {
-        ele.favourite = false;
+        ele.favorite = false;
       }
     })
   }
