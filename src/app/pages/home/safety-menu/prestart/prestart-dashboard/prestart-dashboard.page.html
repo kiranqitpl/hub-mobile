@@ -8,14 +8,14 @@
           {{tabVal.menuName}}
         </ion-col>
 
-        <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2" title="Remove from favourite"
-          *ngIf="tabVal.favourite == true" (click)="onFavorite(tabVal.menuName, false)">
-          <ion-icon name="heart" class="favoirte"></ion-icon>
+        <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2" title="Remove from favorite"
+          *ngIf="tabVal.favorite == true" (click)="onFavorite(tabVal.menuName, false)">
+          <ion-icon name="heart" class="favorite"></ion-icon>
         </ion-col>
 
-        <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2" title="Add to favourite"
-          *ngIf="tabVal.favourite == false" (click)="onFavorite(tabVal.menuName, true)">
-          <ion-icon name="heart-outline" class="favoirte"></ion-icon>
+        <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2" title="Add to favorite"
+          *ngIf="tabVal.favorite == false" (click)="onFavorite(tabVal.menuName, true)">
+          <ion-icon name="heart-outline" class="favorite"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-button>

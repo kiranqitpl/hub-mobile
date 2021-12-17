@@ -39,6 +39,8 @@ export class PrestartDashboardPage implements OnInit {
   ngOnInit() {
     this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     this.loadFavoriteList();
+
+    console.log('prestartMenu',this.sharedService.prestartMenu);
   }
 
   loadFavoriteList() {
@@ -50,12 +52,7 @@ export class PrestartDashboardPage implements OnInit {
     })
   }
 
-  onFavourite(tabname, val) {
-
-    let data = {
-
-    }
-
+  onFavorite(tabname, val) {
 
     this.sharedService.prestartMenu.filter(ele => {
       if (ele.menuName == tabname) {

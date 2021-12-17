@@ -17,7 +17,7 @@ export class FavouriteFormPage implements OnInit {
   ngOnInit() {
   }
 
-  onRemoveFavourite(tabname) {
+  onRemoveFavorite(tabname) {
     this.sharedService.prestartMenu.filter(ele => {
       if (ele.menuName == tabname) {
         ele.favorite = false;
