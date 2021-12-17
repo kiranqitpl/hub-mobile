@@ -11,7 +11,6 @@ import { catchError, map } from 'rxjs/operators';
 
 export class GlobalService {
 
-  // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
   baseUrl: string = 'https://mforms-api-devel.horts.com.au/api/';
 
   formType_user = 1;

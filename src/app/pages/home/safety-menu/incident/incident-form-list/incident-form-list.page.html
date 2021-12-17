@@ -77,12 +77,12 @@
           </ion-item>
 
           <ion-item-options side="end">
-            <ion-item-option class="item-option">
-              <ion-icon slot="icon-only" (click)="onGoToDetails(rowData)" name="eye-outline"></ion-icon>
+            <ion-item-option class="item-option" (click)="onGoToDetails(rowData)" title="View">
+              <ion-icon slot="icon-only" name="eye-outline" style="pointer-events:none"></ion-icon>
             </ion-item-option>
 
-            <ion-item-option class="item-option">
-              <ion-icon slot="icon-only" (click)="onGoToEdit(rowData)" name="create-outline"></ion-icon>
+            <ion-item-option class="item-option" (click)="onGoToEdit(rowData)" title="Edit">
+              <ion-icon slot="icon-only" name="create-outline" style="pointer-events:none"></ion-icon>
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
@@ -131,15 +131,19 @@
       <ngx-datatable-column [minWidth]="20" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>View</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-          <ion-icon class="view" slot="icon-only" name="eye-outline" (click)="onGoToDetails(row)"></ion-icon>
+          <span title="View" (click)="onGoToDetails(row)">
+            <ion-icon class="view" slot="icon-only" name="eye-outline" style="pointer-events:none"></ion-icon>
+          </span>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [minWidth]="20" [resizeable]="true" prop="Id">
         <ng-template let-column="column" ngx-datatable-header-template>Edit</ng-template>
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
-          <ion-icon class="view" slot="icon-only" name="create-outline" (click)="onGoToEdit(row)">
-          </ion-icon>
+          <span title="Edit" (click)="onGoToEdit(row)">
+            <ion-icon class="view" slot="icon-only" name="create-outline" style="pointer-events:none">
+            </ion-icon>
+          </span>
         </ng-template>
       </ngx-datatable-column>
 

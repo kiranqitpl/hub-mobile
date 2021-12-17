@@ -147,7 +147,7 @@ ion-content {
         position: absolute;
         right: 0;
         top: 30px;
-      }
+    }
     .toolbar {
         background-color: var(--theme-blue-color);
         align-items: center;
@@ -345,4 +345,13 @@ ion-progress-bar {
 
     --progress-background: #ffa500;
     background: var(--progress-background);
+}
+
+.favoirte {
+    // background-color: powderblue;
+    color: #ff69b4;
+    font-size: 25px;
+    // margin-left: 150px;
+    --ionicon-stroke-width: 50px;
+    pointer-events: none;
 }

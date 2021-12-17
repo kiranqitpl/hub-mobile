@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardPage
+  },
+  {
+    path: 'favourite-form',
+    loadChildren: () => import('./favourite-form/favourite-form.module').then( m => m.FavouriteFormPageModule)
   }
 ];
 

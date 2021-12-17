@@ -12,6 +12,9 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
 export class DashboardPage implements OnInit {
   menu: any = [
     {
+      menuName: "Favorites", route: "/dashboard/favorite-form"
+    },
+    {
       menuName: "Submitted Forms", route: "/incident-form-list"
     },
     {

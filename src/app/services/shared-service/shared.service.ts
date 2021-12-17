@@ -3,12 +3,37 @@ import { GlobalService } from '../global-service/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
+import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
   notViewNotiCount: any = 0;
+
+
+  //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
+
+  prestartMenu = [
+    {
+      menuName: 'LV', route: '#', favorite: false
+    },
+    {
+      menuName: 'Forklift', route: '#', favorite: false
+    },
+    {
+      menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false
+    },
+    {
+      menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false
+    },
+    {
+      menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false
+    },
+  ];
+
+  //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
 
   constructor(
     private globalService: GlobalService,
