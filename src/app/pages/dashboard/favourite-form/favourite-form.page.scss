@@ -1,0 +1,24 @@
+.reorder  {
+    opacity: 0 !important;
+}
+
+.btn-blue{
+    background: var(--ion-color-primary, #3880ff);
+    --color: var(--ion-color-primary-contrast, #fff);
+    width: 100%;
+    border-radius: 23px;
+    --border-radius: 23px;
+    font-family: "mon-bold";
+    color: var(--ion-color-primary-contrast);
+    --background: var(--theme-blue-color);
+    height: 50px;
+    overflow: hidden;
+    margin-top: 13px;
+    text-transform: capitalize;
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+    line-height: 2.5;
+    text-align: center;
+}
+

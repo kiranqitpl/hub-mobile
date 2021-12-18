@@ -23,6 +23,10 @@ const routes = [
     {
         path: '',
         component: _dashboard_page__WEBPACK_IMPORTED_MODULE_0__.DashboardPage
+    },
+    {
+        path: 'favourite-form',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_dashboard_favourite-form_favourite-form_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./favourite-form/favourite-form.module */ 94565)).then(m => m.FavouriteFormPageModule)
     }
 ];
 let DashboardPageRoutingModule = class DashboardPageRoutingModule {
@@ -120,6 +124,9 @@ let DashboardPage = class DashboardPage {
         this.sharedService = sharedService;
         this.menu = [
             {
+                menuName: "Favorites", route: "/dashboard/favourite-form"
+            },
+            {
                 menuName: "Submitted Forms", route: "/incident-form-list"
             },
             {
@@ -198,11 +205,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SharedService = class SharedService {
+    //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
     constructor(globalService, actionSheetController, camera) {
         this.globalService = globalService;
         this.actionSheetController = actionSheetController;
         this.camera = camera;
         this.notViewNotiCount = 0;
+        //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
+        this.prestartMenu = [
+            {
+                menuName: 'LV', route: '#', favorite: false
+            },
+            {
+                menuName: 'Forklift', route: '#', favorite: false
+            },
+            {
+                menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false
+            },
+            {
+                menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false
+            },
+            {
+                menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false
+            },
+        ];
     }
     getBase64(file) {
         return new Promise((resolve, reject) => {

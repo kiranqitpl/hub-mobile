@@ -672,11 +672,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SharedService = class SharedService {
+    //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
     constructor(globalService, actionSheetController, camera) {
         this.globalService = globalService;
         this.actionSheetController = actionSheetController;
         this.camera = camera;
         this.notViewNotiCount = 0;
+        //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
+        this.prestartMenu = [
+            {
+                menuName: 'LV', route: '#', favorite: false
+            },
+            {
+                menuName: 'Forklift', route: '#', favorite: false
+            },
+            {
+                menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false
+            },
+            {
+                menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false
+            },
+            {
+                menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false
+            },
+        ];
     }
     getBase64(file) {
         return new Promise((resolve, reject) => {

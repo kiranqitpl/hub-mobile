@@ -1,18 +1,28 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
   <div class="container">
-    <span *ngFor="let tabVal of sharedService.prestartMenu">
-      <ion-button class="btn" *ngIf="tabVal.favorite == true">
-        <ion-row>
-          <ion-col size-lg="10" size-md="10" size-sm="10" size-xl="10" size-xs="10" [routerLink]="tabVal.route">
-            {{tabVal.menuName}}
-          </ion-col>
-          <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2" title="Remove from favorite"
-            (click)="onRemoveFavorite(tabVal.menuName)">
-            <ion-icon name="heart" class="favorite"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-button>
-    </span>
+
+    <ion-reorder-group (ionItemReorder)="onRenderItems($event)" disabled="false">
+      <span *ngFor="let tabVal of menuData">
+        <span class="btn-blue" *ngIf="tabVal.favorite == true || tabVal.favorite == 'true'">
+          <ion-row>
+            <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4" class="reorder">
+              <ion-reorder>
+              </ion-reorder>
+            </ion-col>
+            <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4" [routerLink]="tabVal.route">
+              {{tabVal.menuName}}
+            </ion-col>
+
+            <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4">
+              <span title="Remove from favorite" (click)="onRemoveFavorite(tabVal.menuName, false)">
+                <ion-icon name="heart" class="favorite"></ion-icon>
+              </span>
+            </ion-col>
+          </ion-row>
+        </span>
+      </span>
+    </ion-reorder-group>
+
   </div>
 </ion-content>

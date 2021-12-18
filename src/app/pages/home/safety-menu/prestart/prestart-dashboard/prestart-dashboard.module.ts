@@ -10,12 +10,15 @@ import { PrestartDashboardPage } from './prestart-dashboard.page';
 
 import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
+import { DragAndDropModule } from 'angular-draggable-droppable';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PrestartDashboardPageRoutingModule
+    PrestartDashboardPageRoutingModule,
+    DragAndDropModule
   ],
   declarations: [
     PrestartDashboardPage,

@@ -444,13 +444,36 @@
       84267);
 
       var _SharedService = /*#__PURE__*/function () {
+        //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
         function SharedService(globalService, actionSheetController, camera) {
           _classCallCheck(this, SharedService);
 
           this.globalService = globalService;
           this.actionSheetController = actionSheetController;
           this.camera = camera;
-          this.notViewNotiCount = 0;
+          this.notViewNotiCount = 0; //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
+
+          this.prestartMenu = [{
+            menuName: 'LV',
+            route: '#',
+            favorite: false
+          }, {
+            menuName: 'Forklift',
+            route: '#',
+            favorite: false
+          }, {
+            menuName: 'Telehandler',
+            route: '/home/safety-menu/telehandler-add-form',
+            favorite: false
+          }, {
+            menuName: 'Crane',
+            route: '/home/safety-menu/crane-add-form',
+            favorite: false
+          }, {
+            menuName: 'Vehicle Hoist',
+            route: '/home/safety-menu/vehicle-hoist-add-form',
+            favorite: false
+          }];
         }
 
         _createClass(SharedService, [{

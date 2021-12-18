@@ -2192,3 +2192,9 @@ ion-progress-bar {
   --progress-background: #ffa500;
   background: var(--progress-background);
 }
+.favorite {
+  color: #ff69b4;
+  font-size: 25px;
+  --ionicon-stroke-width: 50px;
+  pointer-events: none;
+}

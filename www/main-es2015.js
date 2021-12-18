@@ -332,7 +332,6 @@ let GlobalService = class GlobalService {
         this.httpClient = httpClient;
         this.http = http;
         this.loadingController = loadingController;
-        // baseUrl1: string = 'https://mforms-api-devel.horts.com.au/';
         this.baseUrl = 'https://mforms-api-devel.horts.com.au/api/';
         this.formType_user = 1;
         this.formType_investigator = 2;

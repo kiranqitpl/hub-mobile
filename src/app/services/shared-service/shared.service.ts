@@ -2,7 +2,6 @@ import { Injectable, } from '@angular/core';
 import { GlobalService } from '../global-service/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -12,24 +11,23 @@ export class SharedService {
 
   notViewNotiCount: any = 0;
 
-
   //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
 
   prestartMenu = [
     {
-      menuName: 'LV', route: '#', favorite: false
+      menuName: 'LV', route: '#', favorite: false, position_in_list: 1
     },
     {
-      menuName: 'Forklift', route: '#', favorite: false
+      menuName: 'Forklift', route: '#', favorite: false, position_in_list: 2
     },
     {
-      menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false
+      menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false, position_in_list: 3
     },
     {
-      menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false
+      menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false, position_in_list: 4
     },
     {
-      menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false
+      menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false, position_in_list: 5
     },
   ];
 
@@ -102,7 +100,6 @@ export class SharedService {
   }
 
   async pickImage(sourceType) {
-    console.log('sourceType', sourceType);
     const options: CameraOptions = {
       quality: 100,
       sourceType: sourceType,

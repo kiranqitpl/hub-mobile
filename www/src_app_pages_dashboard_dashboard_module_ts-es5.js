@@ -59,6 +59,17 @@
       var routes = [{
         path: '',
         component: _dashboard_page__WEBPACK_IMPORTED_MODULE_0__.DashboardPage
+      }, {
+        path: 'favourite-form',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_dashboard_favourite-form_favourite-form_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./favourite-form/favourite-form.module */
+          94565)).then(function (m) {
+            return m.FavouriteFormPageModule;
+          });
+        }
       }];
 
       var _DashboardPageRoutingModule = function DashboardPageRoutingModule() {
@@ -239,6 +250,9 @@
           this.global = global;
           this.sharedService = sharedService;
           this.menu = [{
+            menuName: "Favorites",
+            route: "/dashboard/favourite-form"
+          }, {
             menuName: "Submitted Forms",
             route: "/incident-form-list"
           }, {
@@ -367,13 +381,36 @@
       84267);
 
       var _SharedService = /*#__PURE__*/function () {
+        //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
         function SharedService(globalService, actionSheetController, camera) {
           _classCallCheck(this, SharedService);
 
           this.globalService = globalService;
           this.actionSheetController = actionSheetController;
           this.camera = camera;
-          this.notViewNotiCount = 0;
+          this.notViewNotiCount = 0; //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
+
+          this.prestartMenu = [{
+            menuName: 'LV',
+            route: '#',
+            favorite: false
+          }, {
+            menuName: 'Forklift',
+            route: '#',
+            favorite: false
+          }, {
+            menuName: 'Telehandler',
+            route: '/home/safety-menu/telehandler-add-form',
+            favorite: false
+          }, {
+            menuName: 'Crane',
+            route: '/home/safety-menu/crane-add-form',
+            favorite: false
+          }, {
+            menuName: 'Vehicle Hoist',
+            route: '/home/safety-menu/vehicle-hoist-add-form',
+            favorite: false
+          }];
         }
 
         _createClass(SharedService, [{
