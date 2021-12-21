@@ -26,7 +26,7 @@ const routes = [
     },
     {
         path: 'favourite-form',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_dashboard_favourite-form_favourite-form_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./favourite-form/favourite-form.module */ 94565)).then(m => m.FavouriteFormPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_dashboard_favourite-form_favourite-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./favourite-form/favourite-form.module */ 94565)).then(m => m.FavouriteFormPageModule)
     }
 ];
 let DashboardPageRoutingModule = class DashboardPageRoutingModule {
@@ -214,19 +214,19 @@ let SharedService = class SharedService {
         //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
         this.prestartMenu = [
             {
-                menuName: 'LV', route: '#', favorite: false
+                menuName: 'LV', route: '#', favorite: false, position_in_list: 1
             },
             {
-                menuName: 'Forklift', route: '#', favorite: false
+                menuName: 'Forklift', route: '#', favorite: false, position_in_list: 2
             },
             {
-                menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false
+                menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false, position_in_list: 3
             },
             {
-                menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false
+                menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false, position_in_list: 4
             },
             {
-                menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false
+                menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false, position_in_list: 5
             },
         ];
     }
@@ -290,7 +290,6 @@ let SharedService = class SharedService {
     }
     pickImage(sourceType) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
-            console.log('sourceType', sourceType);
             const options = {
                 quality: 100,
                 sourceType: sourceType,

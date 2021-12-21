@@ -6,9 +6,12 @@ export const environment = {
   production: false,
   type: 1,   // type = 0=>all 1=>unread  2=>read  notification
   allType: 0, // type = 0=>all 1=> unread 2=> read notification
-  imageUrl : './assets/',
-
+  imageUrl: './assets/',
+  API_URL: 'https://mforms-api-devel.horts.com.au/api/',
+  QA_API_URL: 'https://mforms-api-devel.horts.com.au/api/'
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

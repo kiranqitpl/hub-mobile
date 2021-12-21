@@ -2,27 +2,36 @@
   <app-header [pageName]="pName"></app-header>
   <div class="container">
 
-    <ion-reorder-group (ionItemReorder)="onRenderItems($event)" disabled="false">
-      <span *ngFor="let tabVal of menuData">
-        <span class="btn-blue" *ngIf="tabVal.favorite == true || tabVal.favorite == 'true'">
-          <ion-row>
-            <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4" class="reorder">
-              <ion-reorder>
-              </ion-reorder>
-            </ion-col>
-            <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4" [routerLink]="tabVal.route">
-              {{tabVal.menuName}}
-            </ion-col>
 
-            <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4">
-              <span title="Remove from favorite" (click)="onRemoveFavorite(tabVal.menuName, false)">
-                <ion-icon name="heart" class="favorite"></ion-icon>
-              </span>
-            </ion-col>
-          </ion-row>
-        </span>
-      </span>
-    </ion-reorder-group>
+
+
+    <ion-row>
+      <ion-col size-lg="3" size-md="3"></ion-col>
+      <ion-col size-lg="6" size-md="6" size-sm="12" size-xl="6" size-xs="12">
+        <ion-reorder-group (ionItemReorder)="onRenderItems($event)" disabled="false">
+          <span *ngFor="let tabVal of menuData">
+            <span class="btn-blue" *ngIf="tabVal.favorite == true || tabVal.favorite == 'true'">
+              <ion-row>
+                <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4" class="reorder">
+                  <ion-reorder>
+                  </ion-reorder>
+                </ion-col>
+                <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4" [routerLink]="tabVal.route">
+                  {{tabVal.menuName}}
+                </ion-col>
+    
+                <ion-col size-lg="4" size-md="4" size-sm="4" size-xl="4" size-xs="4">
+                  <span title="Remove from favorite" (click)="onRemoveFavorite(tabVal.menuName, false)">
+                    <ion-icon name="heart" class="favorite"></ion-icon>
+                  </span>
+                </ion-col>
+              </ion-row>
+            </span>
+          </span>
+        </ion-reorder-group>
+      </ion-col>
+      <ion-col size-lg="3" size-md="3"></ion-col>
+    </ion-row>
 
   </div>
 </ion-content>

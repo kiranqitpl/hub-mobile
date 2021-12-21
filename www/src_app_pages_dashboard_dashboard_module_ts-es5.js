@@ -62,9 +62,9 @@
       }, {
         path: 'favourite-form',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_pages_dashboard_favourite-form_favourite-form_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_dashboard_favourite-form_favourite-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./favourite-form/favourite-form.module */
           94565)).then(function (m) {
             return m.FavouriteFormPageModule;
@@ -393,23 +393,28 @@
           this.prestartMenu = [{
             menuName: 'LV',
             route: '#',
-            favorite: false
+            favorite: false,
+            position_in_list: 1
           }, {
             menuName: 'Forklift',
             route: '#',
-            favorite: false
+            favorite: false,
+            position_in_list: 2
           }, {
             menuName: 'Telehandler',
             route: '/home/safety-menu/telehandler-add-form',
-            favorite: false
+            favorite: false,
+            position_in_list: 3
           }, {
             menuName: 'Crane',
             route: '/home/safety-menu/crane-add-form',
-            favorite: false
+            favorite: false,
+            position_in_list: 4
           }, {
             menuName: 'Vehicle Hoist',
             route: '/home/safety-menu/vehicle-hoist-add-form',
-            favorite: false
+            favorite: false,
+            position_in_list: 5
           }];
         }
 
@@ -504,7 +509,6 @@
                 while (1) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
-                      console.log('sourceType', sourceType);
                       options = {
                         quality: 100,
                         sourceType: sourceType,
@@ -512,7 +516,7 @@
                         encodingType: this.camera.EncodingType.JPEG,
                         mediaType: this.camera.MediaType.PICTURE
                       };
-                      _context2.next = 4;
+                      _context2.next = 3;
                       return this.camera.getPicture(options).then(function (imageData) {
                         console.log('imageData', imageData); // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
 
@@ -524,7 +528,7 @@
                         console.log("errOf Image ", err);
                       });
 
-                    case 4:
+                    case 3:
                     case "end":
                       return _context2.stop();
                   }

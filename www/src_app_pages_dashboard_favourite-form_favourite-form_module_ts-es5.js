@@ -185,7 +185,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -203,35 +203,113 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! src/app/services/shared-service/shared.service */
-      49481);
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
+      89985);
+      /* harmony import */
+
+
+      var src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! src/app/services/toast-service/toast.service */
+      45311);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @ionic/angular */
+      80476);
 
       var _FavouriteFormPage = /*#__PURE__*/function () {
-        function FavouriteFormPage(sharedService) {
+        function FavouriteFormPage(globalService, toastService, nav) {
           _classCallCheck(this, FavouriteFormPage);
 
-          this.sharedService = sharedService;
+          this.globalService = globalService;
+          this.toastService = toastService;
+          this.nav = nav;
           this.pName = "Favourite form";
+          this.menuData = [];
+          this.updateRowId = '';
         }
 
         _createClass(FavouriteFormPage, [{
           key: "ngOnInit",
-          value: function ngOnInit() {}
+          value: function ngOnInit() {
+            this.loadFavoriteList();
+          }
+        }, {
+          key: "loadFavoriteList",
+          value: function loadFavoriteList() {
+            var _this = this;
+
+            this.globalService.getData('PrestartMenu/get_PrestartMenu').subscribe(function (result) {
+              if (result['status']) {
+                _this.menuData = result['data']['menu'].sort(function (a, b) {
+                  return a.favorite_position - b.favorite_position;
+                });
+                _this.updateRowId = result['data'].id;
+                console.log('this.menuData', _this.menuData);
+              } else {
+                _this.menuData = [];
+              }
+            }, function (error) {
+              console.log(error);
+            });
+          }
         }, {
           key: "onRemoveFavorite",
-          value: function onRemoveFavorite(tabname) {
-            this.sharedService.prestartMenu.filter(function (ele) {
+          value: function onRemoveFavorite(tabname, val) {
+            this.menuData.filter(function (ele) {
               if (ele.menuName == tabname) {
-                ele.favorite = false;
+                ele.favorite = val;
               }
             });
+            this.updateMenu('remove');
+          }
+        }, {
+          key: "updateMenu",
+          value: function updateMenu(val) {
+            var _this2 = this;
+
+            var data = {
+              formData: {
+                "id": this.updateRowId,
+                "menu": this.menuData
+              }
+            };
+            this.globalService.postData('PrestartMenu/submit', data).subscribe(function (result) {
+              if (result['status'] && val != '' && val == 'remove') {
+                _this2.toastService.toast('This form is removed from your favorite list.', 'success');
+              }
+            }, function (error) {
+              console.log(error);
+            });
+          }
+        }, {
+          key: "onRenderItems",
+          value: function onRenderItems(event) {
+            var draggedItem = this.menuData.splice(event.detail.from, 1)[0];
+            this.menuData.splice(event.detail.to, 0, draggedItem);
+            event.detail.complete();
+            this.menuData.forEach(function (element, index) {
+              element.favorite_position = index;
+            });
+            this.menuData.sort(function (a, b) {
+              return a.favorite_position - b.favorite_position;
+            });
+            this.updateMenu('');
+            ;
+          }
+        }, {
+          key: "onGoToPage",
+          value: function onGoToPage(route) {
+            console.log('route', route);
+            this.nav.navigateForward(route);
           }
         }]);
 
@@ -240,11 +318,15 @@
 
       _FavouriteFormPage.ctorParameters = function () {
         return [{
-          type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_2__.SharedService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+        }, {
+          type: src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__.ToastService
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.NavController
         }];
       };
 
-      _FavouriteFormPage = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+      _FavouriteFormPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-favourite-form',
         template: _raw_loader_favourite_form_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_favourite_form_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -266,7 +348,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJmYXZvdXJpdGUtZm9ybS5wYWdlLnNjc3MifQ== */";
+      __webpack_exports__["default"] = ".reorder {\n  opacity: 0 !important;\n}\n\n.btn-blue {\n  background: #3880ff;\n  background: var(--ion-color-primary, #3880ff);\n  --color: var(--ion-color-primary-contrast, #fff);\n  width: 100%;\n  border-radius: 23px;\n  --border-radius: 23px;\n  font-family: \"mon-bold\";\n  color: var(--ion-color-primary-contrast);\n  --background: var(--theme-blue-color);\n  height: 50px;\n  overflow: hidden;\n  margin-top: 13px;\n  text-transform: capitalize;\n  font-size: 16px;\n  margin-bottom: 8px;\n  display: block;\n  line-height: 2.5;\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZhdm91cml0ZS1mb3JtLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFCQUFBO0FBQ0o7O0FBRUE7RUFDSSxtQkFBQTtFQUFBLDZDQUFBO0VBQ0EsZ0RBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxxQkFBQTtFQUNBLHVCQUFBO0VBQ0Esd0NBQUE7RUFDQSxxQ0FBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtFQUNBLGdCQUFBO0VBQ0EsMEJBQUE7RUFDQSxlQUFBO0VBQ0Esa0JBQUE7RUFDQSxjQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtBQUNKIiwiZmlsZSI6ImZhdm91cml0ZS1mb3JtLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yZW9yZGVyICB7XHJcbiAgICBvcGFjaXR5OiAwICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbi5idG4tYmx1ZXtcclxuICAgIGJhY2tncm91bmQ6IHZhcigtLWlvbi1jb2xvci1wcmltYXJ5LCAjMzg4MGZmKTtcclxuICAgIC0tY29sb3I6IHZhcigtLWlvbi1jb2xvci1wcmltYXJ5LWNvbnRyYXN0LCAjZmZmKTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMjNweDtcclxuICAgIC0tYm9yZGVyLXJhZGl1czogMjNweDtcclxuICAgIGZvbnQtZmFtaWx5OiBcIm1vbi1ib2xkXCI7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXByaW1hcnktY29udHJhc3QpO1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB2YXIoLS10aGVtZS1ibHVlLWNvbG9yKTtcclxuICAgIGhlaWdodDogNTBweDtcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBtYXJnaW4tdG9wOiAxM3B4O1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XHJcbiAgICBmb250LXNpemU6IDE2cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA4cHg7XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIGxpbmUtaGVpZ2h0OiAyLjU7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcbiJdfQ== */";
       /***/
     },
 
@@ -284,7 +366,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <span *ngFor=\"let tabVal of sharedService.prestartMenu\">\n      <ion-button class=\"btn\" *ngIf=\"tabVal.favorite == true\">\n        <ion-row>\n          <ion-col size-lg=\"10\" size-md=\"10\" size-sm=\"10\" size-xl=\"10\" size-xs=\"10\" [routerLink]=\"tabVal.route\">\n            {{tabVal.menuName}}\n          </ion-col>\n          <ion-col size-lg=\"2\" size-md=\"2\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\" title=\"Remove from favorite\"\n            (click)=\"onRemoveFavorite(tabVal.menuName)\">\n            <ion-icon name=\"heart\" class=\"favorite\"></ion-icon>\n          </ion-col>\n        </ion-row>\n      </ion-button>\n    </span>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n\n    <ion-reorder-group (ionItemReorder)=\"onRenderItems($event)\" disabled=\"false\">\n      <span *ngFor=\"let tabVal of menuData\">\n        <span class=\"btn-blue\" *ngIf=\"tabVal.favorite == true || tabVal.favorite == 'true'\">\n          <ion-row>\n            <ion-col size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xl=\"4\" size-xs=\"4\" class=\"reorder\">\n              <ion-reorder>\n              </ion-reorder>\n            </ion-col>\n            <ion-col size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xl=\"4\" size-xs=\"4\" [routerLink]=\"tabVal.route\">\n              {{tabVal.menuName}}\n            </ion-col>\n\n            <ion-col size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xl=\"4\" size-xs=\"4\">\n              <span title=\"Remove from favorite\" (click)=\"onRemoveFavorite(tabVal.menuName, false)\">\n                <ion-icon name=\"heart\" class=\"favorite\"></ion-icon>\n              </span>\n            </ion-col>\n          </ion-row>\n        </span>\n      </span>\n    </ion-reorder-group>\n\n  </div>\n</ion-content>";
       /***/
     }
   }]);

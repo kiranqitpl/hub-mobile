@@ -52,14 +52,6 @@ const routes: Routes = [
     path: 'incident-form-list',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
   },
-  // {
-  //   path: 'incident-details/:incident_id',
-  //   loadChildren: () => import('./pages/home/safety-menu/incident/incident-details/incident-details.module').then(m => m.IncidentDetailsPageModule)
-  // },
-  // {
-  //   path: 'incident-form-edit/:incident_id',
-  //   loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-edit/incident-form-edit.module').then(m => m.IncidentFormEditPageModule)
-  // },
 ];
 
 @NgModule({

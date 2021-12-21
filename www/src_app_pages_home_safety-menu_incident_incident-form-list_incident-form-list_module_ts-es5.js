@@ -1,18 +1,4 @@
 (function () {
-  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-  function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
   function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
   function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -12790,102 +12776,6 @@
     },
 
     /***/
-    46782:
-    /*!********************************************************************!*\
-      !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
-      \********************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "takeUntil": function takeUntil() {
-          return (
-            /* binding */
-            _takeUntil
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ../innerSubscribe */
-      85345);
-
-      function _takeUntil(notifier) {
-        return function (source) {
-          return source.lift(new TakeUntilOperator(notifier));
-        };
-      }
-
-      var TakeUntilOperator = /*#__PURE__*/function () {
-        function TakeUntilOperator(notifier) {
-          _classCallCheck(this, TakeUntilOperator);
-
-          this.notifier = notifier;
-        }
-
-        _createClass(TakeUntilOperator, [{
-          key: "call",
-          value: function call(subscriber, source) {
-            var takeUntilSubscriber = new TakeUntilSubscriber(subscriber);
-            var notifierSubscription = (0, _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.innerSubscribe)(this.notifier, new _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleInnerSubscriber(takeUntilSubscriber));
-
-            if (notifierSubscription && !takeUntilSubscriber.seenValue) {
-              takeUntilSubscriber.add(notifierSubscription);
-              return source.subscribe(takeUntilSubscriber);
-            }
-
-            return takeUntilSubscriber;
-          }
-        }]);
-
-        return TakeUntilOperator;
-      }();
-
-      var TakeUntilSubscriber = /*#__PURE__*/function (_innerSubscribe__WEBP) {
-        _inherits(TakeUntilSubscriber, _innerSubscribe__WEBP);
-
-        var _super = _createSuper(TakeUntilSubscriber);
-
-        function TakeUntilSubscriber(destination) {
-          var _this28;
-
-          _classCallCheck(this, TakeUntilSubscriber);
-
-          _this28 = _super.call(this, destination);
-          _this28.seenValue = false;
-          return _this28;
-        }
-
-        _createClass(TakeUntilSubscriber, [{
-          key: "notifyNext",
-          value: function notifyNext() {
-            this.seenValue = true;
-            this.complete();
-          }
-        }, {
-          key: "notifyComplete",
-          value: function notifyComplete() {}
-        }]);
-
-        return TakeUntilSubscriber;
-      }(_innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleOuterSubscriber); //# sourceMappingURL=takeUntil.js.map
-
-      /***/
-
-    },
-
-    /***/
     44230:
     /*!*********************************************************************************************************!*\
       !*** ./src/app/pages/home/safety-menu/incident/incident-form-list/incident-form-list-routing.module.ts ***!
@@ -13184,7 +13074,7 @@
         }, {
           key: "loadData",
           value: function loadData(event, pageNo, screen) {
-            var _this29 = this;
+            var _this28 = this;
 
             if (screen == 'mobile') {
               this.pageNumber = event == 'newList' ? ++pageNo : pageNo;
@@ -13221,20 +13111,20 @@
 
                     el.Status = el.Status == 0 ? 'In progress' : el.Status == 1 ? 'Completed' : el.Status == 2 ? 'Cancel' : '';
                   });
-                  _this29.totalPages = result.total_pages;
-                  _this29.totalElements = result.row_count;
+                  _this28.totalPages = result.total_pages;
+                  _this28.totalElements = result.row_count;
 
                   if (screen == 'mobile') {
-                    if (_this29.allSubmittedFormlist.length == 0) {
-                      _this29.allSubmittedFormlist = result.data.mforms_add_form;
+                    if (_this28.allSubmittedFormlist.length == 0) {
+                      _this28.allSubmittedFormlist = result.data.mforms_add_form;
                     } else {
-                      _this29.newList = _this29.allSubmittedFormlist;
-                      _this29.allSubmittedFormlist = _this29.newList.concat(result.data.mforms_add_form);
+                      _this28.newList = _this28.allSubmittedFormlist;
+                      _this28.allSubmittedFormlist = _this28.newList.concat(result.data.mforms_add_form);
                     }
                   }
 
                   if (screen == 'web') {
-                    _this29.allSubmittedFormlist = result.data.mforms_add_form;
+                    _this28.allSubmittedFormlist = result.data.mforms_add_form;
                   } // console.log(' this.allSubmittedFormlist ', this.allSubmittedFormlist);
 
                 } // this.loadingService.dismissLoading();

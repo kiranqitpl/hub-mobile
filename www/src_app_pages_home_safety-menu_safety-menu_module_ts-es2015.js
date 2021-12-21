@@ -26,7 +26,7 @@ const routes = [
     },
     {
         path: 'prestart-dashboard',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/prestart-dashboard/prestart-dashboard.module */ 8492)).then(m => m.PrestartDashboardPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./prestart/prestart-dashboard/prestart-dashboard.module */ 8492)).then(m => m.PrestartDashboardPageModule)
     },
     {
         path: 'incident-form',

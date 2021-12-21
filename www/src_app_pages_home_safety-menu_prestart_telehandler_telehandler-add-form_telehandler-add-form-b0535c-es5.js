@@ -1089,23 +1089,28 @@
           this.prestartMenu = [{
             menuName: 'LV',
             route: '#',
-            favorite: false
+            favorite: false,
+            position_in_list: 1
           }, {
             menuName: 'Forklift',
             route: '#',
-            favorite: false
+            favorite: false,
+            position_in_list: 2
           }, {
             menuName: 'Telehandler',
             route: '/home/safety-menu/telehandler-add-form',
-            favorite: false
+            favorite: false,
+            position_in_list: 3
           }, {
             menuName: 'Crane',
             route: '/home/safety-menu/crane-add-form',
-            favorite: false
+            favorite: false,
+            position_in_list: 4
           }, {
             menuName: 'Vehicle Hoist',
             route: '/home/safety-menu/vehicle-hoist-add-form',
-            favorite: false
+            favorite: false,
+            position_in_list: 5
           }];
         }
 
@@ -1200,7 +1205,6 @@
                 while (1) {
                   switch (_context9.prev = _context9.next) {
                     case 0:
-                      console.log('sourceType', sourceType);
                       options = {
                         quality: 100,
                         sourceType: sourceType,
@@ -1208,7 +1212,7 @@
                         encodingType: this.camera.EncodingType.JPEG,
                         mediaType: this.camera.MediaType.PICTURE
                       };
-                      _context9.next = 4;
+                      _context9.next = 3;
                       return this.camera.getPicture(options).then(function (imageData) {
                         console.log('imageData', imageData); // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
 
@@ -1220,7 +1224,7 @@
                         console.log("errOf Image ", err);
                       });
 
-                    case 4:
+                    case 3:
                     case "end":
                       return _context9.stop();
                   }

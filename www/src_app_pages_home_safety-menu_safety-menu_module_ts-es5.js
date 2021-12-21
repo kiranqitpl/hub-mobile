@@ -62,9 +62,9 @@
       }, {
         path: 'prestart-dashboard',
         loadChildren: function loadChildren() {
-          return __webpack_require__.e(
+          return Promise.all(
           /*! import() */
-          "src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_prestart_prestart-dashboard_prestart-dashboard_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./prestart/prestart-dashboard/prestart-dashboard.module */
           8492)).then(function (m) {
             return m.PrestartDashboardPageModule;

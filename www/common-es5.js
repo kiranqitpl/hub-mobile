@@ -1,4 +1,18 @@
 (function () {
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+  function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -712,6 +726,102 @@
     },
 
     /***/
+    46782:
+    /*!********************************************************************!*\
+      !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
+      \********************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "takeUntil": function takeUntil() {
+          return (
+            /* binding */
+            _takeUntil
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ../innerSubscribe */
+      85345);
+
+      function _takeUntil(notifier) {
+        return function (source) {
+          return source.lift(new TakeUntilOperator(notifier));
+        };
+      }
+
+      var TakeUntilOperator = /*#__PURE__*/function () {
+        function TakeUntilOperator(notifier) {
+          _classCallCheck(this, TakeUntilOperator);
+
+          this.notifier = notifier;
+        }
+
+        _createClass(TakeUntilOperator, [{
+          key: "call",
+          value: function call(subscriber, source) {
+            var takeUntilSubscriber = new TakeUntilSubscriber(subscriber);
+            var notifierSubscription = (0, _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.innerSubscribe)(this.notifier, new _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleInnerSubscriber(takeUntilSubscriber));
+
+            if (notifierSubscription && !takeUntilSubscriber.seenValue) {
+              takeUntilSubscriber.add(notifierSubscription);
+              return source.subscribe(takeUntilSubscriber);
+            }
+
+            return takeUntilSubscriber;
+          }
+        }]);
+
+        return TakeUntilOperator;
+      }();
+
+      var TakeUntilSubscriber = /*#__PURE__*/function (_innerSubscribe__WEBP) {
+        _inherits(TakeUntilSubscriber, _innerSubscribe__WEBP);
+
+        var _super = _createSuper(TakeUntilSubscriber);
+
+        function TakeUntilSubscriber(destination) {
+          var _this;
+
+          _classCallCheck(this, TakeUntilSubscriber);
+
+          _this = _super.call(this, destination);
+          _this.seenValue = false;
+          return _this;
+        }
+
+        _createClass(TakeUntilSubscriber, [{
+          key: "notifyNext",
+          value: function notifyNext() {
+            this.seenValue = true;
+            this.complete();
+          }
+        }, {
+          key: "notifyComplete",
+          value: function notifyComplete() {}
+        }]);
+
+        return TakeUntilSubscriber;
+      }(_innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleOuterSubscriber); //# sourceMappingURL=takeUntil.js.map
+
+      /***/
+
+    },
+
+    /***/
     96022:
     /*!*********************************************************!*\
       !*** ./src/app/services/alert-service/alert.service.ts ***!
@@ -767,7 +877,7 @@
           key: "alertWithBack",
           value: function alertWithBack(message) {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var _this = this;
+              var _this2 = this;
 
               var alert;
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -785,7 +895,7 @@
                           text: 'Ok',
                           role: 'Ok',
                           handler: function handler() {
-                            _this.navCtrl.back();
+                            _this2.navCtrl.back();
                           }
                         }]
                       });

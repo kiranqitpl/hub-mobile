@@ -7615,52 +7615,6 @@ NgxPaginationModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE
 
 /***/ }),
 
-/***/ 46782:
-/*!********************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "takeUntil": function() { return /* binding */ takeUntil; }
-/* harmony export */ });
-/* harmony import */ var _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../innerSubscribe */ 85345);
-
-function takeUntil(notifier) {
-    return (source) => source.lift(new TakeUntilOperator(notifier));
-}
-class TakeUntilOperator {
-    constructor(notifier) {
-        this.notifier = notifier;
-    }
-    call(subscriber, source) {
-        const takeUntilSubscriber = new TakeUntilSubscriber(subscriber);
-        const notifierSubscription = (0,_innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.innerSubscribe)(this.notifier, new _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleInnerSubscriber(takeUntilSubscriber));
-        if (notifierSubscription && !takeUntilSubscriber.seenValue) {
-            takeUntilSubscriber.add(notifierSubscription);
-            return source.subscribe(takeUntilSubscriber);
-        }
-        return takeUntilSubscriber;
-    }
-}
-class TakeUntilSubscriber extends _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleOuterSubscriber {
-    constructor(destination) {
-        super(destination);
-        this.seenValue = false;
-    }
-    notifyNext() {
-        this.seenValue = true;
-        this.complete();
-    }
-    notifyComplete() {
-    }
-}
-//# sourceMappingURL=takeUntil.js.map
-
-/***/ }),
-
 /***/ 44230:
 /*!*********************************************************************************************************!*\
   !*** ./src/app/pages/home/safety-menu/incident/incident-form-list/incident-form-list-routing.module.ts ***!

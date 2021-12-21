@@ -956,8 +956,6 @@ export class IncidentFormPage implements OnInit {
       this.photoGraphyObject = { ...this.photoGraphy };
     }
 
-    console.log('photoGraphyObject ', this.photoGraphyObject);
-
     if (this.alcohalImages.length > 0) {
       this.alcohalImagesObject = { ...this.alcohalImages }
     }
@@ -1019,11 +1017,6 @@ export class IncidentFormPage implements OnInit {
       //---------------------------------------------------- Incident Description ---------------------------------------------------------------//
 
       //-------------------------------------------------------- Classification -----------------------------------------------------------------//
-
-      // console.log('date_of_incident', this.classificationForm.value['date_of_incident']);
-      // console.log('time_of_incident', this.classificationForm.value['time_of_incident']);
-      // console.log('date_reported', this.classificationForm.value['date_reported']);
-      // console.log('time_reported', this.classificationForm.value['time_reported']);
 
       fd.append("classification_value", this.classificationForm.value['classification_value'].length > 0 ? this.classificationForm.value['classification_value'].join(',') : '');
       fd.append("date_of_incident", this.classificationForm.value['date_of_incident'] ? this.classificationForm.value['date_of_incident'] : '');
@@ -1377,7 +1370,6 @@ export class IncidentFormPage implements OnInit {
         this.injuryForm.controls['person_details'].value[index]['immediate_treatment_person_number'] = ele.emp_mobile ? ele.emp_mobile : ele.emp_work_email;
       }
     })
-    console.log(' this.injuryForm.value', this.injuryForm.value['person_details']);
   }
 
   onIncDesWitnessChange(event) {
@@ -1540,9 +1532,6 @@ export class IncidentFormPage implements OnInit {
 
           //--------------------------------------------------- Reputation Des Form -----------------------------------------------------------//  
           if (element.val == "Reputation" && element.isChecked) {
-            // Object.keys(this.reputationDesForm.controls).map(ele => formControlKeys.push(ele));
-            // Object.values(this.reputationDesForm.value).map(ele => formControlValue.push(ele));
-
             formControlKeys.push('reputation_option');
             formControlValue.push(this.reputationDesForm.value['reputation_option']);
             formControlKeys.push('reputation_negative_effect');
@@ -1734,9 +1723,6 @@ export class IncidentFormPage implements OnInit {
         //------------------------------------------------------- Injury Form ---------------------------------------------------------------//    
       }
     }
-
-    console.log('formControlKeys', formControlKeys);
-    console.log('formControlValue', formControlValue);
 
     formControlKeys.forEach((key, index) => {
       if (formControlValue[index] != '' && formControlValue[index] != null && formControlValue[index] != undefined &&

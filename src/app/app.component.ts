@@ -2,14 +2,17 @@ import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Component, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { GlobalService } from './services/global-service/global.service';
-import { Subject } from 'rxjs/internal/Subject';
+import { environment } from 'src/environments/environment';
+
 @HostListener('window:resize', ['$event'])
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+
 export class AppComponent {
 
   constructor(
@@ -17,7 +20,7 @@ export class AppComponent {
     private platform: Platform,
     public alertController: AlertController,
     private _location: Location,
-    private globalService: GlobalService
+    private globalService: GlobalService,
   ) {
     let userDetails = JSON.parse(localStorage.getItem('userDetails'));
     let token = userDetails && userDetails.email ? userDetails.email : '';
@@ -30,8 +33,6 @@ export class AppComponent {
   }
 
   initializeApp() {
-    // console.log('this.platform', this.platform.ready());
-
     if (this.platform.is('cordova')) {
       this.globalService.platform = 'cordova'
       // } else if (this.platform.is('android')) {
@@ -59,6 +60,17 @@ export class AppComponent {
         console.log(err);
       })
     });
+
+    let urlFull = window.location.href;
+    let url = urlFull.split('/');
+    if (url[2] == 'mforms-qa.horts.com.au') {
+      console.log('qa', environment.QA_API_URL);
+      this.globalService.url.next(environment.QA_API_URL);
+    } else {
+      console.log('dev/live', environment.API_URL);
+      this.globalService.url.next(environment.API_URL);
+    }
+    console.log('aaa', window.location.href);
   }
 
   showExitConfirm() {

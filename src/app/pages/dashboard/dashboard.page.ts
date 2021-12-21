@@ -19,7 +19,7 @@ export class DashboardPage implements OnInit {
     },
     {
       menuName: "Notification", route: "/notification"
-    }
+    },
   ];
 
   type: any = environment.allType;

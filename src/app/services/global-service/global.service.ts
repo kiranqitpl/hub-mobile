@@ -2,8 +2,10 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
-import { Observable, Observer, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+// import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +13,28 @@ import { catchError, map } from 'rxjs/operators';
 
 export class GlobalService {
 
-  baseUrl: string = 'https://mforms-api-devel.horts.com.au/api/';
+  url = new BehaviorSubject('');
+  baseUrl: string = '';
+
+  // baseUrl: string = '';
+  // baseUrl: string = environment.baseUrl;
 
   formType_user = 1;
   formType_investigator = 2;
   platform: String = '';
 
   constructor(
-    public toastController: ToastController,
-    public httpClient: HttpClient,
-    public http: HTTP,
-    public loadingController: LoadingController
-  ) { }
+    private toastController: ToastController,
+    private httpClient: HttpClient,
+    private http: HTTP,
+    private loadingController: LoadingController,
+  ) {
+    this.url.subscribe(res => {
+      this.baseUrl = res
+      console.log("this.baseUrl 1", res)
+    })
+
+  }
 
   async presentToast(msg) {
     const toast = await this.toastController.create({
@@ -73,11 +85,13 @@ export class GlobalService {
   // --------------------------------------------------New Services ---------------------------------------------//
 
   postData(url, data) {
+    console.log('postData baseUrl', this.baseUrl);
     let headers = this.setHeader();
     return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
   }
 
   getData(url) {
+    console.log('getData baseUrl', this.baseUrl);
     let headers = this.setHeader();
     return this.httpClient.get(this.baseUrl + url, { headers: headers })
 
@@ -91,7 +105,7 @@ export class GlobalService {
     //   }),
     //   catchError(() => of())
     // );
-    
+
   }
 }
 // ---------------------------------------------  New Services --------------------------------------------------//

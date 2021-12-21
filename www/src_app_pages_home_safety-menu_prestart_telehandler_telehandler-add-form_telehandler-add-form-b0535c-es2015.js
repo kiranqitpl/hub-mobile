@@ -681,19 +681,19 @@ let SharedService = class SharedService {
         //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
         this.prestartMenu = [
             {
-                menuName: 'LV', route: '#', favorite: false
+                menuName: 'LV', route: '#', favorite: false, position_in_list: 1
             },
             {
-                menuName: 'Forklift', route: '#', favorite: false
+                menuName: 'Forklift', route: '#', favorite: false, position_in_list: 2
             },
             {
-                menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false
+                menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false, position_in_list: 3
             },
             {
-                menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false
+                menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false, position_in_list: 4
             },
             {
-                menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false
+                menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false, position_in_list: 5
             },
         ];
     }
@@ -757,7 +757,6 @@ let SharedService = class SharedService {
     }
     pickImage(sourceType) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
-            console.log('sourceType', sourceType);
             const options = {
                 quality: 100,
                 sourceType: sourceType,
