@@ -26,6 +26,7 @@ export class IncidentFormPage implements OnInit {
   imagePath = environment.imageUrl;
   pName: string = 'Add Form';
   form_percent: number = 0;
+  form_percent_val: number = 0;
 
   witnessList: any = [];
   superVisorList: any = [];
@@ -198,13 +199,13 @@ export class IncidentFormPage implements OnInit {
   //-------------------------------------------------------- JSON DATA -------------------------------------------------------//
 
   constructor(
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private sharedService: SharedService,
     private modalController: ModalController,
     public actionSheetController: ActionSheetController,
     private camera: Camera,
     private fb: FormBuilder,
-    private nav: NavController,
+    public nav: NavController,
     private loadingService: LoadingService,
   ) { }
 
@@ -1732,6 +1733,11 @@ export class IncidentFormPage implements OnInit {
     })
 
     this.form_percent = ((1 / formControlKeys.length) * count);
+    this.form_percent_val = parseInt((((1 / formControlKeys.length) * count) * 100).toFixed());
+    
+    // console.log('this.form_percent_val 0 ', (((1 / formControlKeys.length) * count) * 100).toFixed());
+    // console.log('this.form_percent_val 1', this.form_percent_val);
+    // console.log('this.form_percent 2', this.form_percent);
   }
 
   onImmediateTreatment(event, index) {

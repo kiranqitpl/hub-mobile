@@ -1,1519 +1,1526 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
   <div class="container">
-    <ion-card>
-      <ion-card-content>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-label>Verification of Competency :</ion-label>
-          </ion-col>
-          <ion-col size="6">{{teleHandler['competency']}}</ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-label>Telehandler Number :</ion-label>
-          </ion-col>
-          <ion-col size="6"> {{teleHandler['telehandler_number']}}</ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-label>Hour / Meter :</ion-label>
-          </ion-col>
-          <ion-col size="6">{{teleHandler['hour_meter']}}</ion-col>
-        </ion-row>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Data plate attached and legible :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.data_plate}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler.data_plate == 'Faulty'">
+    <ion-row>
+      <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
+      <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12">
+        <ion-card>
+          <ion-card-content>
 
             <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
+              <ion-col size="6">
+                <ion-label>Verification of Competency :</ion-label>
               </ion-col>
+              <ion-col size="6">{{teleHandler['competency']}}</ion-col>
             </ion-row>
+
             <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.data_plate_comment}}</ion-label>
+              <ion-col size="6">
+                <ion-label>Telehandler Number :</ion-label>
               </ion-col>
+              <ion-col size="6"> {{teleHandler['telehandler_number']}}</ion-col>
             </ion-row>
 
-            <ion-row *ngIf="teleHandler['data_plate_image'] == ''">
+            <ion-row>
               <ion-col size="6">
-                <ion-label>Images : </ion-label>
+                <ion-label>Hour / Meter :</ion-label>
               </ion-col>
-
-              <ion-col size="6">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
+              <ion-col size="6">{{teleHandler['hour_meter']}}</ion-col>
             </ion-row>
 
-            <ion-grid *ngIf="teleHandler['data_plate_image'] != ''">
+            <ion-grid lines="none">
               <ion-row>
                 <ion-col size="6">
-                  <ion-label>Images : </ion-label>
+                  <ion-label>Data plate attached and legible :</ion-label>
                 </ion-col>
+                <ion-col size="6">{{teleHandler.data_plate}}</ion-col>
               </ion-row>
-              <ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler.data_plate == 'Faulty'">
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.data_plate_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="teleHandler['data_plate_image'] == ''">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-grid *ngIf="teleHandler['data_plate_image'] != ''">
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <!-- <ion-row>
                 <ion-col size="12">
-                  <ion-slides [options]="sliderOpts" class="preview-slides">
-                    <ion-slide>
-                      <img [src]="teleHandler['data_plate_image']" tappable (click)="onOpenPreview(data_plate_image)">
+                  <ion-slides class="preview-slides"
+                    *ngIf="teleHandler['data_plate_image'] && teleHandler['data_plate_image'].length && teleHandler['data_plate_image'].length > 0">
+                    <ion-slide *ngFor="let data_plate_image of teleHandler['data_plate_image']">
+                      <img [src]="data_plate_image" tappable (click)="onOpenPreview(data_plate_image)">
                     </ion-slide>
                   </ion-slides>
                 </ion-col>
-              </ion-row>
+              </ion-row> -->
+                </ion-grid>
+              </ion-grid>
+
             </ion-grid>
-          </ion-grid>
 
-        </ion-grid>
+            <ion-grid lines="none">
 
-        <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Engine Oil Level :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler['engine_oil']}}</ion-col>
+              </ion-row>
 
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Engine Oil Level :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler['engine_oil']}}</ion-col>
-          </ion-row>
+              <ion-grid lines="none" *ngIf="teleHandler['engine_oil'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
 
-          <ion-grid lines="none" *ngIf="teleHandler['engine_oil'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler['engine_oil_comment']}}</ion-label>
+                  </ion-col>
+                </ion-row>
 
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler['engine_oil_comment']}}</ion-label>
-              </ion-col>
-            </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
 
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-slides [options]="sliderOpts" class="preview-slides"
+                <ion-row>
+                  <!-- <ion-col size="12">
+                <ion-slides class="preview-slides"
                   *ngIf="teleHandler['engine_oil_image'] && teleHandler['engine_oil_image'].length && teleHandler['engine_oil_image'].length > 0">
                   <ion-slide *ngFor="let engine_oil_image of incidentDetails['engine_oil_image']">
                     <img [src]="engine_oil_image" tappable (click)="onOpenPreview(engine_oil_image)">
                   </ion-slide>
                 </ion-slides>
-              </ion-col>
-              <ion-col size="12" *ngIf="teleHandler['engine_oil_image'] == ''">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
+              </ion-col> -->
+                  <ion-col size="12" *ngIf="teleHandler['engine_oil_image'] == ''">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
 
-          </ion-grid>
+              </ion-grid>
 
-        </ion-grid>
+            </ion-grid>
 
-        <ion-grid lines=" none">
+            <ion-grid lines=" none">
 
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Hydraulic Oil :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler['hydraulic_oil']}}</ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Hydraulic Oil :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler['hydraulic_oil']}}</ion-col>
+              </ion-row>
 
-          <ion-grid lines="none" *ngIf="teleHandler['hydraulic_oil'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
+              <ion-grid lines="none" *ngIf="teleHandler['hydraulic_oil'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler['hydraulic_oil_comment']}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Fuel Level :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler['fuel_level']}}</ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Verify Equipment Inspections are Current :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler['equipment_inspect']}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['equipment_inspect'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler['equipment_inspect_comment']}}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Coolant Level :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler['coolant_level']}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['coolant_level'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler['coolant_level_comment']}}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Belts and Hoses :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.belts_and_hoses}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['belts_and_hoses'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.belts_and_hoses_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Wheels, Tyres and nuts :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.wheels_tyres}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['wheels_tyres'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.wheels_tyres_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Fire-Extinguisher :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.fire_extinguisher}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['fire_extinguisher'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.fire_extinguisher_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Fuel Flash Screen: in Place :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.fuel_flash}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['fuel_flash'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.fuel_flash_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Hydraulics Functional and No Leaks :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.hydraulics_functional}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['hydraulics_functional'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.hydraulics_functional_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Boom, Lift Arms, Extending Structure :</ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.lift_arms}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['lift_arms'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>Comment : </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.lift_arms_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>In place / Correctly Tensioned </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Chain and Hose Guards :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.chain_hose}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['chain_hose'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.chain_hose_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        No Images found
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>In place </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Mast Cap Bolts :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.cap_bolts}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['cap_bolts'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.cap_bolts_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        No Images found
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>In place and secure </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Safety Stops and Latches :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.safety_stops}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['safety_stops'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.safety_stops_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        No Images found
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>In place </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Forks :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.forks}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['forks'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.forks_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>No Images found</ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Condition / Tips Even</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Overhead Guards :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.overhead_guards}}</ion-col>
+              </ion-row>
+              <ion-grid lines="none" *ngIf="teleHandler['overhead_guards'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.overhead_guards_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        No Images found
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>In place / Condition</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Counterweight / Counterweight bolts :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.counterweight}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['counterweight'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.counterweight_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        No Images found
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Condition / Leaks</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Engine Bay Components :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.engine_bay_components}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['engine_bay_components'] == 'Faulty'">
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.engine_bay_components_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-text>
+                      <ion-label>Images : </ion-label>
+                    </ion-text>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        No Images found
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="12">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Operating</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid lines="none">
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Horn :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.horn}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['horn'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.horn_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+
+              <ion-grid lines="none">
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Audible, Visual Warning Devices :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.audible}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['audible'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.audible_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+
+              <ion-grid lines="none">
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Headlights :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.headlights}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['headlights'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.headlights_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+              </ion-grid>
+
+              <ion-grid lines="none">
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Turn Signals :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.turn_signals}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['turn_signals'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.turn_signals_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+
+              <ion-grid lines="none">
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Warning / Brake Lights :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.warning_brake_lights}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['warning_brake_lights'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.warning_brake_lights_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+              </ion-grid>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Foot Brake :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.foot_brake}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['foot_brake'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.foot_brake_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Pedal Holds / Smooth Stop</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Parking Brake :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.parking_brake}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['parking_brake'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.parking_brake_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Holds against Accelerator</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Clutch / Gear Shift :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.clutch_gear_shift}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['clutch_gear_shift'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.clutch_gear_shift_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Smooth operation</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Engine Noise :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.engine_noise}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['engine_noise'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.engine_noise_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Fluid Leaks :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.fluid_leaks}}</ion-col>
+                </ion-row>
+                <ion-grid lines="none" *ngIf="teleHandler['fluid_leaks'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.fluid_leaks_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="12">
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Sounds Normal</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Dash Gauges :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.dash_gauges}}</ion-col>
+                </ion-row>
+                <ion-grid lines="none" *ngIf="teleHandler['dash_gauges'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.dash_gauges_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        Operational Controls :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.operational_controls}}</ion-col>
+                </ion-row>
+                <ion-grid lines="none" *ngIf="teleHandler['operational_controls'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.operational_controls_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>Under truck and Near Hoses</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label>
+                      <ion-text>
+                        First Aid Kit :
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="6">{{teleHandler.first_aid_kit}}</ion-col>
+                </ion-row>
+
+                <ion-grid lines="none" *ngIf="teleHandler['first_aid_kit'] == 'Faulty'">
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-text>
+                        <ion-label>Comment : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-label>{{teleHandler.first_aid_kit_comment}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-text>
+                        <ion-label>Images : </ion-label>
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label>
+                        <ion-text>
+                          No Images found
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="12">
+                    </ion-col>
+                  </ion-row>
+
+                </ion-grid>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
                 <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler['hydraulic_oil_comment']}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Fuel Level :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler['fuel_level']}}</ion-col>
-          </ion-row>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Verify Equipment Inspections are Current :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler['equipment_inspect']}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['equipment_inspect'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler['equipment_inspect_comment']}}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Coolant Level :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler['coolant_level']}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['coolant_level'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler['coolant_level_comment']}}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Belts and Hoses :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.belts_and_hoses}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['belts_and_hoses'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.belts_and_hoses_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Wheels, Tyres and nuts :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.wheels_tyres}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['wheels_tyres'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.wheels_tyres_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Fire-Extinguisher :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.fire_extinguisher}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['fire_extinguisher'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.fire_extinguisher_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Fuel Flash Screen: in Place :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.fuel_flash}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['fuel_flash'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.fuel_flash_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Hydraulics Functional and No Leaks :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.hydraulics_functional}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['hydraulics_functional'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.hydraulics_functional_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-              <ion-col size="12">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Boom, Lift Arms, Extending Structure :</ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.lift_arms}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['lift_arms'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>Comment : </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.lift_arms_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>Images : </ion-label>
-              </ion-col>
-              <ion-col size="6">
-                <ion-text>No Images found.</ion-text>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>In place / Correctly Tensioned </ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Chain and Hose Guards :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.chain_hose}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['chain_hose'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.chain_hose_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    No Images found
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>In place </ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Mast Cap Bolts :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.cap_bolts}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['cap_bolts'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.cap_bolts_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    No Images found
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>In place and secure </ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Safety Stops and Latches :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.safety_stops}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['safety_stops'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.safety_stops_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    No Images found
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>In place </ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Forks :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.forks}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['forks'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.forks_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>No Images found</ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Condition / Tips Even</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Overhead Guards :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.overhead_guards}}</ion-col>
-          </ion-row>
-          <ion-grid lines="none" *ngIf="teleHandler['overhead_guards'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.overhead_guards_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    No Images found
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>In place / Condition</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Counterweight / Counterweight bolts :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.counterweight}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['counterweight'] == 'Faulty'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.counterweight_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    No Images found
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Condition / Leaks</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>
-                <ion-text>
-                  Engine Bay Components :
-                </ion-text>
-              </ion-label>
-            </ion-col>
-            <ion-col size="6">{{teleHandler.engine_bay_components}}</ion-col>
-          </ion-row>
-
-          <ion-grid lines="none" *ngIf="teleHandler['engine_bay_components'] == 'Faulty'">
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-text>
-                  <ion-label>Comment : </ion-label>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-label>{{teleHandler.engine_bay_components_comment}}</ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-text>
-                  <ion-label>Images : </ion-label>
-                </ion-text>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    No Images found
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Operating</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-grid lines="none">
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Horn :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.horn}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['horn'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.horn_comment}}</ion-label>
-                </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-
-          <ion-grid lines="none">
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Audible, Visual Warning Devices :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.audible}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['audible'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.audible_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-
-          <ion-grid lines="none">
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Headlights :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.headlights}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['headlights'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.headlights_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
+                {{teleHandler.comment}}
               </ion-row>
             </ion-grid>
 
-          </ion-grid>
-
-          <ion-grid lines="none">
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Turn Signals :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.turn_signals}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['turn_signals'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.turn_signals_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-
-          <ion-grid lines="none">
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Warning / Brake Lights :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.warning_brake_lights}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['warning_brake_lights'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.warning_brake_lights_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-
-          </ion-grid>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Foot Brake :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.foot_brake}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['foot_brake'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.foot_brake_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Pedal Holds / Smooth Stop</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Parking Brake :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.parking_brake}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['parking_brake'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.parking_brake_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Holds against Accelerator</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Clutch / Gear Shift :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.clutch_gear_shift}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['clutch_gear_shift'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.clutch_gear_shift_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Smooth operation</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Engine Noise :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.engine_noise}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['engine_noise'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.engine_noise_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Fluid Leaks :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.fluid_leaks}}</ion-col>
-            </ion-row>
-            <ion-grid lines="none" *ngIf="teleHandler['fluid_leaks'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.fluid_leaks_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-
-              <ion-row>
-                <ion-col size="12">
-
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Sounds Normal</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Dash Gauges :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.dash_gauges}}</ion-col>
-            </ion-row>
-            <ion-grid lines="none" *ngIf="teleHandler['dash_gauges'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.dash_gauges_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    Operational Controls :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.operational_controls}}</ion-col>
-            </ion-row>
-            <ion-grid lines="none" *ngIf="teleHandler['operational_controls'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.operational_controls_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-
-          <ion-row>
-            <ion-col size="6">
-              <ion-label>Under truck and Near Hoses</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-grid lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <ion-label>
-                  <ion-text>
-                    First Aid Kit :
-                  </ion-text>
-                </ion-label>
-              </ion-col>
-              <ion-col size="6">{{teleHandler.first_aid_kit}}</ion-col>
-            </ion-row>
-
-            <ion-grid lines="none" *ngIf="teleHandler['first_aid_kit'] == 'Faulty'">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-text>
-                    <ion-label>Comment : </ion-label>
-                  </ion-text>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-label>{{teleHandler.first_aid_kit_comment}}</ion-label>
-                </ion-col>
-              </ion-row>
-
-              <ion-row>
-                <ion-col size="6">
-                  <ion-text>
-                    <ion-label>Images : </ion-label>
-                  </ion-text>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label>
-                    <ion-text>
-                      No Images found
-                    </ion-text>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-
-              <ion-row>
-                <ion-col size="12">
-                </ion-col>
-              </ion-row>
-              
-            </ion-grid>
-          </ion-grid>
-        </ion-grid>
-
-        <ion-grid lines="none">
-          <ion-row>
-            <ion-label>Comment : </ion-label>
-          </ion-row>
-          <ion-row>
-            {{teleHandler.comment}}
-          </ion-row>
-        </ion-grid>
-
-      </ion-card-content>
-    </ion-card>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
+    </ion-row>
   </div>
 </ion-content>

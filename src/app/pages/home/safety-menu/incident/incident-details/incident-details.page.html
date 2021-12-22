@@ -1,108 +1,112 @@
 <ion-content>
   <app-header [pageName]="pName"></app-header>
   <div class="ion-padding-start ion-padding-end container">
-    <!----------------------------------------------------------- Incident Detalis ---------------------------------------------------->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Incident </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Incident :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.incident_value}} </p>
-          </ion-col>
-        </ion-row>
+    <ion-row>
+      <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
+      <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12">
 
-        <ion-grid *ngIf="incidentDetails?.incident_value == 'Near Miss'" lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Who witnessed the near miss ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.incident_near_miss}} </p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Possible consequence under different circumstances :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.incident_near_miss_other}} </p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <!----------------------------------------------------------- Incident Detalis ---------------------------------------------------->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Incident </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Incident :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.incident_value}} </p>
+              </ion-col>
+            </ion-row>
 
-      </ion-card-content>
-    </ion-card>
-    <!----------------------------------------------------------- Incident Detalis ---------------------------------------------------->
+            <ion-grid *ngIf="incidentDetails?.incident_value == 'Near Miss'" lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Who witnessed the near miss ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.incident_near_miss}} </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Possible consequence under different circumstances :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.incident_near_miss_other}} </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
-    <!------------------------------------------------------------ Photography -------------------------------------------------------->
-    <ion-card
-      *ngIf="incidentDetails && incidentDetails['photography_image'] && incidentDetails['photography_image'].length && incidentDetails['photography_image'].length > 0">
-      <ion-card-header>
-        <ion-card-title>
-          Photography
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-slides [options]="sliderOpts" class="preview-slides">
-          <ion-slide *ngFor="let photography_image of incidentDetails['photography_image']">
-            <img [src]="photography_image" tappable (click)="onOpenPreview(photography_image)">
-          </ion-slide>
-        </ion-slides>
-      </ion-card-content>
-    </ion-card>
-    <!------------------------------------------------------------ Photography -------------------------------------------------------->
+          </ion-card-content>
+        </ion-card>
+        <!----------------------------------------------------------- Incident Detalis ---------------------------------------------------->
 
-    <!----------------------------------------------------------- Incident Description ------------------------------------------------>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          Incident Description
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Description of incident :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.incident_description}} </p>
-            </ion-col>
-          </ion-row>
+        <!------------------------------------------------------------ Photography -------------------------------------------------------->
+        <ion-card
+          *ngIf="incidentDetails && incidentDetails['photography_image'] && incidentDetails['photography_image'].length && incidentDetails['photography_image'].length > 0">
+          <ion-card-header>
+            <ion-card-title>
+              Photography
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-slides [options]="sliderOpts" class="preview-slides">
+              <ion-slide *ngFor="let photography_image of incidentDetails['photography_image']">
+                <img [src]="photography_image" tappable (click)="onOpenPreview(photography_image)">
+              </ion-slide>
+            </ion-slides>
+          </ion-card-content>
+        </ion-card>
+        <!------------------------------------------------------------ Photography -------------------------------------------------------->
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Immediate action taken :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.incident_description_action}} </p>
-            </ion-col>
-          </ion-row>
+        <!----------------------------------------------------------- Incident Description ------------------------------------------------>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Incident Description
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Description of incident :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.incident_description}} </p>
+                </ion-col>
+              </ion-row>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">What could have been done differently ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.seen_differently}} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Immediate action taken :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.incident_description_action}} </p>
+                </ion-col>
+              </ion-row>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Was there any Witnesses of the incident ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.was_there_any_witness_of_the_incident}} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">What could have been done differently ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.seen_differently}} </p>
+                </ion-col>
+              </ion-row>
 
-          <!-- <p class="question">Description of incident :</p>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Was there any Witnesses of the incident ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.was_there_any_witness_of_the_incident}} </p>
+                </ion-col>
+              </ion-row>
+
+              <!-- <p class="question">Description of incident :</p>
           <p class="value">{{incidentDetails?.incident_description}}</p>
 
           <p class="question">Immediate action taken :</p>
@@ -114,87 +118,87 @@
           <p class="question">Was there any Witnesses of the incident ? :</p>
           <p class="value">{{incidentDetails?.was_there_any_witness_of_the_incident}}</p> -->
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Alcohol test Completed :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.incident_description_alcohol_test}} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Alcohol test Completed :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.incident_description_alcohol_test}} </p>
+                </ion-col>
+              </ion-row>
 
-          <div *ngIf="incidentDetails?.incident_description_alcohol_test != '' ">
-            <!-- 
+              <div *ngIf="incidentDetails?.incident_description_alcohol_test != '' ">
+                <!-- 
             <p class="question">Alcohol test completed :</p>
             <p class="value">{{incidentDetails?.incident_description_alcohol_test}}</p> -->
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="incidentDetails['alcohol_test_image'] && incidentDetails['alcohol_test_image'].length > 0">
-              <ion-slide *ngFor="let alcohol_test_image of incidentDetails['alcohol_test_image']">
-                <img [src]="alcohol_test_image" tappable (click)="onOpenPreview(alcohol_test_image)">
-              </ion-slide>
-            </ion-slides>
-          </div>
+                <ion-slides [options]="sliderOpts" class="preview-slides"
+                  *ngIf="incidentDetails['alcohol_test_image'] && incidentDetails['alcohol_test_image'].length > 0">
+                  <ion-slide *ngFor="let alcohol_test_image of incidentDetails['alcohol_test_image']">
+                    <img [src]="alcohol_test_image" tappable (click)="onOpenPreview(alcohol_test_image)">
+                  </ion-slide>
+                </ion-slides>
+              </div>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Drug test Completed :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.drug_test_completed}} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Drug test Completed :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.drug_test_completed}} </p>
+                </ion-col>
+              </ion-row>
 
-          <div *ngIf="incidentDetails?.drug_test_completed !='' ">
+              <div *ngIf="incidentDetails?.drug_test_completed !='' ">
 
-            <!-- <p class="question">Drug test completed :</p>
+                <!-- <p class="question">Drug test completed :</p>
             <p class="value">{{incidentDetails?.drug_test_completed}}</p> -->
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="incidentDetails['drug_test_image'] && incidentDetails['drug_test_image'].length > 0">
-              <ion-slide *ngFor="let drug_test_image of incidentDetails['drug_test_image']">
-                <img [src]="drug_test_image" tappable (click)="onOpenPreview(drug_test_image)">
-              </ion-slide>
-            </ion-slides>
-          </div>
+                <ion-slides [options]="sliderOpts" class="preview-slides"
+                  *ngIf="incidentDetails['drug_test_image'] && incidentDetails['drug_test_image'].length > 0">
+                  <ion-slide *ngFor="let drug_test_image of incidentDetails['drug_test_image']">
+                    <img [src]="drug_test_image" tappable (click)="onOpenPreview(drug_test_image)">
+                  </ion-slide>
+                </ion-slides>
+              </div>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Return to Alternate Duties :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails?.return_to_alternate_duties}} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Return to Alternate Duties :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails?.return_to_alternate_duties}} </p>
+                </ion-col>
+              </ion-row>
 
-          <div *ngIf="incidentDetails?.return_to_alternate_duties!==''">
+              <div *ngIf="incidentDetails?.return_to_alternate_duties!==''">
 
-            <!-- <p class="question">Return to Alternate Duties :</p>
+                <!-- <p class="question">Return to Alternate Duties :</p>
             <p class="value">{{incidentDetails?.return_to_alternate_duties}}</p> -->
 
-            <ion-slides [options]="sliderOpts" class="preview-slides"
-              *ngIf="incidentDetails['return_to_alternate_duties_image'] && incidentDetails['return_to_alternate_duties_image'].length > 0">
-              <ion-slide
-                *ngFor="let return_to_alternate_duties_image of incidentDetails['return_to_alternate_duties_image']">
-                <img [src]="return_to_alternate_duties_image" tappable
-                  (click)="onOpenPreview(return_to_alternate_duties_image)">
-              </ion-slide>
-            </ion-slides>
-          </div>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-    <!----------------------------------------------------------- Incident Description ------------------------------------------------>
+                <ion-slides [options]="sliderOpts" class="preview-slides"
+                  *ngIf="incidentDetails['return_to_alternate_duties_image'] && incidentDetails['return_to_alternate_duties_image'].length > 0">
+                  <ion-slide
+                    *ngFor="let return_to_alternate_duties_image of incidentDetails['return_to_alternate_duties_image']">
+                    <img [src]="return_to_alternate_duties_image" tappable
+                      (click)="onOpenPreview(return_to_alternate_duties_image)">
+                  </ion-slide>
+                </ion-slides>
+              </div>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+        <!----------------------------------------------------------- Incident Description ------------------------------------------------>
 
-    <!------------------------------------------------------------- Classification ---------------------------------------------------->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          Classification
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <!-- <p class="question">Classification :</p>
+        <!------------------------------------------------------------- Classification ---------------------------------------------------->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Classification
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <p class="question">Classification :</p>
         <ion-row class='ion-no-padding'>
           <ion-col size="6" *ngFor="let classificationValue of classificationList; let i=index">
             <ion-item lines="none" class="ion-no-padding">
@@ -203,393 +207,396 @@
           </ion-col>
         </ion-row> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Classification :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value">{{classificationList}}</p>
-            <!-- <p class="value" *ngFor="let classificationValue of classificationList; "> {{classificationValue}} </p> -->
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Classification :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value">{{classificationList}}</p>
+                <!-- <p class="value" *ngFor="let classificationValue of classificationList; "> {{classificationValue}} </p> -->
+              </ion-col>
+            </ion-row>
 
 
-        <!-- <p class="value" *ngFor="let injuryPart of personDetails['part_of_body_injured_occured']">
+            <!-- <p class="value" *ngFor="let injuryPart of personDetails['part_of_body_injured_occured']">
           {{injuryPart}} </p> -->
 
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Date of Incident :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.date_of_incident}} </p>
-          </ion-col>
-        </ion-row>
-        <!-- <p class="question">Date of Incident :</p>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Date of Incident :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.date_of_incident}} </p>
+              </ion-col>
+            </ion-row>
+            <!-- <p class="question">Date of Incident :</p>
         <p class="value">{{incidentDetails['date_of_incident'] }}</p> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Time of Incident :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.time_of_incident}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Time of Incident :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.time_of_incident}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- <p class="question">Time Of Incident :</p>
+            <!-- <p class="question">Time Of Incident :</p>
         <p class="value">{{incidentDetails['time_of_incident']}}</p> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Date Reported :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.date_reported}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Date Reported :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.date_reported}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- <p class="question">Date Reported :</p>
+            <!-- <p class="question">Date Reported :</p>
         <p class="value">{{incidentDetails['date_reported'] }}</p> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Time Reported :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.time_reported}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Time Reported :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.time_reported}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- <p class="question">Time Reported :</p>
+            <!-- <p class="question">Time Reported :</p>
         <p class="value">{{incidentDetails['time_reported'] }}</p> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Location Type :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.classification_location_option}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Location Type :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.classification_location_option}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- <p class="question">Location Type :</p>
+            <!-- <p class="question">Location Type :</p>
         <p class="value">{{incidentDetails['classification_location_option'] }}</p> -->
 
-        <ion-row>
-          <ion-col size="6"></ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.classification_location_value}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6"></ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.classification_location_value}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- <p class="value">{{incidentDetails['classification_location_value'] }}</p> -->
+            <!-- <p class="value">{{incidentDetails['classification_location_value'] }}</p> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Shift Type :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.classification_shift_type}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Shift Type :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.classification_shift_type}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- 
+            <!-- 
         <p class="question">Shift Type :</p>
         <p class="value">{{incidentDetails['classification_shift_type'] }}</p> -->
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Supervisor :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.classification_supervisor}} </p>
-          </ion-col>
-        </ion-row>
-        <!-- 
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Supervisor :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.classification_supervisor}} </p>
+              </ion-col>
+            </ion-row>
+            <!-- 
         <p class="question">Supervisor :</p>
         <p class="value">{{incidentDetails['classification_supervisor'] }}</p> -->
 
-        <ion-grid *ngIf="incidentDetails['classification_supervisor'] == 'Other' " lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Other Person Name :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_name }}
-              </p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Other Person Mobile No :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_mobile_no
-                }} </p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Other Person Email id :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_email }}
-              </p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+            <ion-grid *ngIf="incidentDetails['classification_supervisor'] == 'Other' " lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Other Person Name :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_name }}
+                  </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Other Person Mobile No :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_mobile_no
+                    }} </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Other Person Email id :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['classification_supervisor_other_details'].classification_supervisor_other_email
+                    }}
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
-        <ion-row>
-          <ion-col size="6">
-            <p class="question">Manager :</p>
-          </ion-col>
-          <ion-col size="6">
-            <p class="value"> {{incidentDetails?.classification_manager}} </p>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="question">Manager :</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="value"> {{incidentDetails?.classification_manager}} </p>
+              </ion-col>
+            </ion-row>
 
-        <!-- <p class="question">Manager :</p>
+            <!-- <p class="question">Manager :</p>
         <p class="value">{{incidentDetails['classification_manager']}}</p> -->
 
-        <ion-grid *ngIf="incidentDetails['classification_manager'] == 'Other' " lines="none">
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Other Person Name :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['classification_manager_other_details'].classification_manager_other_name }} </p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Other Person Mobile No :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['classification_manager_other_details'].classification_manager_other_mobile_no }} </p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Other Person Email id :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['classification_manager_other_details'].classification_manager_other_email }} </p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+            <ion-grid *ngIf="incidentDetails['classification_manager'] == 'Other' " lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Other Person Name :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['classification_manager_other_details'].classification_manager_other_name }} </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Other Person Mobile No :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['classification_manager_other_details'].classification_manager_other_mobile_no }}
+                  </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Other Person Email id :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['classification_manager_other_details'].classification_manager_other_email }} </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
-      </ion-card-content>
-    </ion-card>
-    <!------------------------------------------------------------- Classification ---------------------------------------------------->
+          </ion-card-content>
+        </ion-card>
+        <!------------------------------------------------------------- Classification ---------------------------------------------------->
 
-    <div *ngFor="let classificationValue of classificationList; let i=index">
-      <!------------------------------------------------------------- Injury ------------------------------------------------------------>
-      <ion-card *ngIf="classificationValue == 'Injury'">
-        <ion-card-header>
-          <ion-card-title>
-            Injury
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-card *ngFor="let personDetails of incidentDetails['person_details']; let i=index">
+        <div *ngFor="let classificationValue of classificationList; let i=index">
+          <!------------------------------------------------------------- Injury ------------------------------------------------------------>
+          <ion-card *ngIf="classificationValue == 'Injury'">
             <ion-card-header>
               <ion-card-title>
-                Person {{(i+1)}} Details
+                Injury
               </ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <!-- <p class="question">Injured Person Name :</p>
+              <ion-card *ngFor="let personDetails of incidentDetails['person_details']; let i=index">
+                <ion-card-header>
+                  <ion-card-title>
+                    Person {{(i+1)}} Details
+                  </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <!-- <p class="question">Injured Person Name :</p>
               <p class="value">{{personDetails['injured_person_option'] }}</p> -->
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Injured Person Name :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value"> {{personDetails['injured_person_option'] }} </p>
-                </ion-col>
-              </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Injured Person Name :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value"> {{personDetails['injured_person_option'] }} </p>
+                    </ion-col>
+                  </ion-row>
 
-              <ion-grid *ngIf="personDetails['injured_person_option'] == 'Other' " lines="none">
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Other Person Name :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">
-                      {{personDetails['injured_person_option_other_details'].injured_person_option_other_name }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Other Person Mobile No:</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">
-                      {{personDetails['injured_person_option_other_details'].injured_person_option_other_name }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Other Person Email id:</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">
-                      {{personDetails['injured_person_option_other_details'].injured_person_option_other_email }}</p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                  <ion-grid *ngIf="personDetails['injured_person_option'] == 'Other' " lines="none">
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">Other Person Name :</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value">
+                          {{personDetails['injured_person_option_other_details'].injured_person_option_other_name }}</p>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">Other Person Mobile No:</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value">
+                          {{personDetails['injured_person_option_other_details'].injured_person_option_other_name }}</p>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">Other Person Email id:</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value">
+                          {{personDetails['injured_person_option_other_details'].injured_person_option_other_email }}
+                        </p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Gender :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value"> {{personDetails['gender']}} </p>
-                </ion-col>
-              </ion-row>
-              <!-- 
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Gender :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value"> {{personDetails['gender']}} </p>
+                    </ion-col>
+                  </ion-row>
+                  <!-- 
               <p class="question">Gender :</p>
               <p class="value">{{personDetails['gender'] }}</p> -->
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Date of Birth :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value"> {{personDetails['date_of_birth']}} </p>
-                </ion-col>
-              </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Date of Birth :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value"> {{personDetails['date_of_birth']}} </p>
+                    </ion-col>
+                  </ion-row>
 
-              <!-- <p class="question">Date of Birth :</p>
+                  <!-- <p class="question">Date of Birth :</p>
               <p class="value">{{personDetails['date_of_birth'] }}</p> -->
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Return to Normal Duties :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value"> {{personDetails['normal_duties']}} </p>
-                </ion-col>
-              </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Return to Normal Duties :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value"> {{personDetails['normal_duties']}} </p>
+                    </ion-col>
+                  </ion-row>
 
-              <!-- <p class="question">Return to Normal Duties :</p>
+                  <!-- <p class="question">Return to Normal Duties :</p>
               <p class="value">{{personDetails['normal_duties'] }}</p> -->
 
-              <ion-grid lines="none" *ngIf="personDetails['normal_duties'] == 'No'">
-                <!-- <ion-row>
+                  <ion-grid lines="none" *ngIf="personDetails['normal_duties'] == 'No'">
+                    <!-- <ion-row>
                   <ion-col>
                     <p class="question">Explanation :</p>
                     <p class="value">{{personDetails['normal_duties_explanation'] }}</p>
                   </ion-col>
                 </ion-row> -->
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Explanation :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value"> {{personDetails['normal_duties_explanation']}} </p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">Explanation :</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value"> {{personDetails['normal_duties_explanation']}} </p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Return to Alternate Duties :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value"> {{personDetails['alternate_duties']}} </p>
-                </ion-col>
-              </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Return to Alternate Duties :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value"> {{personDetails['alternate_duties']}} </p>
+                    </ion-col>
+                  </ion-row>
 
-              <!-- <p class="question">Return to Alternate Duties :</p>
+                  <!-- <p class="question">Return to Alternate Duties :</p>
               <p class="value">{{personDetails['alternate_duties'] }}</p> -->
 
-              <ion-grid lines="none" *ngIf="personDetails['alternate_duties'] == 'No'">
-                <!-- <ion-row>
+                  <ion-grid lines="none" *ngIf="personDetails['alternate_duties'] == 'No'">
+                    <!-- <ion-row>
                   <ion-col>
                     <p class="question">Explanation :</p>
                     <p class="value">{{personDetails['duties_explanation'] }}</p>
                   </ion-col>
                 </ion-row> -->
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Explanation :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value"> {{personDetails['duties_explanation']}} </p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">Explanation :</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value"> {{personDetails['duties_explanation']}} </p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Initial Injury / IIIness Classification :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value"> {{personDetails['initital_injury']}} </p>
-                </ion-col>
-              </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Initial Injury / IIIness Classification :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value"> {{personDetails['initital_injury']}} </p>
+                    </ion-col>
+                  </ion-row>
 
-              <!-- <p class="question">Initial Injury / IIIness Classification :</p>
+                  <!-- <p class="question">Initial Injury / IIIness Classification :</p>
               <p class="value">{{personDetails['initital_injury'] }}</p> -->
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Part of body injured :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value">{{personDetails['part_of_body_injured_occured']}}</p>
-                  <!-- <p class="value" *ngFor="let injuryPart of personDetails['part_of_body_injured_occured']">
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Part of body injured :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">{{personDetails['part_of_body_injured_occured']}}</p>
+                      <!-- <p class="value" *ngFor="let injuryPart of personDetails['part_of_body_injured_occured']">
                     {{injuryPart}} </p> -->
-                </ion-col>
-              </ion-row>
+                    </ion-col>
+                  </ion-row>
 
-              <!-- <p class="question">Part of body injured :</p>
+                  <!-- <p class="question">Part of body injured :</p>
               <p class="value" *ngFor="let injuryPart of personDetails['part_of_body_injured_occured']">{{injuryPart}}
               </p> -->
 
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Was immediate treatment given ? :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value">{{personDetails['was_immediate_treatment'] }} </p>
-                </ion-col>
-              </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Was immediate treatment given ? :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">{{personDetails['was_immediate_treatment'] }} </p>
+                    </ion-col>
+                  </ion-row>
 
-              <!-- <p class="question">Was immediate treatment given ? :</p>
+                  <!-- <p class="question">Was immediate treatment given ? :</p>
               <p class="value">{{personDetails['was_immediate_treatment'] }}</p> -->
 
-              <ion-grid *ngIf="personDetails['was_immediate_treatment'] == 'Yes'" lines="none">
+                  <ion-grid *ngIf="personDetails['was_immediate_treatment'] == 'Yes'" lines="none">
 
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">What treatment was given ? :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">{{personDetails['immediate_treatment_given_explanation'] }}</p>
-                  </ion-col>
-                </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">What treatment was given ? :</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value">{{personDetails['immediate_treatment_given_explanation'] }}</p>
+                      </ion-col>
+                    </ion-row>
 
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">Who administered treatment ? :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">{{personDetails['immediate_treatment_person_name'] }} </p>
-                  </ion-col>
-                </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">Who administered treatment ? :</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value">{{personDetails['immediate_treatment_person_name'] }} </p>
+                      </ion-col>
+                    </ion-row>
 
-                <!-- <ion-row>
+                    <!-- <ion-row>
                   <p class="question">Who administered treatment ? :</p>
                 </ion-row>
 
@@ -597,97 +604,99 @@
                   <p class="value">{{personDetails['immediate_treatment_person_name'] }}</p>
                 </ion-row> -->
 
-                <ion-grid *ngIf="personDetails['immediate_treatment_person_name'] == 'Other'">
-                  <ion-row>
-                    <ion-col size="6">
-                      <p class="question">Other Person Name :</p>
-                    </ion-col>
-                    <ion-col size="6">
-                      <p class="value">
-                        {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_other_name }}
-                      </p>
-                    </ion-col>
-                  </ion-row>
+                    <ion-grid *ngIf="personDetails['immediate_treatment_person_name'] == 'Other'">
+                      <ion-row>
+                        <ion-col size="6">
+                          <p class="question">Other Person Name :</p>
+                        </ion-col>
+                        <ion-col size="6">
+                          <p class="value">
+                            {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_other_name }}
+                          </p>
+                        </ion-col>
+                      </ion-row>
 
-                  <ion-row>
-                    <ion-col size="6">
-                      <p class="question">Other Person Mobile No :</p>
-                    </ion-col>
-                    <ion-col size="6">
-                      <p class="value">
-                        {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_person_number }}
-                      </p>
-                    </ion-col>
-                  </ion-row>
+                      <ion-row>
+                        <ion-col size="6">
+                          <p class="question">Other Person Mobile No :</p>
+                        </ion-col>
+                        <ion-col size="6">
+                          <p class="value">
+                            {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_person_number
+                            }}
+                          </p>
+                        </ion-col>
+                      </ion-row>
 
-                  <ion-row>
-                    <ion-col size="6">
-                      <p class="question">Other Person Email id :</p>
-                    </ion-col>
-                    <ion-col size="6">
-                      <p class="value">
-                        {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_other_email }}
-                      </p>
-                    </ion-col>
-                  </ion-row>
+                      <ion-row>
+                        <ion-col size="6">
+                          <p class="question">Other Person Email id :</p>
+                        </ion-col>
+                        <ion-col size="6">
+                          <p class="value">
+                            {{personDetails['immediate_treatment_other_person_detail'].immediate_treatment_other_email
+                            }}
+                          </p>
+                        </ion-col>
+                      </ion-row>
 
-                </ion-grid>
+                    </ion-grid>
 
 
 
-              </ion-grid>
+                  </ion-grid>
 
-              <ion-grid *ngIf="personDetails['was_immediate_treatment'] == 'No'" lines="none">
-                <ion-row>
-                  <ion-col size="6">
-                    <p class="question">
-                      Explain Why Immediate Treatment Was Not Given :</p>
-                  </ion-col>
-                  <ion-col size="6">
-                    <p class="value">{{personDetails['was_immediate_treatment_comment'] }}</p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                  <ion-grid *ngIf="personDetails['was_immediate_treatment'] == 'No'" lines="none">
+                    <ion-row>
+                      <ion-col size="6">
+                        <p class="question">
+                          Explain Why Immediate Treatment Was Not Given :</p>
+                      </ion-col>
+                      <ion-col size="6">
+                        <p class="value">{{personDetails['was_immediate_treatment_comment'] }}</p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
 
+                </ion-card-content>
+              </ion-card>
             </ion-card-content>
           </ion-card>
-        </ion-card-content>
-      </ion-card>
-      <!------------------------------------------------------------ Injury ------------------------------------------------------------->
-      <!----------------------------------------------------------- Environmental ------------------------------------------------------->
-      <ion-card *ngIf="classificationValue == 'Environmental'">
-        <ion-card-header>
-          <ion-card-title>Environmental </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
+          <!------------------------------------------------------------ Injury ------------------------------------------------------------->
+          <!----------------------------------------------------------- Environmental ------------------------------------------------------->
+          <ion-card *ngIf="classificationValue == 'Environmental'">
+            <ion-card-header>
+              <ion-card-title>Environmental </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
 
-          <!-- <p class="question">Immediate action taken to minimize Environment impact :</p>
+              <!-- <p class="question">Immediate action taken to minimize Environment impact :</p>
           <p class="value">{{incidentDetails['environmental_description']}}</p> -->
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Immediate action taken to minimize Environment impact :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails['environmental_description'] }} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Immediate action taken to minimize Environment impact :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails['environmental_description'] }} </p>
+                </ion-col>
+              </ion-row>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Was a chemical split ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value"> {{incidentDetails['was_a_chemical_split'] }} </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Was a chemical split ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value"> {{incidentDetails['was_a_chemical_split'] }} </p>
+                </ion-col>
+              </ion-row>
 
-          <!-- <p class="question">Was a chemical split ? :</p>
+              <!-- <p class="question">Was a chemical split ? :</p>
           <p class="value">{{incidentDetails['was_a_chemical_split']}}</p> -->
 
 
-          <ion-grid *ngIf="incidentDetails['was_a_chemical_split']==='Yes'" lines="none">
-            <!-- <ion-row>
+              <ion-grid *ngIf="incidentDetails['was_a_chemical_split']==='Yes'" lines="none">
+                <!-- <ion-row>
               <ion-col>
                 <p class="question">Name of chemical :</p>
                 <p class="value">{{incidentDetails['chemical_details'].chemical_name}}</p>
@@ -705,181 +714,181 @@
                 <p class="value">{{incidentDetails['chemical_details'].approximate_quantity}}</p>
               </ion-col>
             </ion-row> -->
-            <ion-grid>
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Name of chemical :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value">
-                    {{incidentDetails['chemical_details'].chemical_name }}
-                  </p>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Insert Photo :</p>
-                </ion-col>
-              </ion-row>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Name of chemical :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">
+                        {{incidentDetails['chemical_details'].chemical_name }}
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Insert Photo :</p>
+                    </ion-col>
+                  </ion-row>
 
-              <ion-row>
-                <ion-col size="12">
-                  <ion-slides [options]="sliderOpts" class="preview-slides"
-                    *ngIf="incidentDetails['chemical_details'] && incidentDetails['chemical_details'].chemical_photo && incidentDetails['chemical_details'].chemical_photo.length > 0">
-                    <ion-slide *ngFor="let chemical_photo of incidentDetails['chemical_details'].chemical_photo">
-                      <img [src]="chemical_photo" tappable (click)="onOpenPreview(chemical_photo)">
-                    </ion-slide>
-                  </ion-slides>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-slides [options]="sliderOpts" class="preview-slides"
+                        *ngIf="incidentDetails['chemical_details'] && incidentDetails['chemical_details'].chemical_photo && incidentDetails['chemical_details'].chemical_photo.length > 0">
+                        <ion-slide *ngFor="let chemical_photo of incidentDetails['chemical_details'].chemical_photo">
+                          <img [src]="chemical_photo" tappable (click)="onOpenPreview(chemical_photo)">
+                        </ion-slide>
+                      </ion-slides>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
 
-            <ion-grid>
-              <ion-row>
-                <ion-col size="6">
-                  <p class="question">Approximate quantity of chemical spilled :</p>
-                </ion-col>
-                <ion-col size="6">
-                  <p class="value">
-                    {{incidentDetails['chemical_details'].approximate_quantity}}
-                  </p>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <p class="question">Approximate quantity of chemical spilled :</p>
+                    </ion-col>
+                    <ion-col size="6">
+                      <p class="value">
+                        {{incidentDetails['chemical_details'].approximate_quantity}}
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
 
-          </ion-grid>
+              </ion-grid>
 
-          <!-- <p class="question">Was the emergency spill kit used ? :</p>
+              <!-- <p class="question">Was the emergency spill kit used ? :</p>
           <p class="value">{{incidentDetails['emergency_spill_kit_used']}}</p> -->
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Was the emergency spill kit used ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['emergency_spill_kit_used'] }}
-              </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Was the emergency spill kit used ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['emergency_spill_kit_used'] }}
+                  </p>
+                </ion-col>
+              </ion-row>
 
-          <ion-grid *ngIf="incidentDetails['emergency_spill_kit_used']==='Yes'" lines="none">
-            <!-- <ion-row>
+              <ion-grid *ngIf="incidentDetails['emergency_spill_kit_used']==='Yes'" lines="none">
+                <!-- <ion-row>
               <ion-col>
                 <p class=" question"> What was used out of the chemical spill kit ? :</p>
                 <p class="value">{{incidentDetails['out_of_split_kit']}}</p>
               </ion-col>
             </ion-row> -->
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">What was used out of the chemical spill kit ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">
-                  {{incidentDetails['out_of_split_kit'] }}
-                </p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">What was used out of the chemical spill kit ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">
+                      {{incidentDetails['out_of_split_kit'] }}
+                    </p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-        </ion-card-content>
-      </ion-card>
-      <!----------------------------------------------------------- Environmental -------------------------------------------------------->
+            </ion-card-content>
+          </ion-card>
+          <!----------------------------------------------------------- Environmental -------------------------------------------------------->
 
-      <!----------------------------------------------------------- Reputation ----------------------------------------------------------->
-      <ion-card *ngIf="classificationValue == 'Reputation'">
-        <ion-card-header>
-          <ion-card-title>
-            Reputation
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
+          <!----------------------------------------------------------- Reputation ----------------------------------------------------------->
+          <ion-card *ngIf="classificationValue == 'Reputation'">
+            <ion-card-header>
+              <ion-card-title>
+                Reputation
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Was the reputation damages an individual or Company ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['reputation_option'] }}
-              </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Was the reputation damages an individual or Company ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['reputation_option'] }}
+                  </p>
+                </ion-col>
+              </ion-row>
 
-          <!-- <p class="question">Was the reputation damages an individual or Company ? :</p>
+              <!-- <p class="question">Was the reputation damages an individual or Company ? :</p>
           <p class="value">{{incidentDetails['reputation_option']}}</p> -->
-          <!-- <div lines="none"> -->
+              <!-- <div lines="none"> -->
 
-          <!-- <div lines="none"
+              <!-- <div lines="none"
             *ngIf="incidentDetails['individual_damage_value'] == 'Individual' || incidentDetails['company_damage_value'] == 'Company'"> -->
 
-          <!-- <p class="question">Reputation damages type : </p> -->
-          <ion-grid *ngIf="incidentDetails['individual_damage_value'] != '' ">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">How has the Individual's reputation been damaged ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['individual_damage_value']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+              <!-- <p class="question">Reputation damages type : </p> -->
+              <ion-grid *ngIf="incidentDetails['individual_damage_value'] != '' ">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">How has the Individual's reputation been damaged ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['individual_damage_value']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          <ion-grid *ngIf="incidentDetails['company_damage_value'] != '' ">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">How has the Company's reputation been damaged ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['company_damage_value']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <!-- </div> -->
+              <ion-grid *ngIf="incidentDetails['company_damage_value'] != '' ">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">How has the Company's reputation been damaged ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['company_damage_value']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <!-- </div> -->
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Was the negative effect internal or external ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">{{incidentDetails['reputation_negative_effect']}}</p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Was the negative effect internal or external ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">{{incidentDetails['reputation_negative_effect']}}</p>
+                </ion-col>
+              </ion-row>
 
-          <ion-grid *ngIf="incidentDetails['effected_department'] != ''" lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">What Department was effected ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['effected_department']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-grid *ngIf="incidentDetails['effected_department'] != ''" lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">What Department was effected ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['effected_department']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          <ion-grid *ngIf="incidentDetails['external_party'] != ''" lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">Who is the external party ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['external_party']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-grid *ngIf="incidentDetails['external_party'] != ''" lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">Who is the external party ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['external_party']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Name of any witness :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">{{incidentDetails['name_of_witness']}}</p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Name of any witness :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">{{incidentDetails['name_of_witness']}}</p>
+                </ion-col>
+              </ion-row>
 
-          <!-- <ion-item *ngIf="incidentDetails['name_of_witness'] == 'Other'" lines="none">
+              <!-- <ion-item *ngIf="incidentDetails['name_of_witness'] == 'Other'" lines="none">
             <ion-row>
               <ion-col>
                 <div>
@@ -898,210 +907,216 @@
             </ion-row>
           </ion-item> -->
 
-          <ion-grid *ngIf="incidentDetails['name_of_witness']== 'Other'">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">Other Person Name :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">
-                  {{incidentDetails['other_witness_details'].other_witness_name }}
-                </p>
-              </ion-col>
-            </ion-row>
+              <ion-grid *ngIf="incidentDetails['name_of_witness']== 'Other'">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">Other Person Name :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">
+                      {{incidentDetails['other_witness_details'].other_witness_name }}
+                    </p>
+                  </ion-col>
+                </ion-row>
 
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">Other Person Mobile No :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">
-                  {{incidentDetails['other_witness_details'].other_witness_mobile_no }}
-                </p>
-              </ion-col>
-            </ion-row>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">Other Person Mobile No :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">
+                      {{incidentDetails['other_witness_details'].other_witness_mobile_no }}
+                    </p>
+                  </ion-col>
+                </ion-row>
 
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">Other Person Email id :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">
-                  {{incidentDetails['other_witness_details'].other_witness_email }}
-                </p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">Other Person Email id :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">
+                      {{incidentDetails['other_witness_details'].other_witness_email }}
+                    </p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">What is the possible outcome of this incident ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['possible_outcome_incident']}}
-              </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">What is the possible outcome of this incident ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['possible_outcome_incident']}}
+                  </p>
+                </ion-col>
+              </ion-row>
 
-          <!-- <p class="question">What is the possible outcome of this incident ? :</p>
+              <!-- <p class="question">What is the possible outcome of this incident ? :</p>
           <p class="value">{{incidentDetails['possible_outcome_incident']}}</p> -->
 
-        </ion-card-content>
-      </ion-card>
-      <!----------------------------------------------------------- Reputation ----------------------------------------------------------->
-      <!----------------------------------------------------------- Security ------------------------------------------------------------->
-      <ion-card *ngIf="classificationValue == 'Security'">
-        <ion-card-header>
-          <ion-card-title>
-            Security
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Security :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">{{incidentDetails['security_option']}}</p>
-            </ion-col>
-          </ion-row>
+            </ion-card-content>
+          </ion-card>
+          <!----------------------------------------------------------- Reputation ----------------------------------------------------------->
+          <!----------------------------------------------------------- Security ------------------------------------------------------------->
+          <ion-card *ngIf="classificationValue == 'Security'">
+            <ion-card-header>
+              <ion-card-title>
+                Security
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Security :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">{{incidentDetails['security_option']}}</p>
+                </ion-col>
+              </ion-row>
 
-          <ion-grid *ngIf="incidentDetails['security_option'] == 'IT'" lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">What kind of IT Security Incident ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['it_option_value']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-grid *ngIf="incidentDetails['security_option'] == 'IT'" lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">What kind of IT Security Incident ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['it_option_value']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          <ion-grid *ngIf="incidentDetails['security_option'] == 'Theft'" lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question"> What has been stolen ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['what_has_been_stolen_item']}}</p>
-              </ion-col>
-            </ion-row>
+              <ion-grid *ngIf="incidentDetails['security_option'] == 'Theft'" lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question"> What has been stolen ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['what_has_been_stolen_item']}}</p>
+                  </ion-col>
+                </ion-row>
 
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">Approximate value of stolen item ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['approximate_value_of_stolen']}}</p>
-              </ion-col>
-            </ion-row>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">Approximate value of stolen item ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['approximate_value_of_stolen']}}</p>
+                  </ion-col>
+                </ion-row>
 
-          </ion-grid>
+              </ion-grid>
 
-          <ion-grid *ngIf="incidentDetails['security_option'] == 'Other'" lines="none">
+              <ion-grid *ngIf="incidentDetails['security_option'] == 'Other'" lines="none">
 
-            <!-- <p class="question"> What is the Security incident ? :</p>
+                <!-- <p class="question"> What is the Security incident ? :</p>
                 <p class="value">{{incidentDetails['what_is_the_specific_securities_incident']}}</p> -->
-            <ion-row>
-              <ion-col size="6">
-                <p class="question">What is the Security incident ? :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['what_is_the_specific_securities_incident']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question">What is the Security incident ? :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['what_is_the_specific_securities_incident']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-        </ion-card-content>
-      </ion-card>
-      <!----------------------------------------------------------- Security ------------------------------------------------------------->
+            </ion-card-content>
+          </ion-card>
+          <!----------------------------------------------------------- Security ------------------------------------------------------------->
 
-      <!----------------------------------------------------------- Assets --------------------------------------------------------------->
-      <ion-card *ngIf="classificationValue == 'Asset'">
-        <ion-card-header>
-          <ion-card-title>
-            Assets
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Asset description :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">{{incidentDetails['asset_description']}}</p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Does Asset have a number ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">{{incidentDetails['asset_has_number']}}</p>
-            </ion-col>
-          </ion-row>
+          <!----------------------------------------------------------- Assets --------------------------------------------------------------->
+          <ion-card *ngIf="classificationValue == 'Asset'">
+            <ion-card-header>
+              <ion-card-title>
+                Assets
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Asset description :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">{{incidentDetails['asset_description']}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Does Asset have a number ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">{{incidentDetails['asset_has_number']}}</p>
+                </ion-col>
+              </ion-row>
 
-          <ion-grid *ngIf="incidentDetails['asset_has_number']=='Yes'" lines="none">
-            <ion-row>
-              <ion-col size="6">
-                <p class="question"> Asset Number :</p>
-              </ion-col>
-              <ion-col size="6">
-                <p class="value">{{incidentDetails['asset_number']}}</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-grid *ngIf="incidentDetails['asset_has_number']=='Yes'" lines="none">
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="question"> Asset Number :</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="value">{{incidentDetails['asset_number']}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
-          <!-- <p class="question">Extent of Damage :</p>
+              <!-- <p class="question">Extent of Damage :</p>
           <p class="value">{{incidentDetails['extent_of_damage']}}</p> -->
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">Extent of Damage :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['extent_of_damage']}}
-              </p>
-            </ion-col>
-          </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">Extent of Damage :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['extent_of_damage']}}
+                  </p>
+                </ion-col>
+              </ion-row>
 
-          <ion-grid *ngIf="incidentDetails['extent_damage_image'] && incidentDetails['extent_damage_image'].length > 0">
-            <p class="question">Upload photo of damage :</p>
-            <ion-slides [options]="sliderOpts" class="preview-slides">
-              <ion-slide *ngFor="let extent_damage_image of incidentDetails['extent_damage_image']">
-                <img [src]="extent_damage_image" tappable (click)="onOpenPreview(extent_damage_image)">
-              </ion-slide>
-            </ion-slides>
-          </ion-grid>
+              <ion-grid
+                *ngIf="incidentDetails['extent_damage_image'] && incidentDetails['extent_damage_image'].length > 0">
+                <p class="question">Upload photo of damage :</p>
+                <ion-slides [options]="sliderOpts" class="preview-slides">
+                  <ion-slide *ngFor="let extent_damage_image of incidentDetails['extent_damage_image']">
+                    <img [src]="extent_damage_image" tappable (click)="onOpenPreview(extent_damage_image)">
+                  </ion-slide>
+                </ion-slides>
+              </ion-grid>
 
-        </ion-card-content>
-      </ion-card>
-      <!----------------------------------------------------------- Assets --------------------------------------------------------------->
+            </ion-card-content>
+          </ion-card>
+          <!----------------------------------------------------------- Assets --------------------------------------------------------------->
 
-      <!----------------------------------------------------------- Report --------------------------------------------------------------->
-      <ion-card *ngIf="classificationValue == 'Report'">
-        <ion-card-header>
-          <ion-card-title>
-            Report
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <!-- <p class="question"> What could have done differently ? :</p>
+          <!----------------------------------------------------------- Report --------------------------------------------------------------->
+          <ion-card *ngIf="classificationValue == 'Report'">
+            <ion-card-header>
+              <ion-card-title>
+                Report
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <!-- <p class="question"> What could have done differently ? :</p>
           <p class="value">{{incidentDetails['report']}}</p> -->
-          <ion-row>
-            <ion-col size="6">
-              <p class="question">What could have done differently ? :</p>
-            </ion-col>
-            <ion-col size="6">
-              <p class="value">
-                {{incidentDetails['report']}}
-              </p>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-      <!----------------------------------------------------------- Report --------------------------------------------------------------->
-    </div>
+              <ion-row>
+                <ion-col size="6">
+                  <p class="question">What could have done differently ? :</p>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="value">
+                    {{incidentDetails['report']}}
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+          <!----------------------------------------------------------- Report --------------------------------------------------------------->
+        </div>
+
+      </ion-col>
+      <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
+    </ion-row>
+
   </div>
 </ion-content>

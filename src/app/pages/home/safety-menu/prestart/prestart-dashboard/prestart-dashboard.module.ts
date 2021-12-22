@@ -8,7 +8,7 @@ import { PrestartDashboardPageRoutingModule } from './prestart-dashboard-routing
 
 import { PrestartDashboardPage } from './prestart-dashboard.page';
 
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 import { DragAndDropModule } from 'angular-draggable-droppable';
 
@@ -18,11 +18,11 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     FormsModule,
     IonicModule,
     PrestartDashboardPageRoutingModule,
-    DragAndDropModule
+    DragAndDropModule,
+    SharedModuleModule
   ],
   declarations: [
-    PrestartDashboardPage,
-    HeaderComponent
+    PrestartDashboardPage
   ]
 })
 export class PrestartDashboardPageModule { }

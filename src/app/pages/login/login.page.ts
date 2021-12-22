@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 import { HTTP } from '@ionic-native/http/ngx';
 import { HttpHeaders } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -18,7 +17,6 @@ export class LoginPage implements OnInit {
   ionicForm: FormGroup;
   isSubmitted = false;
   imageUrl = environment.imageUrl;
-
 
   constructor(
     private nav: NavController,

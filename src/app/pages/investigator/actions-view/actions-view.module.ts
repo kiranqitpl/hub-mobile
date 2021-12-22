@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ActionsViewPageRoutingModule } from './actions-view-routing.module';
 
 import { ActionsViewPage } from './actions-view.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+// import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { HeaderComponent } from 'src/app/shared-component/header/header.componen
   ],
   declarations: [
     ActionsViewPage,
-    HeaderComponent
+    // HeaderComponent
   ]
 })
 export class ActionsViewPageModule {}

@@ -64,14 +64,15 @@ export class CraneAddFormPage implements OnInit {
   url_id = '';
   craneData = [];
   loggedInUser: any;
+  form_percent_val: number = 0;
 
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private toastService: ToastService,
     private loadingService: LoadingService,
-    private nav: NavController,
+    public nav: NavController,
     private activatedRoute: ActivatedRoute,
   ) { }
 
@@ -144,7 +145,10 @@ export class CraneAddFormPage implements OnInit {
         count = ++count;
       }
     })
+    // this.form_percent = parseInt((((1 / Object.keys(this.craneForm.controls).length) * count) * 100).toExponential(2));
+
     this.form_percent = ((1 / Object.keys(this.craneForm.controls).length) * count);
+    this.form_percent_val = parseInt((((1 / Object.keys(this.craneForm.controls).length) * count) * 100).toFixed());
   }
 
   loadData(id) {

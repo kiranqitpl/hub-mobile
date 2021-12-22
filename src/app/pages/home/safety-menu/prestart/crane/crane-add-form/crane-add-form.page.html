@@ -17,352 +17,362 @@
   </div>
 
   <div class="container" #target>
-    <ion-card>
-      <ion-grid [formGroup]="craneForm" (ionChange)="onProgressBar($event)">
-        <ion-row>
-          <ion-item lines="none">
-            <ion-label>Crane number :</ion-label>
-          </ion-item>
-        </ion-row>
-        <ion-row>
-          <ion-item lines="none">
-            <ion-select placeholder="Please select crane no." interface="action-sheet" formControlName="crane_number">
-              <ion-select-option value="{{craneNoKey?.id}}" *ngFor="let craneNoKey of craneNoList">{{craneNoKey?.name}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-row>
-
-        <ion-grid *ngIf="craneForm.value['crane_number'] != ''">
-          <ion-radio-group formControlName="operate_crane">
-            <ion-item lines="none" size-md="6" size-lg="6">
-              <ion-label>Are you fully qualified and trained to operate the crane ?</ion-label>
-            </ion-item>
+    <ion-row>
+      <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
+      <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12">
+        <ion-card>
+          <ion-grid [formGroup]="craneForm" (ionChange)="onProgressBar($event)">
             <ion-row>
-              <ion-col size-md="6" size-lg="6">
-                <ion-item lines="none">
-                  <ion-label>Yes</ion-label>
-                  <ion-radio slot="start" value="Yes"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size-md="6" size-lg="6">
-                <ion-item lines="none">
-                  <ion-label>No</ion-label>
-                  <ion-radio slot="start" value="No"></ion-radio>
-                </ion-item>
-              </ion-col>
+              <ion-item lines="none">
+                <ion-label>Crane number :</ion-label>
+              </ion-item>
             </ion-row>
-          </ion-radio-group>
-          <ion-text class="mandatoryField">* If you are unsure contact your supervisor. </ion-text>
-        </ion-grid>
-
-        <ion-grid *ngIf="craneForm.value['operate_crane'] != ''">
-          <ion-radio-group formControlName="swi">
-            <ion-item lines="none">
-              <ion-label>Have you read and understood the relevant SWI for the equipment ? </ion-label>
-            </ion-item>
             <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Yes</ion-label>
-                  <ion-radio slot="start" value="Yes"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>No </ion-label>
-                  <ion-radio slot="start" value="No"></ion-radio>
-                </ion-item>
-              </ion-col>
+              <ion-item lines="none">
+                <ion-select placeholder="Please select crane no." interface="action-sheet"
+                  formControlName="crane_number">
+                  <ion-select-option value="{{craneNoKey?.id}}" *ngFor="let craneNoKey of craneNoList">
+                    {{craneNoKey?.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
             </ion-row>
-          </ion-radio-group>
-        </ion-grid>
 
-        <ion-grid *ngIf="craneForm.value['swi'] != ''">
-          <ion-radio-group formControlName="equipment_isolated">
-            <ion-item lines="none">
-              <ion-label>Is the equipment isolated ? </ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
+            <ion-grid *ngIf="craneForm.value['crane_number'] != ''">
+              <ion-radio-group formControlName="operate_crane">
+                <ion-item lines="none" size-md="6" size-lg="6">
+                  <ion-label>Are you fully qualified and trained to operate the crane ?</ion-label>
                 </ion-item>
-              </ion-col>
-              <ion-col size="6">
+                <ion-row>
+                  <ion-col size-md="6" size-lg="6">
+                    <ion-item lines="none">
+                      <ion-label>Yes</ion-label>
+                      <ion-radio slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size-md="6" size-lg="6">
+                    <ion-item lines="none">
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+              <ion-text class="mandatoryField">* If you are unsure contact your supervisor. </ion-text>
+            </ion-grid>
+
+            <ion-grid *ngIf="craneForm.value['operate_crane'] != ''">
+              <ion-radio-group formControlName="swi">
                 <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
+                  <ion-label>Have you read and understood the relevant SWI for the equipment ? </ion-label>
                 </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Yes</ion-label>
+                      <ion-radio slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>No </ion-label>
+                      <ion-radio slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+            </ion-grid>
 
-          <ion-text class="mandatoryField">* Ensure there are no maintenance, lock-out tags or isolation procedures in
-            place. </ion-text>
-        </ion-grid>
-
-
-        <ion-grid *ngIf="craneForm.value['equipment_isolated'] != ''">
-          <ion-radio-group formControlName="inspect_pendant">
-            <ion-item lines="none">
-              <ion-label>Inspect Pendant :</ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
+            <ion-grid *ngIf="craneForm.value['swi'] != ''">
+              <ion-radio-group formControlName="equipment_isolated">
                 <ion-item lines="none">
-                  <ion-label>Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
+                  <ion-label>Is the equipment isolated ? </ion-label>
                 </ion-item>
-              </ion-col>
-              <ion-col size="6">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-text class="mandatoryField">* Ensure there are no maintenance, lock-out tags or isolation procedures
+                in
+                place. </ion-text>
+            </ion-grid>
+
+
+            <ion-grid *ngIf="craneForm.value['equipment_isolated'] != ''">
+              <ion-radio-group formControlName="inspect_pendant">
                 <ion-item lines="none">
-                  <ion-label>Faulty</ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
+                  <ion-label>Inspect Pendant :</ion-label>
                 </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty</ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
 
-          <ion-text class="mandatoryField">* Ensure that you can identify each of the buttons on the pendant and that
-            they
-            move freely without sticking.
-          </ion-text>
-        </ion-grid>
+              <ion-text class="mandatoryField">* Ensure that you can identify each of the buttons on the pendant and
+                that
+                they
+                move freely without sticking.
+              </ion-text>
+            </ion-grid>
 
-        <ion-grid *ngIf="craneForm.value['inspect_pendant'] != ''">
-          <ion-radio-group formControlName="inspect_control_operation">
-            <ion-item lines="none">
-              <ion-label> Inspect Control operation :</ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
+            <ion-grid *ngIf="craneForm.value['inspect_pendant'] != ''">
+              <ion-radio-group formControlName="inspect_control_operation">
                 <ion-item lines="none">
-                  <ion-label> Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
+                  <ion-label> Inspect Control operation :</ion-label>
                 </ion-item>
-              </ion-col>
-              <ion-col size="6">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label> Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-text class="mandatoryField">* Activate each directional button on the pendant control and ensure the
+                correct movement.</ion-text>
+            </ion-grid>
+
+            <ion-grid *ngIf="craneForm.value['inspect_control_operation'] != ''">
+              <ion-radio-group formControlName="directional_swl_sign">
                 <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
+                  <ion-label> Directional and SWL sign in place : </ion-label>
                 </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
 
-          <ion-text class="mandatoryField">* Activate each directional button on the pendant control and ensure the
-            correct movement.</ion-text>
-        </ion-grid>
+              <ion-text class="mandatoryField">* Ensure the directional and SWL sign is attached to the crane.
+              </ion-text>
+            </ion-grid>
 
-        <ion-grid *ngIf="craneForm.value['inspect_control_operation'] != ''">
-          <ion-radio-group formControlName="directional_swl_sign">
-            <ion-item lines="none">
-              <ion-label> Directional and SWL sign in place : </ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
-
-          <ion-text class="mandatoryField">* Ensure the directional and SWL sign is attached to the crane.</ion-text>
-        </ion-grid>
-
-        <div *ngIf="(craneForm.value['crane_number'] == 'OHC01' || craneForm.value['crane_number'] == 'OHC02'
+            <div *ngIf="(craneForm.value['crane_number'] == 'OHC01' || craneForm.value['crane_number'] == 'OHC02'
       || craneForm.value['crane_number'] == 'OHC03') && craneForm.value['directional_swl_sign'] != ''">
-          <ion-radio-group formControlName="brakes_operational">
-            <ion-item lines="none">
-              <ion-label> Brakes operational :</ion-label>
-            </ion-item>
+              <ion-radio-group formControlName="brakes_operational">
+                <ion-item lines="none">
+                  <ion-label> Brakes operational :</ion-label>
+                </ion-item>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label> Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+              <ion-text class="mandatoryField">* Drive and stop the crane a few times in each direction to check the
+                breaks
+                for adjustment and operation of the crane for the job.</ion-text>
+            </div>
+
+            <ion-grid *ngIf="craneForm.value['directional_swl_sign'] != ''">
+              <ion-radio-group formControlName="limit_switches_operational">
+                <ion-item lines="none">
+                  <ion-label> Limit Switches operational :</ion-label>
+                </ion-item>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label> Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-text class="mandatoryField">* Test the operation of the working limit switches.</ion-text>
+            </ion-grid>
+
+            <ion-grid *ngIf="craneForm.value['limit_switches_operational'] != ''">
+              <ion-radio-group formControlName="hook">
+                <ion-item lines="none">
+                  <ion-label> Hook :</ion-label>
+                </ion-item>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label> Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-text class="mandatoryField">* Check the hook is fitted with a safety catch, make sure it is working
+                correctly.</ion-text>
+            </ion-grid>
+
+
+            <ion-grid *ngIf="craneForm.value['hook'] != ''">
+              <ion-radio-group formControlName="hoist_chain_rope">
+                <ion-item lines="none">
+                  <ion-label> Hoist chain/rope :</ion-label>
+                </ion-item>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label> Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-text class="mandatoryField">* Inspect the hoist chain/ rope is free of kinks, wear, rust or damage.
+              </ion-text>
+            </ion-grid>
+
+            <ion-grid *ngIf="craneForm.value['hoist_chain_rope'] != ''">
+              <ion-radio-group formControlName="mechanically_sound">
+                <ion-item lines="none">
+                  <ion-label> Mechanically Sound :</ion-label>
+                </ion-item>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label> Ok</ion-label>
+                      <ion-radio slot="start" value="Ok"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item lines="none">
+                      <ion-label>Faulty </ion-label>
+                      <ion-radio slot="start" value="Faulty"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-text class="mandatoryField">* Check for any obvious mechanical problems (undue noises, signs of
+                strain or
+                leaking oil).
+              </ion-text>
+            </ion-grid>
+
+            <ion-grid *ngIf="craneForm.value['mechanically_sound'] != ''">
+              <ion-radio-group (ionChange)="onPassedInspection($event)" formControlName="passed_inspection">
+                <ion-item lines="none">
+                  <ion-label> Passed Inspection :</ion-label>
+                </ion-item>
+                <ion-row>
+                  <ion-col size-md="6">
+                    <ion-item lines="none">
+                      <ion-label>Yes</ion-label>
+                      <ion-radio slot="start" value="Yes"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size-md="6">
+                    <ion-item lines="none">
+                      <ion-label>No </ion-label>
+                      <ion-radio slot="start" value="No"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+
+              <ion-item lines="none">
+                <ion-label> Comment : </ion-label>
+              </ion-item>
+
+              <ion-item lines="none">
+                <ion-textarea placeholder="Enter Comment" autoGrow="true" formControlName="comment">
+                </ion-textarea>
+              </ion-item>
+            </ion-grid>
+          </ion-grid>
+
+          <ion-grid class="progress-bar">
             <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label> Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
-                </ion-item>
+              <ion-col size="10.5">
+                Form progress bar
               </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
-                </ion-item>
+              <ion-col size="1.5">
+                {{form_percent_val}}{{'%'}}
               </ion-col>
             </ion-row>
-          </ion-radio-group>
-          <ion-text class="mandatoryField">* Drive and stop the crane a few times in each direction to check the
-            breaks
-            for adjustment and operation of the crane for the job.</ion-text>
-        </div>
-
-        <ion-grid *ngIf="craneForm.value['directional_swl_sign'] != ''">
-          <ion-radio-group formControlName="limit_switches_operational">
-            <ion-item lines="none">
-              <ion-label> Limit Switches operational :</ion-label>
-            </ion-item>
             <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label> Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
-                </ion-item>
+              <ion-col size="12">
+                <ion-progress-bar [value]="form_percent"></ion-progress-bar>
               </ion-col>
             </ion-row>
-          </ion-radio-group>
+          </ion-grid>
+          <ion-button *ngIf="url_id == '' && (form_percent_val == 100)" (click)="onSubmit(1)" class="btn"
+            [disabled]="craneForm.invalid">SUBMIT
+          </ion-button>
 
-          <ion-text class="mandatoryField">* Test the operation of the working limit switches.</ion-text>
-        </ion-grid>
-
-        <ion-grid *ngIf="craneForm.value['limit_switches_operational'] != ''">
-          <ion-radio-group formControlName="hook">
-            <ion-item lines="none">
-              <ion-label> Hook :</ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label> Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
-
-          <ion-text class="mandatoryField">* Check the hook is fitted with a safety catch, make sure it is working
-            correctly.</ion-text>
-        </ion-grid>
-
-
-        <ion-grid *ngIf="craneForm.value['hook'] != ''">
-          <ion-radio-group formControlName="hoist_chain_rope">
-            <ion-item lines="none">
-              <ion-label> Hoist chain/rope :</ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label> Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
-
-          <ion-text class="mandatoryField">* Inspect the hoist chain/ rope is free of kinks, wear, rust or damage.
-          </ion-text>
-        </ion-grid>
-
-        <ion-grid *ngIf="craneForm.value['hoist_chain_rope'] != ''">
-          <ion-radio-group formControlName="mechanically_sound">
-            <ion-item lines="none">
-              <ion-label> Mechanically Sound :</ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label> Ok</ion-label>
-                  <ion-radio slot="start" value="Ok"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item lines="none">
-                  <ion-label>Faulty </ion-label>
-                  <ion-radio slot="start" value="Faulty"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
-
-          <ion-text class="mandatoryField">* Check for any obvious mechanical problems (undue noises, signs of strain or
-            leaking oil).
-          </ion-text>
-        </ion-grid>
-
-        <ion-grid *ngIf="craneForm.value['mechanically_sound'] != ''">
-          <ion-radio-group (ionChange)="onPassedInspection($event)" formControlName="passed_inspection">
-            <ion-item lines="none">
-              <ion-label> Passed Inspection :</ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size-md="6">
-                <ion-item lines="none">
-                  <ion-label>Yes</ion-label>
-                  <ion-radio slot="start" value="Yes"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col size-md="6">
-                <ion-item lines="none">
-                  <ion-label>No </ion-label>
-                  <ion-radio slot="start" value="No"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
-
-          <ion-item lines="none">
-            <ion-label> Comment : </ion-label>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-textarea placeholder="Enter Comment" autoGrow="true" formControlName="comment">
-            </ion-textarea>
-          </ion-item>
-        </ion-grid>
-      </ion-grid>
-
-      <ion-grid class="progress-bar">
-        <ion-row>
-          <ion-col size="10.5">
-            Form progress bar
-          </ion-col>
-          <ion-col size="1.5">
-            {{(form_percent*100) | number : '1.0-0'}}{{'%'}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <ion-button *ngIf="url_id == '' && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
-        class="btn" [disabled]="craneForm.invalid">SUBMIT
-      </ion-button>
-
-      <ion-button *ngIf="url_id != ''  && ((form_percent*100) | number : '1.0-0') == 100" (click)="onSubmit(1)"
-        class="btn" [disabled]="craneForm.invalid">Update
-      </ion-button>
-
-    </ion-card>
+          <ion-button *ngIf="url_id != ''  && (form_percent_val  == 100)" (click)="onSubmit(1)" class="btn"
+            [disabled]="craneForm.invalid">Update
+          </ion-button>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
+    </ion-row>
   </div>
 </ion-content>

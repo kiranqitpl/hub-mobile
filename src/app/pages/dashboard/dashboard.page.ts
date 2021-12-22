@@ -24,13 +24,13 @@ export class DashboardPage implements OnInit {
 
   type: any = environment.allType;
   imageUrl = environment.imageUrl;
-
+  pName: String = 'Dashboard';
   loggedInUserDetails: any;
 
   constructor(
-    private nav: NavController,
-    private global: GlobalService,
-    private sharedService: SharedService
+    public nav: NavController,
+    public global: GlobalService,
+    public sharedService: SharedService
   ) { }
 
   ngOnInit() {

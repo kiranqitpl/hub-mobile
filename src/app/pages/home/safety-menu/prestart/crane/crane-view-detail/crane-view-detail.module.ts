@@ -7,18 +7,20 @@ import { IonicModule } from '@ionic/angular';
 import { CraneViewDetailPageRoutingModule } from './crane-view-detail-routing.module';
 
 import { CraneViewDetailPage } from './crane-view-detail.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CraneViewDetailPageRoutingModule
+    CraneViewDetailPageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     CraneViewDetailPage,
-    HeaderComponent
+    // HeaderComponent
   ]
 })
 export class CraneViewDetailPageModule { }

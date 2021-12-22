@@ -7,18 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { NotificationPageRoutingModule } from './notification-routing.module';
 
 import { NotificationPage } from './notification.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NotificationPageRoutingModule
+    NotificationPageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     NotificationPage,
-    HeaderComponent
   ]
 })
 export class NotificationPageModule { }

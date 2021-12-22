@@ -9,8 +9,7 @@ import { IncidentFormListPageRoutingModule } from './incident-form-list-routing.
 import { IncidentFormListPage } from './incident-form-list.page';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
-
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
@@ -20,11 +19,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     IonicModule,
     IncidentFormListPageRoutingModule,
     NgxDatatableModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    SharedModuleModule
   ],
   declarations: [
     IncidentFormListPage,
-    HeaderComponent],
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class IncidentFormListPageModule { }

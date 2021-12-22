@@ -28,6 +28,7 @@ export class TelehandlerAddFormPage implements OnInit {
   isSubmitted: boolean = false;
   loggedInUser: any;
   form_percent: number = 0;
+  form_percent_val: number = 0;
   // showMsg: boolean = false;
   url_id = '';
   telehandlerData = [];
@@ -71,9 +72,9 @@ export class TelehandlerAddFormPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private toastService: ToastService,
-    private nav: NavController,
+    public nav: NavController,
     private loadingService: LoadingService,
     private modalController: ModalController,
     private sharedService: SharedService,
@@ -435,15 +436,10 @@ export class TelehandlerAddFormPage implements OnInit {
         count = ++count;
       }
     })
-    this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
 
-    // Object.values(this.teleHandlerForm.value).map(ele => formControlList.push(ele));
-    // formControlList.forEach(key => {
-    //   if (key != '') {
-    //     count = ++count;
-    //   }
-    // })
-    // this.form_percent = ((1 / Object.values(this.teleHandlerForm.value).length) * count);
+    this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
+    this.form_percent_val = parseInt((((1 / Object.keys(this.teleHandlerForm.controls).length) * count) * 100).toFixed());
+    console.log('this.form_percent_val', this.form_percent_val);
   }
 
   loadData(id) {

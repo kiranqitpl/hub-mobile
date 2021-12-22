@@ -1,15 +1,14 @@
 <ion-content>
-  <div class="toolbar">
+  <!-- <div class="toolbar">
     <ion-text>Dashboard</ion-text>
     <ion-buttons class='logout' slot="end">
       <ion-button (click)="onLogOut()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-  </div>
-
+  </div> -->
+  <app-header [pageName]="pName"></app-header>
   <div class="container">
-
     <ion-row>
       <ion-col size-lg="3" size-md="3"></ion-col>
       <ion-col size-lg="6" size-md="6" size-sm="12" size-xl="6" size-xs="12">

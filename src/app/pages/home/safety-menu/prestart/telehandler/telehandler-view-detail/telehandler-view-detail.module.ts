@@ -7,19 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { TelehandlerViewDetailPageRoutingModule } from './telehandler-view-detail-routing.module';
 
 import { TelehandlerViewDetailPage } from './telehandler-view-detail.page';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TelehandlerViewDetailPageRoutingModule
+    TelehandlerViewDetailPageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     TelehandlerViewDetailPage,
-    HeaderComponent
   ]
 })
 export class TelehandlerViewDetailPageModule { }

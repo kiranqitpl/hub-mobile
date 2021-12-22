@@ -7,19 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { VehicleHostViewDetailPageRoutingModule } from './vehicle-host-view-detail-routing.module';
 
 import { VehicleHostViewDetailPage } from './vehicle-host-view-detail.page';
-
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    VehicleHostViewDetailPageRoutingModule
+    VehicleHostViewDetailPageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     VehicleHostViewDetailPage,
-    HeaderComponent
+
   ]
 })
 export class VehicleHostViewDetailPageModule { }

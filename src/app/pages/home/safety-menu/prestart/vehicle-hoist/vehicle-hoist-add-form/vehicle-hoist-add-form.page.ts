@@ -30,11 +30,12 @@ export class VehicleHoistAddFormPage implements OnInit {
   loggedInUser: any;
   vehicleHoistSingleRecord = [];
   url_id = '';
+  form_percent_val: number = 0;
 
   constructor(
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private navCtrl: NavController,
+    public navCtrl: NavController,
     private fb: FormBuilder,
     private globalService: GlobalService,
     public elementRef: ElementRef,
@@ -300,7 +301,11 @@ export class VehicleHoistAddFormPage implements OnInit {
         count = ++count;
       }
     })
+    // this.form_percent = ((1 / Object.keys(this.vehicleHoistForm.controls).length) * count);
+    // this.form_percent = parseInt((((1 / Object.keys(this.vehicleHoistForm.controls).length) * count) * 100).toExponential(2));
+
     this.form_percent = ((1 / Object.keys(this.vehicleHoistForm.controls).length) * count);
+    this.form_percent_val = parseInt((((1 / Object.keys(this.vehicleHoistForm.controls).length) * count) * 100).toFixed());
   }
 
   // onProgressBar(event) {

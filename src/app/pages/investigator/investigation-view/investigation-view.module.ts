@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { InvestigationViewPageRoutingModule } from './investigation-view-routing.module';
 
 import { InvestigationViewPage } from './investigation-view.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+// import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { HeaderComponent } from 'src/app/shared-component/header/header.componen
   ],
   declarations: [
     InvestigationViewPage,
-    HeaderComponent
+    // HeaderComponent
   ]
 })
 export class InvestigationViewPageModule { }

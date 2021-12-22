@@ -13,7 +13,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HeaderComponent } from './shared-component/header/header.component';
+// import { HeaderComponent } from './shared-component/header/header.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,20 +24,17 @@ import { HeaderComponent } from './shared-component/header/header.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    // RouterModule
   ],
   providers: [
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     },
-    // StatusBar,
-    // SplashScreen,
     Camera,
     File,
     Base64,
     HTTP,
-    HeaderComponent,
+    // HeaderComponent,
   ],
   bootstrap: [AppComponent],
 })

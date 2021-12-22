@@ -152,7 +152,7 @@ ion-content {
         background-color: var(--theme-blue-color);
         align-items: center;
         align-content: center;
-        color: white;
+        color:white !important;
         text-align: center;
         justify-content: center;
         align-self: center;
@@ -355,10 +355,8 @@ ion-progress-bar {
     --ionicon-stroke-width: 50px;
     pointer-events: none;
     margin-top: 10px;
-   
-   
 }
-.favorite-parent{
+.favorite-parent {
     position: absolute;
     right: 50px;
     top: 0;

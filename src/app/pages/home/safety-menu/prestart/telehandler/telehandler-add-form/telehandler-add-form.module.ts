@@ -8,7 +8,8 @@ import { TelehandlerAddFormPageRoutingModule } from './telehandler-add-form-rout
 
 import { TelehandlerAddFormPage } from './telehandler-add-form.page';
 
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
+
 
 @NgModule({
   imports: [
@@ -16,11 +17,11 @@ import { HeaderComponent } from 'src/app/shared-component/header/header.componen
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    TelehandlerAddFormPageRoutingModule
+    TelehandlerAddFormPageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     TelehandlerAddFormPage,
-    HeaderComponent
   ]
 })
 export class TelehandlerAddFormPageModule { }

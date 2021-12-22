@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-import { HeaderComponent } from '../../shared-component/header/header.component';
 import { HomePageRoutingModule } from './home-routing.module';
-
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
@@ -13,10 +12,10 @@ import { HomePageRoutingModule } from './home-routing.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     HomePage,
-    HeaderComponent
-  ]
+  ],
 })
-export class HomePageModule {}
+export class HomePageModule { }

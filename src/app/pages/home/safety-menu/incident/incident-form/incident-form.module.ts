@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { IncidentFormPageRoutingModule } from './incident-form-routing.module';
 
 import { IncidentFormPage } from './incident-form.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
@@ -14,8 +14,11 @@ import { HeaderComponent } from 'src/app/shared-component/header/header.componen
     FormsModule,
     IonicModule,
     IncidentFormPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModuleModule
   ],
-  declarations: [IncidentFormPage, HeaderComponent]
+  declarations: [IncidentFormPage, 
+    // HeaderComponent
+  ]
 })
 export class IncidentFormPageModule { }

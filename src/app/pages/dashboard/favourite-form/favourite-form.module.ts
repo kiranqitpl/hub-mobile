@@ -7,18 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { FavouriteFormPageRoutingModule } from './favourite-form-routing.module';
 
 import { FavouriteFormPage } from './favourite-form.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+// import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FavouriteFormPageRoutingModule
+    FavouriteFormPageRoutingModule,
+    SharedModuleModule
   ],
   declarations: [
     FavouriteFormPage,
-    HeaderComponent
-  ]
+  ],
 })
-export class FavouriteFormPageModule {}
+export class FavouriteFormPageModule { }

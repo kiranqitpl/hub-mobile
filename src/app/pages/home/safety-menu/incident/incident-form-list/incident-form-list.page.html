@@ -2,18 +2,20 @@
   <app-header [pageName]="pName"></app-header>
   <div class="container">
 
-    <ion-list *ngIf="getScreenWidth < 1080">
-      <ion-card *ngFor="let rowData of allSubmittedFormlist ; let index=i">
+    <ion-list *ngIf="getScreenWidth < 768">
+      <ion-card *ngFor="let rowData of allSubmittedFormlist; let i = index">
         <ion-item-sliding>
           <ion-item lines="none">
             <ion-label>
 
               <!-- <ion-row>
                 <ion-col size="auto">
-                  <h2>Id :</h2>
+                  <ion-label>Sr. No :</ion-label>
                 </ion-col>
                 <ion-col>
-                  <h6> {{rowData.Id}} </h6>
+                  <p class="value">
+                    {{(i+1)}}
+                  </p>
                 </ion-col>
               </ion-row> -->
 
@@ -88,39 +90,39 @@
         </ion-item-sliding>
       </ion-card>
 
-      <span *ngIf=" totalElements != ((pageNumber - 1) * size + index +1)">
+      <span *ngIf=" totalElements != ((pageNumber - 1) * (size + 1))">
         <div *ngIf="allSubmittedFormlist.length > 0" class="ion-margin-top ion-text-center">
           <a href="javascript:void(0)" (click)="loadData('newList', pageNumber, 'mobile')">Load More </a>
         </div>
       </span>
     </ion-list>
 
-    <ngx-datatable class="material" [rows]="allSubmittedFormlist" [columnMode]="force" [headerHeight]="50"
+    <ngx-datatable class="material" [rows]="allSubmittedFormlist" [columnMode]="'force'" [headerHeight]="50"
       [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [count]="totalElements" [offset]="offset"
-      [limit]="size" (page)="loadData($event, '','web')" *ngIf="getScreenWidth >= 1080">
+      [limit]="size" (page)="loadData($event, '','web')" *ngIf="getScreenWidth >= 768">
 
-      <ngx-datatable-column name="Sr.No" [width]="80" [resizeable]="true">
+      <ngx-datatable-column name="Sr.No" [minWidth]="5" [resizeable]="true">
         <ng-template let-rowIndex="rowIndex" let-value="rows" ngx-datatable-cell-template>{{ (pageNumber - 1) * size +
           rowIndex +1 }}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Form" prop="Form" [minWidth]="200" [resizeable]="true">
+      <ngx-datatable-column name="Form" prop="Form" [minWidth]="100" [resizeable]="true">
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
           <ion-text color="primary">{{value}}</ion-text>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Date" prop="Date" [minWidth]="180" [resizeable]="true">
+      <ngx-datatable-column name="Date" prop="Date" [minWidth]="50" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Name" prop="Name" [minWidth]="100" [resizeable]="true">
+      <ngx-datatable-column name="Name" prop="Name" [minWidth]="50" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Delegated" prop="Delegate" [minWidth]="180" [resizeable]="true">
+      <ngx-datatable-column name="Delegated" prop="Delegate" [minWidth]="50" [resizeable]="true">
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Status" prop="Status" [minWidth]="100" [resizeable]="true">
+      <ngx-datatable-column name="Status" prop="Status" [minWidth]="50" [resizeable]="true">
         <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
           <ion-text color="success" *ngIf="value == 'Completed'">{{value}}</ion-text>
           <ion-text color="warning" *ngIf="value == 'In progress'">{{value}}</ion-text>
@@ -148,8 +150,7 @@
       </ngx-datatable-column>
 
       <div class="d-flex justify-content-center">
-        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
-          (pageChange)="loadData($event, '', 'web')">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="loadData($event, '', 'web')">
         </pagination-controls>
       </div>
     </ngx-datatable>

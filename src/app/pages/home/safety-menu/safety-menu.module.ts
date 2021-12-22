@@ -7,16 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { SafetyMenuPageRoutingModule } from './safety-menu-routing.module';
 
 import { SafetyMenuPage } from './safety-menu.page';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SafetyMenuPageRoutingModule
+    SafetyMenuPageRoutingModule,
+    SharedModuleModule
   ],
-  declarations: [SafetyMenuPage, HeaderComponent]
+  declarations: [
+    SafetyMenuPage,
+  ],
 })
-export class SafetyMenuPageModule {}
+export class SafetyMenuPageModule { }

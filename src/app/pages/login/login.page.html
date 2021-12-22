@@ -1,41 +1,49 @@
 <ion-content>
   <div class="toolbar">
-    <ion-text>login</ion-text>
+    <ion-text>Login</ion-text>
   </div>
+
   <div class="container">
-    <div class="ion-text-center logo">
-      <img src="{{imageUrl + 'login.png'}}" />
-    </div>
 
-    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
-      <div class="ion-margin-top ion-margin-bottom ">
-        <ion-item class="ion-no-padding" lines="none">
-          <ion-label position="stacked">Mail Id</ion-label>
-          <ion-input placeholder="Enter Mail Id" formControlName="email" required type="email"> </ion-input>
-        </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
-          Email is required.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
-          Please provide valid email id.
-        </span>
+    <ion-row>
+      <ion-col size-lg="3" size-md="3" size-xl="3"></ion-col>
+      <ion-col size-lg="6" size-md="6"  size-xl="6" size-sm="12" size-xs="12">
+        <div class="ion-text-center logo">
+          <img src="{{imageUrl + 'login.png'}}" />
+        </div>
+        <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
+          <div class="ion-margin-top ion-margin-bottom ">
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-label position="stacked">Mail Id</ion-label>
+              <ion-input placeholder="Enter Mail Id" formControlName="email" required type="email"> </ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+              Email is required.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+              Please provide valid email id.
+            </span>
 
-        <ion-item class="ion-no-padding" lines="none">
-          <ion-label position="stacked">Password</ion-label>
-          <ion-input placeholder="Enter Password" formControlName="password" required type="password"> </ion-input>
-        </ion-item>
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-label position="stacked">Password</ion-label>
+              <ion-input placeholder="Enter Password" formControlName="password" required type="password"> </ion-input>
+            </ion-item>
 
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-          password is required.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
-          Password must be at least 6 characters.
-        </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+              password is required.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+              Password must be at least 6 characters.
+            </span>
 
-      </div>
-      <ion-button class="btn" type="submit">
-        Login
-      </ion-button>
-    </form>
+          </div>
+          <ion-button class="btn" type="submit">
+            Login
+          </ion-button>
+        </form>
+      </ion-col>
+      <ion-col size-lg="3" size-md="3" size-xl="3"></ion-col>
+    </ion-row>
+
   </div>
 </ion-content>

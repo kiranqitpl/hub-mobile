@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { CraneAddFormPageRoutingModule } from './crane-add-form-routing.module';
 
 import { CraneAddFormPage } from './crane-add-form.page';
-import { HeaderComponent } from 'src/app/shared-component/header/header.component';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
@@ -14,11 +14,11 @@ import { HeaderComponent } from 'src/app/shared-component/header/header.componen
     FormsModule,
     IonicModule,
     CraneAddFormPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModuleModule
   ],
   declarations: [
     CraneAddFormPage,
-    HeaderComponent
   ]
 })
 export class CraneAddFormPageModule { }

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
 import { BehaviorSubject, Observable, Observer, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 // import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -13,11 +13,9 @@ import { catchError, map } from 'rxjs/operators';
 
 export class GlobalService {
 
-  url = new BehaviorSubject('');
-  baseUrl: string = '';
-
+  // url = new BehaviorSubject('');
   // baseUrl: string = '';
-  // baseUrl: string = environment.baseUrl;
+  baseUrl: string = environment.API_URL;
 
   formType_user = 1;
   formType_investigator = 2;
@@ -29,10 +27,11 @@ export class GlobalService {
     private http: HTTP,
     private loadingController: LoadingController,
   ) {
-    this.url.subscribe(res => {
-      this.baseUrl = res
-      console.log("this.baseUrl 1", res)
-    })
+
+    // this.url.subscribe(res => {
+    //   this.baseUrl = res
+    //   console.log("this.baseUrl 1", res)
+    // })
 
   }
 
