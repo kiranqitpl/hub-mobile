@@ -16,9 +16,9 @@ export class HeaderComponent implements OnInit {
     private nav: NavController,
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    console.log('this.userDetails',this.userDetails);
+    console.log('this.userDetails', this.userDetails);
   }
 
   onGoBack() {
@@ -28,6 +28,10 @@ export class HeaderComponent implements OnInit {
   onLogOut() {
     localStorage.clear();
     this.nav.navigateRoot("login")
+  }
+
+  onUserProfile() {
+    console.log('here');
   }
 
 }

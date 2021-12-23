@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
       menuName: "Admin", route: "#"
     },
     {
-      menuName: "HR", route: "#"
+      menuName: "HR", route: "/home/hr/on-boarding"
     },
     {
       menuName: "Projects", route: "#"

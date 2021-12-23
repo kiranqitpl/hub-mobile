@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'safety-menu',
     loadChildren: () => import('../../pages/home/safety-menu/safety-menu.module').then(m => m.SafetyMenuPageModule)
   },
+  {
+    path: 'hr',
+    loadChildren: () => import('./hr/hr.module').then( m => m.HrPageModule)
+  },
 ];
 
 @NgModule({

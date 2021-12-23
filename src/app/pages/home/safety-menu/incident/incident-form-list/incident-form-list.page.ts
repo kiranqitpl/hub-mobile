@@ -4,6 +4,7 @@ import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import moment from 'moment';
+import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({
   selector: 'app-incident-form-list',
@@ -33,7 +34,8 @@ export class IncidentFormListPage implements OnInit {
     private nav: NavController,
     private global: GlobalService,
     private toastService: ToastService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,8 @@ export class IncidentFormListPage implements OnInit {
   }
 
   onResize(event) {
-    this.getScreenWidth = event.innerWidth ? event.innerWidth : event.target.innerWidth;
+    this.getScreenWidth = this.sharedService.resize(event);
+    // this.getScreenWidth = event.innerWidth ? event.innerWidth : event.target.innerWidth;
   }
 
   setValueOnLoadData() {

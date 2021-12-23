@@ -10,6 +10,7 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  
   menu: any = [
     {
       menuName: "Favorites", route: "/dashboard/favourite-form"

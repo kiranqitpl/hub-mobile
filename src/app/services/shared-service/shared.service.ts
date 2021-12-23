@@ -120,4 +120,9 @@ export class SharedService {
       }
     );
   }
+
+  resize(event) {
+    return event.innerWidth ? event.innerWidth : event.target.innerWidth;
+  }
+
 }

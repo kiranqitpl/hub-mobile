@@ -52,11 +52,16 @@ const routes: Routes = [
     path: 'incident-form-list',
     loadChildren: () => import('./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module').then(m => m.IncidentFormListPageModule)
   },
+  {
+    path: 'user-profile',
+    loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    // RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
 })

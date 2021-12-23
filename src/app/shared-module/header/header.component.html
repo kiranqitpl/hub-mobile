@@ -1,27 +1,48 @@
 <div class="toolbar">
 
   <!-- <ion-row>
-    <ion-col size="4">
+
+    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
       <ion-buttons *ngIf="pageName != 'Dashboard'">
         <ion-button (click)="onGoBack()">
           <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-col>
-    <ion-col size="4" class='logout'>
+
+    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
       <ion-text>{{pageName}}</ion-text>
     </ion-col>
-    <ion-col size="4">
-      <!-- <ion-avatar class="ion-margin-start"></ion-avatar>
-      <ion-text>{{userDetails.full_name}}</ion-text> -->
-  <!-- <ion-buttons>
-    <ion-button (click)="onLogOut()">
-      <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  </ion-col>
-  </ion-row> -->
 
+    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+      <span>
+        <ion-avatar class="user-image">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+      </span>
+      <span> {{userDetails.full_name}} </span>
+      <span (click)="onUserProfile()">
+
+
+        <div class="menu-nav">
+          <div class="dropdown-container" tabindex="-1">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+            <div class="dropdown">
+              <a href="#">
+                <div>click here for a scam</div>
+              </a>
+              <a href="#">
+                <div>even more scams</div>
+              </a>
+              <a href="#">
+                <div>still some money left?</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </span>
+    </ion-col>
+  </ion-row> -->
 
 
 

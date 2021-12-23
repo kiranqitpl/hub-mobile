@@ -8,7 +8,7 @@ export const environment = {
   allType: 0, // type = 0=>all 1=> unread 2=> read notification
   imageUrl: './assets/',
   API_URL: 'https://mforms-api-devel.horts.com.au/api/',
-  QA_API_URL: 'https://mforms-api-devel.horts.com.au/api/'
+  QA_API_URL: 'https://mforms-api-qa.horts.com.au/api/'
 };
 
 
