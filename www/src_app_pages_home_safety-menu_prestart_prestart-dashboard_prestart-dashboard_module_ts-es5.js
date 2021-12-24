@@ -2982,6 +2982,102 @@
     },
 
     /***/
+    46782:
+    /*!********************************************************************!*\
+      !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
+      \********************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "takeUntil": function takeUntil() {
+          return (
+            /* binding */
+            _takeUntil
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ../innerSubscribe */
+      85345);
+
+      function _takeUntil(notifier) {
+        return function (source) {
+          return source.lift(new TakeUntilOperator(notifier));
+        };
+      }
+
+      var TakeUntilOperator = /*#__PURE__*/function () {
+        function TakeUntilOperator(notifier) {
+          _classCallCheck(this, TakeUntilOperator);
+
+          this.notifier = notifier;
+        }
+
+        _createClass(TakeUntilOperator, [{
+          key: "call",
+          value: function call(subscriber, source) {
+            var takeUntilSubscriber = new TakeUntilSubscriber(subscriber);
+            var notifierSubscription = (0, _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.innerSubscribe)(this.notifier, new _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleInnerSubscriber(takeUntilSubscriber));
+
+            if (notifierSubscription && !takeUntilSubscriber.seenValue) {
+              takeUntilSubscriber.add(notifierSubscription);
+              return source.subscribe(takeUntilSubscriber);
+            }
+
+            return takeUntilSubscriber;
+          }
+        }]);
+
+        return TakeUntilOperator;
+      }();
+
+      var TakeUntilSubscriber = /*#__PURE__*/function (_innerSubscribe__WEBP) {
+        _inherits(TakeUntilSubscriber, _innerSubscribe__WEBP);
+
+        var _super5 = _createSuper(TakeUntilSubscriber);
+
+        function TakeUntilSubscriber(destination) {
+          var _this12;
+
+          _classCallCheck(this, TakeUntilSubscriber);
+
+          _this12 = _super5.call(this, destination);
+          _this12.seenValue = false;
+          return _this12;
+        }
+
+        _createClass(TakeUntilSubscriber, [{
+          key: "notifyNext",
+          value: function notifyNext() {
+            this.seenValue = true;
+            this.complete();
+          }
+        }, {
+          key: "notifyComplete",
+          value: function notifyComplete() {}
+        }]);
+
+        return TakeUntilSubscriber;
+      }(_innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleOuterSubscriber); //# sourceMappingURL=takeUntil.js.map
+
+      /***/
+
+    },
+
+    /***/
     22901:
     /*!*****************************************************************!*\
       !*** ./node_modules/rxjs/_esm2015/internal/scheduler/Action.js ***!
@@ -3016,12 +3112,12 @@
       var _Action = /*#__PURE__*/function (_Subscription__WEBPAC) {
         _inherits(_Action, _Subscription__WEBPAC);
 
-        var _super5 = _createSuper(_Action);
+        var _super6 = _createSuper(_Action);
 
         function _Action(scheduler, work) {
           _classCallCheck(this, _Action);
 
-          return _super5.call(this);
+          return _super6.call(this);
         }
 
         _createClass(_Action, [{
@@ -3074,18 +3170,18 @@
       var _AsyncAction = /*#__PURE__*/function (_Action__WEBPACK_IMPO) {
         _inherits(_AsyncAction, _Action__WEBPACK_IMPO);
 
-        var _super6 = _createSuper(_AsyncAction);
+        var _super7 = _createSuper(_AsyncAction);
 
         function _AsyncAction(scheduler, work) {
-          var _this12;
+          var _this13;
 
           _classCallCheck(this, _AsyncAction);
 
-          _this12 = _super6.call(this, scheduler, work);
-          _this12.scheduler = scheduler;
-          _this12.work = work;
-          _this12.pending = false;
-          return _this12;
+          _this13 = _super7.call(this, scheduler, work);
+          _this13.scheduler = scheduler;
+          _this13.work = work;
+          _this13.pending = false;
+          return _this13;
         }
 
         _createClass(_AsyncAction, [{
@@ -3229,26 +3325,26 @@
       var _AsyncScheduler = /*#__PURE__*/function (_Scheduler__WEBPACK_I) {
         _inherits(_AsyncScheduler, _Scheduler__WEBPACK_I);
 
-        var _super7 = _createSuper(_AsyncScheduler);
+        var _super8 = _createSuper(_AsyncScheduler);
 
         function _AsyncScheduler(SchedulerAction) {
-          var _this13;
+          var _this14;
 
           var now = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler.now;
 
           _classCallCheck(this, _AsyncScheduler);
 
-          _this13 = _super7.call(this, SchedulerAction, function () {
-            if (_AsyncScheduler.delegate && _AsyncScheduler.delegate !== _assertThisInitialized(_this13)) {
+          _this14 = _super8.call(this, SchedulerAction, function () {
+            if (_AsyncScheduler.delegate && _AsyncScheduler.delegate !== _assertThisInitialized(_this14)) {
               return _AsyncScheduler.delegate.now();
             } else {
               return now();
             }
           });
-          _this13.actions = [];
-          _this13.active = false;
-          _this13.scheduled = undefined;
-          return _this13;
+          _this14.actions = [];
+          _this14.active = false;
+          _this14.scheduled = undefined;
+          return _this14;
         }
 
         _createClass(_AsyncScheduler, [{
@@ -3336,17 +3432,17 @@
       var _QueueAction = /*#__PURE__*/function (_AsyncAction__WEBPACK) {
         _inherits(_QueueAction, _AsyncAction__WEBPACK);
 
-        var _super8 = _createSuper(_QueueAction);
+        var _super9 = _createSuper(_QueueAction);
 
         function _QueueAction(scheduler, work) {
-          var _this14;
+          var _this15;
 
           _classCallCheck(this, _QueueAction);
 
-          _this14 = _super8.call(this, scheduler, work);
-          _this14.scheduler = scheduler;
-          _this14.work = work;
-          return _this14;
+          _this15 = _super9.call(this, scheduler, work);
+          _this15.scheduler = scheduler;
+          _this15.work = work;
+          return _this15;
         }
 
         _createClass(_QueueAction, [{
@@ -3423,12 +3519,12 @@
       var _QueueScheduler = /*#__PURE__*/function (_AsyncScheduler__WEBP) {
         _inherits(_QueueScheduler, _AsyncScheduler__WEBP);
 
-        var _super9 = _createSuper(_QueueScheduler);
+        var _super10 = _createSuper(_QueueScheduler);
 
         function _QueueScheduler() {
           _classCallCheck(this, _QueueScheduler);
 
-          return _super9.apply(this, arguments);
+          return _super10.apply(this, arguments);
         }
 
         return _QueueScheduler;
@@ -3735,19 +3831,19 @@
         }, {
           key: "loadFavoriteList",
           value: function loadFavoriteList() {
-            var _this15 = this;
+            var _this16 = this;
 
             this.globalService.getData('PrestartMenu/get_PrestartMenu').subscribe(function (result) {
               if (result['status']) {
-                _this15.menuData = result['data']['menu'].sort(function (a, b) {
+                _this16.menuData = result['data']['menu'].sort(function (a, b) {
                   return (// console.log(a.original_postion, b.original_postion)
                     // console.log(a['original_position'], b['original_position'])
                     parseInt(a['original_postion']) - parseInt(b['original_postion'])
                   );
                 });
-                _this15.rowId = result['data']['id'];
+                _this16.rowId = result['data']['id'];
               } else {
-                _this15.menuData = [];
+                _this16.menuData = [];
               }
             }, function (error) {
               console.log(error);
@@ -3756,7 +3852,7 @@
         }, {
           key: "onFavorite",
           value: function onFavorite(tabname, val) {
-            var _this16 = this;
+            var _this17 = this;
 
             console.log('this.menuData 1', this.menuData);
             this.menuData.filter(function (ele) {
@@ -3774,9 +3870,9 @@
             this.globalService.postData('PrestartMenu/submit', data).subscribe(function (result) {
               if (result['status']) {
                 if (val == true) {
-                  _this16.toastService.toast('This form is added in your favorite list.', 'success');
+                  _this17.toastService.toast('This form is added in your favorite list.', 'success');
                 } else if (val == false) {
-                  _this16.toastService.toast('This form is removed from your favorite list.', 'success');
+                  _this17.toastService.toast('This form is removed from your favorite list.', 'success');
                 }
               }
             }, function (error) {

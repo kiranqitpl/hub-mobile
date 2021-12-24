@@ -198,10 +198,21 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-list_incident-form-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_moment_moment_js"), __webpack_require__.e("default-node_modules_swimlane_ngx-datatable___ivy_ngcc___fesm2015_swimlane-ngx-datatable_js-n-ee3579"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-list_incident-form-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./pages/home/safety-menu/incident/incident-form-list/incident-form-list.module */
           33606)).then(function (m) {
             return m.IncidentFormListPageModule;
+          });
+        }
+      }, {
+        path: 'user-profile',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() */
+          [__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_user-profile_user-profile_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          /*! ./pages/user-profile/user-profile.module */
+          71749)).then(function (m) {
+            return m.UserProfilePageModule;
           });
         }
       }];
@@ -211,9 +222,8 @@
       };
 
       _AppRoutingModule = (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule)({
-        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule.forRoot(routes, {
-          preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__.PreloadAllModules
-        })],
+        imports: [// RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+        _angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule.forRoot(routes)],
         exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule]
       })], _AppRoutingModule);
       /***/
@@ -811,7 +821,7 @@
         allType: 0,
         imageUrl: './assets/',
         API_URL: 'https://mforms-api-devel.horts.com.au/api/',
-        QA_API_URL: 'https://mforms-api-devel.horts.com.au/api/'
+        QA_API_URL: 'https://mforms-api-qa.horts.com.au/api/'
       };
       /*
        * For easier debugging in development mode, you can import the following file

@@ -771,6 +771,9 @@ let SharedService = class SharedService {
             });
         });
     }
+    resize(event) {
+        return event.innerWidth ? event.innerWidth : event.target.innerWidth;
+    }
 };
 SharedService.ctorParameters = () => [
     { type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService },

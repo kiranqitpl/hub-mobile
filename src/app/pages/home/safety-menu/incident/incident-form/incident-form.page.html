@@ -55,9 +55,7 @@
           <!--------------------------------------------------------- Incident ------------------------------------------------------------------->
           <div *ngIf="selectedTabItem==tabItem.val && selectedTabItem =='Incident'" class="activeBackground">
             <div class="headerTitle">
-              <p>{{tabItem.val}}
-
-              </p>
+              <p>{{tabItem.val}}</p>
               <img (click)="onDeSelectTabItem(tabItem.val)" class="plus" src="{{imagePath+'minus.png'}}" />
             </div>
             <hr />

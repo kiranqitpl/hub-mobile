@@ -599,6 +599,11 @@
               }, _callee3, this);
             }));
           }
+        }, {
+          key: "resize",
+          value: function resize(event) {
+            return event.innerWidth ? event.innerWidth : event.target.innerWidth;
+          }
         }]);
 
         return SharedService;

@@ -29,7 +29,7 @@ export class UserProfilePage implements OnInit {
       menuName: 'Prescription Medication', route: '#'
     },
     {
-      menuName: 'Superannuation Choice', route: '#'
+      menuName: 'Superannuation Choice', route: '/user-profile/superannuation-choice'
     },
     {
       menuName: 'Tax File Number', route: '#'

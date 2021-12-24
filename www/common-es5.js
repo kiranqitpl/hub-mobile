@@ -1,18 +1,4 @@
 (function () {
-  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-  function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -726,102 +712,6 @@
     },
 
     /***/
-    46782:
-    /*!********************************************************************!*\
-      !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
-      \********************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "takeUntil": function takeUntil() {
-          return (
-            /* binding */
-            _takeUntil
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ../innerSubscribe */
-      85345);
-
-      function _takeUntil(notifier) {
-        return function (source) {
-          return source.lift(new TakeUntilOperator(notifier));
-        };
-      }
-
-      var TakeUntilOperator = /*#__PURE__*/function () {
-        function TakeUntilOperator(notifier) {
-          _classCallCheck(this, TakeUntilOperator);
-
-          this.notifier = notifier;
-        }
-
-        _createClass(TakeUntilOperator, [{
-          key: "call",
-          value: function call(subscriber, source) {
-            var takeUntilSubscriber = new TakeUntilSubscriber(subscriber);
-            var notifierSubscription = (0, _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.innerSubscribe)(this.notifier, new _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleInnerSubscriber(takeUntilSubscriber));
-
-            if (notifierSubscription && !takeUntilSubscriber.seenValue) {
-              takeUntilSubscriber.add(notifierSubscription);
-              return source.subscribe(takeUntilSubscriber);
-            }
-
-            return takeUntilSubscriber;
-          }
-        }]);
-
-        return TakeUntilOperator;
-      }();
-
-      var TakeUntilSubscriber = /*#__PURE__*/function (_innerSubscribe__WEBP) {
-        _inherits(TakeUntilSubscriber, _innerSubscribe__WEBP);
-
-        var _super = _createSuper(TakeUntilSubscriber);
-
-        function TakeUntilSubscriber(destination) {
-          var _this;
-
-          _classCallCheck(this, TakeUntilSubscriber);
-
-          _this = _super.call(this, destination);
-          _this.seenValue = false;
-          return _this;
-        }
-
-        _createClass(TakeUntilSubscriber, [{
-          key: "notifyNext",
-          value: function notifyNext() {
-            this.seenValue = true;
-            this.complete();
-          }
-        }, {
-          key: "notifyComplete",
-          value: function notifyComplete() {}
-        }]);
-
-        return TakeUntilSubscriber;
-      }(_innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleOuterSubscriber); //# sourceMappingURL=takeUntil.js.map
-
-      /***/
-
-    },
-
-    /***/
     96022:
     /*!*********************************************************!*\
       !*** ./src/app/services/alert-service/alert.service.ts ***!
@@ -877,7 +767,7 @@
           key: "alertWithBack",
           value: function alertWithBack(message) {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var _this2 = this;
+              var _this = this;
 
               var alert;
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -895,7 +785,7 @@
                           text: 'Ok',
                           role: 'Ok',
                           handler: function handler() {
-                            _this2.navCtrl.back();
+                            _this.navCtrl.back();
                           }
                         }]
                       });
@@ -1175,6 +1065,11 @@
             localStorage.clear();
             this.nav.navigateRoot("login");
           }
+        }, {
+          key: "onUserProfile",
+          value: function onUserProfile() {
+            console.log('here');
+          }
         }]);
 
         return HeaderComponent;
@@ -1294,7 +1189,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<div class=\"toolbar\">\n\n  <!-- <ion-row>\n    <ion-col size=\"4\">\n      <ion-buttons *ngIf=\"pageName != 'Dashboard'\">\n        <ion-button (click)=\"onGoBack()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-col>\n    <ion-col size=\"4\" class='logout'>\n      <ion-text>{{pageName}}</ion-text>\n    </ion-col>\n    <ion-col size=\"4\">\n      <!-- <ion-avatar class=\"ion-margin-start\"></ion-avatar>\n      <ion-text>{{userDetails.full_name}}</ion-text> -->\n  <!-- <ion-buttons>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  </ion-col>\n  </ion-row> -->\n\n\n\n\n\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back' *ngIf=\"pageName != 'Dashboard'\">\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>";
+      __webpack_exports__["default"] = "<div class=\"toolbar\">\n\n  <!-- <ion-row>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-buttons *ngIf=\"pageName != 'Dashboard'\">\n        <ion-button (click)=\"onGoBack()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-text>{{pageName}}</ion-text>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <span>\n        <ion-avatar class=\"user-image\">\n          <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n        </ion-avatar>\n      </span>\n      <span> {{userDetails.full_name}} </span>\n      <span (click)=\"onUserProfile()\">\n\n\n        <div class=\"menu-nav\">\n          <div class=\"dropdown-container\" tabindex=\"-1\">\n            <ion-icon name=\"chevron-down-outline\"></ion-icon>\n            <div class=\"dropdown\">\n              <a href=\"#\">\n                <div>click here for a scam</div>\n              </a>\n              <a href=\"#\">\n                <div>even more scams</div>\n              </a>\n              <a href=\"#\">\n                <div>still some money left?</div>\n              </a>\n            </div>\n          </div>\n        </div>\n      </span>\n    </ion-col>\n  </ion-row> -->\n\n\n\n\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back' *ngIf=\"pageName != 'Dashboard'\">\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>";
       /***/
     }
   }]);

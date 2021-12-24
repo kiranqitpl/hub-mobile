@@ -440,52 +440,6 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
-/***/ 46782:
-/*!********************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/operators/takeUntil.js ***!
-  \********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "takeUntil": function() { return /* binding */ takeUntil; }
-/* harmony export */ });
-/* harmony import */ var _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../innerSubscribe */ 85345);
-
-function takeUntil(notifier) {
-    return (source) => source.lift(new TakeUntilOperator(notifier));
-}
-class TakeUntilOperator {
-    constructor(notifier) {
-        this.notifier = notifier;
-    }
-    call(subscriber, source) {
-        const takeUntilSubscriber = new TakeUntilSubscriber(subscriber);
-        const notifierSubscription = (0,_innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.innerSubscribe)(this.notifier, new _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleInnerSubscriber(takeUntilSubscriber));
-        if (notifierSubscription && !takeUntilSubscriber.seenValue) {
-            takeUntilSubscriber.add(notifierSubscription);
-            return source.subscribe(takeUntilSubscriber);
-        }
-        return takeUntilSubscriber;
-    }
-}
-class TakeUntilSubscriber extends _innerSubscribe__WEBPACK_IMPORTED_MODULE_0__.SimpleOuterSubscriber {
-    constructor(destination) {
-        super(destination);
-        this.seenValue = false;
-    }
-    notifyNext() {
-        this.seenValue = true;
-        this.complete();
-    }
-    notifyComplete() {
-    }
-}
-//# sourceMappingURL=takeUntil.js.map
-
-/***/ }),
-
 /***/ 96022:
 /*!*********************************************************!*\
   !*** ./src/app/services/alert-service/alert.service.ts ***!
@@ -653,6 +607,9 @@ let HeaderComponent = class HeaderComponent {
         localStorage.clear();
         this.nav.navigateRoot("login");
     }
+    onUserProfile() {
+        console.log('here');
+    }
 };
 HeaderComponent.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.NavController }
@@ -726,7 +683,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"toolbar\">\n\n  <!-- <ion-row>\n    <ion-col size=\"4\">\n      <ion-buttons *ngIf=\"pageName != 'Dashboard'\">\n        <ion-button (click)=\"onGoBack()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-col>\n    <ion-col size=\"4\" class='logout'>\n      <ion-text>{{pageName}}</ion-text>\n    </ion-col>\n    <ion-col size=\"4\">\n      <!-- <ion-avatar class=\"ion-margin-start\"></ion-avatar>\n      <ion-text>{{userDetails.full_name}}</ion-text> -->\n  <!-- <ion-buttons>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  </ion-col>\n  </ion-row> -->\n\n\n\n\n\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back' *ngIf=\"pageName != 'Dashboard'\">\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"toolbar\">\n\n  <!-- <ion-row>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-buttons *ngIf=\"pageName != 'Dashboard'\">\n        <ion-button (click)=\"onGoBack()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-text>{{pageName}}</ion-text>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <span>\n        <ion-avatar class=\"user-image\">\n          <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n        </ion-avatar>\n      </span>\n      <span> {{userDetails.full_name}} </span>\n      <span (click)=\"onUserProfile()\">\n\n\n        <div class=\"menu-nav\">\n          <div class=\"dropdown-container\" tabindex=\"-1\">\n            <ion-icon name=\"chevron-down-outline\"></ion-icon>\n            <div class=\"dropdown\">\n              <a href=\"#\">\n                <div>click here for a scam</div>\n              </a>\n              <a href=\"#\">\n                <div>even more scams</div>\n              </a>\n              <a href=\"#\">\n                <div>still some money left?</div>\n              </a>\n            </div>\n          </div>\n        </div>\n      </span>\n    </ion-col>\n  </ion-row> -->\n\n\n\n\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back' *ngIf=\"pageName != 'Dashboard'\">\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>");
 
 /***/ })
 

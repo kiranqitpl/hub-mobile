@@ -70,6 +70,17 @@
             return m.SafetyMenuPageModule;
           });
         }
+      }, {
+        path: 'hr',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_home_hr_hr_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./hr/hr.module */
+          17330)).then(function (m) {
+            return m.HrPageModule;
+          });
+        }
       }];
 
       var _HomePageRoutingModule = function HomePageRoutingModule() {
@@ -235,7 +246,7 @@
             route: "#"
           }, {
             menuName: "HR",
-            route: "#"
+            route: "/home/hr/on-boarding"
           }, {
             menuName: "Projects",
             route: "#"
