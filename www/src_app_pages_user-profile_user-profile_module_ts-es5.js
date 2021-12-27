@@ -70,6 +70,17 @@
             return m.ProfilePageModule;
           });
         }
+      }, {
+        path: 'superannuation-choice',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() */
+          "src_app_pages_user-profile_superannuation-choice_superannuation-choice_module_ts").then(__webpack_require__.bind(__webpack_require__,
+          /*! ./superannuation-choice/superannuation-choice.module */
+          97519)).then(function (m) {
+            return m.SuperannuationChoicePageModule;
+          });
+        }
       }];
 
       var _UserProfilePageRoutingModule = function UserProfilePageRoutingModule() {
@@ -243,7 +254,7 @@
             route: '#'
           }, {
             menuName: 'Superannuation Choice',
-            route: '#'
+            route: '/user-profile/superannuation-choice'
           }, {
             menuName: 'Tax File Number',
             route: '#'

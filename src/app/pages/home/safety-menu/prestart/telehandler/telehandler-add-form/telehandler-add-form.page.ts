@@ -439,7 +439,7 @@ export class TelehandlerAddFormPage implements OnInit {
 
     this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
     this.form_percent_val = parseInt((((1 / Object.keys(this.teleHandlerForm.controls).length) * count) * 100).toFixed());
-    console.log('this.form_percent_val', this.form_percent_val);
+    // console.log('this.form_percent_val', this.form_percent_val);
   }
 
   loadData(id) {

@@ -27,6 +27,10 @@ const routes = [
     {
         path: 'profile',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_user-profile_profile_profile_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./profile/profile.module */ 41495)).then(m => m.ProfilePageModule)
+    },
+    {
+        path: 'superannuation-choice',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_user-profile_superannuation-choice_superannuation-choice_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./superannuation-choice/superannuation-choice.module */ 97519)).then(m => m.SuperannuationChoicePageModule)
     }
 ];
 let UserProfilePageRoutingModule = class UserProfilePageRoutingModule {
@@ -130,7 +134,7 @@ let UserProfilePage = class UserProfilePage {
                 menuName: 'Prescription Medication', route: '#'
             },
             {
-                menuName: 'Superannuation Choice', route: '#'
+                menuName: 'Superannuation Choice', route: '/user-profile/superannuation-choice'
             },
             {
                 menuName: 'Tax File Number', route: '#'

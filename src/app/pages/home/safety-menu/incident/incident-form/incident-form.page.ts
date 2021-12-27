@@ -710,6 +710,7 @@ export class IncidentFormPage implements OnInit {
   //----------------------------------------------------------- Modals ----------------------------------------------------------------------//
 
   async onOpenIncidentModal() {
+    console.log('this.witnessList', this.witnessList);
     const modal = await this.modalController.create({
       component: ManagersPage,
       componentProps: {
@@ -719,6 +720,7 @@ export class IncidentFormPage implements OnInit {
       cssClass: 'managers',
     });
     modal.onDidDismiss().then((res) => {
+      console.log('onDidDismiss', res);
       if (res && res?.data) {
         this.incidentForm.controls['incident_near_miss'].setValue(res.data.full_name);
         this.incident_near_miss = res.data;
@@ -1734,7 +1736,7 @@ export class IncidentFormPage implements OnInit {
 
     this.form_percent = ((1 / formControlKeys.length) * count);
     this.form_percent_val = parseInt((((1 / formControlKeys.length) * count) * 100).toFixed());
-    
+
     // console.log('this.form_percent_val 0 ', (((1 / formControlKeys.length) * count) * 100).toFixed());
     // console.log('this.form_percent_val 1', this.form_percent_val);
     // console.log('this.form_percent 2', this.form_percent);

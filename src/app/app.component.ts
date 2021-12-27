@@ -22,12 +22,12 @@ export class AppComponent {
     private _location: Location,
     private globalService: GlobalService,
   ) {
-    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    let token = userDetails && userDetails.email ? userDetails.email : '';
+    let token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
+    // let token = userDetails && userDetails.email ? userDetails.email : '';
     if (token == '') {
       this.nav.navigateRoot("login");
-    } else {
-      this.nav.navigateRoot("dashboard");
+    // } else {
+    //   this.nav.navigateRoot("dashboard");
     }
     this.initializeApp();
   }
@@ -42,6 +42,8 @@ export class AppComponent {
     }
 
     document.body.setAttribute('color-theme', 'dark');
+
+
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       if (this._location.isCurrentPathEqualTo('/login')) {
         this.showExitConfirm();
