@@ -225,7 +225,7 @@
         }, {
           key: "ngOnInit",
           value: function ngOnInit() {
-            // console.log('get list in modal', this.list);
+            console.log('get list in modal', this.list);
             this.newList.next(this.list);
           }
         }, {

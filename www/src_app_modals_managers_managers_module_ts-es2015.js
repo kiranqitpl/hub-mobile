@@ -224,7 +224,7 @@ let ManagersPage = class ManagersPage {
     }
     ionViewWillEnter() { }
     ngOnInit() {
-        // console.log('get list in modal', this.list);
+        console.log('get list in modal', this.list);
         this.newList.next(this.list);
     }
     onSearch(event) {

@@ -234,43 +234,43 @@
           _classCallCheck(this, UserProfilePage);
 
           this.pName = 'Profile';
-          this.userMenu = [{
-            menuName: 'Bank Account Details',
-            route: '#'
-          }, {
-            menuName: 'Clothing Issue',
-            route: '#'
-          }, {
-            menuName: 'Medical Questionnaire',
-            route: '#'
-          }, {
-            menuName: 'Personal Details',
-            route: '/user-profile/profile'
-          }, {
-            menuName: 'Authority to Release Personal Information',
-            route: '#'
-          }, {
-            menuName: 'Prescription Medication',
-            route: '#'
-          }, {
+          this.userMenu = [// {
+          //   menuName: 'Bank Account Details', route: '#'
+          // },
+          // {
+          //   menuName: 'Clothing Issue', route: '#'
+          // },
+          // {
+          //   menuName: 'Medical Questionnaire', route: '#'
+          // },
+          // {
+          //   menuName: 'Personal Details', route: '/user-profile/profile'
+          // },
+          // {
+          //   menuName: 'Authority to Release Personal Information', route: '#'
+          // },
+          // {
+          //   menuName: 'Prescription Medication', route: '#'
+          // },
+          {
             menuName: 'Superannuation Choice',
             route: '/user-profile/superannuation-choice'
-          }, {
-            menuName: 'Tax File Number',
-            route: '#'
-          }, {
-            menuName: 'Assigned Licenses',
-            route: '#'
-          }, {
-            menuName: 'Other Forms',
-            route: '#'
-          }, {
-            menuName: 'HORTS Induction',
-            route: '#'
-          }, {
-            menuName: 'Position Description',
-            route: '#'
-          }];
+          } // {
+          //   menuName: 'Tax File Number', route: '#'
+          // },
+          // {
+          //   menuName: 'Assigned Licenses', route: '#'
+          // },
+          // {
+          //   menuName: 'Other Forms', route: '#'
+          // },
+          // {
+          //   menuName: 'HORTS Induction', route: '#'
+          // },
+          // {
+          //   menuName: 'Position Description', route: '#'
+          // },
+          ];
         }
 
         _createClass(UserProfilePage, [{

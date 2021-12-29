@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 
 import { environment } from 'src/environments/environment';
-import { ManagersPage } from 'src/app/modals/managers/managers.page';
+import { ManagersPage } from 'src/app/shared-module/managers/managers.page';
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 
 import { GlobalService } from 'src/app/services/global-service/global.service';

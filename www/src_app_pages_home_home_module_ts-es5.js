@@ -245,8 +245,9 @@
             menuName: "Admin",
             route: "#"
           }, {
+            // menuName: "HR", route: "/home/hr/on-boarding"
             menuName: "HR",
-            route: "/home/hr/on-boarding"
+            route: "#"
           }, {
             menuName: "Projects",
             route: "#"

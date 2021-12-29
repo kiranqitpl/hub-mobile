@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'managers',
-    loadChildren: () => import('./modals/managers/managers.module').then(m => m.ManagersPageModule)
+    loadChildren: () => import('./shared-module/managers/managers.module').then(m => m.ManagersPageModule)
   },
   {
     path: 'image-modal',

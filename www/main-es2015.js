@@ -143,13 +143,12 @@ let AppComponent = class AppComponent {
         this.alertController = alertController;
         this._location = _location;
         this.globalService = globalService;
-        let userDetails = JSON.parse(localStorage.getItem('userDetails'));
-        let token = userDetails && userDetails.email ? userDetails.email : '';
+        let token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
+        // let token = userDetails && userDetails.email ? userDetails.email : '';
         if (token == '') {
             this.nav.navigateRoot("login");
-        }
-        else {
-            this.nav.navigateRoot("dashboard");
+            // } else {
+            //   this.nav.navigateRoot("dashboard");
         }
         this.initializeApp();
     }

@@ -306,13 +306,11 @@
           this.alertController = alertController;
           this._location = _location;
           this.globalService = globalService;
-          var userDetails = JSON.parse(localStorage.getItem('userDetails'));
-          var token = userDetails && userDetails.email ? userDetails.email : '';
+          var token = localStorage.getItem('token') ? localStorage.getItem('token') : ''; // let token = userDetails && userDetails.email ? userDetails.email : '';
 
           if (token == '') {
-            this.nav.navigateRoot("login");
-          } else {
-            this.nav.navigateRoot("dashboard");
+            this.nav.navigateRoot("login"); // } else {
+            //   this.nav.navigateRoot("dashboard");
           }
 
           this.initializeApp();
