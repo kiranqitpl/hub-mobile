@@ -2,7 +2,7 @@
   <app-header [pageName]="pName"></app-header>
   <div class="container">
 
-    <ion-row>
+    <ion-row *ngIf="notificationData.length > 0">
       <ion-col size="10"></ion-col>
       <ion-col size="2">
         <ion-icon name="trash" (click)="onDelete()"></ion-icon>
@@ -10,11 +10,8 @@
     </ion-row>
 
 
-
     <ion-row *ngFor="let notification of notificationData; let i=index;">
-
       <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2">
-        <!-- <ion-checkbox (ionChange)="onDeleteDataSelect(notification.id)"></ion-checkbox> -->
       </ion-col>
       <ion-col size-lg="1" size-md="1" size-sm="2" size-xl="2" size-xs="2">
         <ion-checkbox (ionChange)="onDeleteDataSelect(notification.id)"></ion-checkbox>
@@ -26,17 +23,31 @@
       <ion-col size-lg="2" size-md="2" size-sm="2" size-xl="2" size-xs="2"></ion-col>
     </ion-row>
 
+<!-- 
+    <ngx-datatable class="material" [rows]="notificationData" [headerHeight]="50"
+      [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [count]="totalElements" [offset]="offset"
+      [limit]="size" (page)="onNotificationLoad($event, '','web')">
 
-    <!-- <ion-row *ngFor="let notification of notificationData; let i=index;">
-      <ion-col size="2">
-        <ion-checkbox (ionChange)="onDeleteDataSelect(notification.id)"></ion-checkbox>
-      </ion-col>
-      <ion-col size="10"
-        (click)="onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)">
-        {{notification.message}}
-      </ion-col>
-    </ion-row> -->
+      <ngx-datatable-column [minWidth]="10" [resizeable]="true" prop="id">
+        <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
+          <ion-checkbox (ionChange)="onDeleteDataSelect(value)"></ion-checkbox>
+        </ng-template>
+      </ngx-datatable-column>
 
+      <ngx-datatable-column prop="message" [minWidth]="50" [resizeable]="true">
+        <ng-template let-value="value" ngx-datatable-cell-template let-row="row">
+          <span title="Edit" (click)="onNotificationDetaliPage(row)">
+           {{value}}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <div class="d-flex justify-content-center">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="loadData($event, '', 'web')">
+        </pagination-controls>
+      </div>
+
+    </ngx-datatable> -->
 
   </div>
 </ion-content>

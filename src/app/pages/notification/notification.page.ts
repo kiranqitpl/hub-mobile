@@ -17,6 +17,12 @@ export class NotificationPage implements OnInit {
   notificationData: any = '';
   loggedInUser = '';
 
+  size: number = 10;
+  totalElements: number = 0;
+  // totalPages: number = 0;
+  pageNumber: number = 0;
+  offset: number = 0
+
   constructor(
     private nav: NavController,
     private globalService: GlobalService,
@@ -26,18 +32,40 @@ export class NotificationPage implements OnInit {
   ngOnInit() {
     this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
     this.onNotificationLoad();
+    // this.setValueOnLoadData();
   }
+
+  // setValueOnLoadData() {
+  //   // let screen = this.getScreenWidth < 1080 ? 'mobile' : 'web'
+
+  //   // if (screen == 'mobile') {
+  //   //   this.loadData('', 1, screen);
+  //   // } else {
+  //   let object = {
+  //     count: 60,
+  //     limit: 10,
+  //     offset: 0,
+  //     pageSize: 10,
+  //   }
+  //   this.onNotificationLoad(object, '', screen);
+  //   // }
+  // }
 
 
   //----------------------------------- Load Notification Data ---------------------------------------------------------// 
 
-  async onNotificationLoad() {
+  // onNotificationLoad(event, pageNo, screen) {
+  onNotificationLoad() {
     // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
+    // this.pageNumber = (event.offset + 1);
+    // this.offset = event.offset
     this.globalService.presentLoading();
+    // this.globalService.getData('notification/getNotificationList/?page_no=' + this.pageNumber).subscribe((result: any) => {
     this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
       console.log('result', result);
       if (result && result['row_count'] > 0) {
-        this.notificationData = result['data']
+        this.notificationData = result['data'];
+        this.totalElements = result['row_count'];
       } else {
         this.notificationData = [];
       }
@@ -83,6 +111,7 @@ export class NotificationPage implements OnInit {
       this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(result => {
         if (result && result['status']) {
           this.onNotificationLoad();
+          // this.setValueOnLoadData();
         }
         this.globalService.presentToast(result['message']);
         this.globalService.dismissLoading();

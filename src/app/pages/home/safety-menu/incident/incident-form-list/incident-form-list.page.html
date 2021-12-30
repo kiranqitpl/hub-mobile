@@ -25,7 +25,7 @@
                 </ion-col>
                 <ion-col>
                   <ion-text color="primary">
-                    {{rowData.Form}}
+                   <b>{{rowData.Form}}</b> 
                   </ion-text>
                 </ion-col>
               </ion-row>
@@ -64,15 +64,15 @@
                   <ion-label>Status :</ion-label>
                 </ion-col>
                 <ion-col>
-                  <p class="value" *ngIf="rowData.Status == 'Completed'">
+                  <b class="value" *ngIf="rowData.Status == 'Completed'">
                     <ion-text color="success">{{rowData.Status}}</ion-text>
-                  </p>
-                  <p class="value" *ngIf="rowData.Status == 'In progress'">
+                  </b>
+                  <b class="value" *ngIf="rowData.Status == 'In progress'">
                     <ion-text color="warning">{{rowData.Status}}</ion-text>
-                  </p>
-                  <p class="value" *ngIf="rowData.Status == 'Cancel'">
+                  </b>
+                  <b class="value" *ngIf="rowData.Status == 'Cancel'">
                     <ion-text color="danger">{{rowData.Status}}</ion-text>
-                  </p>
+                  </b>
                 </ion-col>
               </ion-row>
             </ion-label>

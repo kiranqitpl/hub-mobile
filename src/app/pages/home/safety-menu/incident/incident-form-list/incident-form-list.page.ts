@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global-service/global.service';
-import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import moment from 'moment';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
@@ -26,14 +25,13 @@ export class IncidentFormListPage implements OnInit {
 
   size: number = 10;
   totalElements: number = 0;
-  totalPages: number = 0;
+  // totalPages: number = 0;
   pageNumber: number = 0;
   offset: number = 0
 
   constructor(
     private nav: NavController,
     private global: GlobalService,
-    private toastService: ToastService,
     private loadingService: LoadingService,
     private sharedService: SharedService
   ) { }
@@ -105,7 +103,7 @@ export class IncidentFormListPage implements OnInit {
             el.Status = (el.Status == 0 ? 'In progress' : (el.Status == 1 ? 'Completed' : (el.Status == 2 ? 'Cancel' : '')));
           })
 
-          this.totalPages = result.total_pages;
+          // this.totalPages = result.total_pages;
           this.totalElements = result.row_count;
 
           if (screen == 'mobile') {

@@ -42,14 +42,12 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.data_plate_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row *ngIf="teleHandler['data_plate_image'] == ''">
+                <ion-row *ngIf="teleHandler['data_plate_image'].length == 0">
                   <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
@@ -59,23 +57,20 @@
                   </ion-col>
                 </ion-row>
 
-                <ion-grid *ngIf="teleHandler['data_plate_image'] != ''">
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-label>Images : </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <!-- <ion-row>
-                <ion-col size="12">
-                  <ion-slides class="preview-slides"
-                    *ngIf="teleHandler['data_plate_image'] && teleHandler['data_plate_image'].length && teleHandler['data_plate_image'].length > 0">
-                    <ion-slide *ngFor="let data_plate_image of teleHandler['data_plate_image']">
-                      <img [src]="data_plate_image" tappable (click)="onOpenPreview(data_plate_image)">
-                    </ion-slide>
-                  </ion-slides>
-                </ion-col>
-              </ion-row> -->
-                </ion-grid>
+                <ion-row *ngIf="teleHandler['data_plate_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['data_plate_image'] && teleHandler['data_plate_image'].length && teleHandler['data_plate_image'].length > 0">
+                      <ion-slide *ngFor="let data_plate_image of teleHandler['data_plate_image']">
+                        <img [src]="data_plate_image" tappable (click)="onOpenPreview(data_plate_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
 
             </ion-grid>
@@ -90,35 +85,39 @@
               </ion-row>
 
               <ion-grid lines="none" *ngIf="teleHandler['engine_oil'] == 'Faulty'">
+                
                 <ion-row>
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler['engine_oil_comment']}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['data_plate_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <!-- <ion-col size="12">
-                <ion-slides class="preview-slides"
-                  *ngIf="teleHandler['engine_oil_image'] && teleHandler['engine_oil_image'].length && teleHandler['engine_oil_image'].length > 0">
-                  <ion-slide *ngFor="let engine_oil_image of incidentDetails['engine_oil_image']">
-                    <img [src]="engine_oil_image" tappable (click)="onOpenPreview(engine_oil_image)">
-                  </ion-slide>
-                </ion-slides>
-              </ion-col> -->
-                  <ion-col size="12" *ngIf="teleHandler['engine_oil_image'] == ''">
-                    <ion-text>No Images found.</ion-text>
+                <ion-row *ngIf="teleHandler['data_plate_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['data_plate_image'] && teleHandler['data_plate_image'].length && teleHandler['data_plate_image'].length > 0">
+                      <ion-slide *ngFor="let data_plate_image of teleHandler['data_plate_image']">
+                        <img [src]="data_plate_image" tappable (click)="onOpenPreview(data_plate_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
 
@@ -136,30 +135,41 @@
               </ion-row>
 
               <ion-grid lines="none" *ngIf="teleHandler['hydraulic_oil'] == 'Faulty'">
+
                 <ion-row>
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
+
                   <ion-col size="12">
                     <ion-label>{{teleHandler['hydraulic_oil_comment']}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['hydraulic_oil_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
+
+                <ion-row *ngIf="teleHandler['hydraulic_oil_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['hydraulic_oil_image'] && teleHandler['hydraulic_oil_image'].length && teleHandler['hydraulic_oil_image'].length > 0">
+                      <ion-slide *ngFor="let hydraulic_oil_image of teleHandler['hydraulic_oil_image']">
+                        <img [src]="hydraulic_oil_image" tappable (click)="onOpenPreview(hydraulic_oil_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -185,26 +195,35 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler['equipment_inspect_comment']}}</ion-label>
                   </ion-col>
                 </ion-row>
-                <ion-row>
-                  <ion-col size="12">
+
+                <ion-row *ngIf="teleHandler['equipment_inspect_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
 
+                <ion-row *ngIf="teleHandler['equipment_inspect_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['equipment_inspect_image'] && teleHandler['equipment_inspect_image'].length && teleHandler['equipment_inspect_image'].length > 0">
+                      <ion-slide *ngFor="let equipment_inspect_image of teleHandler['equipment_inspect_image']">
+                        <img [src]="equipment_inspect_image" tappable (click)="onOpenPreview(equipment_inspect_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-grid>
 
             <ion-grid lines="none">
@@ -220,26 +239,36 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
+
                   <ion-col size="12">
                     <ion-label>{{teleHandler['coolant_level_comment']}}</ion-label>
                   </ion-col>
                 </ion-row>
-                <ion-row>
-                  <ion-col size="12">
+
+                <ion-row *ngIf="teleHandler['coolant_level_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
 
+                <ion-row *ngIf="teleHandler['coolant_level_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['coolant_level_image'] && teleHandler['coolant_level_image'].length && teleHandler['coolant_level_image'].length > 0">
+                      <ion-slide *ngFor="let coolant_level_image of teleHandler['coolant_level_image']">
+                        <img [src]="coolant_level_image" tappable (click)="onOpenPreview(coolant_level_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-grid>
 
             <ion-grid lines="none">
@@ -255,26 +284,35 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.belts_and_hoses_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
-                <ion-row>
-                  <ion-col size="12">
+
+                <ion-row *ngIf="teleHandler['belts_and_hoses_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
 
+                <ion-row *ngIf="teleHandler['belts_and_hoses_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['belts_and_hoses_image'] && teleHandler['belts_and_hoses_image'].length && teleHandler['belts_and_hoses_image'].length > 0">
+                      <ion-slide *ngFor="let belts_and_hoses_image of teleHandler['belts_and_hoses_image']">
+                        <img [src]="belts_and_hoses_image" tappable (click)="onOpenPreview(belts_and_hoses_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-grid>
 
             <ion-grid lines="none">
@@ -290,24 +328,32 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.wheels_tyres_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['wheels_tyres_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['wheels_tyres_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
                   </ion-col>
                   <ion-col size="12">
-                    <ion-text>No Images found.</ion-text>
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['wheels_tyres_image'] && teleHandler['wheels_tyres_image'].length && teleHandler['wheels_tyres_image'].length > 0">
+                      <ion-slide *ngFor="let wheels_tyres_image of teleHandler['wheels_tyres_image']">
+                        <img [src]="wheels_tyres_image" tappable (click)="onOpenPreview(wheels_tyres_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -326,26 +372,35 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.fire_extinguisher_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['fire_extinguisher_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
+
+                <ion-row *ngIf="teleHandler['fire_extinguisher_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['fire_extinguisher_image'] && teleHandler['fire_extinguisher_image'].length && teleHandler['fire_extinguisher_image'].length > 0">
+                      <ion-slide *ngFor="let fire_extinguisher_image of teleHandler['fire_extinguisher_image']">
+                        <img [src]="fire_extinguisher_image" tappable (click)="onOpenPreview(fire_extinguisher_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
 
             </ion-grid>
@@ -363,26 +418,35 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.fuel_flash_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['fuel_flash_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
+
+                <ion-row *ngIf="teleHandler['fuel_flash_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['fuel_flash_image'] && teleHandler['fuel_flash_image'].length && teleHandler['fuel_flash_image'].length > 0">
+                      <ion-slide *ngFor="let fuel_flash_image of teleHandler['fuel_flash_image']">
+                        <img [src]="fuel_flash_image" tappable (click)="onOpenPreview(fuel_flash_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -399,26 +463,36 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.hydraulics_functional_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
+                <ion-row *ngIf="teleHandler['hydraulics_functional_image'].length == 0">
+                  <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
-                  <ion-col size="12">
-                  </ion-col>
-                  <ion-col size="12">
+                  <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
+
+                <ion-row *ngIf="teleHandler['hydraulics_functional_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['hydraulics_functional_image'] && teleHandler['hydraulics_functional_image'].length && teleHandler['hydraulics_functional_image'].length > 0">
+                      <ion-slide *ngFor="let hydraulics_functional_image of teleHandler['hydraulics_functional_image']">
+                        <img [src]="hydraulics_functional_image" tappable
+                          (click)="onOpenPreview(hydraulics_functional_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -435,21 +509,35 @@
                   <ion-col size="12">
                     <ion-label>Comment : </ion-label>
                   </ion-col>
-                </ion-row>
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.lift_arms_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['lift_arms_image'].length == 0">
                   <ion-col size="6">
                     <ion-label>Images : </ion-label>
                   </ion-col>
+
                   <ion-col size="6">
                     <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
+
+                <ion-row *ngIf="teleHandler['lift_arms_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['lift_arms_image'] && teleHandler['lift_arms_image'].length && teleHandler['lift_arms_image'].length > 0">
+                      <ion-slide *ngFor="let lift_arms_image of teleHandler['lift_arms_image']">
+                        <img [src]="lift_arms_image" tappable (click)="onOpenPreview(lift_arms_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -479,34 +567,36 @@
                       <ion-label>Comment : </ion-label>
                     </ion-text>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.chain_hose_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['chain_hose_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        No Images found
-                      </ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['chain_hose_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['chain_hose_image'] && teleHandler['chain_hose_image'].length && teleHandler['chain_hose_image'].length > 0">
+                      <ion-slide *ngFor="let chain_hose_image of teleHandler['chain_hose_image']">
+                        <img [src]="chain_hose_image" tappable (click)="onOpenPreview(chain_hose_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -536,34 +626,36 @@
                       <ion-label>Comment : </ion-label>
                     </ion-text>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.cap_bolts_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['cap_bolts_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        No Images found
-                      </ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['cap_bolts_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['cap_bolts_image'] && teleHandler['cap_bolts_image'].length && teleHandler['cap_bolts_image'].length > 0">
+                      <ion-slide *ngFor="let cap_bolts_image of teleHandler['cap_bolts_image']">
+                        <img [src]="cap_bolts_image" tappable (click)="onOpenPreview(cap_bolts_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -593,34 +685,36 @@
                       <ion-label>Comment : </ion-label>
                     </ion-text>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.safety_stops_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['safety_stops_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        No Images found
-                      </ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['safety_stops_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['safety_stops_image'] && teleHandler['safety_stops_image'].length && teleHandler['safety_stops_image'].length > 0">
+                      <ion-slide *ngFor="let safety_stops_image of teleHandler['safety_stops_image']">
+                        <img [src]="safety_stops_image" tappable (click)="onOpenPreview(safety_stops_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -649,30 +743,33 @@
                       <ion-label>Comment : </ion-label>
                     </ion-text>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.forks_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['forks_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>No Images found</ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['forks_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['forks_image'] && teleHandler['forks_image'].length && teleHandler['forks_image'].length > 0">
+                      <ion-slide *ngFor="let forks_image of teleHandler['forks_image']">
+                        <img [src]="forks_image" tappable (click)="onOpenPreview(forks_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
 
@@ -696,6 +793,7 @@
                 </ion-col>
                 <ion-col size="6">{{teleHandler.overhead_guards}}</ion-col>
               </ion-row>
+
               <ion-grid lines="none" *ngIf="teleHandler['overhead_guards'] == 'Faulty'">
                 <ion-row>
                   <ion-col size="12">
@@ -711,26 +809,30 @@
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['overhead_guards_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        No Images found
-                      </ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['overhead_guards_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['overhead_guards_image'] && teleHandler['overhead_guards_image'].length && teleHandler['overhead_guards_image'].length > 0">
+                      <ion-slide *ngFor="let overhead_guards_image of teleHandler['overhead_guards_image']">
+                        <img [src]="overhead_guards_image" tappable (click)="onOpenPreview(overhead_guards_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -759,36 +861,37 @@
                       <ion-label>Comment : </ion-label>
                     </ion-text>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.counterweight_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['counterweight_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        No Images found
-                      </ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['counterweight_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['counterweight_image'] && teleHandler['counterweight_image'].length && teleHandler['counterweight_image'].length > 0">
+                      <ion-slide *ngFor="let counterweight_image of teleHandler['counterweight_image']">
+                        <img [src]="counterweight_image" tappable (click)="onOpenPreview(counterweight_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
 
+              </ion-grid>
             </ion-grid>
 
             <ion-grid lines="none">
@@ -817,34 +920,37 @@
                       <ion-label>Comment : </ion-label>
                     </ion-text>
                   </ion-col>
-                </ion-row>
 
-                <ion-row>
                   <ion-col size="12">
                     <ion-label>{{teleHandler.engine_bay_components_comment}}</ion-label>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['engine_bay_components_image'].length == 0">
                   <ion-col size="6">
-                    <ion-text>
-                      <ion-label>Images : </ion-label>
-                    </ion-text>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
 
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        No Images found
-                      </ion-text>
-                    </ion-label>
+                    <ion-text>No Images found.</ion-text>
                   </ion-col>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="teleHandler['engine_bay_components_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
                   <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['engine_bay_components_image'] && teleHandler['engine_bay_components_image'].length && teleHandler['engine_bay_components_image'].length > 0">
+                      <ion-slide *ngFor="let engine_bay_components_image of teleHandler['engine_bay_components_image']">
+                        <img [src]="engine_bay_components_image" tappable
+                          (click)="onOpenPreview(engine_bay_components_image)">
+                      </ion-slide>
+                    </ion-slides>
                   </ion-col>
                 </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -875,269 +981,295 @@
                         <ion-label>Comment : </ion-label>
                       </ion-text>
                     </ion-col>
-                  </ion-row>
-
-                  <ion-row>
                     <ion-col size="12">
                       <ion-label>{{teleHandler.horn_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['horn_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['horn_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['horn_image'] && teleHandler['horn_image'].length && teleHandler['horn_image'].length > 0">
+                        <ion-slide *ngFor="let horn_image of teleHandler['horn_image']">
+                          <img [src]="horn_image" tappable (click)="onOpenPreview(horn_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
               </ion-grid>
+            </ion-grid>
 
-              <ion-grid lines="none">
+            <ion-grid lines="none">
 
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Audible, Visual Warning Devices :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.audible}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['audible'] == 'Faulty'">
                 <ion-row>
-                  <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        Audible, Visual Warning Devices :
-                      </ion-text>
-                    </ion-label>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
                   </ion-col>
-                  <ion-col size="6">{{teleHandler.audible}}</ion-col>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.audible_comment}}</ion-label>
+                  </ion-col>
                 </ion-row>
 
-                <ion-grid lines="none" *ngIf="teleHandler['audible'] == 'Faulty'">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-text>
-                        <ion-label>Comment : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-label>{{teleHandler.audible_comment}}</ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-grid>
-
-              <ion-grid lines="none">
-
-                <ion-row>
+                <ion-row *ngIf="teleHandler['audible_image'].length == 0">
                   <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        Headlights :
-                      </ion-text>
-                    </ion-label>
+                    <ion-label>Images : </ion-label>
                   </ion-col>
-                  <ion-col size="6">{{teleHandler.headlights}}</ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
                 </ion-row>
 
-                <ion-grid lines="none" *ngIf="teleHandler['headlights'] == 'Faulty'">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-text>
-                        <ion-label>Comment : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-label>{{teleHandler.headlights_comment}}</ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
+                <ion-row *ngIf="teleHandler['audible_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['audible_image'] && teleHandler['audible_image'].length && teleHandler['audible_image'].length > 0">
+                      <ion-slide *ngFor="let audible_image of teleHandler['audible_image']">
+                        <img [src]="audible_image" tappable (click)="onOpenPreview(audible_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
 
               </ion-grid>
+            </ion-grid>
 
-              <ion-grid lines="none">
+            <ion-grid lines="none">
 
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Headlights :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.headlights}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['headlights'] == 'Faulty'">
                 <ion-row>
-                  <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        Turn Signals :
-                      </ion-text>
-                    </ion-label>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
                   </ion-col>
-                  <ion-col size="6">{{teleHandler.turn_signals}}</ion-col>
+
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.headlights_comment}}</ion-label>
+                  </ion-col>
                 </ion-row>
 
-                <ion-grid lines="none" *ngIf="teleHandler['turn_signals'] == 'Faulty'">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-text>
-                        <ion-label>Comment : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-label>{{teleHandler.turn_signals_comment}}</ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
+                <ion-row *ngIf="teleHandler['headlights_image'].length == 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
 
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="teleHandler['headlights_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['headlights_image'] && teleHandler['headlights_image'].length && teleHandler['headlights_image'].length > 0">
+                      <ion-slide *ngFor="let headlights_image of teleHandler['headlights_image']">
+                        <img [src]="headlights_image" tappable (click)="onOpenPreview(headlights_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
               </ion-grid>
 
-              <ion-grid lines="none">
+            </ion-grid>
 
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Turn Signals :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.turn_signals}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['turn_signals'] == 'Faulty'">
                 <ion-row>
-                  <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        Warning / Brake Lights :
-                      </ion-text>
-                    </ion-label>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
                   </ion-col>
-                  <ion-col size="6">{{teleHandler.warning_brake_lights}}</ion-col>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.turn_signals_comment}}</ion-label>
+                  </ion-col>
                 </ion-row>
 
-                <ion-grid lines="none" *ngIf="teleHandler['warning_brake_lights'] == 'Faulty'">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-text>
-                        <ion-label>Comment : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-label>{{teleHandler.warning_brake_lights_comment}}</ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
+                <ion-row *ngIf="teleHandler['turn_signals_image'].length == 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="teleHandler['turn_signals_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['turn_signals_image'] && teleHandler['turn_signals_image'].length && teleHandler['turn_signals_image'].length > 0">
+                      <ion-slide *ngFor="let turn_signals_image of teleHandler['turn_signals_image']">
+                        <img [src]="turn_signals_image" tappable (click)="onOpenPreview(turn_signals_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
 
               </ion-grid>
+            </ion-grid>
 
-              <ion-grid lines="none">
+            <ion-grid lines="none">
+
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Warning / Brake Lights :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.warning_brake_lights}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['warning_brake_lights'] == 'Faulty'">
                 <ion-row>
-                  <ion-col size="6">
-                    <ion-label>
-                      <ion-text>
-                        Foot Brake :
-                      </ion-text>
-                    </ion-label>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
                   </ion-col>
-                  <ion-col size="6">{{teleHandler.foot_brake}}</ion-col>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.warning_brake_lights_comment}}</ion-label>
+                  </ion-col>
                 </ion-row>
 
-                <ion-grid lines="none" *ngIf="teleHandler['foot_brake'] == 'Faulty'">
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-text>
-                        <ion-label>Comment : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-label>{{teleHandler.foot_brake_comment}}</ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
+                <ion-row *ngIf="teleHandler['warning_brake_lights_image'].length == 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="teleHandler['warning_brake_lights_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['warning_brake_lights_image'] && teleHandler['warning_brake_lights_image'].length && teleHandler['warning_brake_lights_image'].length > 0">
+                      <ion-slide *ngFor="let warning_brake_lights_image of teleHandler['warning_brake_lights_image']">
+                        <img [src]="warning_brake_lights_image" tappable
+                          (click)="onOpenPreview(warning_brake_lights_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-grid>
+
+            <ion-grid lines="none">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-label>
+                    <ion-text>
+                      Foot Brake :
+                    </ion-text>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="6">{{teleHandler.foot_brake}}</ion-col>
+              </ion-row>
+
+              <ion-grid lines="none" *ngIf="teleHandler['foot_brake'] == 'Faulty'">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-text>
+                      <ion-label>Comment : </ion-label>
+                    </ion-text>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-label>{{teleHandler.foot_brake_comment}}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="teleHandler['foot_brake_image'].length == 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-text>No Images found.</ion-text>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="teleHandler['foot_brake_image'].length > 0">
+                  <ion-col size="6">
+                    <ion-label>Images : </ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-slides class="preview-slides"
+                      *ngIf="teleHandler['foot_brake_image'] && teleHandler['foot_brake_image'].length && teleHandler['foot_brake_image'].length > 0">
+                      <ion-slide *ngFor="let foot_brake_image of teleHandler['foot_brake_image']">
+                        <img [src]="foot_brake_image" tappable (click)="onOpenPreview(foot_brake_image)">
+                      </ion-slide>
+                    </ion-slides>
+                  </ion-col>
+                </ion-row>
+
               </ion-grid>
             </ion-grid>
 
@@ -1161,36 +1293,43 @@
                 </ion-row>
 
                 <ion-grid lines="none" *ngIf="teleHandler['parking_brake'] == 'Faulty'">
+
                   <ion-row>
                     <ion-col size="12">
                       <ion-text>
                         <ion-label>Comment : </ion-label>
                       </ion-text>
                     </ion-col>
-                  </ion-row>
-                  <ion-row>
+
                     <ion-col size="12">
                       <ion-label>{{teleHandler.parking_brake_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['parking_brake_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['parking_brake_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['parking_brake_image'] && teleHandler['parking_brake_image'].length && teleHandler['parking_brake_image'].length > 0">
+                        <ion-slide *ngFor="let parking_brake_image of teleHandler['parking_brake_image']">
+                          <img [src]="parking_brake_image" tappable (click)="onOpenPreview(parking_brake_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
 
               </ion-grid>
@@ -1222,30 +1361,37 @@
                         <ion-label>Comment : </ion-label>
                       </ion-text>
                     </ion-col>
-                  </ion-row>
-                  <ion-row>
+
                     <ion-col size="12">
                       <ion-label>{{teleHandler.clutch_gear_shift_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['clutch_gear_shift_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['clutch_gear_shift_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['clutch_gear_shift_image'] && teleHandler['clutch_gear_shift_image'].length && teleHandler['clutch_gear_shift_image'].length > 0">
+                        <ion-slide *ngFor="let clutch_gear_shift_image of teleHandler['clutch_gear_shift_image']">
+                          <img [src]="clutch_gear_shift_image" tappable
+                            (click)="onOpenPreview(clutch_gear_shift_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
 
               </ion-grid>
@@ -1277,30 +1423,35 @@
                         <ion-label>Comment : </ion-label>
                       </ion-text>
                     </ion-col>
-                  </ion-row>
-                  <ion-row>
                     <ion-col size="12">
                       <ion-label>{{teleHandler.engine_noise_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['engine_noise_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['engine_noise_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['engine_noise_image'] && teleHandler['engine_noise_image'].length && teleHandler['engine_noise_image'].length > 0">
+                        <ion-slide *ngFor="let engine_noise_image of teleHandler['engine_noise_image']">
+                          <img [src]="engine_noise_image" tappable (click)="onOpenPreview(engine_noise_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
               </ion-grid>
 
@@ -1322,32 +1473,36 @@
                         <ion-label>Comment : </ion-label>
                       </ion-text>
                     </ion-col>
-                  </ion-row>
-                  <ion-row>
+
                     <ion-col size="12">
                       <ion-label>{{teleHandler.fluid_leaks_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['fluid_leaks_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
 
-                  <ion-row>
+                  <ion-row *ngIf="teleHandler['fluid_leaks_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
-
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['fluid_leaks_image'] && teleHandler['fluid_leaks_image'].length && teleHandler['fluid_leaks_image'].length > 0">
+                        <ion-slide *ngFor="let fluid_leaks_image of teleHandler['fluid_leaks_image']">
+                          <img [src]="fluid_leaks_image" tappable (click)="onOpenPreview(fluid_leaks_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
               </ion-grid>
             </ion-grid>
@@ -1383,24 +1538,31 @@
                       <ion-label>{{teleHandler.dash_gauges_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['dash_gauges_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['dash_gauges_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['dash_gauges_image'] && teleHandler['dash_gauges_image'].length && teleHandler['dash_gauges_image'].length > 0">
+                        <ion-slide *ngFor="let dash_gauges_image of teleHandler['dash_gauges_image']">
+                          <img [src]="dash_gauges_image" tappable (click)="onOpenPreview(dash_gauges_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
               </ion-grid>
 
@@ -1428,24 +1590,32 @@
                       <ion-label>{{teleHandler.operational_controls_comment}}</ion-label>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['operational_controls_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
+
+                  <ion-row *ngIf="teleHandler['operational_controls_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['operational_controls_image'] && teleHandler['operational_controls_image'].length && teleHandler['operational_controls_image'].length > 0">
+                        <ion-slide *ngFor="let operational_controls_image of teleHandler['operational_controls_image']">
+                          <img [src]="operational_controls_image" tappable
+                            (click)="onOpenPreview(operational_controls_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
+
                 </ion-grid>
               </ion-grid>
             </ion-grid>
@@ -1484,23 +1654,27 @@
                     </ion-col>
                   </ion-row>
 
-                  <ion-row>
+                  <ion-row *ngIf="teleHandler['first_aid_kit_image'].length == 0">
                     <ion-col size="6">
-                      <ion-text>
-                        <ion-label>Images : </ion-label>
-                      </ion-text>
+                      <ion-label>Images : </ion-label>
                     </ion-col>
+
                     <ion-col size="6">
-                      <ion-label>
-                        <ion-text>
-                          No Images found
-                        </ion-text>
-                      </ion-label>
+                      <ion-text>No Images found.</ion-text>
                     </ion-col>
                   </ion-row>
 
-                  <ion-row>
+                  <ion-row *ngIf="teleHandler['first_aid_kit_image'].length > 0">
+                    <ion-col size="6">
+                      <ion-label>Images : </ion-label>
+                    </ion-col>
                     <ion-col size="12">
+                      <ion-slides class="preview-slides"
+                        *ngIf="teleHandler['first_aid_kit_image'] && teleHandler['first_aid_kit_image'].length && teleHandler['first_aid_kit_image'].length > 0">
+                        <ion-slide *ngFor="let first_aid_kit_image of teleHandler['first_aid_kit_image']">
+                          <img [src]="first_aid_kit_image" tappable (click)="onOpenPreview(first_aid_kit_image)">
+                        </ion-slide>
+                      </ion-slides>
                     </ion-col>
                   </ion-row>
 

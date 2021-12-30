@@ -27,12 +27,10 @@ export class GlobalService {
     private http: HTTP,
     private loadingController: LoadingController,
   ) {
-
     // this.url.subscribe(res => {
     //   this.baseUrl = res
     //   console.log("this.baseUrl 1", res)
     // })
-
   }
 
   async presentToast(msg) {

@@ -129,6 +129,7 @@
                     </ion-grid>
                   </ion-slide>
                 </ion-slides>
+
               </div>
             </div>
 
@@ -285,19 +286,19 @@
                   <ion-col size="12">
                     Fuel Level :
                   </ion-col>
-                  <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="12" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label> Full</ion-label>
                       <ion-radio slot="start" value="Full"></ion-radio>
                     </ion-item>
                   </ion-col>
-                  <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="12" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>Half</ion-label>
                       <ion-radio slot="start" value="Half"></ion-radio>
                     </ion-item>
                   </ion-col>
-                  <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="12" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>Empty</ion-label>
                       <ion-radio slot="start" value="Empty"></ion-radio>
@@ -379,6 +380,7 @@
                     </ion-grid>
                   </ion-slide>
                 </ion-slides>
+
               </div>
             </div>
 
@@ -527,7 +529,6 @@
                     </ion-grid>
                   </ion-slide>
                 </ion-slides>
-
               </div>
             </div>
 
@@ -572,8 +573,7 @@
 
                 <ion-row *ngIf="globalService.platform === 'cordova'">
                   <ion-button class="camera" expand="block" (click)="onSelectImage($event, 1, 'wheels_tyres_image')">
-                    Upload
-                    Image
+                    Upload Image
                   </ion-button>
                 </ion-row>
 
@@ -649,8 +649,7 @@
                 <ion-row *ngIf="globalService.platform === 'cordova'">
                   <ion-button class="camera" expand="block"
                     (click)="onSelectImage($event, 1, 'fire_extinguisher_image')">
-                    Upload
-                    Image
+                    Upload Image
                   </ion-button>
                 </ion-row>
 
@@ -1331,6 +1330,7 @@
                   </ion-col>
                 </ion-row>
               </ion-radio-group>
+
               <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.counterweight.errors?.required">
                 Please select value.
               </ion-item>
@@ -1721,6 +1721,7 @@
                   </ion-col>
                 </ion-row>
               </ion-radio-group>
+              
               <ion-item lines="none" class="error" *ngIf="isSubmitted && errorControls.turn_signals.errors?.required">
                 Please select value.
               </ion-item>

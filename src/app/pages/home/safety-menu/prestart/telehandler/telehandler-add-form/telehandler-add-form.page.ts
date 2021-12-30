@@ -385,16 +385,16 @@ export class TelehandlerAddFormPage implements OnInit {
 
     console.log('formData', formData);
 
-    // this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
-    //   if (result && result['status']) {
-    //     this.toastService.toast(result['message'], 'success');
-    //     this.nav.back();
-    //   } else {
-    //     this.toastService.toast(result['message'], 'danger');
-    //   }
-    // }, error => {
-    //   console.log('error', error);
-    // })
+    this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
+      if (result && result['status']) {
+        this.toastService.toast(result['message'], 'success');
+        this.nav.back();
+      } else {
+        this.toastService.toast(result['message'], 'danger');
+      }
+    }, error => {
+      console.log('error', error);
+    })
   }
 
   onSubmit(complete_status) {

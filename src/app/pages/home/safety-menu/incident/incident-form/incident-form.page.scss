@@ -130,7 +130,18 @@ ion-content {
   //   background-color: red;
   // }
 
-  .active area {
+  .active-area {
     color: red;
+  }
+
+  .areaa {
+    // position: absolute;
+  //   cursor: pointer;
+    transition: all 0.1s;
+    &:hover {
+      border: 2px solid red;
+      box-shadow: 0 0px 5px red;
+    }
+
   }
 }
