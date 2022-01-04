@@ -10,18 +10,18 @@ export class UserProfilePage implements OnInit {
   pName: String = 'Profile';
 
   userMenu = [
-    // {
-    //   menuName: 'Bank Account Details', route: '#'
-    // },
+    {
+      menuName: 'Bank Account Details', route: '/user-profile/bank-account'
+    },
     // {
     //   menuName: 'Clothing Issue', route: '#'
     // },
     // {
     //   menuName: 'Medical Questionnaire', route: '#'
     // },
-    // {
-    //   menuName: 'Personal Details', route: '/user-profile/profile'
-    // },
+    {
+      menuName: 'Personal Details', route: '/user-profile/profile'
+    },
     // {
     //   menuName: 'Authority to Release Personal Information', route: '#'
     // },

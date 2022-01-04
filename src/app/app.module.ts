@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-// import { CommonModule } from '@angular/common';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
+// import { FileOpener } from '@ionic-native/file-opener';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
     File,
     Base64,
     HTTP,
+    // FileOpener
     // HeaderComponent,
   ],
   bootstrap: [AppComponent],

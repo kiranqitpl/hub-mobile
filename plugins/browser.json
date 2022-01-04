@@ -40,6 +40,9 @@
     },
     "cordova-plugin-actionsheet": {
       "PACKAGE_NAME": "io.ionic.hub"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "io.ionic.hub"
     }
   },
   "dependent_plugins": {}

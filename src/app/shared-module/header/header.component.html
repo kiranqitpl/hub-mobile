@@ -45,17 +45,18 @@
   </ion-row> -->
 
 
-
-
   <ion-text>{{pageName}}</ion-text>
-  <ion-buttons class='back' *ngIf="pageName != 'Dashboard'">
-    <ion-button (click)="onGoBack()">
-      <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  <ion-buttons class='logout'>
-    <ion-button (click)="onLogOut()">
-      <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
+
+  <span *ngIf="frame == false">
+    <ion-buttons class='back' *ngIf="pageName != 'Dashboard'">
+      <ion-button (click)="onGoBack()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='logout'>
+      <ion-button (click)="onLogOut()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </span>
 </div>

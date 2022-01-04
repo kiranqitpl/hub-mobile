@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'superannuation-choice',
     loadChildren: () => import('./superannuation-choice/superannuation-choice.module').then( m => m.SuperannuationChoicePageModule)
+  },
+  {
+    path: 'bank-account',
+    loadChildren: () => import('./bank-account/bank-account.module').then( m => m.BankAccountPageModule)
   }
 ];
 
