@@ -198,7 +198,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -216,13 +216,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -234,39 +234,32 @@
       /* harmony import */
 
 
-      var src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! src/app/services/toast-service/toast.service */
-      45311);
-      /* harmony import */
-
-
-      var src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/app/services/loading-service/loading.service */
       80513);
       /* harmony import */
 
 
-      var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! moment */
       16738);
       /* harmony import */
 
 
-      var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+      var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
       /* harmony import */
 
 
-      var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! src/app/services/shared-service/shared.service */
       49481);
 
       var _IncidentFormListPage = /*#__PURE__*/function () {
-        function IncidentFormListPage(nav, global, toastService, loadingService, sharedService) {
+        function IncidentFormListPage(nav, global, loadingService, sharedService) {
           _classCallCheck(this, IncidentFormListPage);
 
           this.nav = nav;
           this.global = global;
-          this.toastService = toastService;
           this.loadingService = loadingService;
           this.sharedService = sharedService;
           this.pName = 'Submitted Forms';
@@ -274,8 +267,8 @@
           this.newList = [];
           this.listOfUsers = [];
           this.size = 10;
-          this.totalElements = 0;
-          this.totalPages = 0;
+          this.totalElements = 0; // totalPages: number = 0;
+
           this.pageNumber = 0;
           this.offset = 0;
         }
@@ -345,11 +338,11 @@
                       el.Form = 'Vehicle Hoist Prestarts';
                     }
 
-                    el.Date = moment__WEBPACK_IMPORTED_MODULE_5___default()(el.Date).format("DD-MM-YYYY hh:mm"); // el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY hh:mm:ss");
+                    el.Date = moment__WEBPACK_IMPORTED_MODULE_4___default()(el.Date).format("DD-MM-YYYY hh:mm"); // el.Date = moment(el.Date, "YYYY-MM-DD HH:m:ss").format("DD-MM-YYYY hh:mm:ss");
 
                     el.Status = el.Status == 0 ? 'In progress' : el.Status == 1 ? 'Completed' : el.Status == 2 ? 'Cancel' : '';
-                  });
-                  _this.totalPages = result.total_pages;
+                  }); // this.totalPages = result.total_pages;
+
                   _this.totalElements = result.row_count;
 
                   if (screen == 'mobile') {
@@ -406,23 +399,21 @@
 
       _IncidentFormListPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController
         }, {
           type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
         }, {
-          type: src_app_services_toast_service_toast_service__WEBPACK_IMPORTED_MODULE_3__.ToastService
+          type: src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_3__.LoadingService
         }, {
-          type: src_app_services_loading_service_loading_service__WEBPACK_IMPORTED_MODULE_4__.LoadingService
-        }, {
-          type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_6__.SharedService
+          type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_5__.SharedService
         }];
       };
 
-      _IncidentFormListPage = (0, tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
+      _IncidentFormListPage = (0, tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-incident-form-list',
         template: _raw_loader_incident_form_list_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_incident_form_list_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
-      }), (0, _angular_core__WEBPACK_IMPORTED_MODULE_9__.HostListener)('window:resize', ['$event'])], _IncidentFormListPage);
+      }), (0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.HostListener)('window:resize', ['$event'])], _IncidentFormListPage);
       /***/
     },
 
@@ -573,7 +564,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content (window:resize)=\"onResize($event)\">\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n\n    <ion-list *ngIf=\"getScreenWidth < 768\">\n      <ion-card *ngFor=\"let rowData of allSubmittedFormlist; let i = index\">\n        <ion-item-sliding>\n          <ion-item lines=\"none\">\n            <ion-label>\n\n              <!-- <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Sr. No :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\">\n                    {{(i+1)}}\n                  </p>\n                </ion-col>\n              </ion-row> -->\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <h2>Form :</h2>\n                </ion-col>\n                <ion-col>\n                  <ion-text color=\"primary\">\n                    {{rowData.Form}}\n                  </ion-text>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Date :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\">\n                    {{rowData.Date}}\n                  </p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Name :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\"> {{rowData.Name}}</p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Delegated :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\"> {{rowData.Delegate}}</p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Status :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\" *ngIf=\"rowData.Status == 'Completed'\">\n                    <ion-text color=\"success\">{{rowData.Status}}</ion-text>\n                  </p>\n                  <p class=\"value\" *ngIf=\"rowData.Status == 'In progress'\">\n                    <ion-text color=\"warning\">{{rowData.Status}}</ion-text>\n                  </p>\n                  <p class=\"value\" *ngIf=\"rowData.Status == 'Cancel'\">\n                    <ion-text color=\"danger\">{{rowData.Status}}</ion-text>\n                  </p>\n                </ion-col>\n              </ion-row>\n            </ion-label>\n          </ion-item>\n\n          <ion-item-options side=\"end\">\n            <ion-item-option class=\"item-option\" (click)=\"onGoToDetails(rowData)\" title=\"View\">\n              <ion-icon slot=\"icon-only\" name=\"eye-outline\" style=\"pointer-events:none\"></ion-icon>\n            </ion-item-option>\n\n            <ion-item-option class=\"item-option\" (click)=\"onGoToEdit(rowData)\" title=\"Edit\">\n              <ion-icon slot=\"icon-only\" name=\"create-outline\" style=\"pointer-events:none\"></ion-icon>\n            </ion-item-option>\n          </ion-item-options>\n        </ion-item-sliding>\n      </ion-card>\n\n      <span *ngIf=\" totalElements != ((pageNumber - 1) * (size + 1))\">\n        <div *ngIf=\"allSubmittedFormlist.length > 0\" class=\"ion-margin-top ion-text-center\">\n          <a href=\"javascript:void(0)\" (click)=\"loadData('newList', pageNumber, 'mobile')\">Load More </a>\n        </div>\n      </span>\n    </ion-list>\n\n    <ngx-datatable class=\"material\" [rows]=\"allSubmittedFormlist\" [columnMode]=\"'force'\" [headerHeight]=\"50\"\n      [footerHeight]=\"50\" rowHeight=\"auto\" [externalPaging]=\"true\" [count]=\"totalElements\" [offset]=\"offset\"\n      [limit]=\"size\" (page)=\"loadData($event, '','web')\" *ngIf=\"getScreenWidth >= 768\">\n\n      <ngx-datatable-column name=\"Sr.No\" [minWidth]=\"5\" [resizeable]=\"true\">\n        <ng-template let-rowIndex=\"rowIndex\" let-value=\"rows\" ngx-datatable-cell-template>{{ (pageNumber - 1) * size +\n          rowIndex +1 }}\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Form\" prop=\"Form\" [minWidth]=\"100\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-text color=\"primary\">{{value}}</ion-text>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Date\" prop=\"Date\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Name\" prop=\"Name\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Delegated\" prop=\"Delegate\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Status\" prop=\"Status\" [minWidth]=\"50\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-text color=\"success\" *ngIf=\"value == 'Completed'\">{{value}}</ion-text>\n          <ion-text color=\"warning\" *ngIf=\"value == 'In progress'\">{{value}}</ion-text>\n          <ion-text color=\"danger\" *ngIf=\"value == 'Cancel'\">{{value}}</ion-text>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"20\" [resizeable]=\"true\" prop=\"Id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <span title=\"View\" (click)=\"onGoToDetails(row)\">\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" style=\"pointer-events:none\"></ion-icon>\n          </span>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"20\" [resizeable]=\"true\" prop=\"Id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>Edit</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <span title=\"Edit\" (click)=\"onGoToEdit(row)\">\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" style=\"pointer-events:none\">\n            </ion-icon>\n          </span>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <div class=\"d-flex justify-content-center\">\n        <pagination-controls previousLabel=\"Prev\" nextLabel=\"Next\" (pageChange)=\"loadData($event, '', 'web')\">\n        </pagination-controls>\n      </div>\n    </ngx-datatable>\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content (window:resize)=\"onResize($event)\">\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n\n    <ion-list *ngIf=\"getScreenWidth < 768\">\n      <ion-card *ngFor=\"let rowData of allSubmittedFormlist; let i = index\">\n        <ion-item-sliding>\n          <ion-item lines=\"none\">\n            <ion-label>\n\n              <!-- <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Sr. No :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\">\n                    {{(i+1)}}\n                  </p>\n                </ion-col>\n              </ion-row> -->\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <h2>Form :</h2>\n                </ion-col>\n                <ion-col>\n                  <ion-text color=\"primary\">\n                   <b>{{rowData.Form}}</b> \n                  </ion-text>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Date :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\">\n                    {{rowData.Date}}\n                  </p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Name :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\"> {{rowData.Name}}</p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Delegated :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <p class=\"value\"> {{rowData.Delegate}}</p>\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col size=\"auto\">\n                  <ion-label>Status :</ion-label>\n                </ion-col>\n                <ion-col>\n                  <b class=\"value\" *ngIf=\"rowData.Status == 'Completed'\">\n                    <ion-text color=\"success\">{{rowData.Status}}</ion-text>\n                  </b>\n                  <b class=\"value\" *ngIf=\"rowData.Status == 'In progress'\">\n                    <ion-text color=\"warning\">{{rowData.Status}}</ion-text>\n                  </b>\n                  <b class=\"value\" *ngIf=\"rowData.Status == 'Cancel'\">\n                    <ion-text color=\"danger\">{{rowData.Status}}</ion-text>\n                  </b>\n                </ion-col>\n              </ion-row>\n            </ion-label>\n          </ion-item>\n\n          <ion-item-options side=\"end\">\n            <ion-item-option class=\"item-option\" (click)=\"onGoToDetails(rowData)\" title=\"View\">\n              <ion-icon slot=\"icon-only\" name=\"eye-outline\" style=\"pointer-events:none\"></ion-icon>\n            </ion-item-option>\n\n            <ion-item-option class=\"item-option\" (click)=\"onGoToEdit(rowData)\" title=\"Edit\">\n              <ion-icon slot=\"icon-only\" name=\"create-outline\" style=\"pointer-events:none\"></ion-icon>\n            </ion-item-option>\n          </ion-item-options>\n        </ion-item-sliding>\n      </ion-card>\n\n      <span *ngIf=\" totalElements != ((pageNumber - 1) * (size + 1))\">\n        <div *ngIf=\"allSubmittedFormlist.length > 0\" class=\"ion-margin-top ion-text-center\">\n          <a href=\"javascript:void(0)\" (click)=\"loadData('newList', pageNumber, 'mobile')\">Load More </a>\n        </div>\n      </span>\n    </ion-list>\n\n    <ngx-datatable class=\"material\" [rows]=\"allSubmittedFormlist\" [columnMode]=\"'force'\" [headerHeight]=\"50\"\n      [footerHeight]=\"50\" rowHeight=\"auto\" [externalPaging]=\"true\" [count]=\"totalElements\" [offset]=\"offset\"\n      [limit]=\"size\" (page)=\"loadData($event, '','web')\" *ngIf=\"getScreenWidth >= 768\">\n\n      <ngx-datatable-column name=\"Sr.No\" [minWidth]=\"5\" [resizeable]=\"true\">\n        <ng-template let-rowIndex=\"rowIndex\" let-value=\"rows\" ngx-datatable-cell-template>{{ (pageNumber - 1) * size +\n          rowIndex +1 }}\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Form\" prop=\"Form\" [minWidth]=\"100\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-text color=\"primary\">{{value}}</ion-text>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Date\" prop=\"Date\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Name\" prop=\"Name\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Delegated\" prop=\"Delegate\" [minWidth]=\"50\" [resizeable]=\"true\">\n      </ngx-datatable-column>\n\n      <ngx-datatable-column name=\"Status\" prop=\"Status\" [minWidth]=\"50\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-text color=\"success\" *ngIf=\"value == 'Completed'\">{{value}}</ion-text>\n          <ion-text color=\"warning\" *ngIf=\"value == 'In progress'\">{{value}}</ion-text>\n          <ion-text color=\"danger\" *ngIf=\"value == 'Cancel'\">{{value}}</ion-text>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"20\" [resizeable]=\"true\" prop=\"Id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>View</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <span title=\"View\" (click)=\"onGoToDetails(row)\">\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"eye-outline\" style=\"pointer-events:none\"></ion-icon>\n          </span>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column [minWidth]=\"20\" [resizeable]=\"true\" prop=\"Id\">\n        <ng-template let-column=\"column\" ngx-datatable-header-template>Edit</ng-template>\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <span title=\"Edit\" (click)=\"onGoToEdit(row)\">\n            <ion-icon class=\"view\" slot=\"icon-only\" name=\"create-outline\" style=\"pointer-events:none\">\n            </ion-icon>\n          </span>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <div class=\"d-flex justify-content-center\">\n        <pagination-controls previousLabel=\"Prev\" nextLabel=\"Next\" (pageChange)=\"loadData($event, '', 'web')\">\n        </pagination-controls>\n      </div>\n    </ngx-datatable>\n  </div>\n</ion-content>";
       /***/
     }
   }]);

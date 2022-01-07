@@ -16,9 +16,9 @@ export class UserProfilePage implements OnInit {
     // {
     //   menuName: 'Clothing Issue', route: '#'
     // },
-    // {
-    //   menuName: 'Medical Questionnaire', route: '#'
-    // },
+    {
+      menuName: 'Medical Questionnaire', route: '/user-profile/medical-questionnaire'
+    },
     {
       menuName: 'Personal Details', route: '/user-profile/profile'
     },

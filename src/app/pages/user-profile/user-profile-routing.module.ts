@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'bank-account',
     loadChildren: () => import('./bank-account/bank-account.module').then( m => m.BankAccountPageModule)
+  },
+  {
+    path: 'medical-questionnaire',
+    loadChildren: () => import('./medical-questionnaire/medical-questionnaire.module').then( m => m.MedicalQuestionnairePageModule)
   }
 ];
 

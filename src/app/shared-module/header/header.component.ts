@@ -19,7 +19,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     console.log('location', window.location.href);
-    if (window.location.href == 'https://mforms-devel.horts.com.au/user-profile/superannuation-choice?frame=true') {
+    if (window.location.href == 'https://mforms-devel.horts.com.au/user-profile/superannuation-choice?frame=true' ||
+      window.location.href == 'https://mforms-devel.horts.com.au/user-profile/bank-account?frame=true' ||
+      window.location.href == 'https://mforms-devel.horts.com.au/user-profile/profile?frame=true') {
       this.frame = true;
     }
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));

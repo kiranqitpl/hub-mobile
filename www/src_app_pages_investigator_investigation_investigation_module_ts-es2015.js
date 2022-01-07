@@ -99,8 +99,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ 16738);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/global-service/global.service */ 89985);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../environments/environment */ 92340);
+/* harmony import */ var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/global-service/global.service */ 89985);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ 92340);
 
 
 
@@ -113,7 +113,7 @@ let InvestigationPage = class InvestigationPage {
     constructor(nav, global) {
         this.nav = nav;
         this.global = global;
-        this.imageUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__.environment.imageUrl;
+        this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_4__.environment.imageUrl;
         this.loggedInUser = '';
         // data: any = [];
         this.selected = 'Investigation team members';
@@ -580,7 +580,7 @@ let InvestigationPage = class InvestigationPage {
 };
 InvestigationPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController },
-    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService }
+    { type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService }
 ];
 InvestigationPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({

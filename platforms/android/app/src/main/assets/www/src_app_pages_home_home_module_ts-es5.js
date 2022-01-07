@@ -247,7 +247,7 @@
           }, {
             // menuName: "HR", route: "/home/hr/on-boarding"
             menuName: "HR",
-            route: "#"
+            route: "/user-profile"
           }, {
             menuName: "Projects",
             route: "#"

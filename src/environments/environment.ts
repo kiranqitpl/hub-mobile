@@ -8,7 +8,16 @@ export const environment = {
   allType: 0, // type = 0=>all 1=> unread 2=> read notification
   imageUrl: './assets/',
   API_URL: 'https://mforms-api-devel.horts.com.au/api/',
-  QA_API_URL: 'https://mforms-api-qa.horts.com.au/api/'
+  QA_API_URL: 'https://mforms-api-qa.horts.com.au/api/',
+
+
+  //---------------------------------------- Validators pattern ------------------------------------//
+  
+  alphabet: /^[A-Z.a-z ]+[A-Za-z]+$/,
+  alphaNumeric: /^[a-zA-Z0-9]{10}$/,
+  numeric: /^[0-9]/
+  
+  //---------------------------------------- Validators pattern ------------------------------------//
 };
 
 

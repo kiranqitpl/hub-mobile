@@ -26,11 +26,19 @@ const routes = [
     },
     {
         path: 'profile',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_user-profile_profile_profile_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./profile/profile.module */ 41495)).then(m => m.ProfilePageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_user-profile_profile_profile_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./profile/profile.module */ 41495)).then(m => m.ProfilePageModule)
     },
     {
         path: 'superannuation-choice',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_user-profile_superannuation-choice_superannuation-choice_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./superannuation-choice/superannuation-choice.module */ 97519)).then(m => m.SuperannuationChoicePageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_user-profile_superannuation-choice_superannuation-choice_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./superannuation-choice/superannuation-choice.module */ 97519)).then(m => m.SuperannuationChoicePageModule)
+    },
+    {
+        path: 'bank-account',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_user-profile_bank-account_bank-account_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./bank-account/bank-account.module */ 42779)).then(m => m.BankAccountPageModule)
+    },
+    {
+        path: 'medical-questionnaire',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_user-profile_medical-questionnaire_medical-questionnaire_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./medical-questionnaire/medical-questionnaire.module */ 45696)).then(m => m.MedicalQuestionnairePageModule)
     }
 ];
 let UserProfilePageRoutingModule = class UserProfilePageRoutingModule {
@@ -115,18 +123,18 @@ let UserProfilePage = class UserProfilePage {
     constructor() {
         this.pName = 'Profile';
         this.userMenu = [
-            // {
-            //   menuName: 'Bank Account Details', route: '#'
-            // },
+            {
+                menuName: 'Bank Account Details', route: '/user-profile/bank-account'
+            },
             // {
             //   menuName: 'Clothing Issue', route: '#'
             // },
-            // {
-            //   menuName: 'Medical Questionnaire', route: '#'
-            // },
-            // {
-            //   menuName: 'Personal Details', route: '/user-profile/profile'
-            // },
+            {
+                menuName: 'Medical Questionnaire', route: '/user-profile/medical-questionnaire'
+            },
+            {
+                menuName: 'Personal Details', route: '/user-profile/profile'
+            },
             // {
             //   menuName: 'Authority to Release Personal Information', route: '#'
             // },

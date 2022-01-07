@@ -152,7 +152,8 @@
 
       _NotificationPageModule = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
         imports: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule, _notification_routing_module__WEBPACK_IMPORTED_MODULE_0__.NotificationPageRoutingModule, src_app_shared_module_shared_module_module__WEBPACK_IMPORTED_MODULE_2__.SharedModuleModule],
-        declarations: [_notification_page__WEBPACK_IMPORTED_MODULE_1__.NotificationPage]
+        declarations: [_notification_page__WEBPACK_IMPORTED_MODULE_1__.NotificationPage],
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_4__.CUSTOM_ELEMENTS_SCHEMA]
       })], _NotificationPageModule);
       /***/
     },
@@ -185,7 +186,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -209,14 +210,14 @@
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
 
 
-      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ../../services/global-service/global.service */
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
       89985);
       /* harmony import */
 
@@ -243,52 +244,63 @@
           this.notificationId = [];
           this.notificationData = '';
           this.loggedInUser = '';
+          this.size = 10;
+          this.totalElements = 0; // totalPages: number = 0;
+
+          this.pageNumber = 0;
+          this.offset = 0;
         }
 
         _createClass(NotificationPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {
             this.loggedInUser = JSON.parse(localStorage.getItem('userDetails'));
-            this.onNotificationLoad();
-          } //----------------------------------- Load Notification Data ---------------------------------------------------------// 
+            this.onNotificationLoad(); // this.setValueOnLoadData();
+          } // setValueOnLoadData() {
+          //   // let screen = this.getScreenWidth < 1080 ? 'mobile' : 'web'
+          //   // if (screen == 'mobile') {
+          //   //   this.loadData('', 1, screen);
+          //   // } else {
+          //   let object = {
+          //     count: 60,
+          //     limit: 10,
+          //     offset: 0,
+          //     pageSize: 10,
+          //   }
+          //   this.onNotificationLoad(object, '', screen);
+          //   // }
+          // }
+          //----------------------------------- Load Notification Data ---------------------------------------------------------// 
+          // onNotificationLoad(event, pageNo, screen) {
 
         }, {
           key: "onNotificationLoad",
           value: function onNotificationLoad() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var _this = this;
+            var _this = this;
 
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
-                      this.globalService.presentLoading();
-                      this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(function (result) {
-                        console.log('result', result);
+            // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
+            // this.pageNumber = (event.offset + 1);
+            // this.offset = event.offset
+            this.globalService.presentLoading(); // this.globalService.getData('notification/getNotificationList/?page_no=' + this.pageNumber).subscribe((result: any) => {
 
-                        if (result && result['row_count'] > 0) {
-                          _this.notificationData = result['data'];
-                        } else {
-                          _this.notificationData = [];
-                        }
+            this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(function (result) {
+              console.log('result', result);
 
-                        console.log('this.notificationData ', _this.notificationData);
+              if (result && result['row_count'] > 0) {
+                _this.notificationData = result['data'];
+                _this.totalElements = result['row_count'];
+              } else {
+                _this.notificationData = [];
+              }
 
-                        _this.globalService.dismissLoading();
-                      }), function (error) {
-                        _this.globalService.dismissLoading();
+              console.log('this.notificationData ', _this.notificationData);
 
-                        console.log('error', error);
-                      };
+              _this.globalService.dismissLoading();
+            }), function (error) {
+              _this.globalService.dismissLoading();
 
-                    case 2:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
+              console.log('error', error);
+            };
           } //----------------------------------- Load Notification Data ---------------------------------------------------------//
           //----------------------------------- Delete Notification ---------------------------------------------------------//
 
@@ -328,7 +340,8 @@
               formData.append("id", JSON.stringify(this.notificationId));
               this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(function (result) {
                 if (result && result['status']) {
-                  _this2.onNotificationLoad();
+                  _this2.onNotificationLoad(); // this.setValueOnLoadData();
+
                 }
 
                 _this2.globalService.presentToast(result['message']);
@@ -371,15 +384,15 @@
 
       _NotificationPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.NavController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController
         }, {
-          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
         }, {
           type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService
         }];
       };
 
-      _NotificationPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+      _NotificationPage = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-notification',
         template: _raw_loader_notification_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_notification_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -427,8 +440,8 @@
       /* harmony import */
 
 
-      var _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ../global-service/global.service */
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
       89985);
       /* harmony import */
 
@@ -523,15 +536,15 @@
         }, {
           key: "mobileUploadImages",
           value: function mobileUploadImages() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               var _this4 = this;
 
               var images, actionSheet;
-              return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
-                  switch (_context2.prev = _context2.next) {
+                  switch (_context.prev = _context.next) {
                     case 0:
-                      _context2.next = 2;
+                      _context.next = 2;
                       return this.actionSheetController.create({
                         header: 'Select Image source',
                         buttons: [{
@@ -551,26 +564,26 @@
                       });
 
                     case 2:
-                      actionSheet = _context2.sent;
-                      _context2.next = 5;
+                      actionSheet = _context.sent;
+                      _context.next = 5;
                       return actionSheet.present();
 
                     case 5:
                     case "end":
-                      return _context2.stop();
+                      return _context.stop();
                   }
                 }
-              }, _callee2, this);
+              }, _callee, this);
             }));
           }
         }, {
           key: "pickImage",
           value: function pickImage(sourceType) {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var options;
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
+              return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
-                  switch (_context3.prev = _context3.next) {
+                  switch (_context2.prev = _context2.next) {
                     case 0:
                       options = {
                         quality: 100,
@@ -579,7 +592,7 @@
                         encodingType: this.camera.EncodingType.JPEG,
                         mediaType: this.camera.MediaType.PICTURE
                       };
-                      _context3.next = 3;
+                      _context2.next = 3;
                       return this.camera.getPicture(options).then(function (imageData) {
                         console.log('imageData', imageData); // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
 
@@ -593,10 +606,10 @@
 
                     case 3:
                     case "end":
-                      return _context3.stop();
+                      return _context2.stop();
                   }
                 }
-              }, _callee3, this);
+              }, _callee2, this);
             }));
           }
         }, {
@@ -611,7 +624,7 @@
 
       _SharedService.ctorParameters = function () {
         return [{
-          type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController
         }, {
@@ -657,7 +670,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n\n    <ion-row>\n      <ion-col size=\"10\"></ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n\n      <ion-col size-lg=\"2\" size-md=\"2\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\">\n        <!-- <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox> -->\n      </ion-col>\n      <ion-col size-lg=\"1\" size-md=\"1\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size-lg=\"7\" size-md=\"7\" size-sm=\"6\" size-xl=\"6\" size-xs=\"6\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n      <ion-col size-lg=\"2\" size-md=\"2\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\"></ion-col>\n    </ion-row>\n\n\n    <!-- <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size=\"10\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n    </ion-row> -->\n\n\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n\n    <ion-row *ngIf=\"notificationData.length > 0\">\n      <ion-col size=\"10\"></ion-col>\n      <ion-col size=\"2\">\n        <ion-icon name=\"trash\" (click)=\"onDelete()\"></ion-icon>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngFor=\"let notification of notificationData; let i=index;\">\n      <ion-col size-lg=\"2\" size-md=\"2\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\">\n      </ion-col>\n      <ion-col size-lg=\"1\" size-md=\"1\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\">\n        <ion-checkbox (ionChange)=\"onDeleteDataSelect(notification.id)\"></ion-checkbox>\n      </ion-col>\n      <ion-col size-lg=\"7\" size-md=\"7\" size-sm=\"6\" size-xl=\"6\" size-xs=\"6\"\n        (click)=\"onNotificationDetaliPage(notification.id,notification.form_id,notification.form_type, notification.is_seen)\">\n        {{notification.message}}\n      </ion-col>\n      <ion-col size-lg=\"2\" size-md=\"2\" size-sm=\"2\" size-xl=\"2\" size-xs=\"2\"></ion-col>\n    </ion-row>\n\n<!-- \n    <ngx-datatable class=\"material\" [rows]=\"notificationData\" [headerHeight]=\"50\"\n      [footerHeight]=\"50\" rowHeight=\"auto\" [externalPaging]=\"true\" [count]=\"totalElements\" [offset]=\"offset\"\n      [limit]=\"size\" (page)=\"onNotificationLoad($event, '','web')\">\n\n      <ngx-datatable-column [minWidth]=\"10\" [resizeable]=\"true\" prop=\"id\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <ion-checkbox (ionChange)=\"onDeleteDataSelect(value)\"></ion-checkbox>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <ngx-datatable-column prop=\"message\" [minWidth]=\"50\" [resizeable]=\"true\">\n        <ng-template let-value=\"value\" ngx-datatable-cell-template let-row=\"row\">\n          <span title=\"Edit\" (click)=\"onNotificationDetaliPage(row)\">\n           {{value}}\n          </span>\n        </ng-template>\n      </ngx-datatable-column>\n\n      <div class=\"d-flex justify-content-center\">\n        <pagination-controls previousLabel=\"Prev\" nextLabel=\"Next\" (pageChange)=\"loadData($event, '', 'web')\">\n        </pagination-controls>\n      </div>\n\n    </ngx-datatable> -->\n\n  </div>\n</ion-content>";
       /***/
     }
   }]);

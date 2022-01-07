@@ -1,11 +1,10 @@
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Component, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { GlobalService } from './services/global-service/global.service';
+import { GlobalService } from 'src/app/services/global-service/global.service';
 import { environment } from 'src/environments/environment';
 
 @HostListener('window:resize', ['$event'])
-
 
 @Component({
   selector: 'app-root',
@@ -22,17 +21,21 @@ export class AppComponent {
     private _location: Location,
     private globalService: GlobalService,
   ) {
+    this.initializeApp();
+  }
+
+  initializeApp() {
+    // if (window.location.href == 'https://mforms-devel.horts.com.au/user-profile/superannuation-choice?frame=true') {
+    //   this.globalService.frame.next(true);
+    // }
+
     let token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-    // let token = userDetails && userDetails.email ? userDetails.email : '';
     if (token == '') {
       this.nav.navigateRoot("login");
     // } else {
     //   this.nav.navigateRoot("dashboard");
     }
-    this.initializeApp();
-  }
 
-  initializeApp() {
     if (this.platform.is('cordova')) {
       this.globalService.platform = 'cordova'
       // } else if (this.platform.is('android')) {
@@ -42,7 +45,6 @@ export class AppComponent {
     }
 
     document.body.setAttribute('color-theme', 'dark');
-
 
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
       if (this._location.isCurrentPathEqualTo('/login')) {
@@ -72,7 +74,7 @@ export class AppComponent {
     //   // console.log('dev/live', environment.API_URL);
     //   this.globalService.url.next(environment.API_URL);
     // }
-    console.log('aaa', window.location.href);
+    // console.log('aaa', window.location.href);
   }
 
   showExitConfirm() {

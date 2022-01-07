@@ -30,11 +30,11 @@ const routes = [
     },
     {
         path: 'incident-form',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form/incident-form.module */ 96394)).then(m => m.IncidentFormPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_services_loading-service_loadi-11094a"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form_incident-form_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form/incident-form.module */ 96394)).then(m => m.IncidentFormPageModule)
     },
     {
         path: 'incident-form-edit/:incident_id',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_modals_managers_managers_page_-bd3570"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_modals_image-modal_image-modal_page_ts-src_app_services_loading-service_loadi-11094a"), __webpack_require__.e("src_app_pages_home_safety-menu_incident_incident-form-edit_incident-form-edit_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./incident/incident-form-edit/incident-form-edit.module */ 97694)).then(m => m.IncidentFormEditPageModule)
     },
     {
         path: 'incident-details/:incident_id',

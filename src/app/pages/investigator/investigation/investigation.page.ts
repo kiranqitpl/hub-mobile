@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import moment from 'moment';
-import { GlobalService } from '../../../services/global-service/global.service';
-import { environment } from '../../../../environments/environment';
+import { GlobalService } from 'src/app/services/global-service/global.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-investigation',

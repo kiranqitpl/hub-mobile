@@ -217,8 +217,8 @@
       /* harmony import */
 
 
-      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ../../../services/global-service/global.service */
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
       89985);
 
       var _InvestigationViewPage = /*#__PURE__*/function () {
@@ -272,7 +272,7 @@
         }, {
           type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.ActivatedRoute
         }, {
-          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
         }];
       };
 

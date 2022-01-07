@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { GlobalService } from '../../services/global-service/global.service'
+import { GlobalService } from 'src/app/services/global-service/global.service'
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

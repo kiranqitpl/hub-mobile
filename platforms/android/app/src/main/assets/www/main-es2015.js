@@ -63,7 +63,7 @@ const routes = [
     },
     {
         path: 'managers',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modals_managers_managers_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modals/managers/managers.module */ 45108)).then(m => m.ManagersPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_shared-module_managers_managers_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./shared-module/managers/managers.module */ 13248)).then(m => m.ManagersPageModule)
     },
     {
         path: 'image-modal',
@@ -128,7 +128,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 38583);
-/* harmony import */ var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/global-service/global.service */ 89985);
+/* harmony import */ var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/global-service/global.service */ 89985);
 
 
 
@@ -143,16 +143,18 @@ let AppComponent = class AppComponent {
         this.alertController = alertController;
         this._location = _location;
         this.globalService = globalService;
+        this.initializeApp();
+    }
+    initializeApp() {
+        // if (window.location.href == 'https://mforms-devel.horts.com.au/user-profile/superannuation-choice?frame=true') {
+        //   this.globalService.frame.next(true);
+        // }
         let token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-        // let token = userDetails && userDetails.email ? userDetails.email : '';
         if (token == '') {
             this.nav.navigateRoot("login");
             // } else {
             //   this.nav.navigateRoot("dashboard");
         }
-        this.initializeApp();
-    }
-    initializeApp() {
         if (this.platform.is('cordova')) {
             this.globalService.platform = 'cordova';
             // } else if (this.platform.is('android')) {
@@ -189,7 +191,7 @@ let AppComponent = class AppComponent {
         //   // console.log('dev/live', environment.API_URL);
         //   this.globalService.url.next(environment.API_URL);
         // }
-        console.log('aaa', window.location.href);
+        // console.log('aaa', window.location.href);
     }
     showExitConfirm() {
         this.alertController.create({
@@ -221,7 +223,7 @@ AppComponent.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.Platform },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.AlertController },
     { type: _angular_common__WEBPACK_IMPORTED_MODULE_4__.Location },
-    { type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService }
+    { type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService }
 ];
 AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.HostListener)('window:resize', ['$event']),
@@ -271,6 +273,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import { FileOpener } from '@ionic-native/file-opener';
 
 
 // import { HeaderComponent } from './shared-component/header/header.component';
@@ -286,6 +289,7 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
             _app_routing_module__WEBPACK_IMPORTED_MODULE_5__.AppRoutingModule,
             _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpClientModule,
             _angular_forms__WEBPACK_IMPORTED_MODULE_11__.ReactiveFormsModule,
+            // CommonModule
         ],
         providers: [
             {
@@ -296,6 +300,7 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
             _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_1__.File,
             _ionic_native_base64_ngx__WEBPACK_IMPORTED_MODULE_2__.Base64,
             _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_3__.HTTP,
+            // FileOpener
             // HeaderComponent,
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__.AppComponent],
@@ -317,12 +322,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GlobalService": function() { return /* binding */ GlobalService; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 80476);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ 91841);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ 91841);
 /* harmony import */ var _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ionic-native/http/ngx */ 68589);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ 26215);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 92340);
+
 
 
 
@@ -332,10 +339,6 @@ __webpack_require__.r(__webpack_exports__);
 // import { environment } from 'src/environments/environment.prod';
 let GlobalService = class GlobalService {
     constructor(toastController, httpClient, http, loadingController) {
-        // this.url.subscribe(res => {
-        //   this.baseUrl = res
-        //   console.log("this.baseUrl 1", res)
-        // })
         this.toastController = toastController;
         this.httpClient = httpClient;
         this.http = http;
@@ -346,9 +349,14 @@ let GlobalService = class GlobalService {
         this.formType_user = 1;
         this.formType_investigator = 2;
         this.platform = '';
+        this.frame = new rxjs__WEBPACK_IMPORTED_MODULE_2__.BehaviorSubject(false);
+        // this.url.subscribe(res => {
+        //   this.baseUrl = res
+        //   console.log("this.baseUrl 1", res)
+        // })
     }
     presentToast(msg) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             const toast = yield this.toastController.create({
                 message: msg,
                 duration: 2000,
@@ -359,7 +367,7 @@ let GlobalService = class GlobalService {
         });
     }
     toast(msg, type) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             const toast = yield this.toastController.create({
                 message: msg,
                 duration: 2000,
@@ -371,7 +379,7 @@ let GlobalService = class GlobalService {
         });
     }
     presentLoading() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             const loading = yield this.loadingController.create({
                 cssClass: 'my-custom-class',
                 message: 'Please wait...'
@@ -380,12 +388,12 @@ let GlobalService = class GlobalService {
         });
     }
     dismissLoading() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
             yield this.loadingController.dismiss();
         });
     }
     setHeader() {
-        let header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders()
+        let header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders()
             .set('apikey', 'as*37486a*()HGY')
             .set('Access-Control-Allow-Origin', '*')
             // .set('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
@@ -400,11 +408,13 @@ let GlobalService = class GlobalService {
         console.log('postData baseUrl', this.baseUrl);
         let headers = this.setHeader();
         return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
+        // return this.httpClient.post('https://mforms-api-devel.horts.com.au/api/' + url, data, { headers: headers });
     }
     getData(url) {
         console.log('getData baseUrl', this.baseUrl);
         let headers = this.setHeader();
         return this.httpClient.get(this.baseUrl + url, { headers: headers });
+        // return this.httpClient.get('https://mforms-api-devel.horts.com.au/api/' + url, { headers: headers })
         // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
         //   map((response) => {
         //     console.log('response', response);
@@ -418,13 +428,13 @@ let GlobalService = class GlobalService {
     }
 };
 GlobalService.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ToastController },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ToastController },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpClient },
     { type: _ionic_native_http_ngx__WEBPACK_IMPORTED_MODULE_0__.HTTP },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.LoadingController }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.LoadingController }
 ];
-GlobalService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
+GlobalService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Injectable)({
         providedIn: 'root'
     })
 ], GlobalService);
@@ -454,7 +464,12 @@ const environment = {
     allType: 0,
     imageUrl: './assets/',
     API_URL: 'https://mforms-api-devel.horts.com.au/api/',
-    QA_API_URL: 'https://mforms-api-qa.horts.com.au/api/'
+    QA_API_URL: 'https://mforms-api-qa.horts.com.au/api/',
+    //---------------------------------------- Validators pattern ------------------------------------//
+    alphabet: /^[A-Z.a-z ]+[A-Za-z]+$/,
+    alphaNumeric: /^[a-zA-Z0-9]{10}$/,
+    numeric: /^[0-9]/
+    //---------------------------------------- Validators pattern ------------------------------------//
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -478,16 +493,16 @@ const environment = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ 24608);
-/* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app/app.module */ 36747);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./environments/environment */ 92340);
+/* harmony import */ var src_app_app_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/app.module */ 36747);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 92340);
 
 
 
 
-if (_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.production) {
+if (src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.production) {
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.enableProdMode)();
 }
-(0,_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__.platformBrowserDynamic)().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_0__.AppModule)
+(0,_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__.platformBrowserDynamic)().bootstrapModule(src_app_app_module__WEBPACK_IMPORTED_MODULE_0__.AppModule)
     .catch(err => console.log(err));
 
 

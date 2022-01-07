@@ -219,14 +219,14 @@
       /* harmony import */
 
 
-      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ../../../services/global-service/global.service */
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
       89985);
       /* harmony import */
 
 
-      var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! ../../../../environments/environment */
+      var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/environments/environment */
       92340);
 
       var _InvestigationPage = /*#__PURE__*/function () {
@@ -235,7 +235,7 @@
 
           this.nav = nav;
           this.global = global;
-          this.imageUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__.environment.imageUrl;
+          this.imageUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_4__.environment.imageUrl;
           this.loggedInUser = ''; // data: any = [];
 
           this.selected = 'Investigation team members';
@@ -781,7 +781,7 @@
         return [{
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController
         }, {
-          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
         }];
       };
 

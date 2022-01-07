@@ -20,6 +20,7 @@ export class GlobalService {
   formType_user = 1;
   formType_investigator = 2;
   platform: String = '';
+  frame = new BehaviorSubject(false);
 
   constructor(
     private toastController: ToastController,
@@ -84,13 +85,15 @@ export class GlobalService {
   postData(url, data) {
     console.log('postData baseUrl', this.baseUrl);
     let headers = this.setHeader();
-    return this.httpClient.post(this.baseUrl + url, data, { headers: headers });
+    return this.httpClient.post(this.baseUrl + url,data, { headers: headers })
+    // return this.httpClient.post('https://mforms-api-devel.horts.com.au/api/' + url, data, { headers: headers });
   }
 
   getData(url) {
     console.log('getData baseUrl', this.baseUrl);
     let headers = this.setHeader();
     return this.httpClient.get(this.baseUrl + url, { headers: headers })
+    // return this.httpClient.get('https://mforms-api-devel.horts.com.au/api/' + url, { headers: headers })
 
     // return this.httpClient.get(this.baseUrl + url, { headers: headers }).pipe(
     //   map((response) => {
@@ -102,7 +105,6 @@ export class GlobalService {
     //   }),
     //   catchError(() => of())
     // );
-
   }
 }
 // ---------------------------------------------  New Services --------------------------------------------------//

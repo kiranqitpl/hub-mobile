@@ -1,7 +1,7 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { GlobalService } from '../../services/global-service/global.service';
+import { GlobalService } from 'src/app/services/global-service/global.service';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({

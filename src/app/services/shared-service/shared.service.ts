@@ -1,5 +1,5 @@
 import { Injectable, } from '@angular/core';
-import { GlobalService } from '../global-service/global.service';
+import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { BehaviorSubject } from 'rxjs';

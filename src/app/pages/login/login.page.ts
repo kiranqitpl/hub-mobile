@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { NavController } from '@ionic/angular'
-import { GlobalService } from '../../services/global-service/global.service';
+import { GlobalService } from 'src/app/services/global-service/global.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { environment } from 'src/environments/environment';
