@@ -85,7 +85,7 @@ export class GlobalService {
   postData(url, data) {
     console.log('postData baseUrl', this.baseUrl);
     let headers = this.setHeader();
-    return this.httpClient.post(this.baseUrl + url,data, { headers: headers })
+    return this.httpClient.post(this.baseUrl + url, data, { headers: headers })
     // return this.httpClient.post('https://mforms-api-devel.horts.com.au/api/' + url, data, { headers: headers });
   }
 

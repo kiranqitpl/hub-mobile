@@ -232,8 +232,8 @@
       /* harmony import */
 
 
-      var _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ../../services/global-service/global.service */
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
       89985);
       /* harmony import */
 
@@ -311,7 +311,7 @@
         return [{
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.NavController
         }, {
-          type: _services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_3__.GlobalService
         }, {
           type: src_app_services_shared_service_shared_service__WEBPACK_IMPORTED_MODULE_4__.SharedService
         }];
@@ -365,8 +365,8 @@
       /* harmony import */
 
 
-      var _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ../global-service/global.service */
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
       89985);
       /* harmony import */
 
@@ -549,7 +549,7 @@
 
       _SharedService.ctorParameters = function () {
         return [{
-          type: _global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_0__.GlobalService
         }, {
           type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ActionSheetController
         }, {
@@ -595,7 +595,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n      <ion-col size-lg=\"6\" size-md=\"6\" size-sm=\"12\" size-xl=\"6\" size-xs=\"12\">\n        <div class=\"addForm\" (click)=\"onAddForm()\">\n          <img src=\"{{imageUrl + 'form.png'}}\" />\n          <p class=\" addF\">ADD FORM</p>\n        </div>\n      </ion-col>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n      <ion-col size-lg=\"6\" size-md=\"6\" size-sm=\"12\" size-xl=\"6\" size-xs=\"12\">\n        <ion-button class=\"btn\" routerLink=\"/user-profile\">\n          User Profile\n        </ion-button>\n        <div *ngFor=\"let tabVal of menu\">\n          <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n            {{tabVal.menuName}}\n            <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n              color=\"danger\">\n              {{sharedService.notViewNotiCount}}</ion-badge>\n          </ion-button>\n        </div>\n      </ion-col>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n    </ion-row>\n\n    <!-- <ion-button class=\"btn\">\n      <a href=\"https://logistics-devel.horts.com.au/index.php\" target=\"_blank\"> Test url </a>\n    </ion-button> -->\n\n    <ion-row>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n      <ion-col size-lg=\"6\" size-md=\"6\" size-sm=\"12\" size-xl=\"6\" size-xs=\"12\">\n        <ion-button class=\"btn logouts\" (click)=\"onLogOut()\"> Logout </ion-button>\n      </ion-col>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n    </ion-row>\n\n  </div>\n\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-content>\n  <app-header [pageName]=\"pName\"></app-header>\n  <div class=\"container\">\n    <ion-row>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n      <ion-col size-lg=\"6\" size-md=\"6\" size-sm=\"12\" size-xl=\"6\" size-xs=\"12\">\n        <div class=\"addForm\" (click)=\"onAddForm()\">\n          <img src=\"{{imageUrl + 'form.png'}}\" />\n          <p class=\" addF\">ADD FORM</p>\n        </div>\n      </ion-col>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n      <ion-col size-lg=\"6\" size-md=\"6\" size-sm=\"12\" size-xl=\"6\" size-xs=\"12\">\n        <!-- <ion-button class=\"btn\" routerLink=\"/user-profile\">\n          User Profile\n        </ion-button> -->\n        <div *ngFor=\"let tabVal of menu\">\n          <ion-button class=\"btn\" [routerLink]=\"tabVal.route\">\n            {{tabVal.menuName}}\n            <ion-badge class=\"badge\" *ngIf=\"tabVal.menuName == 'Notification' && sharedService.notViewNotiCount != 0\"\n              color=\"danger\">\n              {{sharedService.notViewNotiCount}}</ion-badge>\n          </ion-button>\n        </div>\n      </ion-col>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n    </ion-row>\n\n    <!-- <ion-button class=\"btn\">\n      <a href=\"https://logistics-devel.horts.com.au/index.php\" target=\"_blank\"> Test url </a>\n    </ion-button> -->\n\n    <ion-row>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n      <ion-col size-lg=\"6\" size-md=\"6\" size-sm=\"12\" size-xl=\"6\" size-xs=\"12\">\n        <ion-button class=\"btn logouts\" (click)=\"onLogOut()\"> Logout </ion-button>\n      </ion-col>\n      <ion-col size-lg=\"3\" size-md=\"3\"></ion-col>\n    </ion-row>\n\n  </div>\n\n</ion-content>";
       /***/
     }
   }]);

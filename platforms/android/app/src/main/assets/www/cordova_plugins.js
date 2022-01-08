@@ -341,6 +341,15 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "cordova.plugins.fileOpener2"
       ]
+    },
+    {
+      "id": "cordova-plugin-document-viewer.SitewaertsDocumentViewer",
+      "file": "plugins/cordova-plugin-document-viewer/www/sitewaertsdocumentviewer.js",
+      "pluginId": "cordova-plugin-document-viewer",
+      "clobbers": [
+        "cordova.plugins.SitewaertsDocumentViewer",
+        "SitewaertsDocumentViewer"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -355,6 +364,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-statusbar": "2.4.3",
     "cordova-plugin-whitelist": "1.3.5",
     "cordova-plugin-actionsheet": "2.3.3",
-    "cordova-plugin-file-opener2": "3.0.5"
+    "cordova-plugin-file-opener2": "3.0.5",
+    "cordova-plugin-document-viewer": "1.0.0"
   };
 });

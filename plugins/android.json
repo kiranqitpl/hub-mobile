@@ -46,6 +46,9 @@
     "cordova-plugin-file-opener2": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "io.ionic.hub"
+    },
+    "cordova-plugin-document-viewer": {
+      "PACKAGE_NAME": "io.ionic.hub"
     }
   },
   "dependent_plugins": {}

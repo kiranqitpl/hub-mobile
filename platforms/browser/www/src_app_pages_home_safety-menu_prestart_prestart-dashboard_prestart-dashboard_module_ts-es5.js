@@ -2507,62 +2507,6 @@
     },
 
     /***/
-    2217:
-    /*!**********************************************************!*\
-      !*** ./node_modules/rxjs/_esm2015/internal/Scheduler.js ***!
-      \**********************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "Scheduler": function Scheduler() {
-          return (
-            /* binding */
-            _Scheduler
-          );
-        }
-        /* harmony export */
-
-      });
-
-      var _Scheduler = /*#__PURE__*/function () {
-        function _Scheduler(SchedulerAction) {
-          var now = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Scheduler.now;
-
-          _classCallCheck(this, _Scheduler);
-
-          this.SchedulerAction = SchedulerAction;
-          this.now = now;
-        }
-
-        _createClass(_Scheduler, [{
-          key: "schedule",
-          value: function schedule(work) {
-            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-            var state = arguments.length > 2 ? arguments[2] : undefined;
-            return new this.SchedulerAction(this, work).schedule(state, delay);
-          }
-        }]);
-
-        return _Scheduler;
-      }();
-
-      _Scheduler.now = function () {
-        return Date.now();
-      }; //# sourceMappingURL=Scheduler.js.map
-
-      /***/
-
-    },
-
-    /***/
     40205:
     /*!**********************************************************************!*\
       !*** ./node_modules/rxjs/_esm2015/internal/observable/throwError.js ***!
@@ -3078,326 +3022,6 @@
     },
 
     /***/
-    22901:
-    /*!*****************************************************************!*\
-      !*** ./node_modules/rxjs/_esm2015/internal/scheduler/Action.js ***!
-      \*****************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "Action": function Action() {
-          return (
-            /* binding */
-            _Action
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var _Subscription__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ../Subscription */
-      10826);
-
-      var _Action = /*#__PURE__*/function (_Subscription__WEBPAC) {
-        _inherits(_Action, _Subscription__WEBPAC);
-
-        var _super6 = _createSuper(_Action);
-
-        function _Action(scheduler, work) {
-          _classCallCheck(this, _Action);
-
-          return _super6.call(this);
-        }
-
-        _createClass(_Action, [{
-          key: "schedule",
-          value: function schedule(state) {
-            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-            return this;
-          }
-        }]);
-
-        return _Action;
-      }(_Subscription__WEBPACK_IMPORTED_MODULE_0__.Subscription); //# sourceMappingURL=Action.js.map
-
-      /***/
-
-    },
-
-    /***/
-    401:
-    /*!**********************************************************************!*\
-      !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncAction.js ***!
-      \**********************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "AsyncAction": function AsyncAction() {
-          return (
-            /* binding */
-            _AsyncAction
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ./Action */
-      22901);
-
-      var _AsyncAction = /*#__PURE__*/function (_Action__WEBPACK_IMPO) {
-        _inherits(_AsyncAction, _Action__WEBPACK_IMPO);
-
-        var _super7 = _createSuper(_AsyncAction);
-
-        function _AsyncAction(scheduler, work) {
-          var _this13;
-
-          _classCallCheck(this, _AsyncAction);
-
-          _this13 = _super7.call(this, scheduler, work);
-          _this13.scheduler = scheduler;
-          _this13.work = work;
-          _this13.pending = false;
-          return _this13;
-        }
-
-        _createClass(_AsyncAction, [{
-          key: "schedule",
-          value: function schedule(state) {
-            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-            if (this.closed) {
-              return this;
-            }
-
-            this.state = state;
-            var id = this.id;
-            var scheduler = this.scheduler;
-
-            if (id != null) {
-              this.id = this.recycleAsyncId(scheduler, id, delay);
-            }
-
-            this.pending = true;
-            this.delay = delay;
-            this.id = this.id || this.requestAsyncId(scheduler, this.id, delay);
-            return this;
-          }
-        }, {
-          key: "requestAsyncId",
-          value: function requestAsyncId(scheduler, id) {
-            var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-            return setInterval(scheduler.flush.bind(scheduler, this), delay);
-          }
-        }, {
-          key: "recycleAsyncId",
-          value: function recycleAsyncId(scheduler, id) {
-            var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-
-            if (delay !== null && this.delay === delay && this.pending === false) {
-              return id;
-            }
-
-            clearInterval(id);
-            return undefined;
-          }
-        }, {
-          key: "execute",
-          value: function execute(state, delay) {
-            if (this.closed) {
-              return new Error('executing a cancelled action');
-            }
-
-            this.pending = false;
-
-            var error = this._execute(state, delay);
-
-            if (error) {
-              return error;
-            } else if (this.pending === false && this.id != null) {
-              this.id = this.recycleAsyncId(this.scheduler, this.id, null);
-            }
-          }
-        }, {
-          key: "_execute",
-          value: function _execute(state, delay) {
-            var errored = false;
-            var errorValue = undefined;
-
-            try {
-              this.work(state);
-            } catch (e) {
-              errored = true;
-              errorValue = !!e && e || new Error(e);
-            }
-
-            if (errored) {
-              this.unsubscribe();
-              return errorValue;
-            }
-          }
-        }, {
-          key: "_unsubscribe",
-          value: function _unsubscribe() {
-            var id = this.id;
-            var scheduler = this.scheduler;
-            var actions = scheduler.actions;
-            var index = actions.indexOf(this);
-            this.work = null;
-            this.state = null;
-            this.pending = false;
-            this.scheduler = null;
-
-            if (index !== -1) {
-              actions.splice(index, 1);
-            }
-
-            if (id != null) {
-              this.id = this.recycleAsyncId(scheduler, id, null);
-            }
-
-            this.delay = null;
-          }
-        }]);
-
-        return _AsyncAction;
-      }(_Action__WEBPACK_IMPORTED_MODULE_0__.Action); //# sourceMappingURL=AsyncAction.js.map
-
-      /***/
-
-    },
-
-    /***/
-    4548:
-    /*!*************************************************************************!*\
-      !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncScheduler.js ***!
-      \*************************************************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "AsyncScheduler": function AsyncScheduler() {
-          return (
-            /* binding */
-            _AsyncScheduler
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var _Scheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! ../Scheduler */
-      2217);
-
-      var _AsyncScheduler = /*#__PURE__*/function (_Scheduler__WEBPACK_I) {
-        _inherits(_AsyncScheduler, _Scheduler__WEBPACK_I);
-
-        var _super8 = _createSuper(_AsyncScheduler);
-
-        function _AsyncScheduler(SchedulerAction) {
-          var _this14;
-
-          var now = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler.now;
-
-          _classCallCheck(this, _AsyncScheduler);
-
-          _this14 = _super8.call(this, SchedulerAction, function () {
-            if (_AsyncScheduler.delegate && _AsyncScheduler.delegate !== _assertThisInitialized(_this14)) {
-              return _AsyncScheduler.delegate.now();
-            } else {
-              return now();
-            }
-          });
-          _this14.actions = [];
-          _this14.active = false;
-          _this14.scheduled = undefined;
-          return _this14;
-        }
-
-        _createClass(_AsyncScheduler, [{
-          key: "schedule",
-          value: function schedule(work) {
-            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-            var state = arguments.length > 2 ? arguments[2] : undefined;
-
-            if (_AsyncScheduler.delegate && _AsyncScheduler.delegate !== this) {
-              return _AsyncScheduler.delegate.schedule(work, delay, state);
-            } else {
-              return _get(_getPrototypeOf(_AsyncScheduler.prototype), "schedule", this).call(this, work, delay, state);
-            }
-          }
-        }, {
-          key: "flush",
-          value: function flush(action) {
-            var actions = this.actions;
-
-            if (this.active) {
-              actions.push(action);
-              return;
-            }
-
-            var error;
-            this.active = true;
-
-            do {
-              if (error = action.execute(action.state, action.delay)) {
-                break;
-              }
-            } while (action = actions.shift());
-
-            this.active = false;
-
-            if (error) {
-              while (action = actions.shift()) {
-                action.unsubscribe();
-              }
-
-              throw error;
-            }
-          }
-        }]);
-
-        return _AsyncScheduler;
-      }(_Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler); //# sourceMappingURL=AsyncScheduler.js.map
-
-      /***/
-
-    },
-
-    /***/
     99403:
     /*!**********************************************************************!*\
       !*** ./node_modules/rxjs/_esm2015/internal/scheduler/QueueAction.js ***!
@@ -3432,17 +3056,17 @@
       var _QueueAction = /*#__PURE__*/function (_AsyncAction__WEBPACK) {
         _inherits(_QueueAction, _AsyncAction__WEBPACK);
 
-        var _super9 = _createSuper(_QueueAction);
+        var _super6 = _createSuper(_QueueAction);
 
         function _QueueAction(scheduler, work) {
-          var _this15;
+          var _this13;
 
           _classCallCheck(this, _QueueAction);
 
-          _this15 = _super9.call(this, scheduler, work);
-          _this15.scheduler = scheduler;
-          _this15.work = work;
-          return _this15;
+          _this13 = _super6.call(this, scheduler, work);
+          _this13.scheduler = scheduler;
+          _this13.work = work;
+          return _this13;
         }
 
         _createClass(_QueueAction, [{
@@ -3519,12 +3143,12 @@
       var _QueueScheduler = /*#__PURE__*/function (_AsyncScheduler__WEBP) {
         _inherits(_QueueScheduler, _AsyncScheduler__WEBP);
 
-        var _super10 = _createSuper(_QueueScheduler);
+        var _super7 = _createSuper(_QueueScheduler);
 
         function _QueueScheduler() {
           _classCallCheck(this, _QueueScheduler);
 
-          return _super10.apply(this, arguments);
+          return _super7.apply(this, arguments);
         }
 
         return _QueueScheduler;
@@ -3831,19 +3455,19 @@
         }, {
           key: "loadFavoriteList",
           value: function loadFavoriteList() {
-            var _this16 = this;
+            var _this14 = this;
 
             this.globalService.getData('PrestartMenu/get_PrestartMenu').subscribe(function (result) {
               if (result['status']) {
-                _this16.menuData = result['data']['menu'].sort(function (a, b) {
+                _this14.menuData = result['data']['menu'].sort(function (a, b) {
                   return (// console.log(a.original_postion, b.original_postion)
                     // console.log(a['original_position'], b['original_position'])
                     parseInt(a['original_postion']) - parseInt(b['original_postion'])
                   );
                 });
-                _this16.rowId = result['data']['id'];
+                _this14.rowId = result['data']['id'];
               } else {
-                _this16.menuData = [];
+                _this14.menuData = [];
               }
             }, function (error) {
               console.log(error);
@@ -3852,7 +3476,7 @@
         }, {
           key: "onFavorite",
           value: function onFavorite(tabname, val) {
-            var _this17 = this;
+            var _this15 = this;
 
             console.log('this.menuData 1', this.menuData);
             this.menuData.filter(function (ele) {
@@ -3870,9 +3494,9 @@
             this.globalService.postData('PrestartMenu/submit', data).subscribe(function (result) {
               if (result['status']) {
                 if (val == true) {
-                  _this17.toastService.toast('This form is added in your favorite list.', 'success');
+                  _this15.toastService.toast('This form is added in your favorite list.', 'success');
                 } else if (val == false) {
-                  _this17.toastService.toast('This form is removed from your favorite list.', 'success');
+                  _this15.toastService.toast('This form is removed from your favorite list.', 'success');
                 }
               }
             }, function (error) {

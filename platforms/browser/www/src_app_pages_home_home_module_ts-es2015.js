@@ -125,7 +125,7 @@ let HomePage = class HomePage {
             },
             {
                 // menuName: "HR", route: "/home/hr/on-boarding"
-                menuName: "HR", route: "#"
+                menuName: "HR", route: "/user-profile"
             },
             {
                 menuName: "Projects", route: "#"

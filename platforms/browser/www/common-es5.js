@@ -1,4 +1,22 @@
 (function () {
+  function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+  function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+  function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -712,6 +730,382 @@
     },
 
     /***/
+    2217:
+    /*!**********************************************************!*\
+      !*** ./node_modules/rxjs/_esm2015/internal/Scheduler.js ***!
+      \**********************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "Scheduler": function Scheduler() {
+          return (
+            /* binding */
+            _Scheduler
+          );
+        }
+        /* harmony export */
+
+      });
+
+      var _Scheduler = /*#__PURE__*/function () {
+        function _Scheduler(SchedulerAction) {
+          var now = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Scheduler.now;
+
+          _classCallCheck(this, _Scheduler);
+
+          this.SchedulerAction = SchedulerAction;
+          this.now = now;
+        }
+
+        _createClass(_Scheduler, [{
+          key: "schedule",
+          value: function schedule(work) {
+            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+            var state = arguments.length > 2 ? arguments[2] : undefined;
+            return new this.SchedulerAction(this, work).schedule(state, delay);
+          }
+        }]);
+
+        return _Scheduler;
+      }();
+
+      _Scheduler.now = function () {
+        return Date.now();
+      }; //# sourceMappingURL=Scheduler.js.map
+
+      /***/
+
+    },
+
+    /***/
+    22901:
+    /*!*****************************************************************!*\
+      !*** ./node_modules/rxjs/_esm2015/internal/scheduler/Action.js ***!
+      \*****************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "Action": function Action() {
+          return (
+            /* binding */
+            _Action
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var _Subscription__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ../Subscription */
+      10826);
+
+      var _Action = /*#__PURE__*/function (_Subscription__WEBPAC) {
+        _inherits(_Action, _Subscription__WEBPAC);
+
+        var _super = _createSuper(_Action);
+
+        function _Action(scheduler, work) {
+          _classCallCheck(this, _Action);
+
+          return _super.call(this);
+        }
+
+        _createClass(_Action, [{
+          key: "schedule",
+          value: function schedule(state) {
+            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+            return this;
+          }
+        }]);
+
+        return _Action;
+      }(_Subscription__WEBPACK_IMPORTED_MODULE_0__.Subscription); //# sourceMappingURL=Action.js.map
+
+      /***/
+
+    },
+
+    /***/
+    401:
+    /*!**********************************************************************!*\
+      !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncAction.js ***!
+      \**********************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "AsyncAction": function AsyncAction() {
+          return (
+            /* binding */
+            _AsyncAction
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ./Action */
+      22901);
+
+      var _AsyncAction = /*#__PURE__*/function (_Action__WEBPACK_IMPO) {
+        _inherits(_AsyncAction, _Action__WEBPACK_IMPO);
+
+        var _super2 = _createSuper(_AsyncAction);
+
+        function _AsyncAction(scheduler, work) {
+          var _this;
+
+          _classCallCheck(this, _AsyncAction);
+
+          _this = _super2.call(this, scheduler, work);
+          _this.scheduler = scheduler;
+          _this.work = work;
+          _this.pending = false;
+          return _this;
+        }
+
+        _createClass(_AsyncAction, [{
+          key: "schedule",
+          value: function schedule(state) {
+            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            if (this.closed) {
+              return this;
+            }
+
+            this.state = state;
+            var id = this.id;
+            var scheduler = this.scheduler;
+
+            if (id != null) {
+              this.id = this.recycleAsyncId(scheduler, id, delay);
+            }
+
+            this.pending = true;
+            this.delay = delay;
+            this.id = this.id || this.requestAsyncId(scheduler, this.id, delay);
+            return this;
+          }
+        }, {
+          key: "requestAsyncId",
+          value: function requestAsyncId(scheduler, id) {
+            var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+            return setInterval(scheduler.flush.bind(scheduler, this), delay);
+          }
+        }, {
+          key: "recycleAsyncId",
+          value: function recycleAsyncId(scheduler, id) {
+            var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+            if (delay !== null && this.delay === delay && this.pending === false) {
+              return id;
+            }
+
+            clearInterval(id);
+            return undefined;
+          }
+        }, {
+          key: "execute",
+          value: function execute(state, delay) {
+            if (this.closed) {
+              return new Error('executing a cancelled action');
+            }
+
+            this.pending = false;
+
+            var error = this._execute(state, delay);
+
+            if (error) {
+              return error;
+            } else if (this.pending === false && this.id != null) {
+              this.id = this.recycleAsyncId(this.scheduler, this.id, null);
+            }
+          }
+        }, {
+          key: "_execute",
+          value: function _execute(state, delay) {
+            var errored = false;
+            var errorValue = undefined;
+
+            try {
+              this.work(state);
+            } catch (e) {
+              errored = true;
+              errorValue = !!e && e || new Error(e);
+            }
+
+            if (errored) {
+              this.unsubscribe();
+              return errorValue;
+            }
+          }
+        }, {
+          key: "_unsubscribe",
+          value: function _unsubscribe() {
+            var id = this.id;
+            var scheduler = this.scheduler;
+            var actions = scheduler.actions;
+            var index = actions.indexOf(this);
+            this.work = null;
+            this.state = null;
+            this.pending = false;
+            this.scheduler = null;
+
+            if (index !== -1) {
+              actions.splice(index, 1);
+            }
+
+            if (id != null) {
+              this.id = this.recycleAsyncId(scheduler, id, null);
+            }
+
+            this.delay = null;
+          }
+        }]);
+
+        return _AsyncAction;
+      }(_Action__WEBPACK_IMPORTED_MODULE_0__.Action); //# sourceMappingURL=AsyncAction.js.map
+
+      /***/
+
+    },
+
+    /***/
+    4548:
+    /*!*************************************************************************!*\
+      !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncScheduler.js ***!
+      \*************************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "AsyncScheduler": function AsyncScheduler() {
+          return (
+            /* binding */
+            _AsyncScheduler
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var _Scheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ../Scheduler */
+      2217);
+
+      var _AsyncScheduler = /*#__PURE__*/function (_Scheduler__WEBPACK_I) {
+        _inherits(_AsyncScheduler, _Scheduler__WEBPACK_I);
+
+        var _super3 = _createSuper(_AsyncScheduler);
+
+        function _AsyncScheduler(SchedulerAction) {
+          var _this2;
+
+          var now = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler.now;
+
+          _classCallCheck(this, _AsyncScheduler);
+
+          _this2 = _super3.call(this, SchedulerAction, function () {
+            if (_AsyncScheduler.delegate && _AsyncScheduler.delegate !== _assertThisInitialized(_this2)) {
+              return _AsyncScheduler.delegate.now();
+            } else {
+              return now();
+            }
+          });
+          _this2.actions = [];
+          _this2.active = false;
+          _this2.scheduled = undefined;
+          return _this2;
+        }
+
+        _createClass(_AsyncScheduler, [{
+          key: "schedule",
+          value: function schedule(work) {
+            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+            var state = arguments.length > 2 ? arguments[2] : undefined;
+
+            if (_AsyncScheduler.delegate && _AsyncScheduler.delegate !== this) {
+              return _AsyncScheduler.delegate.schedule(work, delay, state);
+            } else {
+              return _get(_getPrototypeOf(_AsyncScheduler.prototype), "schedule", this).call(this, work, delay, state);
+            }
+          }
+        }, {
+          key: "flush",
+          value: function flush(action) {
+            var actions = this.actions;
+
+            if (this.active) {
+              actions.push(action);
+              return;
+            }
+
+            var error;
+            this.active = true;
+
+            do {
+              if (error = action.execute(action.state, action.delay)) {
+                break;
+              }
+            } while (action = actions.shift());
+
+            this.active = false;
+
+            if (error) {
+              while (action = actions.shift()) {
+                action.unsubscribe();
+              }
+
+              throw error;
+            }
+          }
+        }]);
+
+        return _AsyncScheduler;
+      }(_Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler); //# sourceMappingURL=AsyncScheduler.js.map
+
+      /***/
+
+    },
+
+    /***/
     96022:
     /*!*********************************************************!*\
       !*** ./src/app/services/alert-service/alert.service.ts ***!
@@ -767,7 +1161,7 @@
           key: "alertWithBack",
           value: function alertWithBack(message) {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              var _this = this;
+              var _this3 = this;
 
               var alert;
               return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -785,7 +1179,7 @@
                           text: 'Ok',
                           role: 'Ok',
                           handler: function handler() {
-                            _this.navCtrl.back();
+                            _this3.navCtrl.back();
                           }
                         }]
                       });
@@ -1046,11 +1440,18 @@
 
           this.nav = nav;
           this.userDetails = '';
+          this.frame = false;
         }
 
         _createClass(HeaderComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
+            console.log('location', window.location.href);
+
+            if (window.location.href == 'https://mforms-devel.horts.com.au/user-profile/superannuation-choice?frame=true' || window.location.href == 'https://mforms-devel.horts.com.au/user-profile/bank-account?frame=true' || window.location.href == 'https://mforms-devel.horts.com.au/user-profile/profile?frame=true') {
+              this.frame = true;
+            }
+
             this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             console.log('this.userDetails', this.userDetails);
           }
@@ -1095,6 +1496,163 @@
     },
 
     /***/
+    29081:
+    /*!*********************************************************!*\
+      !*** ./src/app/shared-module/managers/managers.page.ts ***!
+      \*********************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "ManagersPage": function ManagersPage() {
+          return (
+            /* binding */
+            _ManagersPage
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! !raw-loader!./managers.page.html */
+      27722);
+      /* harmony import */
+
+
+      var _managers_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./managers.page.scss */
+      99986);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @ionic/angular */
+      80476);
+      /* harmony import */
+
+
+      var src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/services/global-service/global.service */
+      89985);
+      /* harmony import */
+
+
+      var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! rxjs */
+      26215);
+
+      var _ManagersPage = /*#__PURE__*/function () {
+        function ManagersPage(modal, global) {
+          _classCallCheck(this, ManagersPage);
+
+          this.modal = modal;
+          this.global = global;
+          this.newList = new rxjs__WEBPACK_IMPORTED_MODULE_3__.BehaviorSubject([]);
+          this.dataList = [];
+        }
+
+        _createClass(ManagersPage, [{
+          key: "ionViewWillEnter",
+          value: function ionViewWillEnter() {}
+        }, {
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            // console.log('get list in modal', this.list);
+            this.newList.next(this.list);
+          }
+        }, {
+          key: "onSearch",
+          value: function onSearch(event) {
+            var _this4 = this;
+
+            var value = false;
+            this.list.filter(function (element) {
+              if (element.full_name == event.detail.value) {
+                value = true;
+              }
+            }); // this.list.forEach(element => {
+            //   if (element.full_name == event.detail.value) {
+            //     value = true;
+            //   }
+            // });
+
+            if (value == false && event != '') {
+              this.newList.next([]);
+              this.global.getData("user/getallemployee/?term=" + event.detail.value).subscribe(function (res) {
+                if (res && res.data && res.data.length > 0) {
+                  res.data.unshift({
+                    full_name: "Other",
+                    employee_id: '0'
+                  });
+
+                  _this4.newList.next(res.data);
+                } else {
+                  _this4.newList.next(_this4.list);
+                }
+              }, function (err) {
+                console.log(err);
+              });
+            }
+          }
+        }, {
+          key: "onClose",
+          value: function onClose(item) {
+            this.modal.dismiss(item);
+          }
+        }]);
+
+        return ManagersPage;
+      }();
+
+      _ManagersPage.ctorParameters = function () {
+        return [{
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ModalController
+        }, {
+          type: src_app_services_global_service_global_service__WEBPACK_IMPORTED_MODULE_2__.GlobalService
+        }];
+      };
+
+      _ManagersPage.propDecorators = {
+        header: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+          args: ['header']
+        }],
+        list: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+          args: ['list']
+        }]
+      };
+      _ManagersPage = (0, tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+        selector: 'app-managers',
+        template: _raw_loader_managers_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_managers_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
+      })], _ManagersPage);
+      /***/
+    },
+
+    /***/
     69270:
     /*!*******************************************************!*\
       !*** ./src/app/shared-module/shared-module.module.ts ***!
@@ -1122,19 +1680,19 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @angular/common */
       38583);
       /* harmony import */
@@ -1143,16 +1701,22 @@
       var _header_header_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! ./header/header.component */
       68366);
+      /* harmony import */
+
+
+      var _managers_managers_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./managers/managers.page */
+      29081);
 
       var _SharedModuleModule = function SharedModuleModule() {
         _classCallCheck(this, SharedModuleModule);
       };
 
-      _SharedModuleModule = (0, tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
-        declarations: [_header_header_component__WEBPACK_IMPORTED_MODULE_0__.HeaderComponent],
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule],
-        exports: [_header_header_component__WEBPACK_IMPORTED_MODULE_0__.HeaderComponent],
-        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_2__.CUSTOM_ELEMENTS_SCHEMA]
+      _SharedModuleModule = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.NgModule)({
+        declarations: [_header_header_component__WEBPACK_IMPORTED_MODULE_0__.HeaderComponent, _managers_managers_page__WEBPACK_IMPORTED_MODULE_1__.ManagersPage],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.CommonModule],
+        exports: [_header_header_component__WEBPACK_IMPORTED_MODULE_0__.HeaderComponent, _managers_managers_page__WEBPACK_IMPORTED_MODULE_1__.ManagersPage],
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_3__.CUSTOM_ELEMENTS_SCHEMA]
       })], _SharedModuleModule);
       /***/
     },
@@ -1176,6 +1740,24 @@
     },
 
     /***/
+    99986:
+    /*!***********************************************************!*\
+      !*** ./src/app/shared-module/managers/managers.page.scss ***!
+      \***********************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "ion-input {\n  color: white !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hbmFnZXJzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF3QkE7RUFDRSx1QkFBQTtBQXZCRiIsImZpbGUiOiJtYW5hZ2Vycy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBpb24taGVhZGVyIHtcbi8vICAgaW9uLXRpdGxlIHtcbi8vICAgICBmb250LWZhbWlseTogbW9uLWJvbGQ7XG4vLyAgIH1cbi8vIH1cbi8vIGlvbi1jb250ZW50IHtcbi8vICAgaW9uLWl0ZW0ge1xuLy8gICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjY2NjY2NjO1xuLy8gICAgIGlvbi1sYWJlbCB7XG4vLyAgICAgICBmb250LWZhbWlseTogJ21vbi1tZWRpdW0nO1xuLy8gICAgICAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XG4vLyAgICAgfVxuLy8gICB9XG4vLyAgIGlvbi1pbnB1dHtcblxuLy8gICAgIGJhY2tncm91bmQ6IHZhcigtLXRoZW1lLXdoaXRlLWNvbG9yKTtcbi8vICAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xuLy8gICAgIGZvbnQtZmFtaWx5OiAnbW9uLW1lZGl1bSc7XG4vLyAgICAgaGVpZ2h0OiA1MnB4O1xuLy8gICAgIG1hcmdpbi10b3A6IDE4cHg7XG5cbi8vICAgfVxuLy8gfVxuXG5pb24taW5wdXQge1xuICBjb2xvcjogd2hpdGUgIWltcG9ydGFudDtcbn1cbiJdfQ== */";
+      /***/
+    },
+
+    /***/
     31476:
     /*!**************************************************************************************************!*\
       !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/shared-module/header/header.component.html ***!
@@ -1189,7 +1771,25 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<div class=\"toolbar\">\n\n  <!-- <ion-row>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-buttons *ngIf=\"pageName != 'Dashboard'\">\n        <ion-button (click)=\"onGoBack()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-text>{{pageName}}</ion-text>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <span>\n        <ion-avatar class=\"user-image\">\n          <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n        </ion-avatar>\n      </span>\n      <span> {{userDetails.full_name}} </span>\n      <span (click)=\"onUserProfile()\">\n\n\n        <div class=\"menu-nav\">\n          <div class=\"dropdown-container\" tabindex=\"-1\">\n            <ion-icon name=\"chevron-down-outline\"></ion-icon>\n            <div class=\"dropdown\">\n              <a href=\"#\">\n                <div>click here for a scam</div>\n              </a>\n              <a href=\"#\">\n                <div>even more scams</div>\n              </a>\n              <a href=\"#\">\n                <div>still some money left?</div>\n              </a>\n            </div>\n          </div>\n        </div>\n      </span>\n    </ion-col>\n  </ion-row> -->\n\n\n\n\n  <ion-text>{{pageName}}</ion-text>\n  <ion-buttons class='back' *ngIf=\"pageName != 'Dashboard'\">\n    <ion-button (click)=\"onGoBack()\">\n      <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n  <ion-buttons class='logout'>\n    <ion-button (click)=\"onLogOut()\">\n      <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n    </ion-button>\n  </ion-buttons>\n</div>";
+      __webpack_exports__["default"] = "<div class=\"toolbar\">\n\n  <!-- <ion-row>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-buttons *ngIf=\"pageName != 'Dashboard'\">\n        <ion-button (click)=\"onGoBack()\">\n          <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <ion-text>{{pageName}}</ion-text>\n    </ion-col>\n\n    <ion-col size-xl=\"4\" size-lg=\"4\" size-md=\"4\" size-sm=\"4\" size-xs=\"4\">\n      <span>\n        <ion-avatar class=\"user-image\">\n          <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n        </ion-avatar>\n      </span>\n      <span> {{userDetails.full_name}} </span>\n      <span (click)=\"onUserProfile()\">\n\n\n        <div class=\"menu-nav\">\n          <div class=\"dropdown-container\" tabindex=\"-1\">\n            <ion-icon name=\"chevron-down-outline\"></ion-icon>\n            <div class=\"dropdown\">\n              <a href=\"#\">\n                <div>click here for a scam</div>\n              </a>\n              <a href=\"#\">\n                <div>even more scams</div>\n              </a>\n              <a href=\"#\">\n                <div>still some money left?</div>\n              </a>\n            </div>\n          </div>\n        </div>\n      </span>\n    </ion-col>\n  </ion-row> -->\n\n\n  <ion-text>{{pageName}}</ion-text>\n\n  <span *ngIf=\"frame == false\">\n    <ion-buttons class='back' *ngIf=\"pageName != 'Dashboard'\">\n      <ion-button (click)=\"onGoBack()\">\n        <ion-icon slot=\"icon-only\" name=\"chevron-back\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-buttons class='logout'>\n      <ion-button (click)=\"onLogOut()\">\n        <ion-icon slot=\"icon-only\" name=\"log-out-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </span>\n</div>";
+      /***/
+    },
+
+    /***/
+    27722:
+    /*!*************************************************************************************************!*\
+      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/shared-module/managers/managers.page.html ***!
+      \*************************************************************************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>{{header}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"onClose()\">\n        <ion-icon name=\"onClose\" slot=\"icon-only\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <!-- <ion-input placeholder=\"Search\" [(ngModel)]=\"term\" (ionChange)=\"onSearch($event)\"></ion-input> -->\n  <ion-input placeholder=\"Search\" (ionChange)=\"onSearch($event)\"></ion-input>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list>\n    <!-- <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"onClose(item)\"\n      *ngFor=\"let item of newList.value | filter:term\"> -->\n    <ion-item button class=\"ion-no-padding\" lines=\"none\" (click)=\"onClose(item)\" *ngFor=\"let item of newList.value\">\n      <ion-label>{{item?.full_name}}</ion-label>\n    </ion-item>\n  </ion-list>\n</ion-content>";
       /***/
     }
   }]);

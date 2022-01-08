@@ -27,7 +27,6 @@ export class SuperannuationChoicePage implements OnInit {
 
   ngOnInit() {
 
-
     this.superannuation = this.fb.group({
       super_contribution: ['RSA'],
 
@@ -72,10 +71,6 @@ export class SuperannuationChoicePage implements OnInit {
   //   console.log('this.superannuation.controls',this.superannuation.value['super_contribution']);
   // }
 
-  onKeyUp(event) {
-    console.log('event', event);
-  }
-
   onSubmit() {
     if (this.superannuation.value['super_contribution'] == 'RSA' && this.superannuation.value['rsa_fund_name'] == '') {
       this.isSubmitted = true;
@@ -110,5 +105,6 @@ export class SuperannuationChoicePage implements OnInit {
       this.isSubmitted = true;
     }
   }
+
 
 }

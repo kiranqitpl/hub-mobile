@@ -94,7 +94,15 @@
   "cordova-plugin-file-opener2": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-file-opener2"
+      "id": "cordova-plugin-file-opener2@^3.0.5"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-document-viewer": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-document-viewer@^1.0.0"
     },
     "is_top_level": true,
     "variables": {}
