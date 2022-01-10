@@ -5,7 +5,7 @@ import { UserProfilePage } from './pages/user-profile/user-profile.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {

@@ -4,10 +4,10 @@
 
     <ion-row>
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
-      <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12" [formGroup]="superannuation">
+      <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12" >
 
         <ion-card>
-          <ion-radio-group formControlName="super_contribution">
+          <ion-radio-group [(ngModel)]="super_contribution" value="super_contribution" (ionChange)="onFormSelection($event)">
             <ion-item lines="none" size="12">
               <ion-label class="ion-text-wrap">I request all of my future super contributions to be paid to :
               </ion-label>
@@ -39,9 +39,9 @@
           </ion-item>
         </ion-card>
 
-        <ion-card>
+        <ion-card [formGroup]="superannuation">
 
-          <div *ngIf="superannuation.value['super_contribution']== 'RSA'">
+          <div *ngIf="super_contribution== 'RSA'">
 
             <ion-row>
               <ion-col size="12">
@@ -190,7 +190,7 @@
               </ion-col>
 
               <ion-col size="12">
-                <ion-input type="file" formControlName="rsa_attach_compliance_letter" (click)="onDocPreview($event)">
+                <ion-input type="file" (change)="onDocPreview($event)">
                 </ion-input>
               </ion-col>
 
@@ -201,7 +201,7 @@
 
           </div>
 
-          <div *ngIf="superannuation.value['super_contribution'] == 'SMSF'">
+          <div *ngIf="super_contribution== 'SMSF'">
             <ion-row>
               <ion-col size="12">
                 <ion-label class="lable-text"> Fund ABN</ion-label>
@@ -222,6 +222,9 @@
             <ion-row>
               <span class="error" *ngIf="superannuation.controls['smsf_fund_name'].errors?.pattern">
                 Please enter alphabets.
+              </span>
+              <span class="error" *ngIf="isSubmitted && superannuation.controls['smsf_fund_name'].value == ''">
+                Please enter fund name.
               </span>
             </ion-row>
 
@@ -341,8 +344,7 @@
               <ion-col size="12">
                 <ion-label class="ion-text-wrap mandatoryField">* If you are the turstee, or a director of the
                   corporate trustee you can confirm that your SMSF will accpet contribution from your employer by making
-                  the
-                  following declaration :
+                  the following declaration :
                 </ion-label>
               </ion-col>
               <ion-col size="12">
@@ -396,7 +398,7 @@
             </ion-row>
           </div>
 
-          <div *ngIf="superannuation.value['super_contribution'] == 'emploper'">
+          <div *ngIf="super_contribution == 'emploper'">
             <ion-row>
               <ion-col size="12">
                 <ion-label class="lable-text">Super Fund Name</ion-label>
@@ -408,6 +410,9 @@
             <ion-row>
               <span class="error" *ngIf="superannuation.controls['employee_fund_name'].errors?.pattern">
                 Please enter alphabets.
+              </span>
+              <span class="error" *ngIf="isSubmitted && superannuation.controls['employee_fund_name'].value == ''">
+                Please enter super fund name.
               </span>
             </ion-row>
 

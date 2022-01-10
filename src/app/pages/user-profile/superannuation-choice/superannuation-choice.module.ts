@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
     SharedModuleModule,
     ReactiveFormsModule
   ],
-  declarations: [SuperannuationChoicePage]
+  declarations: [SuperannuationChoicePage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SuperannuationChoicePageModule {}

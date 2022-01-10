@@ -9,6 +9,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+      "id": "cordova-plugin-actionsheet.ActionSheet",
+      "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+      "pluginId": "cordova-plugin-actionsheet",
+      "clobbers": [
+        "window.plugins.actionsheet"
+      ]
+    },
+    {
       "id": "cordova-plugin-file.DirectoryEntry",
       "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
       "pluginId": "cordova-plugin-file",
@@ -295,6 +303,23 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+      "id": "cordova-plugin-document-viewer.SitewaertsDocumentViewer",
+      "file": "plugins/cordova-plugin-document-viewer/www/sitewaertsdocumentviewer.js",
+      "pluginId": "cordova-plugin-document-viewer",
+      "clobbers": [
+        "cordova.plugins.SitewaertsDocumentViewer",
+        "SitewaertsDocumentViewer"
+      ]
+    },
+    {
+      "id": "cordova-plugin-file-opener2.FileOpener2",
+      "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
+      "pluginId": "cordova-plugin-file-opener2",
+      "clobbers": [
+        "cordova.plugins.fileOpener2"
+      ]
+    },
+    {
       "id": "cordova-plugin-ionic-keyboard.keyboard",
       "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
       "pluginId": "cordova-plugin-ionic-keyboard",
@@ -325,46 +350,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "window.StatusBar"
       ]
-    },
-    {
-      "id": "cordova-plugin-actionsheet.ActionSheet",
-      "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
-      "pluginId": "cordova-plugin-actionsheet",
-      "clobbers": [
-        "window.plugins.actionsheet"
-      ]
-    },
-    {
-      "id": "cordova-plugin-file-opener2.FileOpener2",
-      "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
-      "pluginId": "cordova-plugin-file-opener2",
-      "clobbers": [
-        "cordova.plugins.fileOpener2"
-      ]
-    },
-    {
-      "id": "cordova-plugin-document-viewer.SitewaertsDocumentViewer",
-      "file": "plugins/cordova-plugin-document-viewer/www/sitewaertsdocumentviewer.js",
-      "pluginId": "cordova-plugin-document-viewer",
-      "clobbers": [
-        "cordova.plugins.SitewaertsDocumentViewer",
-        "SitewaertsDocumentViewer"
-      ]
     }
   ];
   module.exports.metadata = {
     "com-badrit-base64": "0.2.0",
+    "cordova-plugin-actionsheet": "2.3.3",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-advanced-http": "3.2.2",
+    "cordova-plugin-androidx-adapter": "1.1.3",
     "cordova-plugin-camera": "5.0.3",
     "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-document-viewer": "1.0.0",
+    "cordova-plugin-file-opener2": "3.0.5",
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-ionic-webview": "4.2.1",
     "cordova-plugin-splashscreen": "5.0.4",
     "cordova-plugin-statusbar": "2.4.3",
-    "cordova-plugin-whitelist": "1.3.5",
-    "cordova-plugin-actionsheet": "2.3.3",
-    "cordova-plugin-file-opener2": "3.0.5",
-    "cordova-plugin-document-viewer": "1.0.0"
+    "cordova-plugin-whitelist": "1.3.5"
   };
 });

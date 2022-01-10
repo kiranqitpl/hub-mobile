@@ -10,8 +10,14 @@
     "com-badrit-base64": {
       "PACKAGE_NAME": "io.ionic.hub"
     },
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "io.ionic.hub"
+    },
     "cordova-plugin-advanced-http": {
       "ANDROIDBLACKLISTSECURESOCKETPROTOCOLS": "SSLv3,TLSv1",
+      "PACKAGE_NAME": "io.ionic.hub"
+    },
+    "cordova-plugin-androidx-adapter": {
       "PACKAGE_NAME": "io.ionic.hub"
     },
     "cordova-plugin-camera": {
@@ -21,7 +27,14 @@
     "cordova-plugin-device": {
       "PACKAGE_NAME": "io.ionic.hub"
     },
+    "cordova-plugin-document-viewer": {
+      "PACKAGE_NAME": "io.ionic.hub"
+    },
     "cordova-plugin-file": {
+      "PACKAGE_NAME": "io.ionic.hub"
+    },
+    "cordova-plugin-file-opener2": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "io.ionic.hub"
     },
     "cordova-plugin-ionic-keyboard": {
@@ -38,16 +51,6 @@
       "PACKAGE_NAME": "io.ionic.hub"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.ionic.hub"
-    },
-    "cordova-plugin-actionsheet": {
-      "PACKAGE_NAME": "io.ionic.hub"
-    },
-    "cordova-plugin-file-opener2": {
-      "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "io.ionic.hub"
-    },
-    "cordova-plugin-document-viewer": {
       "PACKAGE_NAME": "io.ionic.hub"
     }
   },

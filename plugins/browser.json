@@ -46,6 +46,12 @@
     },
     "cordova-plugin-document-viewer": {
       "PACKAGE_NAME": "io.ionic.hub"
+    },
+    "cordova-plugin-androidx": {
+      "PACKAGE_NAME": "io.ionic.hub"
+    },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "io.ionic.hub"
     }
   },
   "dependent_plugins": {}

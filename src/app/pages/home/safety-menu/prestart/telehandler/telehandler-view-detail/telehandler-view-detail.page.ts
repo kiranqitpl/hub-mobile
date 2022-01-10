@@ -43,4 +43,8 @@ export class TelehandlerViewDetailPage implements OnInit {
     }
   }
 
+  onOpenPreview(event){
+    console.log('event',event);
+  }
+
 }

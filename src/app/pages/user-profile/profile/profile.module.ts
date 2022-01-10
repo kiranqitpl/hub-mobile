@@ -10,7 +10,7 @@ import { ProfilePage } from './profile.page';
 
 import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ProfilePageRoutingModule,
     SharedModuleModule,
     ReactiveFormsModule,
-    PdfViewerModule],
+    // PdfViewerModule
+  ],
   declarations: [ProfilePage]
 })
 export class ProfilePageModule { }

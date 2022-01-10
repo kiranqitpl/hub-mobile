@@ -127,7 +127,6 @@ export class NotificationPage implements OnInit {
   //----------------------------------- Re-direct on detail page --------------------------------------------------------//
 
   onNotificationDetaliPage(rowID, formId, formType, isSeen) {
-
     if (formType == this.globalService.formType_user) {
       this.nav.navigateRoot("/home/safety-menu/incident-details/" + formId);
     } else if (formType == this.globalService.formType_investigator) {
