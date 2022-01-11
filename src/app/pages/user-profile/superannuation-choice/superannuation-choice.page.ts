@@ -17,13 +17,14 @@ import { catchError } from 'rxjs/operators';
 })
 export class SuperannuationChoicePage implements OnInit {
 
-  pName: String = 'Superannuation Choice';
+  pName: String = '';
   paidTo: String = '';
-  superannuation: FormGroup;
   isSubmitted: boolean = false;
   userDetails: {};
-  super_contribution: String = 'RSA';
-  rsaAttachLetter = [];
+  super_contribution: string;
+  attachLetter: any = '';
+  superannuation: FormGroup;
+  edit: Boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,61 +40,53 @@ export class SuperannuationChoicePage implements OnInit {
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
     this.superannuation = this.fb.group({
-      // super_contribution: ['RSA'],
-
-      rsa_fund_abn: [''],
-      rsa_fund_name: ['', Validators.pattern(environment.alphabet)],
-      rsa_fund_address: [''],
-      rsa_suburb: [''],
-      rsa_state: ['', Validators.pattern(environment.alphabet)],
-      rsa_postcode: ['', Validators.pattern(environment.numeric)],
-      rsa_fund_phone: ['', Validators.pattern(environment.numeric)],
-      rsa_usi: [''],
-      rsa_account_no: ['', Validators.pattern(environment.alphabet)],
-      rsa_member_number: ['', Validators.pattern(environment.numeric)],
-      rsa_attach_compliance_letter: [''],
-
-      smsf_fund_abn: [''],
-      smsf_fund_name: ['', Validators.pattern(environment.alphabet)],
-      smsf_fund_address: [''],
-      smsf_suburb: ['', Validators.pattern(environment.alphabet)],
-      smsf_state: ['', Validators.pattern(environment.alphabet)],
-      smsf_postcode: ['', Validators.pattern(environment.numeric)],
-      smsf_fund_phone: ['', Validators.pattern(environment.numeric)],
-      smsf_esa: [''],
-      smsf_bsb_code: [''],
-      smsf_account_no: ['', Validators.pattern(environment.numeric)],
-      smsf_attach_compliance_doc: [''],
-      smsf_trustee: [''],
-      smsf_attatch_confir_letter: [''],
-
-      employee_fund_name: ['', Validators.pattern(environment.alphabet)],
-      employee_usi: [''],
-      employee_phone: ['', Validators.pattern(environment.numeric)],
-      employee_fund_weburl: [''],
+      fund_abn: [''],                                                       // RSA SMSF
+      fund_name: ['', Validators.pattern(environment.alphabet)],            // RSA SMSF EMPLOYER
+      fund_address: [''],                                                   // RSA SMSF
+      fund_sub_urb: [''],                                                   // RSA SMSF
+      fund_state: ['', Validators.pattern(environment.alphabet)],           // RSA SMSF
+      fund_postcode: ['', Validators.pattern(environment.numeric)],         // RSA SMSF
+      fund_phone: ['', Validators.pattern(environment.numeric)],            // RSA SMSF EMPLOYER
+      fund_usi: [''],                                                       // RSA EMPLOYER
+      fund_account_name: ['', Validators.pattern(environment.alphabet)],    // RSA
+      fund_member_number: ['', Validators.pattern(environment.numeric)],    // RSA
+      fund_attachement: [''],                                               // RSA SMSF
+      fund_esa: [''],                                                       // SMSF
+      fund_bsb_code: ['', [Validators.pattern(environment.numeric), Validators.minLength(6), Validators.maxLength(6)]],  // SMSF                                           // SMSF
+      fund_account_number: ['', Validators.pattern(environment.numeric)],   // SMSF
+      fund_trustee: [''],                                                   // SMSF
+      fund_attachment_confirm_letter: [''],                                 // SMSF
+      fund_web_url: ['', Validators.pattern(environment.url)],              // EMPLOYER
 
       completed: [false],
     });
-
     this.onLoadData();
   }
 
-  onFormSelection(event) {
-    this.superannuation.reset();
-  }
-
-
   onLoadData() {
+    this.loadingService.presentLoading();
     this.globalService.getData('OnboardingSuperannuation/getSuperannuation/' + this.userDetails['id']).subscribe(result => {
-      console.log('result', result);
+      if (result && result['status'] && result['data'] && result['data'][0]) {
+        this.edit = true;
+        this.pName = 'Edit Superannuation Choice';
+        this.super_contribution = result['data'][0].super_annuation;
+        this.superannuation.patchValue(result['data'][0]);
+      } else {
+        this.edit = false;
+        this.pName = 'Superannuation Choice';
+        this.super_contribution = 'RSA';
+      }
+      this.loadingService.dismissLoading();
+    }, error => {
+      this.loadingService.dismissLoading();
+      console.log('error', error);
     })
   }
 
   onSubmit() {
     if (
-      (this.super_contribution == 'RSA' && this.superannuation.value['rsa_fund_abn'] == '') ||
-      (this.super_contribution == 'SMSF' && this.superannuation.value['smsf_fund_abn'] == '') ||
-      (this.super_contribution == 'emploper' && this.superannuation.value['employee_fund_name'] == '')
+      (this.super_contribution == 'RSA' || this.super_contribution == 'EMPLOYER' || this.super_contribution == 'SMSF') &&
+      this.superannuation.value['rsa_fund_abn'] == ''
     ) {
       this.isSubmitted = true;
       return;
@@ -107,7 +100,7 @@ export class SuperannuationChoicePage implements OnInit {
       this.superannuation.value['type'] = 'dyn';
       this.superannuation.value['code'] = 'form_Superannuation';
       this.superannuation.value['user_id'] = this.userDetails['id'];
-      this.superannuation.value['rsa_attach_compliance_letter'] = this.rsaAttachLetter.length > 0 ? this.rsaAttachLetter : [];
+      this.superannuation.value['fund_attachement'] = this.attachLetter.length > 0 ? this.attachLetter : '';
 
       let data = {
         formData: this.superannuation.value
@@ -129,15 +122,49 @@ export class SuperannuationChoicePage implements OnInit {
     }
   }
 
+  onFormSelection(event) {
+    // if (this.edit == false) {
+    //   this.superannuation.reset();
+    // }
+
+    if (this.super_contribution == 'RSA') {
+      this.superannuation.controls['fund_esa'].reset();
+      this.superannuation.controls['fund_bsb_code'].reset();
+      this.superannuation.controls['fund_account_number'].reset();
+      this.superannuation.controls['fund_trustee'].reset();
+      this.superannuation.controls['fund_attachment_confirm_letter'].reset();
+      this.superannuation.controls['fund_web_url'].reset();
+    } else if (this.super_contribution == 'SMSF') {
+      this.superannuation.controls['fund_usi'].reset();
+      this.superannuation.controls['fund_account_name'].reset();
+      this.superannuation.controls['fund_member_number'].reset();
+      this.superannuation.controls['fund_web_url'].reset();
+    } else if (this.super_contribution == 'EMPLOYER') {
+      this.superannuation.controls['fund_abn'].reset();
+      this.superannuation.controls['fund_address'].reset();
+      this.superannuation.controls['fund_sub_urb'].reset();
+      this.superannuation.controls['fund_state'].reset();
+      this.superannuation.controls['fund_postcode'].reset();
+      this.superannuation.controls['fund_account_name'].reset();
+      this.superannuation.controls['fund_member_number'].reset();
+      this.superannuation.controls['fund_attachement'].reset();
+      this.superannuation.controls['fund_esa'].reset();
+      this.superannuation.controls['fund_bsb_code'].reset();
+      this.superannuation.controls['fund_account_number'].reset();
+      this.superannuation.controls['fund_trustee'].reset();
+      this.superannuation.controls['fund_attachment_confirm_letter'].reset();
+    }
+  }
+
   onDocPreview(event) {
     for (let i = 0; i < event.target.files.length; i++) {
       this.sharedService.getBase64(event.target.files[0]).then(data => {
-        console.log('data', data);
-        if (this.rsaAttachLetter.length <= 0) {
-          this.rsaAttachLetter.push(data);
-        } else {
-          this.rsaAttachLetter.unshift(data);
-        }
+        this.attachLetter = data
+        // if (this.attachLetter.length <= 0) {
+        //   this.attachLetter.push(data);
+        // } else {
+        //   this.attachLetter.unshift(data);
+        // }
       })
     }
   }

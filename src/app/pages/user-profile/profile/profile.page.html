@@ -7,6 +7,7 @@
         <ion-card [formGroup]="userProfileForm">
 
           <ion-row>
+
             <ion-col size="12">
               <ion-label>Salutation</ion-label>
             </ion-col>
@@ -17,12 +18,21 @@
                 </ion-select-option>
               </ion-select>
             </ion-col>
+            <ion-col size="12" class="error" *ngIf="isSubmitted && userProfileForm.controls['salutation'].invalid">
+              Please enter Salutation.
+            </ion-col>
 
             <ion-col size="12">
               <ion-label>First Name</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter first name" formControlName="first_name"> </ion-input>
+            </ion-col>
+            <ion-col size="12" class="error" *ngIf="isSubmitted && userProfileForm.value['first_name'] == ''">
+              Please enter first name.
+            </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['first_name'].errors?.pattern">
+              Please enter alphabets.
             </ion-col>
 
             <ion-col size="12">
@@ -31,12 +41,18 @@
             <ion-col size="12">
               <ion-input placeholder="Please enter middle name" formControlName="middel_name"> </ion-input>
             </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['middel_name'].errors?.pattern">
+              Please enter alphabets.
+            </ion-col>
 
             <ion-col size="12">
               <ion-label>Last Name</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter last name" formControlName="last_name"> </ion-input>
+            </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['last_name'].errors?.pattern">
+              Please enter alphabets.
             </ion-col>
 
             <ion-col size="12">
@@ -53,6 +69,9 @@
             <ion-col size="12">
               <ion-input placeholder="Please enter town" formControlName="town"> </ion-input>
             </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['town'].errors?.pattern">
+              Please enter alphabets.
+            </ion-col>
 
             <ion-col size="12">
               <ion-label>State</ion-label>
@@ -60,12 +79,18 @@
             <ion-col size="12">
               <ion-input placeholder="Please enter state" formControlName="state"> </ion-input>
             </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['state'].errors?.pattern">
+              Please enter alphabets.
+            </ion-col>
 
             <ion-col size="12">
               <ion-label>Postcode</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter postcode" formControlName="postcode"> </ion-input>
+            </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['postcode'].errors?.pattern">
+              Please enter number.
             </ion-col>
 
             <ion-col size="12">
@@ -88,12 +113,15 @@
             <ion-col size="12">
               <ion-input placeholder="Please enter mobile no" formControlName="mobile_no"> </ion-input>
             </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['mobile_no'].errors?.pattern">
+              Please enter number.
+            </ion-col>
 
             <ion-col size="12">
               <ion-label>Email</ion-label>
             </ion-col>
             <ion-col size="12">
-              <ion-input placeholder="Please enter email" formControlName="email"> </ion-input>
+              <ion-input type="email" placeholder="Please enter email" formControlName="email"> </ion-input>
             </ion-col>
 
             <ion-col size="12">
@@ -149,12 +177,18 @@
             <ion-col size="12">
               <ion-input placeholder="Please enter name" formControlName="kin_name"> </ion-input>
             </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_name'].errors?.pattern">
+              Please enter alphabets.
+            </ion-col>
 
             <ion-col size="12">
               <ion-label>Relationship</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter relationship" formControlName="kin_relationship"> </ion-input>
+            </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_relationship'].errors?.pattern">
+              Please enter alphabets.
             </ion-col>
 
             <ion-col size="12">
@@ -169,6 +203,9 @@
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter mobile no" formControlName="kin_mobile_no"> </ion-input>
+            </ion-col>
+            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_mobile_no'].errors?.pattern">
+              Please enter numbers.
             </ion-col>
           </ion-row>
 
@@ -230,7 +267,6 @@
                     </ion-row>
 
                     <!-- <ion-row>
-
                       <ion-col size="11" *ngIf="riDoc.type == 'image">
                         <img [src]="riDoc.val" tappable (click)="onOpenPreview(riDoc.val)">
                       </ion-col>
@@ -239,11 +275,9 @@
                         <pdf-viewer [src]="riDoc.val" [render-text]="true" [original-size]="false" style=" width:
                           400px; height: 500px"></pdf-viewer>
                       </ion-col>
-  
                       <ion-col size="1">
                         <ion-icon name="close" (click)="onImageDelete(i, 'riDoc')"></ion-icon>
                       </ion-col>
-  
                     </ion-row> -->
 
                   </ion-grid>

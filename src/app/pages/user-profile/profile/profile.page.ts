@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+
 // import { FileOpener } from '@ionic-native/file-opener';
 // import { DocumentViewer, DocumentViewerOptions } from '@awesome-cordova-plugins/document-viewer/ngx';
 
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 import { GlobalService } from 'src/app/services/global-service/global.service';
+import { LoadingService } from 'src/app/services/loading-service/loading.service';
+import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -151,6 +155,7 @@ export class ProfilePage implements OnInit {
   userProfileForm: FormGroup;
   highRiskLicences = [];
   riDocs = [];
+  isSubmitted: Boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -159,32 +164,33 @@ export class ProfilePage implements OnInit {
     private modalController: ModalController,
     // private fileOpener: FileOpener
     // private documentViewer: DocumentViewer
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
-
     this.userProfileForm = this.fb.group({
-      salutation: [''],
-      first_name: [''],
-      middel_name: [''],
-      last_name: [''],
+      salutation: ['', Validators.required],
+      first_name: ['', [Validators.required, Validators.pattern(environment.alphabet)]],
+      middel_name: ['', Validators.pattern(environment.alphabet)],
+      last_name: ['', Validators.pattern(environment.alphabet)],
       residential_address: [''],
-      town: [''],
-      state: [''],
-      postcode: [''],
+      town: ['', Validators.pattern(environment.alphabet)],
+      state: ['', Validators.pattern(environment.alphabet)],
+      postcode: ['', Validators.pattern(environment.numeric)],
       dob: [''],
-      pob: [''],
-      mobile_no: [''],
+      pob: ['', Validators.pattern(environment.alphabet)],
+      mobile_no: ['', Validators.pattern(environment.numeric)],
       email: [''],
       gender: [''],
       usi_number: [''],
       sap_number: [''],
       drivers_licence_number: [''],
       drivers_licence_type: [''],
-      kin_name: [''],
-      kin_relationship: [''],
+      kin_name: ['', Validators.pattern(environment.alphabet)],
+      kin_relationship: ['', Validators.pattern(environment.alphabet)],
       kin_home_address: [''],
-      kin_mobile_no: [''],
+      kin_mobile_no: ['', Validators.pattern(environment.numeric)],
       high_risk_licences: [''],
       other_qualification: [''],
 
@@ -210,9 +216,6 @@ export class ProfilePage implements OnInit {
   }
 
   onSelectImage(event) {
-    console.log('event 1', event);
-    console.log('event 2', event.target.files);
-
     for (let i = 0; i < event.target.files.length; i++) {
       if (event.target.files[0].type == 'application/pdf') {
         let dataObject = {
@@ -269,11 +272,29 @@ export class ProfilePage implements OnInit {
   }
 
   onSubmit() {
-    console.log('userProfileForm', this.userProfileForm.value);
-    let formData = { formData: this.userProfileForm.value };
-    this.globalService.postData('OnboardingSuperannuation/saveOnboardingProfile', formData).subscribe(result => {
+    this.isSubmitted = true;
+    if (this.userProfileForm.valid) {
 
-    })
+      this.loadingService.presentLoading();
+      console.log('userProfileForm', this.userProfileForm.value);
+      let formData = { formData: this.userProfileForm.value };
+      this.globalService.postData('OnboardingSuperannuation/saveProfileDetails', formData).subscribe(result => {
+        if (result && result['status'] && result['data'] && result['data'][0]) {
+          // this.edit = true;
+          // this.pName = 'Edit Superannuation Choice';
+          this.userProfileForm.patchValue(result['data'][0]);
+        } else {
+          // this.edit = false;
+          // this.pName = 'Superannuation Choice';
+        }
+        this.loadingService.dismissLoading();
+      }, error => {
+        this.loadingService.dismissLoading();
+        console.log('error', error);
+      })
+      // } else {
+      //   this.toastService.toast('Please enter correct values', 'danger')
+    }
   }
 
 }

@@ -9,7 +9,8 @@ export const environment = {
 
   alphabet: /^[A-Z.a-z ]+[A-Za-z]+$/,
   alphaNumeric: /^[a-zA-Z0-9]{10}$/,
-  numeric: /^[0-9]/
+  numeric: /^[0-9]/,
+  url: /^(ftp|http|https):\/\/[^ "]+$/
 
   //--------------------------------------------- Validators pattern --------------------------------------------//
 };
