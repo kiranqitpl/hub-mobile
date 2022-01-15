@@ -11,6 +11,8 @@ import { LoadingService } from 'src/app/services/loading-service/loading.service
 import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { ImageModalPage } from 'src/app/modals/image-modal/image-modal.page';
 import { environment } from 'src/environments/environment';
+import { NavController } from '@ionic/angular';
+import moment from 'moment';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +21,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProfilePage implements OnInit {
 
-  pName: String = 'Personal Details';
+  pName: String = '';
   salutation = [
     {
       id: 'Miss.',
@@ -152,10 +154,31 @@ export class ProfilePage implements OnInit {
     },
   ];
 
+  otherQualification = [
+    {
+      id: '10th',
+      val: '10th',
+    },
+    {
+      id: '12th',
+      val: '12th',
+    },
+    {
+      id: 'BBA',
+      val: 'BBA',
+    },
+    {
+      id: 'BCA',
+      val: 'BCA',
+    },
+  ]
+
   userProfileForm: FormGroup;
   highRiskLicences = [];
   riDocs = [];
   isSubmitted: Boolean = false;
+  userDetails: {};
+  edit: Boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -165,10 +188,12 @@ export class ProfilePage implements OnInit {
     // private fileOpener: FileOpener
     // private documentViewer: DocumentViewer
     private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
+    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.userProfileForm = this.fb.group({
       salutation: ['', Validators.required],
       first_name: ['', [Validators.required, Validators.pattern(environment.alphabet)]],
@@ -194,24 +219,86 @@ export class ProfilePage implements OnInit {
       high_risk_licences: [''],
       other_qualification: [''],
 
-      ri_expiry_date: [''],
+      re_expiry_date: [''],
       ri_document: [''],
 
-      fire_warden_expiry_date: [''],
+      fire_wardens_expiry_date: [''],
       fire_warden_document: [''],
 
-      drivers_licence_C_expiry_date: [''],
+      driver_licence_C_expiry_date: [''],
       drivers_licence_C_document: [''],
+    })
+
+    this.onLoadData();
+  }
+
+  onLoadData() {
+    // this.loadingService.presentLoading();
+    this.globalService.getData('OnboardingSuperannuation/getEmployeeProfileDetails/' + this.userDetails['id']).subscribe(result => {
+      if (result && result['status'] && result['data'] && result['data'][0]) {
+        this.edit = true;
+        this.pName = 'Edit Personal Details';
+
+        console.log('result', result['data'][0]);
+        console.log('result 1', result['data'][0]['high_risk_licences']);
+        if (result['data'][0]['high_risk_licences'] && result['data'][0]['high_risk_licences'].length && result['data'][0]['high_risk_licences'].length > 0) {
+          for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
+            this.highRiskCheck(result['data'][0]['high_risk_licences'][i]);
+          }
+          for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
+            this.high_risk_licence.push(result['data'][0]['high_risk_licences'][i]);
+          }
+        }
+        this.highRiskLicences = result['data'][0]['high_risk_licences'];
+
+        this.userProfileForm.patchValue(result['data'][0]);
+      } else {
+        this.edit = false;
+        this.pName = 'Personal Details';
+      }
+      // this.loadingService.dismissLoading();
+    }, error => {
+      // this.loadingService.dismissLoading();
+      console.log('error', error);
+    })
+  }
+
+
+  highRiskCheck(value) {
+    this.high_risk_licence.find(ele => {
+      if (ele.val == value) {
+        ele.isChecked = true
+      }
     })
   }
 
   onHighRiskLicences(event) {
-    this.high_risk_licence.find(ele => {
-      if (ele.val == event.detail.value) {
-        ele.isChecked = true
+    this.highRiskCheck(event.detail.value);
+
+    // this.highRiskLicences.push(event && event.detail && event.detail.value ? event.detail.value : event);
+    // this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences);
+
+    if (this.highRiskLicences.length <= 0) {
+      this.highRiskLicences.push(event.detail.value);
+    } else {
+      let result = [];
+      if (this.highRiskLicences.length > 0) {
+        this.highRiskLicences.filter((ele, index) => {
+          if (ele == event.detail.value) {
+            result['ele'] = ele;
+            result['index'] = index;
+            return result;
+          }
+        })
       }
-    })
-    this.highRiskLicences.push(event.detail.value);
+
+      if (result && result['ele'] && result['ele'] != '') {
+        this.highRiskLicences.splice(result['index'], 1);
+      } else {
+        this.highRiskLicences.push(event.detail.value);
+      }
+    }
+
     this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences);
   }
 
@@ -274,26 +361,32 @@ export class ProfilePage implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     if (this.userProfileForm.valid) {
-
       this.loadingService.presentLoading();
-      console.log('userProfileForm', this.userProfileForm.value);
+      let dob = this.userProfileForm.value['dob'] != '' && this.userProfileForm.value['dob'] != null ? moment(this.userProfileForm.value['dob']).format("DD-MM-YYYY") : '';
+      let re_expiry_date = this.userProfileForm.value['re_expiry_date'] != '' && this.userProfileForm.value['re_expiry_date'] != null ? moment(this.userProfileForm.value['re_expiry_date']).format("DD-MM-YYYY") : "";
+      let fire_wardens_expiry_date = this.userProfileForm.value['fire_wardens_expiry_date'] != '' && this.userProfileForm.value['fire_wardens_expiry_date'] != null ? moment(this.userProfileForm.value['fire_wardens_expiry_date']).format("DD-MM-YYYY") : "";
+      let driver_licence_C_expiry_date = this.userProfileForm.value['driver_licence_C_expiry_date'] != '' && this.userProfileForm.value['driver_licence_C_expiry_date'] != null && this.userProfileForm.value['driver_licence_C_expiry_date'] != null ? moment(this.userProfileForm.value['driver_licence_C_expiry_date']).format("DD-MM-YYYY") : "";
+
+      this.userProfileForm.controls['dob'].setValue(dob);
+      this.userProfileForm.controls['re_expiry_date'].setValue(re_expiry_date);
+      this.userProfileForm.controls['fire_wardens_expiry_date'].setValue(fire_wardens_expiry_date);
+      this.userProfileForm.controls['driver_licence_C_expiry_date'].setValue(driver_licence_C_expiry_date);
+
+      this.userProfileForm.value['user_id'] = this.userDetails['id'];
+
       let formData = { formData: this.userProfileForm.value };
       this.globalService.postData('OnboardingSuperannuation/saveProfileDetails', formData).subscribe(result => {
-        if (result && result['status'] && result['data'] && result['data'][0]) {
-          // this.edit = true;
-          // this.pName = 'Edit Superannuation Choice';
-          this.userProfileForm.patchValue(result['data'][0]);
+        if (result && result['status']) {
+          // this.navCtrl.back();
+          this.toastService.toast(result['message'], 'success');
         } else {
-          // this.edit = false;
-          // this.pName = 'Superannuation Choice';
+          this.toastService.toast(result['message'], 'danger');
         }
         this.loadingService.dismissLoading();
       }, error => {
         this.loadingService.dismissLoading();
         console.log('error', error);
       })
-      // } else {
-      //   this.toastService.toast('Please enter correct values', 'danger')
     }
   }
 

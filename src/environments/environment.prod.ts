@@ -10,7 +10,8 @@ export const environment = {
   alphabet: /^[A-Z.a-z ]+[A-Za-z]+$/,
   alphaNumeric: /^[a-zA-Z0-9]{10}$/,
   numeric: /^[0-9]/,
-  url: /^(ftp|http|https):\/\/[^ "]+$/
+  url: /^(ftp|http|https):\/\/[^ "]+$/,
+  amount: /^[0-9.0-9 ]+[0-9]+$/,
 
   //--------------------------------------------- Validators pattern --------------------------------------------//
 };

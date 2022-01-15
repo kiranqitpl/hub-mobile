@@ -50,10 +50,10 @@ export class SuperannuationChoicePage implements OnInit {
       fund_usi: [''],                                                       // RSA EMPLOYER
       fund_account_name: ['', Validators.pattern(environment.alphabet)],    // RSA
       fund_member_number: ['', Validators.pattern(environment.numeric)],    // RSA
-      fund_attachement: [''],                                               // RSA SMSF
+      fund_attachment: [''],                                               // RSA SMSF
       fund_esa: [''],                                                       // SMSF
       fund_bsb_code: ['', [Validators.pattern(environment.numeric), Validators.minLength(6), Validators.maxLength(6)]],  // SMSF                                           // SMSF
-      fund_account_number: ['', Validators.pattern(environment.numeric)],   // SMSF
+      fund_account_no: ['', Validators.pattern(environment.numeric)],   // SMSF
       fund_trustee: [''],                                                   // SMSF
       fund_attachment_confirm_letter: [''],                                 // SMSF
       fund_web_url: ['', Validators.pattern(environment.url)],              // EMPLOYER
@@ -64,7 +64,7 @@ export class SuperannuationChoicePage implements OnInit {
   }
 
   onLoadData() {
-    this.loadingService.presentLoading();
+    // this.loadingService.presentLoading();
     this.globalService.getData('OnboardingSuperannuation/getSuperannuation/' + this.userDetails['id']).subscribe(result => {
       if (result && result['status'] && result['data'] && result['data'][0]) {
         this.edit = true;
@@ -76,9 +76,9 @@ export class SuperannuationChoicePage implements OnInit {
         this.pName = 'Superannuation Choice';
         this.super_contribution = 'RSA';
       }
-      this.loadingService.dismissLoading();
+      // this.loadingService.dismissLoading();
     }, error => {
-      this.loadingService.dismissLoading();
+      // this.loadingService.dismissLoading();
       console.log('error', error);
     })
   }
@@ -100,14 +100,14 @@ export class SuperannuationChoicePage implements OnInit {
       this.superannuation.value['type'] = 'dyn';
       this.superannuation.value['code'] = 'form_Superannuation';
       this.superannuation.value['user_id'] = this.userDetails['id'];
-      this.superannuation.value['fund_attachement'] = this.attachLetter.length > 0 ? this.attachLetter : '';
+      this.superannuation.value['fund_attachment'] = this.attachLetter.length > 0 ? this.attachLetter : '';
 
       let data = {
         formData: this.superannuation.value
       }
       this.globalService.postData('OnboardingSuperannuation/saveSuperannuation', data).subscribe(result => {
         if (result && result['status']) {
-          this.navCtrl.back();
+          // this.navCtrl.back();
           this.toastService.toast(result['message'], 'success');
         } else {
           this.toastService.toast(result['message'], 'danger');
@@ -130,7 +130,7 @@ export class SuperannuationChoicePage implements OnInit {
     if (this.super_contribution == 'RSA') {
       this.superannuation.controls['fund_esa'].reset();
       this.superannuation.controls['fund_bsb_code'].reset();
-      this.superannuation.controls['fund_account_number'].reset();
+      this.superannuation.controls['fund_account_no'].reset();
       this.superannuation.controls['fund_trustee'].reset();
       this.superannuation.controls['fund_attachment_confirm_letter'].reset();
       this.superannuation.controls['fund_web_url'].reset();
@@ -147,10 +147,10 @@ export class SuperannuationChoicePage implements OnInit {
       this.superannuation.controls['fund_postcode'].reset();
       this.superannuation.controls['fund_account_name'].reset();
       this.superannuation.controls['fund_member_number'].reset();
-      this.superannuation.controls['fund_attachement'].reset();
+      this.superannuation.controls['fund_attachment'].reset();
       this.superannuation.controls['fund_esa'].reset();
       this.superannuation.controls['fund_bsb_code'].reset();
-      this.superannuation.controls['fund_account_number'].reset();
+      this.superannuation.controls['fund_account_no'].reset();
       this.superannuation.controls['fund_trustee'].reset();
       this.superannuation.controls['fund_attachment_confirm_letter'].reset();
     }

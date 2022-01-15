@@ -107,18 +107,18 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-androidx": {
+  "cordova-plugin-androidx-adapter": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-androidx"
+      "id": "cordova-plugin-androidx-adapter@^1.1.3"
     },
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-androidx-adapter": {
+  "cordova-plugin-androidx": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-androidx-adapter"
+      "id": "cordova-plugin-androidx"
     },
     "is_top_level": true,
     "variables": {}

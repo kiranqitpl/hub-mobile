@@ -65,16 +65,14 @@ export class AppComponent {
       })
     });
 
-    // let urlFull = window.location.href;
-    // let url = urlFull.split('/');
-    // if (url[2] == 'mforms-qa.horts.com.au') {
-    //   // console.log('qa', environment.QA_API_URL);
-    //   this.globalService.url.next(environment.QA_API_URL);
-    // } else {
-    //   // console.log('dev/live', environment.API_URL);
-    //   this.globalService.url.next(environment.API_URL);
-    // }
-    // console.log('aaa', window.location.href);
+    let urlFull = window.location.href;
+    let url = urlFull.split('/');
+    if (url[2] == 'mforms-qa.horts.com.au') {
+      this.globalService.url.next(environment.QA_API_URL);
+    } else {
+      console.log('dev/live', environment.API_URL);
+      this.globalService.url.next(environment.API_URL);
+    }
   }
 
   showExitConfirm() {
