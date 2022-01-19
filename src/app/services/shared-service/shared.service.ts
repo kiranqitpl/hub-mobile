@@ -1,6 +1,6 @@
-import { Injectable, } from '@angular/core';
+import { ElementRef, Injectable, ViewChild, } from '@angular/core';
 import { GlobalService } from 'src/app/services/global-service/global.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, IonContent } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { BehaviorSubject } from 'rxjs';
 
@@ -13,23 +13,23 @@ export class SharedService {
 
   //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
 
-  prestartMenu = [
-    {
-      menuName: 'LV', route: '#', favorite: false, position_in_list: 1
-    },
-    {
-      menuName: 'Forklift', route: '#', favorite: false, position_in_list: 2
-    },
-    {
-      menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false, position_in_list: 3
-    },
-    {
-      menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false, position_in_list: 4
-    },
-    {
-      menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false, position_in_list: 5
-    },
-  ];
+  // prestartMenu = [
+  //   {
+  //     menuName: 'LV', route: '#', favorite: false, position_in_list: 1
+  //   },
+  //   {
+  //     menuName: 'Forklift', route: '#', favorite: false, position_in_list: 2
+  //   },
+  //   {
+  //     menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false, position_in_list: 3
+  //   },
+  //   {
+  //     menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false, position_in_list: 4
+  //   },
+  //   {
+  //     menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false, position_in_list: 5
+  //   },
+  // ];
 
   //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
 
@@ -109,10 +109,10 @@ export class SharedService {
     };
     await this.camera.getPicture(options).then(
       (imageData) => {
-        console.log('imageData', imageData);
+        // console.log('imageData', imageData);
         // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
         let image = 'data:image/jpeg;base64,' + imageData;
-        console.log('pickImage', image);
+        // console.log('pickImage', image);
         return image;
       },
       (err) => {
@@ -123,6 +123,26 @@ export class SharedService {
 
   resize(event) {
     return event.innerWidth ? event.innerWidth : event.target.innerWidth;
+  }
+
+  progressBar(form) {
+    let count = 0;
+    let formControlList = [];
+    let data = {};
+  
+    Object.keys(form.controls).map(ele => formControlList.push(ele));
+    formControlList.forEach(key => {
+      if (form.value[key] && form.value[key] != '') {
+        count = ++count;
+      }
+    })
+    let form_percent = ((1 / Object.keys(form.controls).length) * count);
+    let form_percent_val = parseInt((((1 / Object.keys(form.controls).length) * count) * 100).toFixed());
+    data = {
+      form_percent : form_percent,
+      form_percent_val : form_percent_val
+    }
+    return data;
   }
 
 }

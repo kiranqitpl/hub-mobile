@@ -3,14 +3,14 @@
   <div class="toolbar">
     <ion-text *ngIf="url_id == ''">Vehicle Hoist</ion-text>
     <ion-text *ngIf="url_id != ''">Edit Vehicle Hoist</ion-text>
-    <ion-buttons class="back">
+    <ion-buttons class="back" title="Go Back">
       <ion-button (click)="navCtrl.back()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons class='saveBtn' (click)="onSubmit(0)">
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)"  title="Submit Incomplete Form">
       <ion-button>
-        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+        <ion-icon slot="icon-only" name="save-outline" ></ion-icon>
       </ion-button>
     </ion-buttons>
   </div>

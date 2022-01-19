@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import { ToastService } from 'src/app/services/toast-service/toast.service';
+import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({
   selector: 'app-medical-questionnaire',
@@ -12,7 +13,13 @@ import { ToastService } from 'src/app/services/toast-service/toast.service';
 })
 export class MedicalQuestionnairePage implements OnInit {
 
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild('target') myScrollContainer: ElementRef;
+
   pName: String = 'Medical Questionnaire';
+
+  form_percent: number = 0;
+  form_percent_val: number = 0;
 
   treatment = [
     {
@@ -233,34 +240,35 @@ export class MedicalQuestionnairePage implements OnInit {
     private globalService: GlobalService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private navCtrl: NavController) { }
+    private nav: NavController,
+    private sharedService: SharedService) { }
 
   ngOnInit() {
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.medicalForm = this.fb.group({
       received_treatment: [''],
       received_treatment_details: [''],
-      injury_time_off: ['', Validators.required],
-      currently_treated: ['', Validators.required],
-      taking_medication: ['', Validators.required],
-      seen_doctor: ['', Validators.required],
-      personal_protective_equipment: ['', Validators.required],
-      affected_Heights: ['', Validators.required],
-      suffer_from_allergies: ['', Validators.required],
-      excessive_noise: ['', Validators.required],
-      hazardous_chemicals: ['', Validators.required],
-      health_problems: ['', Validators.required],
-      workers_compensation_claim: ['', Validators.required],
-      workers_compensation_claim_in_the_past: ['', Validators.required],
-      pre_existing_injuries: ['', Validators.required],
-      last_tetanus_injection: ['', Validators.required],
+      injury_time_off: [''],
+      currently_treated: [''],
+      taking_medication: [''],
+      seen_doctor: [''],
+      personal_protective_equipment: [''],
+      affected_Heights: [''],
+      suffer_from_allergies: [''],
+      excessive_noise: [''],
+      hazardous_chemicals: [''],
+      health_problems: [''],
+      workers_compensation_claim: [''],
+      workers_compensation_claim_in_the_past: [''],
+      pre_existing_injuries: [''],
+      last_tetanus_injection: [''],
       medical_advice_details: [''],
-      manufacturing: ['', Validators.required],
-      normal_working_hours: ['', Validators.required],
-      shift_work: ['', Validators.required],
-      right_to_work_in_australia: ['', Validators.required],
-      criminal_offence: ['', Validators.required],
-      work_performanc: ['', Validators.required],
+      manufacturing: [''],
+      normal_working_hours: [''],
+      shift_work: [''],
+      right_to_work_in_australia: [''],
+      criminal_offence: [''],
+      work_performanc: [''],
       miscellaneous_details: ['']
     })
     this.onLoadData();
@@ -270,14 +278,10 @@ export class MedicalQuestionnairePage implements OnInit {
     // this.loadingService.presentLoading();
     this.globalService.getData('OnboardingSuperannuation/getEmployeeMedicalQuestionnair/' + this.userDetails['id']).subscribe(result => {
       if (result && result['status'] && result['data'] && result['data'][0]) {
-
         this.edit = true;
         this.pName = 'Edit Medical Questionnaire';
-
         console.log('hhhh', result['data'][0]['received_treatment']);
-
         // this.receivedTreatment = result['data'][0]['received_treatment'].length > 0 ? result['data'][0]['received_treatment'] : [];
-
         if (result['data'][0]['received_treatment'] && result['data'][0]['received_treatment'].length && result['data'][0]['received_treatment'].length > 0) {
           for (let i = 0; i < result['data'][0]['received_treatment'].length; i++) {
             this.receivedCheckBoxTreatment(result['data'][0]['received_treatment'][i]);
@@ -286,16 +290,14 @@ export class MedicalQuestionnairePage implements OnInit {
             this.receivedTreatment.push(result['data'][0]['received_treatment'][i]);
           }
         }
-
         console.log('this.receivedTreatment', this.receivedTreatment);
-
         this.medicalForm.controls['received_treatment'].setValue(this.receivedTreatment);
         this.medicalForm.patchValue(result['data'][0]);
-
       } else {
         this.edit = false;
         this.pName = 'Medical Questionnaire';
       }
+      this.onProgressBar('');
       // this.loadingService.dismissLoading();
     }, error => {
       // this.loadingService.dismissLoading();
@@ -305,7 +307,7 @@ export class MedicalQuestionnairePage implements OnInit {
 
   receivedCheckBoxTreatment(value) {
     this.treatment.find((ele, index) => {
-      if (ele.name == value ) {
+      if (ele.name == value) {
         ele.isChecked = true
       }
     })
@@ -333,34 +335,38 @@ export class MedicalQuestionnairePage implements OnInit {
         this.receivedTreatment.push(event.detail.value);
       }
     }
+    this.medicalForm.controls['received_treatment'].setValue(this.receivedTreatment.length > 0 ? this.receivedTreatment : '');
     // console.log('this.receivedTreatment', this.receivedTreatment);
   }
 
-  onSubmit() {
+  onSubmit(complete_status) {
     this.isSubmitted = true;
-    console.log('this.medicalForm 1', this.receivedTreatment);
-    if (this.medicalForm.valid) {
-      // this.loadingService.presentLoading();
-      this.medicalForm.value['user_id'] = this.userDetails['id'];
-      this.medicalForm.value['received_treatment'] = this.receivedTreatment.length > 0 ? this.receivedTreatment : '';
-      // this.medicalForm.value['received_treatment'] ='';
-      console.log('this.medicalForm.value', this.medicalForm.value);
-      let formData = { formData: this.medicalForm.value };
+    // if (this.medicalForm.valid) {
+    // this.loadingService.presentLoading();
+    this.medicalForm.value['user_id'] = this.userDetails['id'];
+    this.medicalForm['complete_status'] = complete_status;
+    // this.medicalForm.value['received_treatment'] = this.receivedTreatment.length > 0 ? this.receivedTreatment : '';
+    let formData = { formData: this.medicalForm.value };
+    this.globalService.postData('OnboardingSuperannuation/saveEmployeeMedicalQuestionnair', formData).subscribe(result => {
+      if (result && result['status']) {
+        // this.navCtrl.back();
+        this.toastService.toast(result['message'], 'success');
+      } else {
+        this.toastService.toast(result['message'], 'danger');
+      }
+      // this.loadingService.dismissLoading();
+    }, error => {
+      // this.loadingService.dismissLoading();
+      console.log('error', error);
+    })
+    // }
+  }
 
-      console.log('formData',formData);
-      this.globalService.postData('OnboardingSuperannuation/saveEmployeeMedicalQuestionnair', formData).subscribe(result => {
-        if (result && result['status']) {
-          // this.navCtrl.back();
-          this.toastService.toast(result['message'], 'success');
-        } else {
-          this.toastService.toast(result['message'], 'danger');
-        }
-        // this.loadingService.dismissLoading();
-      }, error => {
-        // this.loadingService.dismissLoading();
-        console.log('error', error);
-      })
-    }
+  onProgressBar(event) {
+    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    let data = this.sharedService.progressBar(this.medicalForm);
+    this.form_percent = data['form_percent'];
+    this.form_percent_val = data['form_percent_val'];
   }
 
 }

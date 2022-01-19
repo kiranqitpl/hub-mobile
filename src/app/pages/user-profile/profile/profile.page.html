@@ -1,10 +1,23 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
-  <div class="container">
+  <!-- <app-header [pageName]="pName"></app-header> -->
+  <div class="toolbar">
+    <ion-text>{{pName}}</ion-text>
+    <ion-buttons class="back" title="Go Back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <div class="container" #target>
     <ion-row>
       <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
       <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
-        <ion-card [formGroup]="userProfileForm">
+        <ion-card [formGroup]="userProfileForm" (ionChange)="onProgressBar($event)">
 
           <ion-row>
             <ion-col size="12">
@@ -17,10 +30,9 @@
                 </ion-select-option>
               </ion-select>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="isSubmitted && userProfileForm.controls['salutation'].invalid">
-              Please enter Salutation.
-            </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['salutation']!= ''">
             <ion-col size="12">
               <ion-label>First Name</ion-label>
             </ion-col>
@@ -33,7 +45,9 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['first_name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['first_name'] != ''">
             <ion-col size="12">
               <ion-label>Middle Name</ion-label>
             </ion-col>
@@ -43,7 +57,9 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['middel_name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['middel_name'] != ''">
             <ion-col size="12">
               <ion-label>Last Name</ion-label>
             </ion-col>
@@ -53,7 +69,9 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['last_name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['last_name'] != ''">
             <ion-col size="12">
               <ion-label>Residential address</ion-label>
             </ion-col>
@@ -61,7 +79,9 @@
               <ion-input placeholder="Please enter residential address" formControlName="residential_address">
               </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['residential_address'] != ''">
             <ion-col size="12">
               <ion-label>Town</ion-label>
             </ion-col>
@@ -71,7 +91,9 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['town'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['town'] != ''">
             <ion-col size="12">
               <ion-label>State</ion-label>
             </ion-col>
@@ -81,7 +103,9 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['state'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['state'] != ''">
             <ion-col size="12">
               <ion-label>Postcode</ion-label>
             </ion-col>
@@ -91,21 +115,27 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['postcode'].errors?.pattern">
               Please enter number.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['postcode'] != ''">
             <ion-col size="12">
               <ion-label>Date of birth</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-datetime placeholder="Please select dob" formControlName="dob"> </ion-datetime>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['dob'] != ''">
             <ion-col size="12">
               <ion-label>Place of birth</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter place of birth" formControlName="pob"> </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['pob'] != ''">
             <ion-col size="12">
               <ion-label>Mobile no</ion-label>
             </ion-col>
@@ -115,14 +145,18 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['mobile_no'].errors?.pattern">
               Please enter number.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['mobile_no'] != ''">
             <ion-col size="12">
               <ion-label>Email</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input type="email" placeholder="Please enter email" formControlName="email"> </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['email'] != ''">
             <ion-col size="12">
               <ion-label>Gender</ion-label>
             </ion-col>
@@ -133,21 +167,27 @@
                 </ion-select-option>
               </ion-select>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['gender'] != ''">
             <ion-col size="12">
               <ion-label>USI Number</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter USI number" formControlName="usi_number"> </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['usi_number'] != ''">
             <ion-col size="12">
               <ion-label>SAP Number</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter SAP number" formControlName="sap_number"> </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['sap_number'] != ''">
             <ion-col size="12">
               <ion-label>Driver's licence Number</ion-label>
             </ion-col>
@@ -155,7 +195,9 @@
               <ion-input placeholder="Please enter driver's licence number" formControlName="drivers_licence_number">
               </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['drivers_licence_number'] != ''">
             <ion-col size="12">
               <ion-label>Driver's licence Type</ion-label>
             </ion-col>
@@ -172,7 +214,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="userProfileForm.value['drivers_licence_type'] != ''">
             <ion-col class="heading" size="12">Next of Kin</ion-col>
             <ion-col size="12">
               <ion-label>Name</ion-label>
@@ -183,7 +225,9 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['kin_name'] != ''">
             <ion-col size="12">
               <ion-label>Relationship</ion-label>
             </ion-col>
@@ -193,14 +237,18 @@
             <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_relationship'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['kin_relationship'] != ''">
             <ion-col size="12">
               <ion-label>Home address</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter home address" formControlName="kin_home_address"> </ion-input>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="userProfileForm.value['kin_home_address'] != ''">
             <ion-col size="12">
               <ion-label>Mobile no</ion-label>
             </ion-col>
@@ -212,7 +260,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="userProfileForm.value['kin_mobile_no'] != ''">
             <ion-col size="12" class="heading">Qualification & Competencies</ion-col>
             <ion-col size="12" class="sub-heading"> Copies of all relevant qualifications (clear colour scans or
               photographs, front and back) are required to be submitted with this form.</ion-col>
@@ -229,7 +277,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="userProfileForm.value['high_risk_licences'] != ''">
             <ion-col size="12" class="heading">Other Qualifications</ion-col>
             <ion-text class="text-val">Click the box below, and choose the qualifications you have in
               the pop out box that appears. A set of fields for the expiry date of the qualification and a place to
@@ -237,15 +285,17 @@
               submitting does not have an expiry date, please leave that field blank.</ion-text>
             <ion-col size="12">
               <!-- <ion-textarea formControlName="other_qualification"></ion-textarea> -->
-              <ion-select placeholder="Please select qualification" interface="action-sheet" formControlName="other_qualification">
-                <ion-select-option value="{{otherQualificationVal.id}}" *ngFor="let otherQualificationVal of otherQualification">
+              <ion-select placeholder="Please select qualification" interface="action-sheet"
+                formControlName="other_qualification">
+                <ion-select-option value="{{otherQualificationVal.id}}"
+                  *ngFor="let otherQualificationVal of otherQualification">
                   {{otherQualificationVal.val}}
                 </ion-select-option>
               </ion-select>
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="userProfileForm.value['other_qualification'] != ''">
             <ion-col size="12" class="ion-text-center"> RI - Rigging Intermediate</ion-col>
             <ion-col size="12">
               <ion-label>Expiry Date </ion-label>
@@ -253,6 +303,9 @@
             <ion-col size="12">
               <ion-datetime placeholder="Please select expiry date" formControlName="re_expiry_date"></ion-datetime>
             </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="userProfileForm.value['re_expiry_date'] != ''">
             <ion-col size="12">
               <ion-label>Upload Documents </ion-label>
             </ion-col>
@@ -298,7 +351,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="userProfileForm.value['ri_document'] != ''">
             <ion-col size="12" class="ion-text-center">Fire Warden</ion-col>
             <ion-col size="12">
               <ion-label>Expiry Date </ion-label>
@@ -307,6 +360,9 @@
               <ion-datetime placeholder="Please select expiry date" formControlName="fire_wardens_expiry_date">
               </ion-datetime>
             </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="userProfileForm.value['fire_wardens_expiry_date'] != ''">
             <ion-col size="12">
               <ion-label>Upload Documents </ion-label>
             </ion-col>
@@ -336,7 +392,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="userProfileForm.value['fire_warden_document'] != ''">
             <ion-col size="12" class="ion-text-center">Drivers Licence - C</ion-col>
             <ion-col size="12">
               <ion-label>Expiry Date </ion-label>
@@ -345,6 +401,9 @@
               <ion-datetime placeholder="Please select expiry date" formControlName="driver_licence_C_expiry_date">
               </ion-datetime>
             </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="userProfileForm.value['driver_licence_C_expiry_date'] != ''">
             <ion-col size="12">
               <ion-label>Upload Documents </ion-label>
             </ion-col>
@@ -378,10 +437,22 @@
             </ion-col>
           </ion-row>
 
+          <ion-row class="progress-bar">
+            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+              Form progress bar
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+              {{form_percent_val}}{{'%'}}
+            </ion-col>
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+
           <ion-row>
             <ion-col size="12">
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == true">UPDATE</ion-button>
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == false">SUBMIT</ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE</ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT</ion-button>
             </ion-col>
           </ion-row>
 

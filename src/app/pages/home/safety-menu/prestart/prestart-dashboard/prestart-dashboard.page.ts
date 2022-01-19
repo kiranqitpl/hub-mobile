@@ -60,9 +60,9 @@ export class PrestartDashboardPage implements OnInit {
     this.globalService.postData('PrestartMenu/submit', data).subscribe(result => {
       if (result['status']) {
         if (val == true) {
-          this.toastService.toast('This form is added in your favorite list.', 'success');
+          this.toastService.toast('This form is added in your favourite list.', 'success');
         } else if (val == false) {
-          this.toastService.toast('This form is removed from your favorite list.', 'success');
+          this.toastService.toast('This form is removed from your favourite list.', 'success');
         }
       }
     }, error => {

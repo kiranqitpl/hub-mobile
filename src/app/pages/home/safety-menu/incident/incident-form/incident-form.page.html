@@ -2,35 +2,36 @@
 
   <div class="toolbar">
     <ion-text>Incident Form</ion-text>
-    <ion-buttons class="back">
+    <ion-buttons class="back" title="Go Back">
       <ion-button (click)="nav.back()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons class='saveBtn' (click)="onSubmit('incomplete_submit')">
-      <ion-button>
-        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+    <ion-buttons class='saveBtn' (click)="onSubmit('incomplete_submit')" title="Submit Incomplete Form">
+      <ion-button >
+        <ion-icon slot="icon-only" name="save-outline" ></ion-icon>
       </ion-button>
     </ion-buttons>
   </div>
 
   <div class="container">
-    <ion-row>
+    <!-- <ion-row>
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
       <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12">
         <p class="question">ReacIncident report</p>
       </ion-col>
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
-    </ion-row>
+    </ion-row> -->
   </div>
 
   <ion-row>
     <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
     <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12">
+     
       <div class="ion-padding-start ion-padding-end">
-
-        <div class="activeBackground">
-          <!-- <div class="progress-bar"> -->
+        <p class="question">ReacIncident report</p>
+        <!-- <div class="activeBackground"> -->
+          <div class="progress-bar">
           <ion-row>
             <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10" size-xs="9">
               Form progress bar

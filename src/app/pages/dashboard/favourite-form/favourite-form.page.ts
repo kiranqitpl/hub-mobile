@@ -61,7 +61,7 @@ export class FavouriteFormPage implements OnInit {
     }
     this.globalService.postData('PrestartMenu/submit', data).subscribe(result => {
       if (result['status'] && val != '' && val == 'remove') {
-        this.toastService.toast('This form is removed from your favorite list.', 'success');
+        this.toastService.toast('This form is removed from your favourite list.', 'success');
       }
     }, error => {
       console.log(error);

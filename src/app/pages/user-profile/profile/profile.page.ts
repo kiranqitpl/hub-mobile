@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { IonContent, ModalController } from '@ionic/angular';
 
 // import { FileOpener } from '@ionic-native/file-opener';
 // import { DocumentViewer, DocumentViewerOptions } from '@awesome-cordova-plugins/document-viewer/ngx';
@@ -21,7 +21,11 @@ import moment from 'moment';
 })
 export class ProfilePage implements OnInit {
 
-  pName: String = '';
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild('target') myScrollContainer: ElementRef;
+
+  pName: String = 'Personal Details';
+
   salutation = [
     {
       id: 'Miss.',
@@ -180,6 +184,9 @@ export class ProfilePage implements OnInit {
   userDetails: {};
   edit: Boolean = false;
 
+  form_percent: number = 0;
+  form_percent_val: number = 0;
+
   constructor(
     private fb: FormBuilder,
     private globalService: GlobalService,
@@ -189,14 +196,14 @@ export class ProfilePage implements OnInit {
     // private documentViewer: DocumentViewer
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private navCtrl: NavController,
+    private nav: NavController,
   ) { }
 
   ngOnInit() {
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.userProfileForm = this.fb.group({
-      salutation: ['', Validators.required],
-      first_name: ['', [Validators.required, Validators.pattern(environment.alphabet)]],
+      salutation: [''],
+      first_name: ['', Validators.pattern(environment.alphabet)],
       middel_name: ['', Validators.pattern(environment.alphabet)],
       last_name: ['', Validators.pattern(environment.alphabet)],
       residential_address: [''],
@@ -238,9 +245,6 @@ export class ProfilePage implements OnInit {
       if (result && result['status'] && result['data'] && result['data'][0]) {
         this.edit = true;
         this.pName = 'Edit Personal Details';
-
-        console.log('result', result['data'][0]);
-        console.log('result 1', result['data'][0]['high_risk_licences']);
         if (result['data'][0]['high_risk_licences'] && result['data'][0]['high_risk_licences'].length && result['data'][0]['high_risk_licences'].length > 0) {
           for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
             this.highRiskCheck(result['data'][0]['high_risk_licences'][i]);
@@ -250,19 +254,18 @@ export class ProfilePage implements OnInit {
           }
         }
         this.highRiskLicences = result['data'][0]['high_risk_licences'];
-
-        this.userProfileForm.patchValue(result['data'][0]);
+        this.userProfileForm.patchValue(result['data'][0]); 
       } else {
         this.edit = false;
         this.pName = 'Personal Details';
       }
+      this.onProgressBar('');
       // this.loadingService.dismissLoading();
     }, error => {
       // this.loadingService.dismissLoading();
       console.log('error', error);
     })
   }
-
 
   highRiskCheck(value) {
     this.high_risk_licence.find(ele => {
@@ -274,10 +277,8 @@ export class ProfilePage implements OnInit {
 
   onHighRiskLicences(event) {
     this.highRiskCheck(event.detail.value);
-
     // this.highRiskLicences.push(event && event.detail && event.detail.value ? event.detail.value : event);
     // this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences);
-
     if (this.highRiskLicences.length <= 0) {
       this.highRiskLicences.push(event.detail.value);
     } else {
@@ -291,7 +292,6 @@ export class ProfilePage implements OnInit {
           }
         })
       }
-
       if (result && result['ele'] && result['ele'] != '') {
         this.highRiskLicences.splice(result['index'], 1);
       } else {
@@ -299,7 +299,7 @@ export class ProfilePage implements OnInit {
       }
     }
 
-    this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences);
+    this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences.length > 0 ? this.highRiskLicences : '');
   }
 
   onSelectImage(event) {
@@ -360,7 +360,7 @@ export class ProfilePage implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
-    if (this.userProfileForm.valid) {
+    // if (this.userProfileForm.valid) {
       this.loadingService.presentLoading();
       let dob = this.userProfileForm.value['dob'] != '' && this.userProfileForm.value['dob'] != null ? moment(this.userProfileForm.value['dob']).format("DD-MM-YYYY") : '';
       let re_expiry_date = this.userProfileForm.value['re_expiry_date'] != '' && this.userProfileForm.value['re_expiry_date'] != null ? moment(this.userProfileForm.value['re_expiry_date']).format("DD-MM-YYYY") : "";
@@ -387,7 +387,15 @@ export class ProfilePage implements OnInit {
         this.loadingService.dismissLoading();
         console.log('error', error);
       })
-    }
+    // }
+  }
+
+  onProgressBar(event) {
+    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    let data = this.sharedService.progressBar(this.userProfileForm);
+    console.log('data', data);
+    this.form_percent = data['form_percent'];
+    this.form_percent_val = data['form_percent_val'];
   }
 
 }

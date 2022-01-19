@@ -46,6 +46,9 @@ export class UserProfilePage implements OnInit {
     // {
     //   menuName: 'Position Description', route: '#'
     // },
+    {
+      menuName: 'Professional Development Application', route: '/home/hr/prof-dev-form'
+    },
   ]
 
   constructor() { }

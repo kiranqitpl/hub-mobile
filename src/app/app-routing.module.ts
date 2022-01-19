@@ -17,10 +17,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardPageModule)
   },
   {
-    path: 'notification',
-    loadChildren: () => import('./pages/notification/notification.module').then(m => m.NotificationPageModule)
-  },
-  {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },

@@ -1,0 +1,309 @@
+<ion-content>
+  <app-header [pageName]="pName"></app-header>
+
+  <div class="container">
+
+    <ion-row>
+      <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
+
+      <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+        <ion-card>
+          <ion-row>
+            <ion-col size="12" class="text-val">
+              <span>Employee to complete </span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label>Employee No.</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Employee no."></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>USI No.</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter USI No."></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Employee name</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Employee name"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Department</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Department"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Position</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Position"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Course/Licence name</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Course/Licence name"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Institution</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Institution"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Course/Licence Fee(approx.)</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Course/Licence Fee(approx.)"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Start Date</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-datetime placeholder="Please Select Start Date"></ion-datetime>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Finish Date</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-datetime placeholder="Please Select Finish Date"></ion-datetime>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Certificate</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Diploma</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Work Cover Licence</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Degree</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Requested by :</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Manger</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Employee</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Anticipated Costs(accommodation / meals)</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Anticipated Costs(accommodation / meals)"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Attendance Requirements (include days and times)</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Attendance Requirements (include days and times)"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Anticipated Time Away From Work / Reasons For Time Away From Work</ion-label>
+            </ion-col>
+            <ion-col size="12" class="text-val">
+              <span>(e.g. Residential schools etc.)</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input
+                placeholder="Please Enter Anticipated Time Away From Work / Reasons For Time Away From Work (e.g. Residential schools etc.)">
+              </ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>
+                Relevance of course to current position and the benefit to HE
+              </ion-label>
+            </ion-col>
+            <ion-col size="12" class="text-val">
+              <span>(Attach copies of course content etc. to support your application)</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input
+                placeholder="Please Enter Relevance of course to current position and the benefit to HE (Attach copies of course content etc. to support your application)">
+              </ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" class="text-val"> I agree to the terms and conditions as detailed in the Hort Enterprises
+              Professional Development <ion-text color="tertiary">[Doc ID: HE-COR-STD-020].</ion-text>
+            </ion-col>
+
+            <ion-col size="12" class="text-val"> I understand that by accepting the financial entitlements offered to
+              me, I shall also accept the consequences as documented in the Professional Development Policy and my
+              approved application <ion-text color="tertiary">
+                [Doc ID: HE-HR-FRM-0110].</ion-text>
+            </ion-col>
+
+            <ion-col size="12" class="text-val">The consequences are:
+              I understand that if I fail to complete the training or fail to pass the training course undertaken
+              whether
+              you are training for a degree / diploma / certificate / high risk license or other courses, and/or fail to
+              comply with the continuous employment guarantee timeframe. I shall reimburse the Company [Hort
+              Enterprises]
+              for all or part of the course costs dependent on the length of post training employment. Repayment will be
+              made by payroll deduction fortnightly, or from final payment in the case of an employment termination or
+              other agreed means.
+            </ion-col>
+
+            <ion-col size="12" class="error"> I understand if I resign or am terminated for wilful misconduct within;
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">12 months</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">2 years</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" class="text-val"> of completing the above training I agree to have the full amount or
+              otherwise specified deducted from my final pay/s.
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>Employee’s Signature</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Employee’s Signature"></ion-input>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-label>Date</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-datetime placeholder="Please Select Date"></ion-datetime>
+            </ion-col>
+          </ion-row>
+          <ion-row class="heading">
+            <ion-col size="12"> Approval & Acceptance of Development Application </ion-col>
+            <ion-col size="12" class="text-val">
+              <span>To be completed by Management</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Application Approved</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Assistance Required</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="4">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Assistance Approved</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Assistance not approved (state reason)</ion-label>
+                <ion-checkbox slot="start" color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter Assistance Not Approved (State Reason)"></ion-input>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>General Manager’s Signature</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input placeholder="Please Enter General Manager’s Signature"></ion-input>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-label>Date</ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-datetime placeholder="Please Select Date"></ion-datetime>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <!-- <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == true">UPDATE</ion-button> -->
+              <ion-button (click)="onSubmit()" class="btn">SUBMIT</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-card>
+      </ion-col>
+
+      <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
+    </ion-row>
+
+  </div>
+
+</ion-content>

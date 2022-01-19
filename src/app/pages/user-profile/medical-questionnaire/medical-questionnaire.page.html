@@ -1,31 +1,44 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
-  <div class="container">
+  <!-- <app-header [pageName]="pName"></app-header> -->
+  <div class="toolbar">
+    <ion-text>{{pName}}</ion-text>
+    <ion-buttons class="back" title="Go Back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
+  <div class="container" #target>
     <ion-row>
       <ion-col size-lg="3" size-md="3"></ion-col>
       <ion-col size-lg="6" size-md="6" size-sm="12" size-xl="6" size-xs="12">
-        <ion-card [formGroup]="medicalForm">
+        <ion-card [formGroup]="medicalForm" (ionChange)="onProgressBar($event)">
 
           <ion-row>
-
             <ion-col size="12" class="heading">Medical History</ion-col>
-
             <ion-col size="12">
               Have you ever received treatment or medical advice for any of the following:
             </ion-col>
-
             <ion-col size="12" class="text-val">(Please tick all that apply)</ion-col>
 
             <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
               *ngFor="let treatmentObject of treatment">
               <ion-item lines="none">
                 <ion-label class="ion-text-wrap">{{treatmentObject.name}}</ion-label>
-                <ion-checkbox slot="start" [value]="treatmentObject.id"
-                  [checked]="treatmentObject.isChecked" (ionChange)="onReceivedTreatment($event)">
+                <ion-checkbox slot="start" [value]="treatmentObject.id" [checked]="treatmentObject.isChecked"
+                  (ionChange)="onReceivedTreatment($event)">
                 </ion-checkbox>
               </ion-item>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['received_treatment'] != ''">
             <ion-col size="12">
               If you answered yes to any of the above questions, please provide details:
             </ion-col>
@@ -34,7 +47,9 @@
               <ion-textarea placeholder="Please enter details" formControlName="received_treatment_details">
               </ion-textarea>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['received_treatment_details'] != ''">
             <ion-col size="12">
               Have you ever received treatment or medical advice for any of the following:
             </ion-col>
@@ -46,7 +61,7 @@
                 <ion-col size="12">
                   <ion-item lines="none">
                     <ion-label class="ion-text-wrap">
-                      <span class="error">* </span> Have you ever had time off in the last year to any illness or
+                      Have you ever had time off in the last year to any illness or
                       injury(work related) ?
                     </ion-label>
                   </ion-item>
@@ -57,7 +72,7 @@
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -66,26 +81,28 @@
               </ion-row>
             </ion-radio-group>
 
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['injury_time_off']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['injury_time_off']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['injury_time_off'] != ''">
             <ion-radio-group formControlName="currently_treated">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"><span class="error">* </span> Are you currently being treated by a
+                    <ion-label class="ion-text-wrap">Are you currently being treated by a
                       doctor for any medical condition
                       that may affect your ability to perform the duties you are applying for ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -94,27 +111,29 @@
               </ion-row>
             </ion-radio-group>
 
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['currently_treated']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['currently_treated']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['currently_treated'] != ''">
             <ion-radio-group formControlName="taking_medication">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
                     <ion-label class="ion-text-wrap">
-                      <span class="error">* </span> Are you taking any medication, drug or injections for a Medical
+                      Are you taking any medication, drug or injections for a Medical
                       Condition on a regular basis ?
                     </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -122,25 +141,27 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['taking_medication']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['taking_medication']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['taking_medication'] != ''">
             <ion-radio-group formControlName="seen_doctor">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Have you seen a doctor in the last 3
+                    <ion-label class="ion-text-wrap">Have you seen a doctor in the last 3
                       months ? </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -148,26 +169,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['seen_doctor']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['seen_doctor']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row  *ngIf="medicalForm.value['seen_doctor'] != ''">
             <ion-radio-group formControlName="personal_protective_equipment">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"><span class="error">* </span> Is there any reason you cannot wear
+                    <ion-label class="ion-text-wrap">Is there any reason you cannot wear
                       Personal Protective Equipment in
                       the workplace ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -175,26 +198,29 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error"
+
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['personal_protective_equipment']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['personal_protective_equipment'] != ''">
             <ion-radio-group formControlName="affected_Heights">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Are you affected by Heights or
+                    <ion-label class="ion-text-wrap">Are you affected by Heights or
                       Confined Spaces ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -202,26 +228,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['affected_Heights']?.errors?.required">
-              Please select value.
-            </ion-item>
 
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['affected_Heights']?.errors?.required">
+              Please select value.
+            </ion-item> -->
+          </ion-row>
+
+          <ion-row  *ngIf="medicalForm.value['affected_Heights'] != ''">
             <ion-radio-group formControlName="suffer_from_allergies">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap">
-                      <span class="error">* </span>Do you suffer from any allergies ?
+                    <ion-label class="ion-text-wrap">Do you suffer from any allergies ?
                     </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -229,27 +257,30 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error"
+
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['suffer_from_allergies']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['suffer_from_allergies'] != ''">
             <ion-radio-group formControlName="excessive_noise">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span> Have you ever been exposed to
+                    <ion-label class="ion-text-wrap"> Have you ever been exposed to
                       Excessive Noise in any previous
                       employment ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -257,25 +288,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['excessive_noise']?.errors?.required">
-              Please select value.
-            </ion-item>
 
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['excessive_noise']?.errors?.required">
+              Please select value.
+            </ion-item> -->
+          </ion-row>
+
+          <ion-row  *ngIf="medicalForm.value['excessive_noise'] != ''">
             <ion-radio-group formControlName="hazardous_chemicals">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span> Have you ever worked with Hazardous
+                    <ion-label class="ion-text-wrap"> Have you ever worked with Hazardous
                       Chemicals ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -283,26 +317,29 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['hazardous_chemicals']?.errors?.required">
-              Please select value.
-            </ion-item>
 
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['hazardous_chemicals']?.errors?.required">
+              Please select value.
+            </ion-item> -->
+          </ion-row>
+
+          <ion-row  *ngIf="medicalForm.value['hazardous_chemicals'] != ''">
             <ion-radio-group formControlName="health_problems">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Did you suffer or experience any
+                    <ion-label class="ion-text-wrap">Did you suffer or experience any
                       health problems whilst working
                       with these Hazardous Chemicals ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -310,25 +347,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['health_problems']?.errors?.required">
-              Please select value.
-            </ion-item>
 
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['health_problems']?.errors?.required">
+              Please select value.
+            </ion-item> -->
+          </ion-row>
+
+          <ion-row *ngIf="medicalForm.value['health_problems'] != ''">
             <ion-radio-group formControlName="workers_compensation_claim">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Have you a current Workers’
+                    <ion-label class="ion-text-wrap">Have you a current Workers’
                       Compensation Claim ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -336,27 +376,30 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error"
+
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['workers_compensation_claim']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['workers_compensation_claim'] != ''">
             <ion-radio-group formControlName="workers_compensation_claim_in_the_past">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Have you had a Workers’ Compensation
+                    <ion-label class="ion-text-wrap">Have you had a Workers’ Compensation
                       Claim in the past ?
                     </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -364,29 +407,32 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error"
+
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['workers_compensation_claim_in_the_past']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['workers_compensation_claim_in_the_past'] != ''">
             <ion-radio-group formControlName="pre_existing_injuries">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Do you have any other pre-existing
+                    <ion-label class="ion-text-wrap">Do you have any other pre-existing
                       injuries or Disabilities
                       (physical
                       or mental) which may affect your ability to carry out the responsibilities and / or duties of the
                       position ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -394,13 +440,16 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error"
+
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['pre_existing_injuries']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row  *ngIf="medicalForm.value['pre_existing_injuries'] != ''">
             <ion-col size="12">
-              <span class="error">* </span>In what year did you have your last Tetanus Injection ?
+              In what year did you have your last Tetanus Injection ?
             </ion-col>
 
             <ion-col size="12">
@@ -408,11 +457,14 @@
                 <ion-select-option value="2021"> 2021</ion-select-option>
               </ion-select>
             </ion-col>
-            <ion-item lines="none" class="error"
+
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['last_tetanus_injection']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['last_tetanus_injection'] != ''">
             <ion-col size="12">
               If you answered yes to any of the above questions, please provide details:
             </ion-col>
@@ -420,7 +472,9 @@
             <ion-col size="12">
               <ion-textarea placeholder="Please enter details" formControlName="medical_advice_details"></ion-textarea>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['medical_advice_details'] != ''">
             <ion-col size="12" class="heading"> Miscellaneous </ion-col>
             <ion-col size="12" class="text-val">(Please tick appropriate answer)</ion-col>
 
@@ -428,18 +482,18 @@
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Are you prepared to work in a
+                    <ion-label class="ion-text-wrap">Are you prepared to work in a
                       Manufacturing / Engineering Environment and undertake required Training Activities ?
                     </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6"size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6"size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -447,26 +501,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['manufacturing']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['manufacturing']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['manufacturing'] != ''">
             <ion-radio-group formControlName="normal_working_hours">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Are you prepared to work outside
+                    <ion-label class="ion-text-wrap">Are you prepared to work outside
                       normal working hours
                     </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -474,25 +530,27 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['normal_working_hours']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['normal_working_hours']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['normal_working_hours'] != ''">
             <ion-radio-group formControlName="shift_work">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Are you prepared to do Shift Work ?
+                    <ion-label class="ion-text-wrap">Are you prepared to do Shift Work ?
                     </ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -500,25 +558,27 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['shift_work']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['shift_work']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['shift_work'] != ''">
             <ion-radio-group formControlName="right_to_work_in_australia">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Do you have the legal right to work
+                    <ion-label class="ion-text-wrap">Do you have the legal right to work
                       in Australia ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6" size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -526,26 +586,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error"
+            <!-- <ion-item lines="none" class="error"
               *ngIf="isSubmitted && medicalForm.controls['right_to_work_in_australia']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['right_to_work_in_australia'] != ''">
             <ion-radio-group formControlName="criminal_offence">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Have you ever been convicted of a
+                    <ion-label class="ion-text-wrap">Have you ever been convicted of a
                       Criminal Offence ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -553,26 +615,28 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['criminal_offence']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['criminal_offence']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['criminal_offence'] != ''">
             <ion-radio-group formControlName="work_performanc">
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none">
-                    <ion-label class="ion-text-wrap"> <span class="error">* </span>Do you or have you ever taken any
+                    <ion-label class="ion-text-wrap">Do you or have you ever taken any
                       type of illicit drug that may
                       affect your work performance ?</ion-label>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>Yes</ion-label>
                     <ion-radio slot="start" value="Yes"></ion-radio>
                   </ion-item>
                 </ion-col>
-                <ion-col size-xl="6" size-lg="6" size-md="6"  size-sm="6"  size-xs="12">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="12">
                   <ion-item lines="none">
                     <ion-label>No</ion-label>
                     <ion-radio slot="start" value="No"></ion-radio>
@@ -580,10 +644,12 @@
                 </ion-col>
               </ion-row>
             </ion-radio-group>
-            <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['work_performanc']?.errors?.required">
+            <!-- <ion-item lines="none" class="error" *ngIf="isSubmitted && medicalForm.controls['work_performanc']?.errors?.required">
               Please select value.
-            </ion-item>
+            </ion-item> -->
+          </ion-row>
 
+          <ion-row *ngIf="medicalForm.value['work_performanc'] != ''">
             <ion-col size="12">
               If you answered any of the above questions with the highlighted answer, please provide details:
             </ion-col>
@@ -596,13 +662,27 @@
               Workplace. Pre-employment Screening Checks (including Criminal Record) may be undertaken before
               appointment to any position.
             </ion-col>
-
-             <ion-col size="12">
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == true">UPDATE</ion-button>
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == false">SUBMIT</ion-button>
-            </ion-col>
-
           </ion-row>
+
+          <ion-row class="progress-bar">
+            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+              Form progress bar
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+              {{form_percent_val}}{{'%'}}
+            </ion-col>
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE</ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT</ion-button>
+            </ion-col>
+          </ion-row>
+
         </ion-card>
       </ion-col>
       <ion-col size-lg="3" size-md="3"></ion-col>

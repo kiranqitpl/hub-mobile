@@ -2,12 +2,12 @@
   <div class="toolbar">
     <ion-text *ngIf="url_id == ''">Telehandler</ion-text>
     <ion-text *ngIf="url_id != ''">Edit Telehandler</ion-text>
-    <ion-buttons class="back">
+    <ion-buttons class="back" title="Go Back">
       <ion-button (click)="nav.back()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons class='saveBtn' (click)="onSubmit(0)">
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)"   title="Submit Incomplete Form">
       <ion-button>
         <ion-icon slot="icon-only" name="save-outline"></ion-icon>
       </ion-button>

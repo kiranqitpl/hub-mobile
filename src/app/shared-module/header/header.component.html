@@ -48,12 +48,12 @@
   <ion-text>{{pageName}}</ion-text>
 
   <span *ngIf="frame == false">
-    <ion-buttons class='back' *ngIf="pageName != 'Dashboard'">
+    <ion-buttons class='back' *ngIf="pageName != 'Dashboard'"   title="Go Back">
       <ion-button (click)="onGoBack()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons class='logout'>
+    <ion-buttons class='logout'  title="Logout">
       <ion-button (click)="onLogOut()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>

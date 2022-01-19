@@ -11,7 +11,11 @@ const routes: Routes = [
   {
     path: 'favourite-form',
     loadChildren: () => import('./favourite-form/favourite-form.module').then( m => m.FavouriteFormPageModule)
-  }
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then(m => m.NotificationPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,10 +1,24 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
-  <div class="container">
+  <!-- <app-header [pageName]="pName"></app-header> -->
+  <div class="toolbar">
+    <ion-text>{{pName}}</ion-text>
+    <ion-buttons class="back" title="Go Back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <div class="container" #target>
     <ion-row>
       <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
       <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
-        <ion-card [formGroup]="bankAccountForm">
+        <ion-card [formGroup]="bankAccountForm" (ionChange)="onProgressBar($event)">
+
           <ion-row>
             <ion-col size="12">
               <ion-label>Date</ion-label>
@@ -12,74 +26,82 @@
             <ion-col size="12">
               <ion-datetime placeholder="Please select date" formControlName="form_date"></ion-datetime>
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['form_date']!= ''">
             <ion-col size="12">
               <ion-label>Bank</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter bank name" formControlName="bank"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="isSubmitted && bankAccountForm.value['bank'] == ''">
-              Please enter bank name.
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['bank'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['bank'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['bank']!= ''">
             <ion-col size="12">
               <ion-label>Bank Branch</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter bank branch" formControlName="branch"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['branch'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['branch'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['branch']!= ''">
             <ion-col size="12">
               <ion-label>BSB Number</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter BSB number" formControlName="bsb_number"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['bsb_number'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['bsb_number'].errors?.pattern">
               Please enter number.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['bsb_number']!= ''">
             <ion-col size="12">
               <ion-label>Account Number</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter account number" formControlName="account_number"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="isSubmitted && bankAccountForm.value['account_number'] == ''">
-              Please enter account number.
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['account_number'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['account_number'].errors?.pattern">
               Please enter number.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['account_number']!= ''">
             <ion-col size="12">
               <ion-label>Account Name</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter account Name" formControlName="name"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['name'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['name']!= ''">
             <ion-col size="12">
               <ion-label>Amount</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter amount" formControlName="amount"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['amount'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['amount'].errors?.pattern">
               Please enter number.
             </ion-col>
           </ion-row>
-          <ion-row>
+
+          <ion-row *ngIf="bankAccountForm.value['amount']!= ''">
+
             <ion-col size="12" class="heading">
               If you have a 2nd Bank Account you would like to split your wage into
             </ion-col>
@@ -90,20 +112,24 @@
             <ion-col size="12">
               <ion-input placeholder="Please enter bank name" formControlName="other_bank"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['other_bank'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['other_bank'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['other_bank']!= ''">
             <ion-col size="12">
               <ion-label>Bank Branch</ion-label>
             </ion-col>
             <ion-col size="12">
               <ion-input placeholder="Please enter bank branch" formControlName="other_branch"></ion-input>
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['other_branch'].errors?.pattern">
+            <ion-col size="12" class="error" *ngIf=" bankAccountForm.controls['other_branch'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['other_branch']!= ''">
             <ion-col size="12">
               <ion-label>BSB Number</ion-label>
             </ion-col>
@@ -113,7 +139,9 @@
             <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['other_bsb_number'].errors?.pattern">
               Please enter number.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['other_bsb_number']!= ''">
             <ion-col size="12">
               <ion-label>Account Number</ion-label>
             </ion-col>
@@ -123,7 +151,9 @@
             <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['other_account_number'].errors?.pattern">
               Please enter number.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['other_account_number']!= ''">
             <ion-col size="12">
               <ion-label>Account Name</ion-label>
             </ion-col>
@@ -133,7 +163,9 @@
             <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['other_name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
+          </ion-row>
 
+          <ion-row *ngIf="bankAccountForm.value['other_name']!= ''">
             <ion-col size="12">
               <ion-label>Amount</ion-label>
             </ion-col>
@@ -143,12 +175,26 @@
             <ion-col size="12" class="error" *ngIf="bankAccountForm.controls['other_amount'].errors?.pattern">
               Please enter number.
             </ion-col>
-
           </ion-row>
+
+          <ion-row class="progress-bar">
+            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+              Form progress bar
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+              {{form_percent_val}}{{'%'}}
+            </ion-col>
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+
           <ion-row>
             <ion-col size="12">
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == true">UPDATE</ion-button>
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == false">SUBMIT</ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE
+              </ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-card>

@@ -5,11 +5,11 @@
     <ion-text *ngIf="url_id == ''">Crane</ion-text>
     <ion-text *ngIf="url_id != ''">Edit Crane</ion-text>
     <ion-buttons class="back">
-      <ion-button (click)="nav.back()">
+      <ion-button (click)="nav.back()" title="Go Back">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons class='saveBtn' (click)="onSubmit(0)">
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)"  title="Submit Incomplete Form">
       <ion-button>
         <ion-icon slot="icon-only" name="save-outline"></ion-icon>
       </ion-button>
@@ -398,7 +398,6 @@
                 correctly.</ion-text>
             </div>
 
-
             <div *ngIf="craneForm.value['hook'] != ''">
               <!-- <ion-radio-group formControlName="hoist_chain_rope">
                 <ion-item lines="none">
@@ -547,21 +546,20 @@
             </div>
           </div>
 
-          <div class="progress-bar">
-            <ion-row>
-              <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
-                Form progress bar
-              </ion-col>
-              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
-                {{form_percent_val}}{{'%'}}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-              </ion-col>
-            </ion-row>
-          </div>
+          <!-- <div > -->
+          <ion-row class="progress-bar">
+            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+              Form progress bar
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+              {{form_percent_val}}{{'%'}}
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+          <!-- </div> -->
 
           <ion-button *ngIf="url_id == '' && (form_percent_val == 100)" (click)="onSubmit(1)" class="btn"
             [disabled]="craneForm.invalid">SUBMIT
@@ -571,6 +569,7 @@
             [disabled]="craneForm.invalid">Update
           </ion-button>
         </ion-card>
+
       </ion-col>
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
     </ion-row>

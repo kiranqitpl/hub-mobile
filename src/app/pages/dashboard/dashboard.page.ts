@@ -13,13 +13,13 @@ export class DashboardPage implements OnInit {
   
   menu: any = [
     {
-      menuName: "Favorites", route: "/dashboard/favourite-form"
+      menuName: "Favourites", route: "/dashboard/favourite-form"
     },
     {
       menuName: "Submitted Forms", route: "/incident-form-list"
     },
     {
-      menuName: "Notification", route: "/notification"
+      menuName: "Notification", route: "/dashboard/notification"
     },
   ];
 

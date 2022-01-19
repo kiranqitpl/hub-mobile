@@ -2,12 +2,12 @@
 
   <div class="toolbar">
     <ion-text>Edit Incident Form</ion-text>
-    <ion-buttons class="back">
+    <ion-buttons class="back" title="Go Back">
       <ion-button (click)="nav.back()">
         <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons class='saveBtn' (click)="onSubmit('incomplete_submit')">
+    <ion-buttons class='saveBtn' (click)="onSubmit('incomplete_submit')" title="Submit Incomplete Form">
       <ion-button>
         <ion-icon slot="icon-only" name="save-outline"></ion-icon>
       </ion-button>
@@ -996,7 +996,7 @@
                     <ion-item class="ra" lines="none">
                       <p class="question">Part of body injured :</p>
                     </ion-item>
-                    <ion-select multiple="true" cancelText="Cancel" okText="Ok" 
+                    <ion-select multiple="true" cancelText="Cancel" okText="Ok"
                       formControlName="part_of_body_injured_occured" placeholder="Select Part of body injured">
                       <ion-select-option value="{{bodyPartsVal.name}}" *ngFor="let bodyPartsVal of bodyPartList">
                         {{bodyPartsVal.name}}</ion-select-option>
@@ -1180,13 +1180,13 @@
                       <ion-radio slot="start" value="Internal"></ion-radio>
                     </ion-item>
                   </ion-col>
-                      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>External</ion-label>
                       <ion-radio slot="start" value="External"></ion-radio>
                     </ion-item>
                   </ion-col>
-                      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>Both</ion-label>
                       <ion-radio slot="start" value="Both"></ion-radio>
@@ -1272,19 +1272,19 @@
 
               <ion-radio-group formControlName="security_option" (ionChange)="onSecurityOption($event)">
                 <ion-row class="ion-no-padding">
-                         <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>IT</ion-label>
                       <ion-radio slot="start" value="IT"></ion-radio>
                     </ion-item>
                   </ion-col>
-                         <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>Theft</ion-label>
                       <ion-radio slot="start" value="Theft"></ion-radio>
                     </ion-item>
                   </ion-col>
-                         <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+                  <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12">
                     <ion-item class="ra" lines="none">
                       <ion-label>Other</ion-label>
                       <ion-radio slot="start" value="Other"></ion-radio>
