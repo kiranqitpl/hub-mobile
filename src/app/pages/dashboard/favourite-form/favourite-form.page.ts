@@ -29,12 +29,8 @@ export class FavouriteFormPage implements OnInit {
   loadFavoriteList() {
     this.globalService.getData('PrestartMenu/get_PrestartMenu').subscribe(result => {
       if (result['status']) {
-
         this.menuData = result['data']['menu'].sort((a, b) => a.favorite_position - b.favorite_position);
         this.updateRowId = result['data'].id;
-
-        console.log('this.menuData', this.menuData);
-
       } else {
         this.menuData = [];
       }
@@ -80,7 +76,6 @@ export class FavouriteFormPage implements OnInit {
   }
 
   onGoToPage(route) {
-    console.log('route', route);
     this.nav.navigateForward(route)
   }
 

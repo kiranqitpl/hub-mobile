@@ -26,7 +26,6 @@ export class EmpSearchComponent implements OnInit {
   ionViewWillEnter() { }
 
   ngOnInit() {
-    // console.log('get list in modal', this.list);
     this.newList.next(this.list);
   }
 

@@ -306,8 +306,6 @@ export class TelehandlerAddFormPage implements OnInit {
           } else {
             this[rowName].push(image);
           }
-
-          console.log('rowName', this[rowName]);
           this.teleHandlerForm.controls[rowName].setValue(this[rowName]);
           // this.teleHandlerForm.controls[rowName].setValue(image);
         }).catch(error => {
@@ -382,9 +380,6 @@ export class TelehandlerAddFormPage implements OnInit {
     if (this.url_id != '' && this.url_id != undefined) {
       formData['id'] = this.teleHandlerForm['id'];
     }
-
-    console.log('formData', formData);
-
     this.globalService.postData('Telehandler/submit', formData).subscribe(result => {
       if (result && result['status']) {
         this.toastService.toast(result['message'], 'success');
@@ -439,7 +434,6 @@ export class TelehandlerAddFormPage implements OnInit {
 
     this.form_percent = ((1 / Object.keys(this.teleHandlerForm.controls).length) * count);
     this.form_percent_val = parseInt((((1 / Object.keys(this.teleHandlerForm.controls).length) * count) * 100).toFixed());
-    // console.log('this.form_percent_val', this.form_percent_val);
   }
 
   loadData(id) {

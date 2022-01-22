@@ -25,7 +25,6 @@ export class VehicleHostViewDetailPage implements OnInit {
     this.activatedRoute.params.subscribe(
       (params: Params) => {
         this.globalService.getData('add_form/getSingleData?table_name=prestart&id=' + params['id']).subscribe(result => {
-          console.log('vehicleHoist', typeof (this.vehicleHoist));
           if (result && result['data'] && result['data'][0]) {
             this.vehicleHoist = result['data'][0];
           } else {

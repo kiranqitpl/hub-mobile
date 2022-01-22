@@ -180,12 +180,16 @@ export class ProfilePage implements OnInit {
   userProfileForm: FormGroup;
   highRiskLicences = [];
   riDocs = [];
+  fireWardenDocs = [];
+  driverLicenceExpiryDocs = [];
   isSubmitted: Boolean = false;
   userDetails: {};
   edit: Boolean = false;
 
   form_percent: number = 0;
   form_percent_val: number = 0;
+
+  pdfSrc:string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -243,6 +247,7 @@ export class ProfilePage implements OnInit {
     // this.loadingService.presentLoading();
     this.globalService.getData('OnboardingSuperannuation/getEmployeeProfileDetails/' + this.userDetails['id']).subscribe(result => {
       if (result && result['status'] && result['data'] && result['data'][0]) {
+        console.log('onLoadData', result);
         this.edit = true;
         this.pName = 'Edit Personal Details';
         if (result['data'][0]['high_risk_licences'] && result['data'][0]['high_risk_licences'].length && result['data'][0]['high_risk_licences'].length > 0) {
@@ -254,7 +259,7 @@ export class ProfilePage implements OnInit {
           }
         }
         this.highRiskLicences = result['data'][0]['high_risk_licences'];
-        this.userProfileForm.patchValue(result['data'][0]); 
+        this.userProfileForm.patchValue(result['data'][0]);
       } else {
         this.edit = false;
         this.pName = 'Personal Details';
@@ -302,35 +307,93 @@ export class ProfilePage implements OnInit {
     this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences.length > 0 ? this.highRiskLicences : '');
   }
 
-  onSelectImage(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      if (event.target.files[0].type == 'application/pdf') {
-        let dataObject = {
-          type: 'pdf',
-          val: event.target.files[0]
-        }
-        if (this.riDocs.length <= 0) {
-          this.riDocs.push(dataObject);
+  onSelectImage(event, variableName) {
+    console.log('onSelectImage', event.target.files);
+    if (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpeg' ||
+      event.target.files[0].type == 'application/pdf') {
+      let dataObject = {};
+      for (let i = 0; i < event.target.files.length; i++) {
+        if (event.target.files[0].type == 'application/pdf') {
+          let img: any = document.querySelector("#riDocs");
+          if(typeof (FileReader) !== 'undefined') {
+            let reader = new FileReader();
+            // reader.onload = (e:any) => {
+            //   dataObject = {
+            //     type: 'pdf',
+            //     val: e.target.result
+            //   }
+            // }
+            reader.onload = (e:any) => {
+              this.pdfSrc = e.target.result;
+            }
+            reader.readAsArrayBuffer(img.files[0]);
+
+            console.log( "this.pdfSrc" , this.pdfSrc );
+
+            // console.log('dataObject',dataObject);
+
+            // if (this[variableName].length <= 0) {
+            //   this[variableName].push(dataObject);
+            // } else {
+            //   this[variableName].unshift(dataObject);
+            // }
+            // if (variableName == 'riDocs') {
+            //   this.userProfileForm.controls['ri_document'].setValue(this.riDocs);
+            // } else if (variableName == 'fireWardenDocs') {
+            //   this.userProfileForm.controls['fire_warden_document'].setValue(this.fireWardenDocs);
+            // } else if (variableName == 'driverLicenceExpiryDocs') {
+            //   this.userProfileForm.controls['drivers_licence_C_document'].setValue(this.driverLicenceExpiryDocs);
+            // }
+            this.onProgressBar('');
+          }
         } else {
-          this.riDocs.unshift(dataObject);
+          this.sharedService.getBase64(event.target.files[i]).then(
+            data => {
+              dataObject = {
+                type: 'image',
+                val: data
+              }
+              if (this[variableName].length <= 0) {
+                this[variableName].push(dataObject);
+              } else {
+                this[variableName].unshift(dataObject);
+              }
+              if (variableName == 'riDocs') {
+                this.userProfileForm.controls['ri_document'].setValue(this.riDocs);
+              } else if (variableName == 'fireWardenDocs') {
+                this.userProfileForm.controls['fire_warden_document'].setValue(this.fireWardenDocs);
+              } else if (variableName == 'driverLicenceExpiryDocs') {
+                this.userProfileForm.controls['drivers_licence_C_document'].setValue(this.driverLicenceExpiryDocs);
+              }
+              this.onProgressBar('');
+            }).catch(error => {
+              console.log('error', error);
+            });
+          // }
+          // if (this[variableName].length <= 0) {
+          //   this[variableName].push(dataObject);
+          // } else {
+          //   this[variableName].unshift(dataObject);
+          // }
+          // if (variableName == 'riDocs') {
+          //   this.userProfileForm.controls['ri_document'].setValue(this[variableName]);
+          // } else if (variableName == 'fireWardenDocs') {
+          //   this.userProfileForm.controls['fire_warden_document'].setValue(this[variableName]);
+          // } else if (variableName == 'driverLicenceExpiryDocs') {
+          //   this.userProfileForm.controls['drivers_licence_C_document'].setValue(this[variableName]);
+          // }
+          // this.onProgressBar('');
         }
-      } else {
-        this.sharedService.getBase64(event.target.files[i]).then(
-          data => {
-            let imageObject = {
-              type: 'image',
-              val: data
-            }
-            if (this.riDocs.length <= 0) {
-              this.riDocs.push(imageObject);
-            } else {
-              this.riDocs.unshift(imageObject);
-            }
-            this.userProfileForm.controls['ri_document'].setValue(this.riDocs);
-            // this.onProgressBar('', '');
-          }).catch(error => {
-            console.log('error', error);
-          });
+      }
+    } else {
+      this.toastService.toast('Please select PDF, PNG or JPEG format only.', 'danger');
+      this[variableName] = [];
+      if (variableName == 'riDocs') {
+        this.userProfileForm.controls['ri_document'].setValue(this[variableName]);
+      } else if (variableName == 'fireWardenDocs') {
+        this.userProfileForm.controls['fire_warden_document'].setValue(this[variableName]);
+      } else if (variableName == 'driverLicenceExpiryDocs') {
+        this.userProfileForm.controls['drivers_licence_C_document'].setValue(this[variableName]);
       }
     }
   }
@@ -355,12 +418,12 @@ export class ProfilePage implements OnInit {
 
   onImageDelete(index, variableName) {
     this[variableName].splice(index, 1);
-    // this.onProgressBar('', '');
+    this.onProgressBar('');
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    // if (this.userProfileForm.valid) {
+    if (this.userProfileForm.valid) {
       this.loadingService.presentLoading();
       let dob = this.userProfileForm.value['dob'] != '' && this.userProfileForm.value['dob'] != null ? moment(this.userProfileForm.value['dob']).format("DD-MM-YYYY") : '';
       let re_expiry_date = this.userProfileForm.value['re_expiry_date'] != '' && this.userProfileForm.value['re_expiry_date'] != null ? moment(this.userProfileForm.value['re_expiry_date']).format("DD-MM-YYYY") : "";
@@ -387,13 +450,14 @@ export class ProfilePage implements OnInit {
         this.loadingService.dismissLoading();
         console.log('error', error);
       })
-    // }
+    }
   }
 
   onProgressBar(event) {
-    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
-    let data = this.sharedService.progressBar(this.userProfileForm);
-    console.log('data', data);
+    // this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    let formControlList = [];
+    Object.keys(this.userProfileForm.controls).map(ele => formControlList.push(ele));
+    let data = this.sharedService.progressBar(formControlList, this.userProfileForm);
     this.form_percent = data['form_percent'];
     this.form_percent_val = data['form_percent_val'];
   }

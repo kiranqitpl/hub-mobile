@@ -880,7 +880,7 @@ export class IncidentFormEditPage implements OnInit {
           this.onProgressBar('', '');
           this.loadingService.dismissLoading();
         } else {
-          console.log('Error in image processing.');
+          // console.log('Error in image processing.');
           this.loadingService.dismissLoading();
         }
       },
@@ -1695,7 +1695,6 @@ export class IncidentFormEditPage implements OnInit {
       no = this.injuryForm.value['injury_persons']
     }
     // if (no == 0) {
-    //   console.log(1);
     //   this.injuryPersonDetails.push(this.injuryPersonKeys());
     // } else 
     if (no > 0) {
@@ -2161,14 +2160,10 @@ export class IncidentFormEditPage implements OnInit {
 
     this.form_percent = ((1 / formControlKeys.length) * count);
     this.form_percent_val = parseInt((((1 / formControlKeys.length) * count) * 100).toFixed());
-
-    // console.log('this.form_percent_val 0 ', (((1 / formControlKeys.length) * count) * 100).toFixed());
-    // console.log('this.form_percent_val 1', this.form_percent_val);
-    // console.log('this.form_percent 2', this.form_percent);
   }
 
-  onImageClick(val) {
-    console.log(val);
-  }
+  // onImageClick(val) {
+  //   console.log(val);
+  // }
 
 }

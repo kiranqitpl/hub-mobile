@@ -70,7 +70,6 @@ export class AppComponent {
     if (url[2] == 'mforms-qa.horts.com.au') {
       this.globalService.url.next(environment.QA_API_URL);
     } else {
-      console.log('dev/live', environment.API_URL);
       this.globalService.url.next(environment.API_URL);
     }
   }

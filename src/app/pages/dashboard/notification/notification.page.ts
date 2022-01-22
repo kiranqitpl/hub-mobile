@@ -56,23 +56,20 @@ export class NotificationPage implements OnInit {
 
   // onNotificationLoad(event, pageNo, screen) {
   onNotificationLoad() {
-    // console.log('this.loggedInUser', this.loggedInUser, this.loggedInUser['id']);
     // this.pageNumber = (event.offset + 1);
     // this.offset = event.offset
-    this.globalService.presentLoading();
+    // this.globalService.presentLoading();
     // this.globalService.getData('notification/getNotificationList/?page_no=' + this.pageNumber).subscribe((result: any) => {
     this.globalService.getData('notification/getNotificationList/' + this.loggedInUser['id']).subscribe(result => {
-      console.log('result', result);
       if (result && result['row_count'] > 0) {
         this.notificationData = result['data'];
         this.totalElements = result['row_count'];
       } else {
         this.notificationData = [];
       }
-      console.log('this.notificationData ', this.notificationData);
-      this.globalService.dismissLoading();
+      // this.globalService.dismissLoading();
     }), error => {
-      this.globalService.dismissLoading();
+      // this.globalService.dismissLoading();
       console.log('error', error);
     }
   }
@@ -106,7 +103,6 @@ export class NotificationPage implements OnInit {
     if (this.notificationId.length != 0) {
       this.globalService.presentLoading();
       let formData = new FormData();
-      // console.log('this.notificationId', this.notificationId);
       formData.append("id", JSON.stringify(this.notificationId));
       this.globalService.postData('notification/deleteNotificationByNotificationID', formData).subscribe(result => {
         if (result && result['status']) {

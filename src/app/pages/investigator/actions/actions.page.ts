@@ -49,7 +49,6 @@ export class ActionsPage implements OnInit {
         this.data = result.data;
       }
       this.loadingService.dismissLoading();
-      console.log('this.data ', this.data);
     }, err => {
       this.loadingService.dismissLoading();
       console.log(err)
@@ -63,14 +62,10 @@ export class ActionsPage implements OnInit {
       let d = JSON.parse(localStorage.getItem("singleView"));
       // this.incident_id = d.id;
       // this.global.presentLoading();
-      console.log('  this.incident_id ', this.incident_id);
       this.global.getData("Investigator/getInvestigationAction/" + this.loggedInUser['id']).subscribe((res: any) => {
-        console.log('getInvestigationAction 1', res);
         if (res) {
           res?.data?.forEach((el) => {
-            console.log('getInvestigationAction 2', el);
             if (el.incident_id == this.incident_id) {
-              console.log('here');
               this.description_of_required_action = el.description_of_required_action;
               // this.user_name = el.user_name;
               this.user_name = el.user_id;
@@ -78,7 +73,6 @@ export class ActionsPage implements OnInit {
               this.expected_completion = el.expected_completion;
               this.id = el.id
               // this.global.dismissLoading();
-              console.log(' this.id ', this.id);
             }
           })
         }

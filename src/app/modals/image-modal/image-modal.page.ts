@@ -19,24 +19,22 @@ export class ImageModalPage implements OnInit {
 
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() {
-
-    console.log('img', this.img);
-
-    console.log('slides', this.slides);
-  }
+  ngOnInit() {}
 
   ionViewDidEnter() {
+    console.log('this.slides',this.slides);
     this.slides.update();
   }
 
-  async zoom(zoomIn: boolean) {
+  async onZoom(zoomIn: boolean) {
     const slider = await this.slides.getSwiper();
     const zoom = slider.zoom;
     zoomIn ? zoom.in() : zoom.out();
+
+    console.log('zoomIn',zoomIn);
   }
 
-  close() {
+  onClose() {
     this.modalController.dismiss();
   }
 

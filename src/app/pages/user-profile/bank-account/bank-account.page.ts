@@ -97,10 +97,11 @@ export class BankAccountPage implements OnInit {
     }
   }
 
-
   onProgressBar(event) {
     this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
-    let data = this.sharedService.progressBar(this.bankAccountForm);
+    let formControlList = [];
+    Object.keys(this.bankAccountForm.controls).map(ele => formControlList.push(ele));
+    let data = this.sharedService.progressBar(formControlList, this.bankAccountForm);
     this.form_percent = data['form_percent'];
     this.form_percent_val = data['form_percent_val'];
   }

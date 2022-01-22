@@ -1,6 +1,18 @@
 <ion-content>
-  <app-header [pageName]="pName"></app-header>
-  <div class="container">
+  <div class="toolbar">
+    <ion-text>{{pName}}</ion-text>
+    <ion-buttons class="back" title="Go Back">
+      <ion-button (click)="nav.back()">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
+      <ion-button>
+        <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <div class="container" #target>
 
     <ion-row>
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
@@ -40,7 +52,7 @@
           </ion-item>
         </ion-card>
 
-        <ion-card [formGroup]="superannuation">
+        <ion-card [formGroup]="superannuation" (ionChange)="onProgressBar($event)">
 
           <ion-row *ngIf="super_contribution != 'EMPLOYER'">
             <ion-col size="12">
@@ -52,7 +64,8 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row
+            *ngIf="(super_contribution != 'EMPLOYER' && superannuation.value['fund_abn']) || super_contribution == 'EMPLOYER'">
             <ion-col size="12" *ngIf="super_contribution != 'EMPLOYER'">
               <ion-label>Fund Name</ion-label>
             </ion-col>
@@ -67,13 +80,10 @@
             <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_name'].errors?.pattern">
               Please enter alphabets.
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="isSubmitted && superannuation.controls['fund_name'].value == ''">
-              Please enter fund name.
-            </ion-col>
           </ion-row>
 
           <div *ngIf="super_contribution != 'EMPLOYER'">
-            <ion-row>
+            <ion-row *ngIf="superannuation.value['fund_name']">
               <ion-col size="12">
                 <ion-label> Fund Address</ion-label>
               </ion-col>
@@ -82,7 +92,7 @@
               </ion-col>
             </ion-row>
 
-            <ion-row>
+            <ion-row *ngIf="superannuation.value['fund_address']">
               <ion-col size="12">
                 <ion-label> Suburb/Town </ion-label>
               </ion-col>
@@ -94,7 +104,7 @@
               </ion-col>
             </ion-row>
 
-            <ion-row>
+            <ion-row *ngIf="superannuation.value['fund_sub_urb']">
               <ion-col size="12">
                 <ion-label> State</ion-label>
               </ion-col>
@@ -106,7 +116,7 @@
               </ion-col>
             </ion-row>
 
-            <ion-row>
+            <ion-row *ngIf="superannuation.value['fund_state']">
               <ion-col size="12">
                 <ion-label>Postcode</ion-label>
               </ion-col>
@@ -119,7 +129,8 @@
             </ion-row>
           </div>
 
-          <ion-row>
+          <ion-row
+            *ngIf="(super_contribution != 'EMPLOYER' && superannuation.value['fund_postcode']) || (super_contribution == 'EMPLOYER' && superannuation.value['fund_name'])">
             <ion-col size="12" *ngIf="super_contribution != 'EMPLOYER'">
               <ion-label>Fund Phone</ion-label>
             </ion-col>
@@ -135,7 +146,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="super_contribution != 'SMSF'">
+          <ion-row *ngIf="super_contribution != 'SMSF' &&  superannuation.value['fund_phone']">
             <ion-col size="12">
               <ion-label>Unique Superannuation Identifier (USI)</ion-label>
             </ion-col>
@@ -145,78 +156,80 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="super_contribution == 'RSA'">
-            <ion-col size="12">
-              <ion-label> Your Account Name (if applicable)</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter Your Account Name" formControlName="fund_account_name"></ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_account_name'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+          <div *ngIf="super_contribution == 'RSA'">
+            <ion-row *ngIf="superannuation.value['fund_usi']">
+              <ion-col size="12">
+                <ion-label> Your Account Name (if applicable)</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter Your Account Name" formControlName="fund_account_name"></ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_account_name'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="super_contribution == 'RSA'">
-            <ion-col size="12">
-              <ion-label>Your Member Number (if applicable)</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter Your Member Number" formControlName="fund_member_number">
-              </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_member_number'].errors?.pattern">
-              Please enter number.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="superannuation.value['fund_account_name']">
+              <ion-col size="12">
+                <ion-label>Your Member Number (if applicable)</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter Your Member Number" formControlName="fund_member_number">
+                </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_member_number'].errors?.pattern">
+                Please enter number.
+              </ion-col>
+            </ion-row>
+          </div>
 
-          <ion-row *ngIf="super_contribution == 'SMSF'">
-            <ion-col size="12">
-              <ion-label>Fund electronic service address (ESA)</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter Fund electronic service address (ESA)" formControlName="fund_esa">
-              </ion-input>
-            </ion-col>
-          </ion-row>
+          <div *ngIf="super_contribution == 'SMSF' ">
+            <ion-row *ngIf="superannuation.value['fund_phone']">
+              <ion-col size="12">
+                <ion-label>Fund electronic service address (ESA)</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter Fund electronic service address (ESA)" formControlName="fund_esa">
+                </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="super_contribution == 'SMSF'">
-            <ion-col size="12">
-              <ion-label>BSB Code(please include all six numbers)</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter BSB Code" formControlName="fund_bsb_code"></ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_bsb_code'].errors?.pattern">
-              Please enter number.
-            </ion-col>
+            <ion-row *ngIf="superannuation.value['fund_esa']">
+              <ion-col size="12">
+                <ion-label>BSB Code(please include all six numbers)</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter BSB Code" formControlName="fund_bsb_code"></ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_bsb_code'].errors?.pattern">
+                Please enter number.
+              </ion-col>
+              <ion-col size="12" class="error"
+                *ngIf="superannuation.controls['fund_bsb_code'].errors?.minlength || superannuation.controls['fund_bsb_code'].errors?.maxlength">
+                Please enter 6 number.
+              </ion-col>
+            </ion-row>
 
-            <ion-col size="12" class="error"
-              *ngIf="superannuation.controls['fund_bsb_code'].errors?.minlength || superannuation.controls['fund_bsb_code'].errors?.maxlength">
-              Please enter 6 number.
-            </ion-col>
-
-
-          </ion-row>
-
-          <ion-row *ngIf="super_contribution == 'SMSF'">
-            <ion-col size="12">
-              <ion-label>Account Number</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter Account Number" formControlName="fund_account_no"></ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_account_no'].errors?.pattern">
-              Please enter number.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="superannuation.value['fund_bsb_code']">
+              <ion-col size="12">
+                <ion-label>Account Number</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter Account Number" formControlName="fund_account_no"></ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="superannuation.controls['fund_account_no'].errors?.pattern">
+                Please enter number.
+              </ion-col>
+            </ion-row>
+          </div>
 
           <ion-row *ngIf="super_contribution != 'EMPLOYER'">
 
-            <ion-col size="12" *ngIf="super_contribution == 'RSA'">
+            <ion-col size="12" *ngIf="super_contribution == 'RSA' && superannuation.value['fund_member_number']">
               <ion-label> Attach Compliance Letter</ion-label>
             </ion-col>
-            <ion-col size="12" *ngIf="super_contribution == 'RSA'">
+
+            <ion-col size="12" *ngIf="super_contribution == 'RSA' && superannuation.value['fund_member_number']">
               <ion-label class="ion-text-wrap mandatoryField">* You need to attach a letter from your
                 fund stating that they are a complying fund and that they will
                 accept contributions from your employer. Correct information about your super fund is needed for your
@@ -224,10 +237,11 @@
               </ion-label>
             </ion-col>
 
-            <ion-col size="12" *ngIf="super_contribution == 'SMSF'">
+            <ion-col size="12" *ngIf="super_contribution == 'SMSF' && superannuation.value['fund_account_no']">
               <ion-label> Attach AOT Compliance Letter</ion-label>
             </ion-col>
-            <ion-col size="12" *ngIf="super_contribution == 'SMSF'">
+
+            <ion-col size="12" *ngIf="super_contribution == 'SMSF' && superannuation.value['fund_account_no']">
               <ion-label class="ion-text-wrap mandatoryField">* You need to attach a document confirming SMSF is an
                 ATO regulated super fund. You can located and print a copy of the compliance status for your SMSF by
                 searching using the ABN or fund name in the Super Fund Lookup service at
@@ -236,46 +250,47 @@
               </ion-label>
             </ion-col>
 
-            <ion-col size="12">
+            <ion-col size="12" *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_member_number']) || 
+            (super_contribution == 'SMSF' && superannuation.value['fund_account_no'])">
               <ion-input type="file" (change)="onDocPreview($event)">
               </ion-input>
-            </ion-col>
-
-            <ion-col size="12">
             </ion-col>
           </ion-row>
 
           <div *ngIf="super_contribution == 'SMSF'">
-            <ion-row>
-              <ion-col size="12">
-                <ion-label class="ion-text-wrap mandatoryField">* If you are the turstee, or a director of the
-                  corporate trustee you can confirm that your SMSF will accpet contribution from your employer by making
-                  the following declaration :
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-radio-group formControlName="fund_trustee">
+            <div *ngIf="superannuation.value['fund_attachment']">
               <ion-row>
                 <ion-col size="12">
-                  <ion-item lines="none">
-                    <ion-label class="ion-text-wrap">I am the trustee, or a director of the corporate trustee of the
-                      SMSF and I declare that the SMSF will accept contributions from my employer.
-                    </ion-label>
-                    <ion-radio slot="start" value="RSA"></ion-radio>
-                  </ion-item>
-                </ion-col>
-                <ion-col size="12">
-                  <ion-item lines="none">
-                    <ion-label class="ion-text-wrap">I am neither the trustee nor a director of the corporte trustee
-                      of the SMSF.</ion-label>
-                    <ion-radio slot="start" value="SMSF"></ion-radio>
-                  </ion-item>
+                  <ion-label class="ion-text-wrap mandatoryField">* If you are the turstee, or a director of the
+                    corporate trustee you can confirm that your SMSF will accpet contribution from your employer by
+                    making
+                    the following declaration :
+                  </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-radio-group>
 
-            <ion-row>
+              <ion-radio-group formControlName="fund_trustee">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item lines="none">
+                      <ion-label class="ion-text-wrap">I am the trustee, or a director of the corporate trustee of the
+                        SMSF and I declare that the SMSF will accept contributions from my employer.
+                      </ion-label>
+                      <ion-radio slot="start" value="RSA"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item lines="none">
+                      <ion-label class="ion-text-wrap">I am neither the trustee nor a director of the corporte trustee
+                        of the SMSF.</ion-label>
+                      <ion-radio slot="start" value="SMSF"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+            </div>
+
+            <ion-row *ngIf="superannuation.value['fund_trustee']">
               <ion-col size="12">
                 <ion-label class="ion-text-wrap mandatoryField">* If you are not the trustee, or a director of the
                   corporate trustee of the SMSF, then you must attach a letter from the trustee confirming that the fund
@@ -291,10 +306,9 @@
               <ion-col size="12">
               </ion-col>
             </ion-row>
-
           </div>
 
-          <ion-row *ngIf="super_contribution == 'EMPLOYER'">
+          <ion-row *ngIf="super_contribution == 'EMPLOYER' && superannuation.value['fund_usi']">
             <ion-col size="12">
               <ion-label>Super Fund Website Address</ion-label>
             </ion-col>
@@ -307,29 +321,45 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="(super_contribution == 'EMPLOYER' && superannuation.value['fund_attachment']) || 
+          (super_contribution == 'EMPLOYER' && superannuation.value['fund_attachment_confirm_letter']) || 
+          (super_contribution == 'EMPLOYER' && superannuation.value['fund_web_url'])">
             <ion-col size="1">
               <ion-checkbox color="primary" formControlName="completed"></ion-checkbox>
             </ion-col>
             <ion-col size="11">
               I have completed this form.
             </ion-col>
-
-            <ion-col size="12" class="error" *ngIf="isSubmitted && superannuation.value['completed'] == false">
+            <ion-col size="12" class="error" *ngIf="superannuation.value['completed'] == false">
               Please check this if you have completed above form.
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="progress-bar">
+            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+              Form progress bar
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+              {{form_percent_val}}{{'%'}}
+            </ion-col>
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
             </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col size="12">
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == true">UPDATE</ion-button>
-              <ion-button (click)="onSubmit()" class="btn" *ngIf="edit == false">SUBMIT</ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE
+              </ion-button>
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT
+              </ion-button>
             </ion-col>
           </ion-row>
 
         </ion-card>
 
       </ion-col>
+
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
     </ion-row>
   </div>

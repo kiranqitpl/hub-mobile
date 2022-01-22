@@ -103,15 +103,9 @@ export class InvestigationPage implements OnInit {
 
       this.investigatorId = d.investigation_details.id;
       let investigatorDetails = d.investigation_details;
-
-      // console.log('investigatorDetails', investigatorDetails);
-      // this.selectedName = investigatorDetails.name;
-      // console.log('this.selectedName', this.selectedName);
-
       if (investigatorDetails?.name !== null) {
         this.selectedName = investigatorDetails?.name[0]?.investigator_name;
       }
-      console.log('this.selectedName ', this.selectedName);
 
       this.additional_investigation_required = investigatorDetails.additional_investigation_required;
       if (investigatorDetails.comments !== undefined && investigatorDetails.comments !== 'undefined') {
@@ -203,8 +197,6 @@ export class InvestigationPage implements OnInit {
   }
 
   selectedValue(e) {
-
-    console.log('selectedValue', e);
     this.listOfUsers.forEach((ele) => {
       if (ele.employee_id == e.detail.value) {
         let data = {
@@ -235,8 +227,6 @@ export class InvestigationPage implements OnInit {
         this.names.push(data)
       }
     })
-
-    console.log('this.names', this.names);
 
     this.is_a_safety_environmental_or_quality_alert_required = ar
     this.name = [{ user_id: 100, user_name: 'Deepak' }, { user_id: 101, user_name: 'Gaurav' }]

@@ -150,7 +150,10 @@ export class CraneAddFormPage implements OnInit {
     // this.form_percent = ((1 / Object.keys(this.craneForm.controls).length) * count);
     // this.form_percent_val = parseInt((((1 / Object.keys(this.craneForm.controls).length) * count) * 100).toFixed());
 
-   let data =  this.sharedService.progressBar(this.craneForm);
+
+    let formControlList = [];
+    Object.keys(this.craneForm.controls).map(ele => formControlList.push(ele));
+    let data = this.sharedService.progressBar(formControlList, this.craneForm);
    this.form_percent = data['form_percent'];
    this.form_percent_val =  data['form_percent_val'];
   }

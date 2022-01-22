@@ -29,8 +29,6 @@ export class PrestartDashboardPage implements OnInit {
     this.globalService.getData('PrestartMenu/get_PrestartMenu').subscribe(result => {
       if (result['status']) {
         this.menuData = result['data']['menu'].sort((a, b) =>
-          // console.log(a.original_postion, b.original_postion)
-          // console.log(a['original_position'], b['original_position'])
           parseInt(a['original_postion']) - parseInt(b['original_postion'])
         );
         this.rowId = result['data']['id'];
@@ -43,13 +41,11 @@ export class PrestartDashboardPage implements OnInit {
   }
 
   onFavorite(tabname, val) {
-    console.log('this.menuData 1', this.menuData);
     this.menuData.filter(ele => {
       if (ele.menuName == tabname) {
         ele.favorite = val;
       }
     })
-    console.log('this.menuData 2', this.menuData);
     let data = {
       formData: {
         "id": this.rowId,

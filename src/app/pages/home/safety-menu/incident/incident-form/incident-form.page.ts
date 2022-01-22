@@ -509,7 +509,6 @@ export class IncidentFormPage implements OnInit {
           this.onProgressBar('', '');
           this.loadingService.dismissLoading();
         } else {
-          console.log('Error in image processing.');
           this.loadingService.dismissLoading();
         }
       },
@@ -711,7 +710,6 @@ export class IncidentFormPage implements OnInit {
   //----------------------------------------------------------- Modals ----------------------------------------------------------------------//
 
   async onOpenIncidentModal() {
-    console.log('this.witnessList', this.witnessList);
     const modal = await this.modalController.create({
       component: ManagersPage,
       componentProps: {
@@ -721,7 +719,6 @@ export class IncidentFormPage implements OnInit {
       cssClass: 'managers',
     });
     modal.onDidDismiss().then((res) => {
-      console.log('onDidDismiss', res);
       if (res && res?.data) {
         this.incidentForm.controls['incident_near_miss'].setValue(res.data.full_name);
         this.incident_near_miss = res.data;
@@ -1767,7 +1764,7 @@ export class IncidentFormPage implements OnInit {
   }
 
   onImageClick(bodypartname) {
-    console.log('bodypartname', bodypartname);
+    // console.log('bodypartname', bodypartname);
     // return false;
   }
 

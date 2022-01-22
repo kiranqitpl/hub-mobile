@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, ViewChild, } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { ActionSheetController, IonContent } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -11,28 +11,6 @@ export class SharedService {
 
   notViewNotiCount: any = 0;
 
-  //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
-
-  // prestartMenu = [
-  //   {
-  //     menuName: 'LV', route: '#', favorite: false, position_in_list: 1
-  //   },
-  //   {
-  //     menuName: 'Forklift', route: '#', favorite: false, position_in_list: 2
-  //   },
-  //   {
-  //     menuName: 'Telehandler', route: '/home/safety-menu/telehandler-add-form', favorite: false, position_in_list: 3
-  //   },
-  //   {
-  //     menuName: 'Crane', route: '/home/safety-menu/crane-add-form', favorite: false, position_in_list: 4
-  //   },
-  //   {
-  //     menuName: 'Vehicle Hoist', route: '/home/safety-menu/vehicle-hoist-add-form', favorite: false, position_in_list: 5
-  //   },
-  // ];
-
-  //------------------------------------------------------------------ Global Variable -------------------------------------------------------//
-
   constructor(
     private globalService: GlobalService,
     public actionSheetController: ActionSheetController,
@@ -44,6 +22,15 @@ export class SharedService {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  pdfReader(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.readAsArrayBuffer(file);
       reader.onerror = error => reject(error);
     });
   }
@@ -109,10 +96,7 @@ export class SharedService {
     };
     await this.camera.getPicture(options).then(
       (imageData) => {
-        // console.log('imageData', imageData);
-        // const file = this.DataURIToBlob('data:image/jpeg;base64,' + imageData);
         let image = 'data:image/jpeg;base64,' + imageData;
-        // console.log('pickImage', image);
         return image;
       },
       (err) => {
@@ -125,22 +109,19 @@ export class SharedService {
     return event.innerWidth ? event.innerWidth : event.target.innerWidth;
   }
 
-  progressBar(form) {
+  progressBar(formControlList, form) {
     let count = 0;
-    let formControlList = [];
     let data = {};
-  
-    Object.keys(form.controls).map(ele => formControlList.push(ele));
     formControlList.forEach(key => {
       if (form.value[key] && form.value[key] != '') {
         count = ++count;
       }
     })
-    let form_percent = ((1 / Object.keys(form.controls).length) * count);
-    let form_percent_val = parseInt((((1 / Object.keys(form.controls).length) * count) * 100).toFixed());
+    let form_percent = ((1 / Object.keys(formControlList).length) * count);
+    let form_percent_val = parseInt((form_percent * 100).toFixed());
     data = {
-      form_percent : form_percent,
-      form_percent_val : form_percent_val
+      form_percent: form_percent,
+      form_percent_val: form_percent_val
     }
     return data;
   }

@@ -280,7 +280,6 @@ export class MedicalQuestionnairePage implements OnInit {
       if (result && result['status'] && result['data'] && result['data'][0]) {
         this.edit = true;
         this.pName = 'Edit Medical Questionnaire';
-        console.log('hhhh', result['data'][0]['received_treatment']);
         // this.receivedTreatment = result['data'][0]['received_treatment'].length > 0 ? result['data'][0]['received_treatment'] : [];
         if (result['data'][0]['received_treatment'] && result['data'][0]['received_treatment'].length && result['data'][0]['received_treatment'].length > 0) {
           for (let i = 0; i < result['data'][0]['received_treatment'].length; i++) {
@@ -290,7 +289,6 @@ export class MedicalQuestionnairePage implements OnInit {
             this.receivedTreatment.push(result['data'][0]['received_treatment'][i]);
           }
         }
-        console.log('this.receivedTreatment', this.receivedTreatment);
         this.medicalForm.controls['received_treatment'].setValue(this.receivedTreatment);
         this.medicalForm.patchValue(result['data'][0]);
       } else {
@@ -336,7 +334,6 @@ export class MedicalQuestionnairePage implements OnInit {
       }
     }
     this.medicalForm.controls['received_treatment'].setValue(this.receivedTreatment.length > 0 ? this.receivedTreatment : '');
-    // console.log('this.receivedTreatment', this.receivedTreatment);
   }
 
   onSubmit(complete_status) {
@@ -364,7 +361,9 @@ export class MedicalQuestionnairePage implements OnInit {
 
   onProgressBar(event) {
     this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
-    let data = this.sharedService.progressBar(this.medicalForm);
+    let formControlList = [];
+    Object.keys(this.medicalForm.controls).map(ele => formControlList.push(ele));
+    let data = this.sharedService.progressBar(formControlList, this.medicalForm);
     this.form_percent = data['form_percent'];
     this.form_percent_val = data['form_percent_val'];
   }

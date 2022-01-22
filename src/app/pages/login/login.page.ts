@@ -45,7 +45,6 @@ export class LoginPage implements OnInit {
       fd.append("email", this.ionicForm.value.email);
       fd.append("password", this.ionicForm.value.password);
       this.global.postData("user/login", fd).subscribe((res: any) => {
-        console.log('login', res);
         if (res && res.status) {
           localStorage.setItem("userDetails", JSON.stringify(res.data));
           localStorage.setItem('token', res.jwtToken);

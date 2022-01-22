@@ -30,7 +30,6 @@ export class GlobalService {
   ) {
     this.url.subscribe(res => {
       this.baseUrl = res
-      console.log("this.baseUrl 1", res)
     })
   }
 
@@ -83,14 +82,12 @@ export class GlobalService {
   // --------------------------------------------------New Services ---------------------------------------------//
 
   postData(url, data) {
-    console.log('postData baseUrl', this.baseUrl);
     let headers = this.setHeader();
     return this.httpClient.post(this.baseUrl + url, data, { headers: headers })
     // return this.httpClient.post('https://mforms-api-devel.horts.com.au/api/' + url, data, { headers: headers });
   }
 
   getData(url) {
-    console.log('getData baseUrl', this.baseUrl);
     let headers = this.setHeader();
     return this.httpClient.get(this.baseUrl + url, { headers: headers })
     // return this.httpClient.get('https://mforms-api-devel.horts.com.au/api/' + url, { headers: headers })

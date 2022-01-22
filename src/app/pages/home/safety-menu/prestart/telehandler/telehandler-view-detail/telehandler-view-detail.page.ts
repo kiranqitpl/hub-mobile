@@ -25,11 +25,9 @@ export class TelehandlerViewDetailPage implements OnInit {
     this.activatedRoute.params.subscribe(
       (params: Params) => {
         this.globalService.getData('add_form/getSingleData?table_name=telehandler&id=' + params['id']).subscribe(result => {
-          console.log('result', result);
           if (result && result['data'] && result['data'][0]) {
             this.teleHandler = result['data'][0];
           }
-          console.log(' this.teleHandler', this.teleHandler);
           // this.loadingService.dismissLoading();
         }), error => {
           // this.loadingService.dismissLoading();
@@ -44,7 +42,7 @@ export class TelehandlerViewDetailPage implements OnInit {
   }
 
   onOpenPreview(event){
-    console.log('event',event);
+    // console.log('event',event);
   }
 
 }
