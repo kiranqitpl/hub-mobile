@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild ,ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonContent, NavController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global-service/global.service';
@@ -21,7 +21,7 @@ export class MedicalQuestionnairePage implements OnInit {
   form_percent: number = 0;
   form_percent_val: number = 0;
 
-  treatment = [
+  received_treatment = [
     {
       id: 'Asthma/Bronchitis',
       name: 'Asthma/Bronchitis',
@@ -240,8 +240,9 @@ export class MedicalQuestionnairePage implements OnInit {
     private globalService: GlobalService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private nav: NavController,
-    private sharedService: SharedService) { }
+    public nav: NavController,
+    private sharedService: SharedService,
+    private cd :ChangeDetectorRef) { }
 
   ngOnInit() {
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -271,7 +272,17 @@ export class MedicalQuestionnairePage implements OnInit {
       work_performanc: [''],
       miscellaneous_details: ['']
     })
+
     this.onLoadData();
+  }
+
+  ngAfterViewInit() {
+    // setTimeout(() => {
+      
+    //   this.onLoadData();
+    // }, 0);
+
+    this.cd.detectChanges();
   }
 
   onLoadData() {
@@ -280,16 +291,14 @@ export class MedicalQuestionnairePage implements OnInit {
       if (result && result['status'] && result['data'] && result['data'][0]) {
         this.edit = true;
         this.pName = 'Edit Medical Questionnaire';
-        // this.receivedTreatment = result['data'][0]['received_treatment'].length > 0 ? result['data'][0]['received_treatment'] : [];
         if (result['data'][0]['received_treatment'] && result['data'][0]['received_treatment'].length && result['data'][0]['received_treatment'].length > 0) {
           for (let i = 0; i < result['data'][0]['received_treatment'].length; i++) {
             this.receivedCheckBoxTreatment(result['data'][0]['received_treatment'][i]);
-          }
-          for (let i = 0; i < result['data'][0]['received_treatment'].length; i++) {
+            // }
+            // for (let i = 0; i < result['data'][0]['received_treatment'].length; i++) {
             this.receivedTreatment.push(result['data'][0]['received_treatment'][i]);
           }
         }
-        this.medicalForm.controls['received_treatment'].setValue(this.receivedTreatment);
         this.medicalForm.patchValue(result['data'][0]);
       } else {
         this.edit = false;
@@ -304,7 +313,7 @@ export class MedicalQuestionnairePage implements OnInit {
   }
 
   receivedCheckBoxTreatment(value) {
-    this.treatment.find((ele, index) => {
+    this.received_treatment.find((ele, index) => {
       if (ele.name == value) {
         ele.isChecked = true
       }
@@ -326,7 +335,6 @@ export class MedicalQuestionnairePage implements OnInit {
           }
         })
       }
-
       if (result && result['ele'] && result['ele'] != '') {
         this.receivedTreatment.splice(result['index'], 1);
       } else {
@@ -338,29 +346,29 @@ export class MedicalQuestionnairePage implements OnInit {
 
   onSubmit(complete_status) {
     this.isSubmitted = true;
-    // if (this.medicalForm.valid) {
-    // this.loadingService.presentLoading();
-    this.medicalForm.value['user_id'] = this.userDetails['id'];
-    this.medicalForm['complete_status'] = complete_status;
-    // this.medicalForm.value['received_treatment'] = this.receivedTreatment.length > 0 ? this.receivedTreatment : '';
-    let formData = { formData: this.medicalForm.value };
-    this.globalService.postData('OnboardingSuperannuation/saveEmployeeMedicalQuestionnair', formData).subscribe(result => {
-      if (result && result['status']) {
-        // this.navCtrl.back();
-        this.toastService.toast(result['message'], 'success');
-      } else {
-        this.toastService.toast(result['message'], 'danger');
-      }
-      // this.loadingService.dismissLoading();
-    }, error => {
-      // this.loadingService.dismissLoading();
-      console.log('error', error);
-    })
-    // }
+    if (this.medicalForm.valid) {
+      // this.loadingService.presentLoading();
+      let formData = this.medicalForm.value;
+      formData['user_id'] = this.userDetails['id'];
+      formData['complete_status'] = complete_status;
+      this.globalService.postData('OnboardingSuperannuation/saveEmployeeMedicalQuestionnair', { formData: formData }).subscribe(result => {
+        if (result && result['status']) {
+          // this.navCtrl.back();
+          this.toastService.toast(result['message'], 'success');
+        } else {
+          this.toastService.toast(result['message'], 'danger');
+        }
+        // this.loadingService.dismissLoading();
+      }, error => {
+        // this.loadingService.dismissLoading();
+        console.log('error', error);
+      })
+    }
   }
 
   onProgressBar(event) {
-    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    this.sharedService.autoScroll(this.content, this.myScrollContainer);
+    // this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
     let formControlList = [];
     Object.keys(this.medicalForm.controls).map(ele => formControlList.push(ele));
     let data = this.sharedService.progressBar(formControlList, this.medicalForm);

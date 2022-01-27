@@ -26,13 +26,11 @@ export class SharedService {
     });
   }
 
-  pdfReader(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target.result);
-      reader.readAsArrayBuffer(file);
-      reader.onerror = error => reject(error);
-    });
+  downloadPdf(file, fileName) {
+    const link = document.createElement("a");
+    link.href = file;
+    link.download = fileName
+    link.click();
   }
 
   // fileToBase64 = (file) => {
@@ -124,6 +122,10 @@ export class SharedService {
       form_percent_val: form_percent_val
     }
     return data;
+  }
+
+  autoScroll(content, myScrollContainer){
+    return content.scrollToPoint(0, myScrollContainer.nativeElement.scrollHeight, 8000);
   }
 
 }

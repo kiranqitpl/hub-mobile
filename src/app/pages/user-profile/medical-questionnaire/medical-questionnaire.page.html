@@ -27,15 +27,25 @@
             </ion-col>
             <ion-col size="12" class="text-val">(Please tick all that apply)</ion-col>
 
-            <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
-              *ngFor="let treatmentObject of treatment">
+            <!-- <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
+              *ngFor="let received_treatment_key of received_treatment">
               <ion-item lines="none">
-                <ion-label class="ion-text-wrap">{{treatmentObject.name}}</ion-label>
-                <ion-checkbox slot="start" [value]="treatmentObject.id" [checked]="treatmentObject.isChecked"
+                <ion-label class="ion-text-wrap">{{received_treatment_key.name}}</ion-label>
+                <ion-checkbox slot="start" [value]="received_treatment_key.name" [checked]="received_treatment_key.isChecked"
                   (ionChange)="onReceivedTreatment($event)">
                 </ion-checkbox>
               </ion-item>
-            </ion-col>
+            </ion-col> -->
+
+            <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
+            *ngFor="let received_treatment_key of received_treatment">
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">{{received_treatment_key.name}}</ion-label>
+              <ion-checkbox slot="start" [value]="received_treatment_key.name"
+                [checked]="received_treatment_key.isChecked" (ionChange)="onReceivedTreatment($event)">
+              </ion-checkbox>
+            </ion-item>
+          </ion-col>
           </ion-row>
 
           <ion-row *ngIf="medicalForm.value['received_treatment'] != ''">

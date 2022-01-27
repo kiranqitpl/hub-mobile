@@ -32,7 +32,7 @@ export class BankAccountPage implements OnInit {
     private globalService: GlobalService,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private nav: NavController,
+    public nav: NavController,
     private sharedService: SharedService
   ) { }
 
@@ -77,28 +77,30 @@ export class BankAccountPage implements OnInit {
 
   onSubmit(complete_status) {
     if (this.bankAccountForm.valid) {
-    // this.loadingService.presentLoading();
-    this.bankAccountForm.controls['form_date'].setValue(this.bankAccountForm.value['form_date'] != '' ? moment(this.bankAccountForm.value['form_date']).format("DD-MM-YYYY") : '');
-    this.bankAccountForm.value['user_id'] = this.userDetails['id'];
-    this.bankAccountForm['complete_status'] = complete_status;
-    let formData = { formData: this.bankAccountForm.value };
-    this.globalService.postData('OnboardingSuperannuation/saveEmployeeBankDetails', formData).subscribe(result => {
-      if (result && result['status']) {
-        // this.navCtrl.back();
-        this.toastService.toast(result['message'], 'success');
-      } else {
-        this.toastService.toast(result['message'], 'danger');
-      }
-      // this.loadingService.dismissLoading();
-    }, error => {
-      // this.loadingService.dismissLoading();
-      console.log('error', error);
-    })
+      // this.loadingService.presentLoading();
+      this.bankAccountForm.controls['form_date'].setValue(this.bankAccountForm.value['form_date'] != '' ? moment(this.bankAccountForm.value['form_date']).format("DD-MM-YYYY") : '');
+      let formData = this.bankAccountForm.value;
+
+      formData['user_id'] = this.userDetails['id'];
+      formData['complete_status'] = complete_status;
+
+      this.globalService.postData('OnboardingSuperannuation/saveEmployeeBankDetails', { formData: formData }).subscribe(result => {
+        if (result && result['status']) {
+          // this.navCtrl.back();
+          this.toastService.toast(result['message'], 'success');
+        } else {
+          this.toastService.toast(result['message'], 'danger');
+        }
+        // this.loadingService.dismissLoading();
+      }, error => {
+        // this.loadingService.dismissLoading();
+        console.log('error', error);
+      })
     }
   }
 
   onProgressBar(event) {
-    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    this.sharedService.autoScroll(this.content, this.myScrollContainer);
     let formControlList = [];
     Object.keys(this.bankAccountForm.controls).map(ele => formControlList.push(ele));
     let data = this.sharedService.progressBar(formControlList, this.bankAccountForm);

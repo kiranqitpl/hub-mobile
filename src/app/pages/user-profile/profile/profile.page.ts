@@ -1,10 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonContent, ModalController } from '@ionic/angular';
-
-// import { FileOpener } from '@ionic-native/file-opener';
-// import { DocumentViewer, DocumentViewerOptions } from '@awesome-cordova-plugins/document-viewer/ngx';
-
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
@@ -189,7 +185,7 @@ export class ProfilePage implements OnInit {
   form_percent: number = 0;
   form_percent_val: number = 0;
 
-  pdfSrc:string = '';
+  pdfSrc: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -200,7 +196,7 @@ export class ProfilePage implements OnInit {
     // private documentViewer: DocumentViewer
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private nav: NavController,
+    public nav: NavController,
   ) { }
 
   ngOnInit() {
@@ -230,7 +226,7 @@ export class ProfilePage implements OnInit {
       high_risk_licences: [''],
       other_qualification: [''],
 
-      re_expiry_date: [''],
+      ri_expiry_date: [''],
       ri_document: [''],
 
       fire_wardens_expiry_date: [''],
@@ -247,19 +243,38 @@ export class ProfilePage implements OnInit {
     // this.loadingService.presentLoading();
     this.globalService.getData('OnboardingSuperannuation/getEmployeeProfileDetails/' + this.userDetails['id']).subscribe(result => {
       if (result && result['status'] && result['data'] && result['data'][0]) {
-        console.log('onLoadData', result);
         this.edit = true;
         this.pName = 'Edit Personal Details';
-        if (result['data'][0]['high_risk_licences'] && result['data'][0]['high_risk_licences'].length && result['data'][0]['high_risk_licences'].length > 0) {
-          for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
-            this.highRiskCheck(result['data'][0]['high_risk_licences'][i]);
-          }
-          for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
-            this.high_risk_licence.push(result['data'][0]['high_risk_licences'][i]);
+        if (result['data'][0]) {
+          if (result['data'][0]['high_risk_licences'].length && result['data'][0]['high_risk_licences'].length > 0) {
+            for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
+              this.highRiskCheck(result['data'][0]['high_risk_licences'][i]);
+              // }
+              // for (let i = 0; i < result['data'][0]['high_risk_licences'].length; i++) {
+              this.highRiskLicences.push(result['data'][0]['high_risk_licences'][i]);
+
+            }
           }
         }
-        this.highRiskLicences = result['data'][0]['high_risk_licences'];
+        if (result['data'][0]['ri_document'].length > 0) {
+          this.riDocs = result['data'][0]['ri_document'];
+        }
+
+        if (result['data'][0]['fire_warden_document'].length > 0) {
+          this.fireWardenDocs =result['data'][0]['fire_warden_document'];
+        }
+
+        if (result['data'][0]['drivers_licence_C_document'].length > 0) {
+          this.driverLicenceExpiryDocs =result['data'][0]['drivers_licence_C_document'];
+        }
+
         this.userProfileForm.patchValue(result['data'][0]);
+
+        // console.log(  'riDocs' ,  this.riDocs);
+        // console.log(  'fireWardenDocs' ,  this.fireWardenDocs);
+        // console.log(  'driverLicenceExpiryDocs' ,  this.driverLicenceExpiryDocs);
+
+        // console.log('userProfileForm',this.userProfileForm.value);
       } else {
         this.edit = false;
         this.pName = 'Personal Details';
@@ -282,8 +297,6 @@ export class ProfilePage implements OnInit {
 
   onHighRiskLicences(event) {
     this.highRiskCheck(event.detail.value);
-    // this.highRiskLicences.push(event && event.detail && event.detail.value ? event.detail.value : event);
-    // this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences);
     if (this.highRiskLicences.length <= 0) {
       this.highRiskLicences.push(event.detail.value);
     } else {
@@ -297,61 +310,36 @@ export class ProfilePage implements OnInit {
           }
         })
       }
+
       if (result && result['ele'] && result['ele'] != '') {
         this.highRiskLicences.splice(result['index'], 1);
       } else {
         this.highRiskLicences.push(event.detail.value);
       }
     }
-
     this.userProfileForm.controls['high_risk_licences'].setValue(this.highRiskLicences.length > 0 ? this.highRiskLicences : '');
   }
 
   onSelectImage(event, variableName) {
-    console.log('onSelectImage', event.target.files);
-    if (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpeg' ||
-      event.target.files[0].type == 'application/pdf') {
-      let dataObject = {};
-      for (let i = 0; i < event.target.files.length; i++) {
-        if (event.target.files[0].type == 'application/pdf') {
-          let img: any = document.querySelector("#riDocs");
-          if(typeof (FileReader) !== 'undefined') {
-            let reader = new FileReader();
-            // reader.onload = (e:any) => {
-            //   dataObject = {
-            //     type: 'pdf',
-            //     val: e.target.result
-            //   }
-            // }
-            reader.onload = (e:any) => {
-              this.pdfSrc = e.target.result;
-            }
-            reader.readAsArrayBuffer(img.files[0]);
+    // console.log(event.target.files);
+    if (event && event.target && event.target.files && event.target.files[0]) {
+      if (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpeg' ||
+        event.target.files[0].type == 'application/pdf') {
+        let dataObject = {};
 
-            console.log( "this.pdfSrc" , this.pdfSrc );
-
-            // console.log('dataObject',dataObject);
-
-            // if (this[variableName].length <= 0) {
-            //   this[variableName].push(dataObject);
-            // } else {
-            //   this[variableName].unshift(dataObject);
-            // }
-            // if (variableName == 'riDocs') {
-            //   this.userProfileForm.controls['ri_document'].setValue(this.riDocs);
-            // } else if (variableName == 'fireWardenDocs') {
-            //   this.userProfileForm.controls['fire_warden_document'].setValue(this.fireWardenDocs);
-            // } else if (variableName == 'driverLicenceExpiryDocs') {
-            //   this.userProfileForm.controls['drivers_licence_C_document'].setValue(this.driverLicenceExpiryDocs);
-            // }
-            this.onProgressBar('');
-          }
-        } else {
+        for (let i = 0; i < event.target.files.length; i++) {
           this.sharedService.getBase64(event.target.files[i]).then(
             data => {
-              dataObject = {
-                type: 'image',
-                val: data
+              if (event.target.files[0].type == 'application/pdf') {
+                dataObject = {
+                  type: 'pdf',
+                  val: data
+                }
+              } else {
+                dataObject = {
+                  type: 'image',
+                  val: data
+                }
               }
               if (this[variableName].length <= 0) {
                 this[variableName].push(dataObject);
@@ -359,43 +347,38 @@ export class ProfilePage implements OnInit {
                 this[variableName].unshift(dataObject);
               }
               if (variableName == 'riDocs') {
-                this.userProfileForm.controls['ri_document'].setValue(this.riDocs);
+                this.userProfileForm.controls['ri_document'].setValue(this[variableName]);
               } else if (variableName == 'fireWardenDocs') {
-                this.userProfileForm.controls['fire_warden_document'].setValue(this.fireWardenDocs);
+                this.userProfileForm.controls['fire_warden_document'].setValue(this[variableName]);
               } else if (variableName == 'driverLicenceExpiryDocs') {
-                this.userProfileForm.controls['drivers_licence_C_document'].setValue(this.driverLicenceExpiryDocs);
+                this.userProfileForm.controls['drivers_licence_C_document'].setValue(this[variableName]);
               }
               this.onProgressBar('');
             }).catch(error => {
               console.log('error', error);
             });
-          // }
-          // if (this[variableName].length <= 0) {
-          //   this[variableName].push(dataObject);
-          // } else {
-          //   this[variableName].unshift(dataObject);
-          // }
-          // if (variableName == 'riDocs') {
-          //   this.userProfileForm.controls['ri_document'].setValue(this[variableName]);
-          // } else if (variableName == 'fireWardenDocs') {
-          //   this.userProfileForm.controls['fire_warden_document'].setValue(this[variableName]);
-          // } else if (variableName == 'driverLicenceExpiryDocs') {
-          //   this.userProfileForm.controls['drivers_licence_C_document'].setValue(this[variableName]);
-          // }
-          // this.onProgressBar('');
+        }
+
+        // console.log(  'ri_document' ,  this.userProfileForm.value['ri_document']);
+        // console.log(  'fire_warden_document' ,  this.userProfileForm.value['fire_warden_document']);
+        // console.log(  'drivers_licence_C_document' ,  this.userProfileForm.value['drivers_licence_C_document']);
+        
+      } else {
+        this.toastService.toast('Please select PDF, PNG or JPEG format only.', 'danger');
+        this[variableName] = [];
+        if (variableName == 'riDocs') {
+          this.userProfileForm.controls['ri_document'].setValue(this[variableName]);
+        } else if (variableName == 'fireWardenDocs') {
+          this.userProfileForm.controls['fire_warden_document'].setValue(this[variableName]);
+        } else if (variableName == 'driverLicenceExpiryDocs') {
+          this.userProfileForm.controls['drivers_licence_C_document'].setValue(this[variableName]);
         }
       }
-    } else {
-      this.toastService.toast('Please select PDF, PNG or JPEG format only.', 'danger');
-      this[variableName] = [];
-      if (variableName == 'riDocs') {
-        this.userProfileForm.controls['ri_document'].setValue(this[variableName]);
-      } else if (variableName == 'fireWardenDocs') {
-        this.userProfileForm.controls['fire_warden_document'].setValue(this[variableName]);
-      } else if (variableName == 'driverLicenceExpiryDocs') {
-        this.userProfileForm.controls['drivers_licence_C_document'].setValue(this[variableName]);
-      }
     }
+  }
+
+  onDownloadPdf(file, fileName) {
+    this.sharedService.downloadPdf(file, fileName);
   }
 
   async onOpenPreview(img) {
@@ -409,51 +392,47 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
-  onOpenPdf(val) {
-    // const options: DocumentViewerOptions = {
-    //   title: 'My PDF'
-    // }
-    // this.documentViewer.viewDocument(val, 'application/pdf', options);
-  }
-
   onImageDelete(index, variableName) {
     this[variableName].splice(index, 1);
     this.onProgressBar('');
   }
 
-  onSubmit() {
+  onSubmit(complete_status) {
     this.isSubmitted = true;
     if (this.userProfileForm.valid) {
-      this.loadingService.presentLoading();
+      // this.loadingService.presentLoading();
       let dob = this.userProfileForm.value['dob'] != '' && this.userProfileForm.value['dob'] != null ? moment(this.userProfileForm.value['dob']).format("DD-MM-YYYY") : '';
-      let re_expiry_date = this.userProfileForm.value['re_expiry_date'] != '' && this.userProfileForm.value['re_expiry_date'] != null ? moment(this.userProfileForm.value['re_expiry_date']).format("DD-MM-YYYY") : "";
+      let ri_expiry_date = this.userProfileForm.value['ri_expiry_date'] != '' && this.userProfileForm.value['ri_expiry_date'] != null ? moment(this.userProfileForm.value['ri_expiry_date']).format("DD-MM-YYYY") : "";
       let fire_wardens_expiry_date = this.userProfileForm.value['fire_wardens_expiry_date'] != '' && this.userProfileForm.value['fire_wardens_expiry_date'] != null ? moment(this.userProfileForm.value['fire_wardens_expiry_date']).format("DD-MM-YYYY") : "";
       let driver_licence_C_expiry_date = this.userProfileForm.value['driver_licence_C_expiry_date'] != '' && this.userProfileForm.value['driver_licence_C_expiry_date'] != null && this.userProfileForm.value['driver_licence_C_expiry_date'] != null ? moment(this.userProfileForm.value['driver_licence_C_expiry_date']).format("DD-MM-YYYY") : "";
 
       this.userProfileForm.controls['dob'].setValue(dob);
-      this.userProfileForm.controls['re_expiry_date'].setValue(re_expiry_date);
+      this.userProfileForm.controls['ri_expiry_date'].setValue(ri_expiry_date);
       this.userProfileForm.controls['fire_wardens_expiry_date'].setValue(fire_wardens_expiry_date);
       this.userProfileForm.controls['driver_licence_C_expiry_date'].setValue(driver_licence_C_expiry_date);
 
-      this.userProfileForm.value['user_id'] = this.userDetails['id'];
+      let formData = this.userProfileForm.value;
 
-      let formData = { formData: this.userProfileForm.value };
-      this.globalService.postData('OnboardingSuperannuation/saveProfileDetails', formData).subscribe(result => {
+      formData['user_id'] = this.userDetails['id'];
+      formData['complete_status'] = complete_status;
+
+      this.globalService.postData('OnboardingSuperannuation/saveProfileDetails', { formData: formData }).subscribe(result => {
         if (result && result['status']) {
           // this.navCtrl.back();
           this.toastService.toast(result['message'], 'success');
         } else {
           this.toastService.toast(result['message'], 'danger');
         }
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
       }, error => {
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
         console.log('error', error);
       })
     }
   }
 
   onProgressBar(event) {
+    // this.sharedService.autoScroll(this.content, this.myScrollContainer);
     // this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
     let formControlList = [];
     Object.keys(this.userProfileForm.controls).map(ele => formControlList.push(ele));

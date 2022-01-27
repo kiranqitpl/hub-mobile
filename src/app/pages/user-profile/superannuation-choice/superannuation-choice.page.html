@@ -252,19 +252,36 @@
 
             <ion-col size="12" *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_member_number']) || 
             (super_contribution == 'SMSF' && superannuation.value['fund_account_no'])">
-              <ion-input type="file" (change)="onDocPreview($event)">
+              <ion-input type="file" (change)="onDocPreview($event, 'fund_attachement')">
               </ion-input>
             </ion-col>
           </ion-row>
 
+          <ion-row *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_member_number']) || 
+          (super_contribution == 'SMSF' && superannuation.value['fund_account_no'])||
+          (super_contribution == 'SMSF' && superannuation.value['fund_attachment_confirm_letter'])">
+
+            <ion-col size="11" *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_attachement']) || 
+              (super_contribution == 'SMSF' && superannuation.value['fund_attachement'])">
+              <ion-button class="pdf"
+                (click)="onDownloadPdf(superannuation.value['fund_attachement'] , 'compliance-letter')">Download
+                Attach Compliance Letter</ion-button>
+            </ion-col>
+
+            <ion-col size="1" *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_attachement']) || 
+              (super_contribution == 'SMSF' && superannuation.value['fund_attachement'])">
+              <ion-icon name="close" (click)="onImageDelete('fund_attachement')"></ion-icon>
+            </ion-col>
+
+          </ion-row>
+
           <div *ngIf="super_contribution == 'SMSF'">
-            <div *ngIf="superannuation.value['fund_attachment']">
+            <div *ngIf="superannuation.value['fund_attachement']">
               <ion-row>
                 <ion-col size="12">
                   <ion-label class="ion-text-wrap mandatoryField">* If you are the turstee, or a director of the
                     corporate trustee you can confirm that your SMSF will accpet contribution from your employer by
-                    making
-                    the following declaration :
+                    making the following declaration :
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -293,18 +310,29 @@
             <ion-row *ngIf="superannuation.value['fund_trustee']">
               <ion-col size="12">
                 <ion-label class="ion-text-wrap mandatoryField">* If you are not the trustee, or a director of the
-                  corporate trustee of the SMSF, then you must attach a letter from the trustee confirming that the fund
-                  will accept contributions from your employer.
+                  corporate trustee of the SMSF, then you must attach a letter from the trustee confirming that the
+                  fund will accept contributions from your employer.
                 </ion-label>
               </ion-col>
+
               <ion-col size="12">
                 <ion-label>Attach Confirmation Letter</ion-label>
               </ion-col>
+
               <ion-col size="12">
-                <ion-input type="file"></ion-input>
+                <ion-input type="file" (change)="onDocPreview($event, 'fund_attachment_confirm_letter')"></ion-input>
               </ion-col>
-              <ion-col size="12">
-              </ion-col>
+
+              <ion-col size="11" *ngIf="superannuation.value['fund_attachment_confirm_letter']">
+              <ion-button class="pdf"
+                (click)="onDownloadPdf(superannuation.value['fund_attachment_confirm_letter'] , 'fund-attachment-confirm-letter')">Download
+                Attach Confirmation Letter</ion-button>
+            </ion-col>
+
+            <ion-col size="1" *ngIf="superannuation.value['fund_attachment_confirm_letter']">
+              <ion-icon name="close" (click)="onImageDelete('fund_attachment_confirm_letter')"></ion-icon>
+            </ion-col>
+
             </ion-row>
           </div>
 
@@ -321,16 +349,17 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="(super_contribution == 'EMPLOYER' && superannuation.value['fund_attachment']) || 
-          (super_contribution == 'EMPLOYER' && superannuation.value['fund_attachment_confirm_letter']) || 
+          <ion-row *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_attachement'] != '') || 
+          (super_contribution == 'SMSF' && superannuation.value['fund_attachment_confirm_letter']) || 
           (super_contribution == 'EMPLOYER' && superannuation.value['fund_web_url'])">
             <ion-col size="1">
-              <ion-checkbox color="primary" formControlName="completed"></ion-checkbox>
+              <ion-checkbox color="primary" formControlName="completed" [checked]="superannuation.value['completed']">
+              </ion-checkbox>
             </ion-col>
             <ion-col size="11">
               I have completed this form.
             </ion-col>
-            <ion-col size="12" class="error" *ngIf="superannuation.value['completed'] == false">
+            <ion-col size="12" class="error" *ngIf="isSubmitted && superannuation.value['completed'] == false">
               Please check this if you have completed above form.
             </ion-col>
           </ion-row>

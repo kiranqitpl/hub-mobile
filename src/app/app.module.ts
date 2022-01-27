@@ -9,7 +9,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
-import { PdfViewerModule } from 'ng2-pdf-viewer'; 
+// import { PdfViewerModule } from 'ng2-pdf-viewer'; 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -24,7 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    // PdfViewerModule,
     // CommonModule
   ],
   providers: [

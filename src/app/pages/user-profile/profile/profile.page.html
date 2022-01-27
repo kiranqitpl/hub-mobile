@@ -201,13 +201,6 @@
             <ion-col size="12">
               <ion-label>Driver's licence Type</ion-label>
             </ion-col>
-            <!-- <ion-col size="12">
-              <ion-select placeholder="Please select driver's licence type" interface="action-sheet"
-                formControlName="drivers_licence_type">
-                <ion-select-option value="">
-                </ion-select-option>
-              </ion-select>
-            </ion-col> -->
             <ion-col size="12">
               <ion-input placeholder="Please enter driver's licence type" formControlName="drivers_licence_type">
               </ion-input>
@@ -266,6 +259,7 @@
               photographs, front and back) are required to be submitted with this form.</ion-col>
             <ion-col size="12" class="ion-text-center">High risk licences</ion-col>
             <ion-col size="12" class="sub-heading"> Only national photo ID high risk licenses are accepted.</ion-col>
+
             <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
               *ngFor="let high_risk_licence_key of high_risk_licence">
               <ion-item lines="none">
@@ -301,57 +295,27 @@
               <ion-label>Expiry Date </ion-label>
             </ion-col>
             <ion-col size="12">
-              <ion-datetime placeholder="Please select expiry date" formControlName="re_expiry_date"></ion-datetime>
+              <ion-datetime placeholder="Please select expiry date" formControlName="ri_expiry_date"></ion-datetime>
             </ion-col>
           </ion-row>
-
-          <ion-row>
-            <!-- <ion-row *ngIf="userProfileForm.value['re_expiry_date'] != ''"> -->
+          <ion-row *ngIf="userProfileForm.value['ri_expiry_date'] != ''">
             <ion-col size="12">
               <ion-label>Upload Documents</ion-label>
             </ion-col>
             <ion-col size="12">
+
               <input type='file' multiple (change)="onSelectImage($event, 'riDocs')" *ngIf="riDocs.length < 2"
                 value='ri_document' id="riDocs">
-
 
               <ion-slides class="preview-slides" *ngIf="riDocs.length > 0">
                 <ion-slide *ngFor="let riDoc of riDocs; let i = index">
                   <ion-grid>
-
-                    <!-- <ion-row>
-                      <ion-col size="11">
+                    <ion-row *ngIf="riDoc.val">
+                      <ion-col size="11" *ngIf="riDoc.type == 'image'">
                         <img [src]="riDoc.val" tappable (click)="onOpenPreview(riDoc.val)">
                       </ion-col>
-                      <ion-col size="1">
-                        <p class="question">
-                          <ion-icon name="close" (click)="onImageDelete(i, 'riDocs')"></ion-icon>
-                        </p>
-                      </ion-col>
-                    </ion-row> -->
-
-                    <ion-row>
-                      <ion-col size="11" *ngIf="riDoc.type == 'image'">
-                        <!-- <img [src]="riDoc.val" tappable (click)="onOpenPreview(riDoc.val)">
-                      </ion-col>
-                      <ion-col size="11" *ngIf="riDoc.type == 'pdf'"> -->
-                        <!-- <pdf-viewer [src]="riDoc.val" [render-text]="true" [original-size]="false" style=" width:
-                          400px; height: 500px"></pdf-viewer> -->
-                        <!-- <pdf-viewer
-                          [src]="riDoc.val"
-                          [rotation]="0"
-                          [original-size]="false"
-                          [show-all]="true"
-                          [fit-to-page]="false"
-                          [zoom]="1"
-                          [zoom-scale]="'page-width'"
-                          [stick-to-page]="false"
-                          [render-text]="true"
-                          [external-link-target]="'blank'"
-                          [autoresize]="true"
-                          [show-borders]="false"
-                          style="display:block;"
-                        ></pdf-viewer> -->
+                      <ion-col size="11" *ngIf="riDoc.type == 'pdf'">
+                        <ion-button class="pdf" (click)="onDownloadPdf(riDoc.val, 'ri-doc_'+(i+1))">Download PDF</ion-button>
                       </ion-col>
                       <ion-col size="1">
                         <ion-icon name="close" (click)="onImageDelete(i, 'riDocs')"></ion-icon>
@@ -360,13 +324,14 @@
                   </ion-grid>
                 </ion-slide>
               </ion-slides>
+
             </ion-col>
             <ion-col size="12" class="text-val">
               Two files max - PDF, PNG or JPEG only.
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['ri_document'] != ''">
+          <ion-row *ngIf="riDocs.length > 0">
             <ion-col size="12" class="ion-text-center">Fire Warden</ion-col>
             <ion-col size="12">
               <ion-label>Expiry Date </ion-label>
@@ -377,6 +342,7 @@
             </ion-col>
           </ion-row>
 
+          <!-- <ion-row> -->
           <ion-row *ngIf="userProfileForm.value['fire_wardens_expiry_date'] != ''">
             <ion-col size="12">
               <ion-label>Upload Documents </ion-label>
@@ -388,8 +354,12 @@
                 <ion-slide *ngFor="let fireWardenDoc of fireWardenDocs; let i = index">
                   <ion-grid>
                     <ion-row>
-                      <ion-col size="11">
+                      <ion-col size="11" *ngIf="fireWardenDoc.type == 'image'">
                         <img [src]="fireWardenDoc.val" tappable (click)="onOpenPreview(fireWardenDoc.val)">
+                      </ion-col>
+                      <ion-col size="11" *ngIf="fireWardenDoc.type == 'pdf'">
+                        <ion-button class="pdf"
+                          (click)="onDownloadPdf(fireWardenDoc.val, 'fire-warden-doc_'+(i+1))">Download PDF</ion-button>
                       </ion-col>
                       <ion-col size="1">
                         <p class="question">
@@ -406,7 +376,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['fire_warden_document'] != ''">
+          <ion-row *ngIf="fireWardenDocs.length > 0">
             <ion-col size="12" class="ion-text-center">Drivers Licence - C</ion-col>
             <ion-col size="12">
               <ion-label>Expiry Date </ion-label>
@@ -422,16 +392,21 @@
               <ion-label>Upload Documents </ion-label>
             </ion-col>
             <ion-col size="12">
+
               <input type='file' multiple (change)="onSelectImage($event, 'driverLicenceExpiryDocs')"
                 *ngIf="driverLicenceExpiryDocs.length < 2" value='drivers_licence_C_document'>
+
               <ion-slides class="preview-slides" *ngIf="driverLicenceExpiryDocs.length > 0">
                 <ion-slide *ngFor="let driverLicenceExpiryDoc of driverLicenceExpiryDocs; let i = index">
                   <ion-grid>
 
                     <ion-row>
-                      <ion-col size="11">
-                        <img [src]="driverLicenceExpiryDoc.val" tappable
-                          (click)="onOpenPreview(driverLicenceExpiryDoc.val)">
+                      <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'image'">
+                        <img [src]="driverLicenceExpiryDoc.val" tappable (click)="onOpenPreview(driverLicenceExpiryDoc.val)">
+                      </ion-col>
+                      <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'pdf'">
+                        <ion-button class="pdf"
+                          (click)="onDownloadPdf(driverLicenceExpiryDoc.val, 'driver-licence-expiry-doc_'+(i+1))">Download PDF</ion-button>
                       </ion-col>
                       <ion-col size="1">
                         <p class="question">
@@ -439,10 +414,28 @@
                         </p>
                       </ion-col>
                     </ion-row>
+<!-- 
+                    <ion-row>
+                      <ion-col size="11">
+                        <img [src]="driverLicenceExpiryDoc.val" tappable
+                          (click)="onOpenPreview(driverLicenceExpiryDoc.val)">
+                      </ion-col>
+                      <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'pdf'">
+                        <button class="pdf"
+                          (click)="onDownloadPdf(driverLicenceExpiryDoc.val, 'driver-licence-expiry-doc_'+(i+1))">Download
+                          PDF</button>
+                      </ion-col>
+                      <ion-col size="1">
+                        <p class="question">
+                          <ion-icon name="close" (click)="onImageDelete(i, 'driverLicenceExpiryDocs')"></ion-icon>
+                        </p>
+                      </ion-col>
+                    </ion-row> -->
 
                   </ion-grid>
                 </ion-slide>
               </ion-slides>
+
             </ion-col>
             <ion-col size="12" class="text-val">
               Two files max - PDF, PNG or JPEG only.

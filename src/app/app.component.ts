@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { environment } from 'src/environments/environment';
 
+
 @HostListener('window:resize', ['$event'])
 
 @Component({
@@ -32,8 +33,8 @@ export class AppComponent {
     let token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
     if (token == '') {
       this.nav.navigateRoot("login");
-    // } else {
-    //   this.nav.navigateRoot("dashboard");
+      // } else {
+      //   this.nav.navigateRoot("dashboard");
     }
 
     if (this.platform.is('cordova')) {

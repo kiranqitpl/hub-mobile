@@ -2162,8 +2162,8 @@ export class IncidentFormEditPage implements OnInit {
     this.form_percent_val = parseInt((((1 / formControlKeys.length) * count) * 100).toFixed());
   }
 
-  // onImageClick(val) {
+  onImageClick(val) {
   //   console.log(val);
-  // }
+  }
 
 }

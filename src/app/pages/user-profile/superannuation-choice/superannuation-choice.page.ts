@@ -52,7 +52,7 @@ export class SuperannuationChoicePage implements OnInit {
       fund_usi: [''],                                                                                                   // RSA EMPLOYER
       fund_account_name: ['', Validators.pattern(environment.alphabet)],                                                // RSA
       fund_member_number: ['', Validators.pattern(environment.numeric)],                                                // RSA
-      fund_attachment: [''],                                                                                            // RSA SMSF
+      fund_attachement: [''],                                                                                            // RSA SMSF
       fund_esa: [''],                                                                                                   // SMSF
       fund_bsb_code: ['', [Validators.pattern(environment.numeric), Validators.minLength(6), Validators.maxLength(6)]], // SMSF                                           // SMSF
       fund_account_no: ['', Validators.pattern(environment.numeric)],                                                   // SMSF
@@ -61,6 +61,8 @@ export class SuperannuationChoicePage implements OnInit {
       fund_web_url: ['', Validators.pattern(environment.url)],                                                          // EMPLOYER
       completed: [false],                                                                                               // RSA SMSF EMPLOYER
     });
+
+    // console.log('superannuation', this.superannuation);
 
     this.onLoadData();
   }
@@ -78,6 +80,8 @@ export class SuperannuationChoicePage implements OnInit {
         this.pName = 'Superannuation Choice';
         this.super_contribution = 'RSA';
       }
+
+      console.log( ' this.superannuation',this.superannuation.value);
       // this.loadingService.dismissLoading();
     }, error => {
       // this.loadingService.dismissLoading();
@@ -90,23 +94,21 @@ export class SuperannuationChoicePage implements OnInit {
       (this.super_contribution == 'RSA' || this.super_contribution == 'EMPLOYER' || this.super_contribution == 'SMSF') &&
       this.superannuation.value['rsa_fund_abn'] == ''
     ) {
-      this.isSubmitted = true;
-      return;
+      return this.isSubmitted = true;
     }
 
     if (this.superannuation.valid) {
       // this.loadingService.presentLoading();
       this.superannuation.value['super_contribution'] = this.super_contribution;
-      this.superannuation.value['guid'] = '5DFFF608-B771-48AC-8C78-DE22A161BFB3';
-      this.superannuation.value['type'] = 'dyn';
-      this.superannuation.value['code'] = 'form_Superannuation';
-      this.superannuation.value['user_id'] = this.userDetails['id'];
-      this.superannuation.value['fund_attachment'] = this.attachLetter.length > 0 ? this.attachLetter : '';
-      this.superannuation.value['complete_status'] = complete_status;
-      let data = {
-        formData: this.superannuation.value
-      }
-      this.globalService.postData('OnboardingSuperannuation/saveSuperannuation', data).subscribe(result => {
+
+      let formData = this.superannuation.value;
+      formData['guid'] = '5DFFF608-B771-48AC-8C78-DE22A161BFB3';
+      formData['type'] = 'dyn';
+      formData['code'] = 'form_Superannuation';
+      formData['user_id'] = this.userDetails['id'];
+      formData['completed'] = complete_status;
+
+      this.globalService.postData('OnboardingSuperannuation/saveSuperannuation', { formData: formData }).subscribe(result => {
         if (result && result['status']) {
           this.toastService.toast(result['message'], 'success');
         } else {
@@ -144,30 +146,42 @@ export class SuperannuationChoicePage implements OnInit {
       this.superannuation.controls['fund_postcode'].reset();
       this.superannuation.controls['fund_account_name'].reset();
       this.superannuation.controls['fund_member_number'].reset();
-      this.superannuation.controls['fund_attachment'].reset();
+      this.superannuation.controls['fund_attachement'].reset();
       this.superannuation.controls['fund_esa'].reset();
       this.superannuation.controls['fund_bsb_code'].reset();
       this.superannuation.controls['fund_account_no'].reset();
       this.superannuation.controls['fund_trustee'].reset();
       this.superannuation.controls['fund_attachment_confirm_letter'].reset();
     }
+    this.onProgressBar('');
   }
 
-  onDocPreview(event) {
-    for (let i = 0; i < event.target.files.length; i++) {
-      this.sharedService.getBase64(event.target.files[0]).then(data => {
-        this.attachLetter = data
-        // if (this.attachLetter.length <= 0) {
-        //   this.attachLetter.push(data);
-        // } else {
-        //   this.attachLetter.unshift(data);
-        // }
-      })
+  onDocPreview(event, key) {
+    if (event && event.target && event.target.files && event.target.files[0] && event.target.files[0].type) {
+      if (event.target.files[0].type == 'application/pdf') {
+        this.sharedService.getBase64(event.target.files[0]).then(data => {
+          this.superannuation.controls[key].setValue(data);
+          this.onProgressBar('');
+        })
+      } else {
+        this.toastService.toast('Please select PDF format document only.', 'danger');
+        this.onProgressBar('');
+      }
     }
   }
 
+  onDownloadPdf(file, fileName) {
+    this.sharedService.downloadPdf(file, fileName);
+  }
+
+  onImageDelete(variableName) {
+    this.superannuation.controls[variableName].setValue('');
+    this.onProgressBar('');
+  }
+
   onProgressBar(event) {
-    this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    // this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
+    this.sharedService.autoScroll(this.content, this.myScrollContainer);
     let formControlList = [];
 
     if (this.super_contribution == 'RSA') {
@@ -179,7 +193,7 @@ export class SuperannuationChoicePage implements OnInit {
       });
     } else if (this.super_contribution == 'SMSF') {
       Object.keys(this.superannuation.controls).map(ele => {
-        if (ele != 'fund_account_name' && ele != 'fund_member_number' && ele != 'fund_web_url') {
+        if (ele != 'fund_account_name' && ele != 'fund_member_number' && ele != 'fund_web_url' && ele != 'fund_usi') {
           formControlList.push(ele);
         }
       });
@@ -191,6 +205,8 @@ export class SuperannuationChoicePage implements OnInit {
         }
       });
     }
+
+    console.log('this.superannuation',this.superannuation.value);
     let data = this.sharedService.progressBar(formControlList, this.superannuation);
     this.form_percent = data['form_percent'];
     this.form_percent_val = data['form_percent_val'];

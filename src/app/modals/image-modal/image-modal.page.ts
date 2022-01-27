@@ -22,8 +22,8 @@ export class ImageModalPage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
-    console.log('this.slides',this.slides);
-    this.slides.update();
+    // console.log('this.slides',this.slides);
+    // this.slides.update();
   }
 
   async onZoom(zoomIn: boolean) {
