@@ -23,6 +23,14 @@ const routes: Routes = [
   {
     path: 'medical-questionnaire',
     loadChildren: () => import('./medical-questionnaire/medical-questionnaire.module').then( m => m.MedicalQuestionnairePageModule)
+  },
+  {
+    path: 'release-personal-info',
+    loadChildren: () => import('./release-personal-info/release-personal-info.module').then( m => m.ReleasePersonalInfoPageModule)
+  },
+  {
+    path: 'prescription-medication',
+    loadChildren: () => import('./prescription-medication/prescription-medication.module').then( m => m.PrescriptionMedicationPageModule)
   }
 ];
 

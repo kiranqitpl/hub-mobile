@@ -1,6 +1,29 @@
+<ion-header>
+  <ion-row>
+    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+      <ion-buttons class="back" title="Go Back">
+        <ion-button (click)="nav.back()">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col class="ion-text-center" size-xl="8" size-lg="8" size-md="8" size-sm="8" size-xs="8" class="title">
+      {{pName}}
+    </ion-col>
+    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+      <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
+        <ion-button>
+          <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+  <div class="tool"></div>
+</ion-header>
+
 <ion-content>
   <!-- <app-header [pageName]="pName"></app-header> -->
-  <div class="toolbar">
+  <!-- <div class="toolbar">
     <ion-text>{{pName}}</ion-text>
     <ion-buttons class="back" title="Go Back">
       <ion-button (click)="nav.back()">
@@ -12,409 +35,414 @@
         <ion-icon slot="icon-only" name="save-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-  </div>
-  <div class="container" #target>
+  </div> -->
+  <div class="container">
     <ion-row>
       <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
       <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
-        <ion-card [formGroup]="userProfileForm" (ionChange)="onProgressBar($event)">
+        <ion-card [formGroup]="userProfileForm" (ionChange)="onProgressBar($event)" class="card">
+          <div #target>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label>Salutation</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-select placeholder="Please select salutation" interface="action-sheet"
+                  formControlName="salutation">
+                  <ion-select-option value="{{salutationVal.id}}" *ngFor="let salutationVal of salutation">
+                    {{salutationVal.val}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
 
-          <ion-row>
-            <ion-col size="12">
-              <ion-label>Salutation</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-select placeholder="Please select salutation" interface="action-sheet" formControlName="salutation">
-                <ion-select-option value="{{salutationVal.id}}" *ngFor="let salutationVal of salutation">
-                  {{salutationVal.val}}
-                </ion-select-option>
-              </ion-select>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['salutation']!= ''">
+              <ion-col size="12">
+                <ion-label>First Name</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter first name" formControlName="first_name"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="isSubmitted && userProfileForm.value['first_name'] == ''">
+                Please enter first name.
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['first_name'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['salutation']!= ''">
-            <ion-col size="12">
-              <ion-label>First Name</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter first name" formControlName="first_name"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="isSubmitted && userProfileForm.value['first_name'] == ''">
-              Please enter first name.
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['first_name'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['first_name'] != ''">
+              <ion-col size="12">
+                <ion-label>Middle Name</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter middle name" formControlName="middel_name"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['middel_name'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['first_name'] != ''">
-            <ion-col size="12">
-              <ion-label>Middle Name</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter middle name" formControlName="middel_name"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['middel_name'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['middel_name'] != ''">
+              <ion-col size="12">
+                <ion-label>Last Name</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter last name" formControlName="last_name"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['last_name'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['middel_name'] != ''">
-            <ion-col size="12">
-              <ion-label>Last Name</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter last name" formControlName="last_name"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['last_name'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['last_name'] != ''">
+              <ion-col size="12">
+                <ion-label>Residential address</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter residential address" formControlName="residential_address">
+                </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['last_name'] != ''">
-            <ion-col size="12">
-              <ion-label>Residential address</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter residential address" formControlName="residential_address">
-              </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['residential_address'] != ''">
+              <ion-col size="12">
+                <ion-label>Town</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter town" formControlName="town"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['town'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['residential_address'] != ''">
-            <ion-col size="12">
-              <ion-label>Town</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter town" formControlName="town"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['town'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['town'] != ''">
+              <ion-col size="12">
+                <ion-label>State</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter state" formControlName="state"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['state'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['town'] != ''">
-            <ion-col size="12">
-              <ion-label>State</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter state" formControlName="state"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['state'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['state'] != ''">
+              <ion-col size="12">
+                <ion-label>Postcode</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter postcode" formControlName="postcode"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['postcode'].errors?.pattern">
+                Please enter number.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['state'] != ''">
-            <ion-col size="12">
-              <ion-label>Postcode</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter postcode" formControlName="postcode"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['postcode'].errors?.pattern">
-              Please enter number.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['postcode'] != ''">
+              <ion-col size="12">
+                <ion-label>Date of birth</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-datetime placeholder="Please select dob" formControlName="dob"> </ion-datetime>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['postcode'] != ''">
-            <ion-col size="12">
-              <ion-label>Date of birth</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-datetime placeholder="Please select dob" formControlName="dob"> </ion-datetime>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['dob'] != ''">
+              <ion-col size="12">
+                <ion-label>Place of birth</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter place of birth" formControlName="pob"> </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['dob'] != ''">
-            <ion-col size="12">
-              <ion-label>Place of birth</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter place of birth" formControlName="pob"> </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['pob'] != ''">
+              <ion-col size="12">
+                <ion-label>Mobile no</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter mobile no" formControlName="mobile_no"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['mobile_no'].errors?.pattern">
+                Please enter number.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['pob'] != ''">
-            <ion-col size="12">
-              <ion-label>Mobile no</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter mobile no" formControlName="mobile_no"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['mobile_no'].errors?.pattern">
-              Please enter number.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['mobile_no'] != ''">
+              <ion-col size="12">
+                <ion-label>Email</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input type="email" placeholder="Please enter email" formControlName="email"> </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['mobile_no'] != ''">
-            <ion-col size="12">
-              <ion-label>Email</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input type="email" placeholder="Please enter email" formControlName="email"> </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['email'] != ''">
+              <ion-col size="12">
+                <ion-label>Gender</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">
+                  <ion-select-option value="{{genderVal.id}}" *ngFor="let genderVal of gender">
+                    {{genderVal.val}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['email'] != ''">
-            <ion-col size="12">
-              <ion-label>Gender</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-select placeholder="Please select gender" interface="action-sheet" formControlName="gender">
-                <ion-select-option value="{{genderVal.id}}" *ngFor="let genderVal of gender">
-                  {{genderVal.val}}
-                </ion-select-option>
-              </ion-select>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['gender'] != ''">
+              <ion-col size="12">
+                <ion-label>USI Number</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter USI number" formControlName="usi_number"> </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['gender'] != ''">
-            <ion-col size="12">
-              <ion-label>USI Number</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter USI number" formControlName="usi_number"> </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['usi_number'] != ''">
+              <ion-col size="12">
+                <ion-label>SAP Number</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter SAP number" formControlName="sap_number"> </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['usi_number'] != ''">
-            <ion-col size="12">
-              <ion-label>SAP Number</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter SAP number" formControlName="sap_number"> </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['sap_number'] != ''">
+              <ion-col size="12">
+                <ion-label>Driver's licence Number</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter driver's licence number" formControlName="drivers_licence_number">
+                </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['sap_number'] != ''">
-            <ion-col size="12">
-              <ion-label>Driver's licence Number</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter driver's licence number" formControlName="drivers_licence_number">
-              </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['drivers_licence_number'] != ''">
+              <ion-col size="12">
+                <ion-label>Driver's licence Type</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter driver's licence type" formControlName="drivers_licence_type">
+                </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['drivers_licence_number'] != ''">
-            <ion-col size="12">
-              <ion-label>Driver's licence Type</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter driver's licence type" formControlName="drivers_licence_type">
-              </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['drivers_licence_type'] != ''">
+              <ion-col class="heading" size="12">Next of Kin</ion-col>
+              <ion-col size="12">
+                <ion-label>Name</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter name" formControlName="kin_name"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_name'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['drivers_licence_type'] != ''">
-            <ion-col class="heading" size="12">Next of Kin</ion-col>
-            <ion-col size="12">
-              <ion-label>Name</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter name" formControlName="kin_name"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_name'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['kin_name'] != ''">
+              <ion-col size="12">
+                <ion-label>Relationship</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter relationship" formControlName="kin_relationship"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_relationship'].errors?.pattern">
+                Please enter alphabets.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['kin_name'] != ''">
-            <ion-col size="12">
-              <ion-label>Relationship</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter relationship" formControlName="kin_relationship"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_relationship'].errors?.pattern">
-              Please enter alphabets.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['kin_relationship'] != ''">
+              <ion-col size="12">
+                <ion-label>Home address</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter home address" formControlName="kin_home_address"> </ion-input>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['kin_relationship'] != ''">
-            <ion-col size="12">
-              <ion-label>Home address</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter home address" formControlName="kin_home_address"> </ion-input>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['kin_home_address'] != ''">
+              <ion-col size="12">
+                <ion-label>Mobile no</ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input placeholder="Please enter mobile no" formControlName="kin_mobile_no"> </ion-input>
+              </ion-col>
+              <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_mobile_no'].errors?.pattern">
+                Please enter numbers.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['kin_home_address'] != ''">
-            <ion-col size="12">
-              <ion-label>Mobile no</ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-input placeholder="Please enter mobile no" formControlName="kin_mobile_no"> </ion-input>
-            </ion-col>
-            <ion-col size="12" class="error" *ngIf="userProfileForm.controls['kin_mobile_no'].errors?.pattern">
-              Please enter numbers.
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['kin_mobile_no'] != ''">
+              <ion-col size="12" class="heading">Qualification & Competencies</ion-col>
+              <ion-col size="12" class="sub-heading"> Copies of all relevant qualifications (clear colour scans or
+                photographs, front and back) are required to be submitted with this form.</ion-col>
+              <ion-col size="12" class="ion-text-center">High risk licences</ion-col>
+              <ion-col size="12" class="sub-heading"> Only national photo ID high risk licenses are accepted.</ion-col>
 
-          <ion-row *ngIf="userProfileForm.value['kin_mobile_no'] != ''">
-            <ion-col size="12" class="heading">Qualification & Competencies</ion-col>
-            <ion-col size="12" class="sub-heading"> Copies of all relevant qualifications (clear colour scans or
-              photographs, front and back) are required to be submitted with this form.</ion-col>
-            <ion-col size="12" class="ion-text-center">High risk licences</ion-col>
-            <ion-col size="12" class="sub-heading"> Only national photo ID high risk licenses are accepted.</ion-col>
+              <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
+                *ngFor="let high_risk_licence_key of high_risk_licence">
+                <ion-item lines="none">
+                  <ion-label class="ion-text-wrap">{{high_risk_licence_key.val}}</ion-label>
+                  <ion-checkbox slot="start" [value]="high_risk_licence_key.val"
+                    [checked]="high_risk_licence_key.isChecked" (ionChange)="onHighRiskLicences($event)">
+                  </ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
 
-            <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size-xs="12"
-              *ngFor="let high_risk_licence_key of high_risk_licence">
-              <ion-item lines="none">
-                <ion-label class="ion-text-wrap">{{high_risk_licence_key.val}}</ion-label>
-                <ion-checkbox slot="start" [value]="high_risk_licence_key.val"
-                  [checked]="high_risk_licence_key.isChecked" (ionChange)="onHighRiskLicences($event)">
-                </ion-checkbox>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['high_risk_licences'] != ''">
+              <ion-col size="12" class="heading">Other Qualifications</ion-col>
+              <ion-text class="text-val">Click the box below, and choose the qualifications you have in
+                the pop out box that appears. A set of fields for the expiry date of the qualification and a place to
+                upload supporting documents will appear once you make your selection. If the qualification you are
+                submitting does not have an expiry date, please leave that field blank.</ion-text>
+              <ion-col size="12">
+                <!-- <ion-textarea formControlName="other_qualification"></ion-textarea> -->
+                <ion-select placeholder="Please select qualification" interface="action-sheet"
+                  formControlName="other_qualification">
+                  <ion-select-option value="{{otherQualificationVal.id}}"
+                    *ngFor="let otherQualificationVal of otherQualification">
+                    {{otherQualificationVal.val}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['high_risk_licences'] != ''">
-            <ion-col size="12" class="heading">Other Qualifications</ion-col>
-            <ion-text class="text-val">Click the box below, and choose the qualifications you have in
-              the pop out box that appears. A set of fields for the expiry date of the qualification and a place to
-              upload supporting documents will appear once you make your selection. If the qualification you are
-              submitting does not have an expiry date, please leave that field blank.</ion-text>
-            <ion-col size="12">
-              <!-- <ion-textarea formControlName="other_qualification"></ion-textarea> -->
-              <ion-select placeholder="Please select qualification" interface="action-sheet"
-                formControlName="other_qualification">
-                <ion-select-option value="{{otherQualificationVal.id}}"
-                  *ngFor="let otherQualificationVal of otherQualification">
-                  {{otherQualificationVal.val}}
-                </ion-select-option>
-              </ion-select>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="userProfileForm.value['other_qualification'] != ''">
+              <ion-col size="12" class="ion-text-center"> RI - Rigging Intermediate</ion-col>
+              <ion-col size="12">
+                <ion-label>Expiry Date </ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-datetime placeholder="Please select expiry date" formControlName="ri_expiry_date"></ion-datetime>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['other_qualification'] != ''">
-            <ion-col size="12" class="ion-text-center"> RI - Rigging Intermediate</ion-col>
-            <ion-col size="12">
-              <ion-label>Expiry Date </ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-datetime placeholder="Please select expiry date" formControlName="ri_expiry_date"></ion-datetime>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="userProfileForm.value['ri_expiry_date'] != ''">
-            <ion-col size="12">
-              <ion-label>Upload Documents</ion-label>
-            </ion-col>
-            <ion-col size="12">
+            <ion-row *ngIf="userProfileForm.value['ri_expiry_date'] != ''">
+              <ion-col size="12">
+                <ion-label>Upload Documents</ion-label>
+              </ion-col>
+              <ion-col size="12">
 
-              <input type='file' multiple (change)="onSelectImage($event, 'riDocs')" *ngIf="riDocs.length < 2"
-                value='ri_document' id="riDocs">
+                <input type='file' multiple (change)="onSelectImage($event, 'riDocs')" *ngIf="riDocs.length < 2"
+                  value='ri_document' id="riDocs">
 
-              <ion-slides class="preview-slides" *ngIf="riDocs.length > 0">
-                <ion-slide *ngFor="let riDoc of riDocs; let i = index">
-                  <ion-grid>
-                    <ion-row *ngIf="riDoc.val">
-                      <ion-col size="11" *ngIf="riDoc.type == 'image'">
-                        <img [src]="riDoc.val" tappable (click)="onOpenPreview(riDoc.val)">
-                      </ion-col>
-                      <ion-col size="11" *ngIf="riDoc.type == 'pdf'">
-                        <ion-button class="pdf" (click)="onDownloadPdf(riDoc.val, 'ri-doc_'+(i+1))">Download PDF</ion-button>
-                      </ion-col>
-                      <ion-col size="1">
-                        <ion-icon name="close" (click)="onImageDelete(i, 'riDocs')"></ion-icon>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-slide>
-              </ion-slides>
+                <ion-slides class="preview-slides" *ngIf="riDocs.length > 0">
+                  <ion-slide *ngFor="let riDoc of riDocs; let i = index">
+                    <ion-grid>
+                      <ion-row *ngIf="riDoc.val">
+                        <ion-col size="11" *ngIf="riDoc.type == 'image'">
+                          <img [src]="riDoc.val" tappable (click)="onOpenPreview(riDoc.val)">
+                        </ion-col>
+                        <ion-col size="11" *ngIf="riDoc.type == 'pdf'">
+                          <ion-button class="pdf" (click)="onDownloadPdf(riDoc.val, 'ri-doc_'+(i+1))">Download PDF
+                          </ion-button>
+                        </ion-col>
+                        <ion-col size="1">
+                          <ion-icon name="close" (click)="onImageDelete(i, 'riDocs')"></ion-icon>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-slide>
+                </ion-slides>
 
-            </ion-col>
-            <ion-col size="12" class="text-val">
-              Two files max - PDF, PNG or JPEG only.
-            </ion-col>
-          </ion-row>
+              </ion-col>
+              <ion-col size="12" class="text-val">
+                Two files max - PDF, PNG or JPEG only.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="riDocs.length > 0">
-            <ion-col size="12" class="ion-text-center">Fire Warden</ion-col>
-            <ion-col size="12">
-              <ion-label>Expiry Date </ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-datetime placeholder="Please select expiry date" formControlName="fire_wardens_expiry_date">
-              </ion-datetime>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="riDocs.length > 0">
+              <ion-col size="12" class="ion-text-center">Fire Warden</ion-col>
+              <ion-col size="12">
+                <ion-label>Expiry Date </ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-datetime placeholder="Please select expiry date" formControlName="fire_wardens_expiry_date">
+                </ion-datetime>
+              </ion-col>
+            </ion-row>
 
-          <!-- <ion-row> -->
-          <ion-row *ngIf="userProfileForm.value['fire_wardens_expiry_date'] != ''">
-            <ion-col size="12">
-              <ion-label>Upload Documents </ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <input type='file' multiple (change)="onSelectImage($event, 'fireWardenDocs')"
-                *ngIf="fireWardenDocs.length < 2" value='fire_warden_document'>
-              <ion-slides class="preview-slides" *ngIf="fireWardenDocs.length > 0">
-                <ion-slide *ngFor="let fireWardenDoc of fireWardenDocs; let i = index">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col size="11" *ngIf="fireWardenDoc.type == 'image'">
-                        <img [src]="fireWardenDoc.val" tappable (click)="onOpenPreview(fireWardenDoc.val)">
-                      </ion-col>
-                      <ion-col size="11" *ngIf="fireWardenDoc.type == 'pdf'">
-                        <ion-button class="pdf"
-                          (click)="onDownloadPdf(fireWardenDoc.val, 'fire-warden-doc_'+(i+1))">Download PDF</ion-button>
-                      </ion-col>
-                      <ion-col size="1">
-                        <p class="question">
-                          <ion-icon name="close" (click)="onImageDelete(i, 'fireWardenDocs')"></ion-icon>
-                        </p>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-slide>
-              </ion-slides>
-            </ion-col>
-            <ion-col size="12" class="text-val">
-              Two files max - PDF, PNG or JPEG only.
-            </ion-col>
-          </ion-row>
+            <!-- <ion-row> -->
+            <ion-row *ngIf="userProfileForm.value['fire_wardens_expiry_date'] != ''">
+              <ion-col size="12">
+                <ion-label>Upload Documents </ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <input type='file' multiple (change)="onSelectImage($event, 'fireWardenDocs')"
+                  *ngIf="fireWardenDocs.length < 2" value='fire_warden_document'>
+                <ion-slides class="preview-slides" *ngIf="fireWardenDocs.length > 0">
+                  <ion-slide *ngFor="let fireWardenDoc of fireWardenDocs; let i = index">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="11" *ngIf="fireWardenDoc.type == 'image'">
+                          <img [src]="fireWardenDoc.val" tappable (click)="onOpenPreview(fireWardenDoc.val)">
+                        </ion-col>
+                        <ion-col size="11" *ngIf="fireWardenDoc.type == 'pdf'">
+                          <ion-button class="pdf" (click)="onDownloadPdf(fireWardenDoc.val, 'fire-warden-doc_'+(i+1))">
+                            Download PDF</ion-button>
+                        </ion-col>
+                        <ion-col size="1">
+                          <p class="question">
+                            <ion-icon name="close" (click)="onImageDelete(i, 'fireWardenDocs')"></ion-icon>
+                          </p>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-slide>
+                </ion-slides>
+              </ion-col>
+              <ion-col size="12" class="text-val">
+                Two files max - PDF, PNG or JPEG only.
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="fireWardenDocs.length > 0">
-            <ion-col size="12" class="ion-text-center">Drivers Licence - C</ion-col>
-            <ion-col size="12">
-              <ion-label>Expiry Date </ion-label>
-            </ion-col>
-            <ion-col size="12">
-              <ion-datetime placeholder="Please select expiry date" formControlName="driver_licence_C_expiry_date">
-              </ion-datetime>
-            </ion-col>
-          </ion-row>
+            <ion-row *ngIf="fireWardenDocs.length > 0">
+              <ion-col size="12" class="ion-text-center">Drivers Licence - C</ion-col>
+              <ion-col size="12">
+                <ion-label>Expiry Date </ion-label>
+              </ion-col>
+              <ion-col size="12">
+                <ion-datetime placeholder="Please select expiry date" formControlName="driver_licence_C_expiry_date">
+                </ion-datetime>
+              </ion-col>
+            </ion-row>
 
-          <ion-row *ngIf="userProfileForm.value['driver_licence_C_expiry_date'] != ''">
-            <ion-col size="12">
-              <ion-label>Upload Documents </ion-label>
-            </ion-col>
-            <ion-col size="12">
+            <ion-row *ngIf="userProfileForm.value['driver_licence_C_expiry_date'] != ''">
+              <ion-col size="12">
+                <ion-label>Upload Documents </ion-label>
+              </ion-col>
+              <ion-col size="12">
 
-              <input type='file' multiple (change)="onSelectImage($event, 'driverLicenceExpiryDocs')"
-                *ngIf="driverLicenceExpiryDocs.length < 2" value='drivers_licence_C_document'>
+                <input type='file' multiple (change)="onSelectImage($event, 'driverLicenceExpiryDocs')"
+                  *ngIf="driverLicenceExpiryDocs.length < 2" value='drivers_licence_C_document'>
 
-              <ion-slides class="preview-slides" *ngIf="driverLicenceExpiryDocs.length > 0">
-                <ion-slide *ngFor="let driverLicenceExpiryDoc of driverLicenceExpiryDocs; let i = index">
-                  <ion-grid>
+                <ion-slides class="preview-slides" *ngIf="driverLicenceExpiryDocs.length > 0">
+                  <ion-slide *ngFor="let driverLicenceExpiryDoc of driverLicenceExpiryDocs; let i = index">
+                    <ion-grid>
 
-                    <ion-row>
-                      <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'image'">
-                        <img [src]="driverLicenceExpiryDoc.val" tappable (click)="onOpenPreview(driverLicenceExpiryDoc.val)">
-                      </ion-col>
-                      <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'pdf'">
-                        <ion-button class="pdf"
-                          (click)="onDownloadPdf(driverLicenceExpiryDoc.val, 'driver-licence-expiry-doc_'+(i+1))">Download PDF</ion-button>
-                      </ion-col>
-                      <ion-col size="1">
-                        <p class="question">
-                          <ion-icon name="close" (click)="onImageDelete(i, 'driverLicenceExpiryDocs')"></ion-icon>
-                        </p>
-                      </ion-col>
-                    </ion-row>
-<!-- 
+                      <ion-row>
+                        <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'image'">
+                          <img [src]="driverLicenceExpiryDoc.val" tappable
+                            (click)="onOpenPreview(driverLicenceExpiryDoc.val)">
+                        </ion-col>
+                        <ion-col size="11" *ngIf="driverLicenceExpiryDoc.type == 'pdf'">
+                          <ion-button class="pdf"
+                            (click)="onDownloadPdf(driverLicenceExpiryDoc.val, 'driver-licence-expiry-doc_'+(i+1))">
+                            Download PDF</ion-button>
+                        </ion-col>
+                        <ion-col size="1">
+                          <p class="question">
+                            <ion-icon name="close" (click)="onImageDelete(i, 'driverLicenceExpiryDocs')"></ion-icon>
+                          </p>
+                        </ion-col>
+                      </ion-row>
+                      <!-- 
                     <ion-row>
                       <ion-col size="11">
                         <img [src]="driverLicenceExpiryDoc.val" tappable
@@ -432,39 +460,65 @@
                       </ion-col>
                     </ion-row> -->
 
-                  </ion-grid>
-                </ion-slide>
-              </ion-slides>
+                    </ion-grid>
+                  </ion-slide>
+                </ion-slides>
 
-            </ion-col>
-            <ion-col size="12" class="text-val">
-              Two files max - PDF, PNG or JPEG only.
-            </ion-col>
-          </ion-row>
+              </ion-col>
+              <ion-col size="12" class="text-val">
+                Two files max - PDF, PNG or JPEG only.
+              </ion-col>
+            </ion-row>
 
-          <ion-row>
-            <ion-col size="12" class="heading">Declaration</ion-col>
-            <ion-col size="12" class="text-val"> Before submitting this form, please take time to review your
-              responses and ensure all details are complete and correct.
-              <hr />
-            </ion-col>
-            <ion-col size="12" class="text-val"> I understand that the information in this form will be used for the
-              purpose of managing my access to project sites and assessing my competencies and qualifications to carry
-              out assigned work at this site. Further information may also be collected, such as site induction and
-              training records.
-            </ion-col>
+            <ion-row>
+              <ion-col size="12" class="heading">Declaration</ion-col>
+              <ion-col size="12" class="text-val"> Before submitting this form, please take time to review your
+                responses and ensure all details are complete and correct.
+                <hr />
+              </ion-col>
+              <ion-col size="12" class="text-val"> I understand that the information in this form will be used for the
+                purpose of managing my access to project sites and assessing my competencies and qualifications to carry
+                out assigned work at this site. Further information may also be collected, such as site induction and
+                training records.
+              </ion-col>
 
-            <ion-col size="12" class="text-val"> I certify that the information provided by me in this form is to the
-              best of my knowledge true and accurate. I will update HORT Enterprises if any of this information changes.
-            </ion-col>
+              <ion-col size="12" class="text-val"> I certify that the information provided by me in this form is to the
+                best of my knowledge true and accurate. I will update HORT Enterprises if any of this information
+                changes.
+              </ion-col>
 
-            <ion-col size="12" class="text-val"> I understand that HORT Enterprises reserve the right to verify the
-              information provided. Any false statements will be sufficient to cause this person's rejection as an
-              applicant for site access, dismissal if hired, or termination of agreement or contract.
-            </ion-col>
-          </ion-row>
+              <ion-col size="12" class="text-val"> I understand that HORT Enterprises reserve the right to verify the
+                information provided. Any false statements will be sufficient to cause this person's rejection as an
+                applicant for site access, dismissal if hired, or termination of agreement or contract.
+              </ion-col>
+            </ion-row>
 
-          <ion-row class="progress-bar">
+            <ion-row>
+              <ion-col size="12">
+                <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE
+                </ion-button>
+                <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <!-- </div>
+        <div class="card1"> -->
+
+            <!-- </div> -->
+            <ion-row class="progress-bar new card1">
+              <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+                Form progress bar
+              </ion-col>
+              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+                {{form_percent_val}}{{'%'}}
+              </ion-col>
+              <ion-col size="12">
+                <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+              </ion-col>
+            </ion-row>
+
+            <!-- <ion-row class="progress-bar new card1">
             <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
               Form progress bar
             </ion-col>
@@ -474,16 +528,9 @@
             <ion-col size="12">
               <ion-progress-bar [value]="form_percent"></ion-progress-bar>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
 
-          <ion-row>
-            <ion-col size="12">
-              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE
-              </ion-button>
-              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT
-              </ion-button>
-            </ion-col>
-          </ion-row>
+          </div>
 
         </ion-card>
       </ion-col>

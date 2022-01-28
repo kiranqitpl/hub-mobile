@@ -22,12 +22,12 @@ export class UserProfilePage implements OnInit {
     {
       menuName: 'Personal Details', route: '/user-profile/profile'
     },
-    // {
-    //   menuName: 'Authority to Release Personal Information', route: '#'
-    // },
-    // {
-    //   menuName: 'Prescription Medication', route: '#'
-    // },
+    {
+      menuName: 'Authority to Release Personal Information', route: '/user-profile/release-personal-info'
+    },
+    {
+      menuName: 'Prescription Medication', route: '#'
+    },
     {
       menuName: 'Superannuation Choice', route: '/user-profile/superannuation-choice'
     },

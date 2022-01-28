@@ -263,7 +263,7 @@
 
             <ion-col size="11" *ngIf="(super_contribution == 'RSA' && superannuation.value['fund_attachement']) || 
               (super_contribution == 'SMSF' && superannuation.value['fund_attachement'])">
-              <ion-button class="pdf"
+              <ion-button class="pdf ion-text-wrap"
                 (click)="onDownloadPdf(superannuation.value['fund_attachement'] , 'compliance-letter')">Download
                 Attach Compliance Letter</ion-button>
             </ion-col>
@@ -324,7 +324,7 @@
               </ion-col>
 
               <ion-col size="11" *ngIf="superannuation.value['fund_attachment_confirm_letter']">
-              <ion-button class="pdf"
+              <ion-button class="pdf ion-text-wrap"
                 (click)="onDownloadPdf(superannuation.value['fund_attachment_confirm_letter'] , 'fund-attachment-confirm-letter')">Download
                 Attach Confirmation Letter</ion-button>
             </ion-col>

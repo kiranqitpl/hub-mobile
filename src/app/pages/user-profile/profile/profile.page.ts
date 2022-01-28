@@ -398,6 +398,7 @@ export class ProfilePage implements OnInit {
   }
 
   onSubmit(complete_status) {
+    console.log('this.userProfileForm.value',this.userProfileForm.value);
     this.isSubmitted = true;
     if (this.userProfileForm.valid) {
       // this.loadingService.presentLoading();

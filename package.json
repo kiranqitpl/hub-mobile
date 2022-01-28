@@ -28,6 +28,7 @@
     "@capacitor/status-bar": "1.0.2",
     "@ionic-native/action-sheet": "^5.36.0",
     "@ionic-native/base64": "^5.35.0",
+    "@ionic-native/base64-to-gallery": "^5.36.0",
     "@ionic-native/camera": "^5.35.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
@@ -47,6 +48,7 @@
     "ngx-pagination": "^5.1.1",
     "resource": "0.8.1",
     "rxjs": "~6.6.0",
+    "signature_pad": "^4.0.2",
     "simple-pdf-viewer": "^2.0.3",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -72,6 +74,7 @@
     "@typescript-eslint/parser": "4.16.1",
     "com-badrit-base64": "^0.2.0",
     "cordova-android": "^9.1.0",
+    "cordova-base64-to-gallery": "^4.1.3",
     "cordova-browser": "^6.0.0",
     "cordova-plugin-advanced-http": "^3.2.2",
     "cordova-plugin-camera": "^5.0.3",
@@ -119,7 +122,8 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-actionsheet": {},
       "cordova-plugin-file-opener2": {},
-      "cordova-plugin-document-viewer": {}
+      "cordova-plugin-document-viewer": {},
+      "cordova-base64-to-gallery": {}
     },
     "platforms": [
       "browser",
