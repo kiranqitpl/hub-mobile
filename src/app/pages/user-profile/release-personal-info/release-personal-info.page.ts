@@ -72,4 +72,8 @@ export class ReleasePersonalInfoPage implements OnInit {
     }
   }
 
+  onSubmit(type){
+
+  }
+
 }

@@ -209,7 +209,7 @@ export class IncidentFormEditPage implements OnInit {
     public nav: NavController,
     private platform: Platform,
     private activatedRoute: ActivatedRoute,
-    private loadingService: LoadingService
+    // private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -815,7 +815,7 @@ export class IncidentFormEditPage implements OnInit {
   }
 
   pickImage(sourceType, tabName) {
-    this.loadingService.presentLoading();
+    // this.loadingService.presentLoading();
     let image: any;
 
     const options: CameraOptions = {
@@ -878,14 +878,14 @@ export class IncidentFormEditPage implements OnInit {
             }
           }
           this.onProgressBar('', '');
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
         } else {
           // console.log('Error in image processing.');
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
         }
       },
       (err) => {
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
         console.log("errOf Image ", err)
       }
     );

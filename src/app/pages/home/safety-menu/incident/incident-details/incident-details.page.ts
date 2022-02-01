@@ -28,7 +28,7 @@ export class IncidentDetailsPage implements OnInit {
     private global: GlobalService,
     private activatedRoute: ActivatedRoute,
     private modalController: ModalController,
-    private loadingService: LoadingService
+    // private loadingService: LoadingService
   ) { }
 
   ngOnInit() {

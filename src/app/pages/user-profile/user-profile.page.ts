@@ -26,7 +26,7 @@ export class UserProfilePage implements OnInit {
       menuName: 'Authority to Release Personal Information', route: '/user-profile/release-personal-info'
     },
     {
-      menuName: 'Prescription Medication', route: '#'
+      menuName: 'Prescription Medication', route: '/user-profile/prescription-medication'
     },
     {
       menuName: 'Superannuation Choice', route: '/user-profile/superannuation-choice'

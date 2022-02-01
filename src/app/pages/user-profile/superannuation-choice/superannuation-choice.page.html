@@ -1,5 +1,5 @@
 <ion-content>
-  <div class="toolbar">
+  <!-- <div class="toolbar">
     <ion-text>{{pName}}</ion-text>
     <ion-buttons class="back" title="Go Back">
       <ion-button (click)="nav.back()">
@@ -11,9 +11,9 @@
         <ion-icon slot="icon-only" name="save-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-  </div>
+  </div> -->
+  <app-header [pageName]="pName"></app-header>
   <div class="container" #target>
-
     <ion-row>
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
       <ion-col size-xl="6" size-lg="8" size-md="8" size-sm="12" size-xs="12">
@@ -53,7 +53,6 @@
         </ion-card>
 
         <ion-card [formGroup]="superannuation" (ionChange)="onProgressBar($event)">
-
           <ion-row *ngIf="super_contribution != 'EMPLOYER'">
             <ion-col size="12">
               <ion-label class="lable-text">Fund ABN</ion-label>
@@ -324,14 +323,15 @@
               </ion-col>
 
               <ion-col size="11" *ngIf="superannuation.value['fund_attachment_confirm_letter']">
-              <ion-button class="pdf ion-text-wrap"
-                (click)="onDownloadPdf(superannuation.value['fund_attachment_confirm_letter'] , 'fund-attachment-confirm-letter')">Download
-                Attach Confirmation Letter</ion-button>
-            </ion-col>
+                <ion-button class="pdf ion-text-wrap"
+                  (click)="onDownloadPdf(superannuation.value['fund_attachment_confirm_letter'] , 'fund-attachment-confirm-letter')">
+                  Download
+                  Attach Confirmation Letter</ion-button>
+              </ion-col>
 
-            <ion-col size="1" *ngIf="superannuation.value['fund_attachment_confirm_letter']">
-              <ion-icon name="close" (click)="onImageDelete('fund_attachment_confirm_letter')"></ion-icon>
-            </ion-col>
+              <ion-col size="1" *ngIf="superannuation.value['fund_attachment_confirm_letter']">
+                <ion-icon name="close" (click)="onImageDelete('fund_attachment_confirm_letter')"></ion-icon>
+              </ion-col>
 
             </ion-row>
           </div>
@@ -364,23 +364,57 @@
             </ion-col>
           </ion-row>
 
-          <ion-row class="progress-bar">
-            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+          <!-- <ion-row class="progress-bar">
+            <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="7" size-xs="7" class="padding">
               Form progress bar
             </ion-col>
-            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3" class="padding">
               {{form_percent_val}}{{'%'}}
+            </ion-col>
+            <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size-xs="2">
+              <ion-buttons *ngIf="(form_percent_val != 100)">
+                <ion-button (click)="onSubmit(0)" title="Submit Incomplete Form" >
+                  <ion-icon slot="icon-only" name="save-outline" color="primary"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+            </ion-col>
+          </ion-row> -->
+          <ion-row class="progress-bar">
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+              <ion-buttons *ngIf="(form_percent_val != 100)">
+                <ion-button (click)="onResetForm()" title="Reset Form">
+                  <ion-icon slot="icon-only" name="refresh-outline" color="primary"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="5" size-xs="5" class="padding">
+              Form progress bar
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3" class="padding">
+              {{form_percent_val}}{{'%'}}
+            </ion-col>
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+              <ion-buttons *ngIf="(form_percent_val != 100)">
+                <ion-button (click)="onSubmit(0)" title="Submit Incomplete Form">
+                  <ion-icon slot="icon-only" name="save-outline" color="primary"></ion-icon>
+                </ion-button>
+              </ion-buttons>
             </ion-col>
             <ion-col size="12">
               <ion-progress-bar [value]="form_percent"></ion-progress-bar>
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="(form_percent_val == 100)">
             <ion-col size="12">
-              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true">UPDATE
               </ion-button>
-              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT
+              <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false">SUBMIT
               </ion-button>
             </ion-col>
           </ion-row>
@@ -388,7 +422,6 @@
         </ion-card>
 
       </ion-col>
-
       <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>
     </ion-row>
   </div>

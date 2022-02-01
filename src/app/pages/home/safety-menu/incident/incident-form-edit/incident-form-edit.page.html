@@ -32,21 +32,6 @@
       <div class="ion-padding-start ion-padding-end">
         <p class="question">ReacIncident report</p>
         <!-- <div class="activeBackground"> -->
-          <div class="progress-bar">
-          <ion-row>
-            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="10" size-xs="9">
-              Form progress bar
-            </ion-col>
-            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="3">
-              {{form_percent_val}}{{'%'}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-            </ion-col>
-          </ion-row>
-        </div>
 
         <div *ngFor=" let tabItem of tabList">
           <ion-button class="incident" *ngIf="selectedTabItem != tabItem.val" (click)="onSelectTabItem(tabItem.val)"
@@ -1337,9 +1322,39 @@
         <!----------------------------------------------------- Classification Sub Tab ----------------------------------------------------------->
       </div>
 
-      <div class="container">
-        <ion-button (click)="onSubmit('submit')" class="btn">SUBMIT</ion-button>
+      <div class="progress-bar">
+        <ion-row>
+
+          <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="7" size-xs="7" class="padding">
+            Form progress bar
+          </ion-col>
+
+          <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3" class="padding">
+            {{form_percent_val}}{{'%'}}
+          </ion-col>
+
+          <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size-xs="2">
+            <ion-buttons (click)="onSubmit('incomplete_submit')" title="Submit Incomplete Form" *ngIf="(form_percent_val != 100)">
+              <ion-button>
+                <ion-icon slot="icon-only"  name="save-outline" color="primary"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-progress-bar [value]="form_percent"></ion-progress-bar>
+          </ion-col>
+        </ion-row>
       </div>
+
+      <ion-row *ngIf="(form_percent_val == 100)">
+        <ion-col size="12">
+          <ion-button (click)="onSubmit('submit')" class="btn">SUBMIT</ion-button>
+        </ion-col>
+      </ion-row>
 
     </ion-col>
     <ion-col size-xl="3" size-lg="2" size-md="2"></ion-col>

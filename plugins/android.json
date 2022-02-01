@@ -10,6 +10,9 @@
     "com-badrit-base64": {
       "PACKAGE_NAME": "io.ionic.hub"
     },
+    "cordova-base64-to-gallery": {
+      "PACKAGE_NAME": "io.ionic.hub"
+    },
     "cordova-plugin-actionsheet": {
       "PACKAGE_NAME": "io.ionic.hub"
     },
@@ -51,9 +54,6 @@
       "PACKAGE_NAME": "io.ionic.hub"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.ionic.hub"
-    },
-    "cordova-base64-to-gallery": {
       "PACKAGE_NAME": "io.ionic.hub"
     }
   },

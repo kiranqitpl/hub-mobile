@@ -4,7 +4,6 @@ import { Location } from '@angular/common';
 import { GlobalService } from 'src/app/services/global-service/global.service';
 import { environment } from 'src/environments/environment';
 
-
 @HostListener('window:resize', ['$event'])
 
 @Component({

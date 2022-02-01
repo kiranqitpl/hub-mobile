@@ -207,7 +207,7 @@ export class IncidentFormPage implements OnInit {
     private camera: Camera,
     private fb: FormBuilder,
     public nav: NavController,
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
   ) { }
 
   ngOnInit() {
@@ -444,7 +444,7 @@ export class IncidentFormPage implements OnInit {
   //----------------------------------------------------------- Images ----------------------------------------------------------------------//
 
   pickImage(sourceType, tabName) {
-    this.loadingService.presentLoading();
+    // this.loadingService.presentLoading();
     let image: any;
 
     const options: CameraOptions = {
@@ -507,14 +507,14 @@ export class IncidentFormPage implements OnInit {
             }
           }
           this.onProgressBar('', '');
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
         } else {
-          this.loadingService.dismissLoading();
+          // this.loadingService.dismissLoading();
         }
       },
 
       (err) => {
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
         console.log("errOf Image ", err)
       }
     );

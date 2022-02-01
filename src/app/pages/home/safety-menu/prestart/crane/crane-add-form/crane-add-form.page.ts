@@ -21,7 +21,7 @@ export class CraneAddFormPage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
   @ViewChild('target') myScrollContainer: ElementRef;
 
-  // pName: String = 'Crane';
+  pName: String = 'Crane';
   craneNoList = [
     {
       id: 'OHC01',
@@ -72,7 +72,7 @@ export class CraneAddFormPage implements OnInit {
     private alertService: AlertService,
     public globalService: GlobalService,
     private toastService: ToastService,
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     public nav: NavController,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService
@@ -112,7 +112,7 @@ export class CraneAddFormPage implements OnInit {
   }
 
   onSubmit(complete_status) {
-    this.loadingService.presentLoading();
+    // this.loadingService.presentLoading();
     let formData = {};
     formData = this.craneForm.value;
     formData['user_id'] = this.loggedInUser.id;
@@ -130,9 +130,9 @@ export class CraneAddFormPage implements OnInit {
       } else {
         this.toastService.toast(result['message'], 'danger');
       }
-      this.loadingService.dismissLoading();
+      // this.loadingService.dismissLoading();
     }, error => {
-      this.loadingService.dismissLoading();
+      // this.loadingService.dismissLoading();
       console.log(error);
     })
   }
@@ -154,16 +154,19 @@ export class CraneAddFormPage implements OnInit {
     let formControlList = [];
     Object.keys(this.craneForm.controls).map(ele => formControlList.push(ele));
     let data = this.sharedService.progressBar(formControlList, this.craneForm);
-   this.form_percent = data['form_percent'];
-   this.form_percent_val =  data['form_percent_val'];
+    this.form_percent = data['form_percent'];
+    this.form_percent_val = data['form_percent_val'];
   }
 
   loadData(id) {
     this.globalService.getData('add_form/getSingleData?table_name=crane&id=' + id).subscribe(result => {
       if (result && result['data'] && result['data'][0]) {
+        this.pName = 'Edit Crane';
         this.craneData = result['data'][0];
         this.craneForm.patchValue(this.craneData);
         this.onProgressBar('');
+      } else {
+        this.pName = 'Crane';
       }
     }), error => {
       console.log(error);

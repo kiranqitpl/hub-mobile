@@ -238,7 +238,7 @@ export class MedicalQuestionnairePage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private globalService: GlobalService,
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     private toastService: ToastService,
     public nav: NavController,
     private sharedService: SharedService,
@@ -354,6 +354,8 @@ export class MedicalQuestionnairePage implements OnInit {
       this.globalService.postData('OnboardingSuperannuation/saveEmployeeMedicalQuestionnair', { formData: formData }).subscribe(result => {
         if (result && result['status']) {
           // this.navCtrl.back();
+          this.medicalForm.reset();
+          this.onLoadData();
           this.toastService.toast(result['message'], 'success');
         } else {
           this.toastService.toast(result['message'], 'danger');

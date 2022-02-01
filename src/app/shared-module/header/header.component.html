@@ -1,50 +1,4 @@
 <div class="toolbar">
-
-  <!-- <ion-row>
-
-    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-      <ion-buttons *ngIf="pageName != 'Dashboard'">
-        <ion-button (click)="onGoBack()">
-          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-col>
-
-    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-      <ion-text>{{pageName}}</ion-text>
-    </ion-col>
-
-    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
-      <span>
-        <ion-avatar class="user-image">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
-      </span>
-      <span> {{userDetails.full_name}} </span>
-      <span (click)="onUserProfile()">
-
-
-        <div class="menu-nav">
-          <div class="dropdown-container" tabindex="-1">
-            <ion-icon name="chevron-down-outline"></ion-icon>
-            <div class="dropdown">
-              <a href="#">
-                <div>click here for a scam</div>
-              </a>
-              <a href="#">
-                <div>even more scams</div>
-              </a>
-              <a href="#">
-                <div>still some money left?</div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </span>
-    </ion-col>
-  </ion-row> -->
-
-
   <ion-text>{{pageName}}</ion-text>
 
   <span *ngIf="frame == false">
@@ -59,4 +13,28 @@
       </ion-button>
     </ion-buttons>
   </span>
+
 </div>
+
+<!-- <ion-header>
+  <ion-row>
+    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2" *ngIf="frame == false">
+      <ion-buttons class="back" title="Go Back" *ngIf="pageName != 'Dashboard'">
+        <ion-button (click)="onGoBack()">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col class="ion-text-center" size-xl="8" size-lg="8" size-md="8" size-sm="8" size-xs="8" class="title">
+      {{pageName}}
+    </ion-col>
+    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+      <ion-buttons class='logout' title="Logout">
+        <ion-button (click)="onLogOut()">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+  <div class="tool"></div>
+</ion-header> -->

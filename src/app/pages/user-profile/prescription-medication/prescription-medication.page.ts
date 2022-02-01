@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-prescription-medication',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrescriptionMedicationPage implements OnInit {
 
-  constructor() { }
+  pName: String = 'Prescription medication';
+
+  constructor(
+    public nav: NavController
+  ) { }
 
   ngOnInit() {
+  }
+
+  onSubmit(type){
+
   }
 
 }

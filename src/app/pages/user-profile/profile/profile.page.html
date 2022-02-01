@@ -1,28 +1,7 @@
-<ion-header>
-  <ion-row>
-    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
-      <ion-buttons class="back" title="Go Back">
-        <ion-button (click)="nav.back()">
-          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-col>
-    <ion-col class="ion-text-center" size-xl="8" size-lg="8" size-md="8" size-sm="8" size-xs="8" class="title">
-      {{pName}}
-    </ion-col>
-    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
-      <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
-        <ion-button>
-          <ion-icon slot="icon-only" name="save-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-col>
-  </ion-row>
-  <div class="tool"></div>
-</ion-header>
+
 
 <ion-content>
-  <!-- <app-header [pageName]="pName"></app-header> -->
+  <app-header [pageName]="pName"></app-header>
   <!-- <div class="toolbar">
     <ion-text>{{pName}}</ion-text>
     <ion-buttons class="back" title="Go Back">
@@ -493,42 +472,40 @@
               </ion-col>
             </ion-row>
 
-            <ion-row>
-              <ion-col size="12">
-                <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true && (form_percent_val == 100)">UPDATE
-                </ion-button>
-                <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false && (form_percent_val == 100)">SUBMIT
-                </ion-button>
+            <ion-row class="progress-bar">
+              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+                <ion-buttons *ngIf="(form_percent_val != 100)">
+                  <ion-button (click)="onResetForm()" title="Reset Form">
+                    <ion-icon slot="icon-only" name="refresh-outline" color="primary"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
               </ion-col>
-            </ion-row>
-
-            <!-- </div>
-        <div class="card1"> -->
-
-            <!-- </div> -->
-            <ion-row class="progress-bar new card1">
-              <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
+              <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="5" size-xs="5" class="padding">
                 Form progress bar
               </ion-col>
-              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
+              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3" class="padding">
                 {{form_percent_val}}{{'%'}}
+              </ion-col>
+              <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+                <ion-buttons *ngIf="(form_percent_val != 100)">
+                  <ion-button (click)="onSubmit(0)" title="Submit Incomplete Form">
+                    <ion-icon slot="icon-only" name="save-outline" color="primary"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
               </ion-col>
               <ion-col size="12">
                 <ion-progress-bar [value]="form_percent"></ion-progress-bar>
               </ion-col>
             </ion-row>
 
-            <!-- <ion-row class="progress-bar new card1">
-            <ion-col size-xl="10" size-lg="10" size-md="10" size-sm="9" size-xs="9">
-              Form progress bar
-            </ion-col>
-            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="3" size-xs="3">
-              {{form_percent_val}}{{'%'}}
-            </ion-col>
-            <ion-col size="12">
-              <ion-progress-bar [value]="form_percent"></ion-progress-bar>
-            </ion-col>
-          </ion-row> -->
+            <ion-row *ngIf="(form_percent_val == 100)">
+              <ion-col size="12">
+                <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == true">UPDATE
+                </ion-button>
+                <ion-button (click)="onSubmit(1)" class="btn" *ngIf="edit == false">SUBMIT
+                </ion-button>
+              </ion-col>
+            </ion-row>
 
           </div>
 

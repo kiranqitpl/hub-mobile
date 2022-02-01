@@ -6,7 +6,6 @@ import { ToastService } from 'src/app/services/toast-service/toast.service';
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import { environment } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-superannuation-choice',
@@ -23,7 +22,6 @@ export class SuperannuationChoicePage implements OnInit {
   isSubmitted: boolean = false;
   userDetails: {};
   super_contribution: string;
-  attachLetter: any = '';
   superannuation: FormGroup;
   edit: Boolean = false;
 
@@ -36,7 +34,7 @@ export class SuperannuationChoicePage implements OnInit {
     public nav: NavController,
     private toastService: ToastService,
     private sharedService: SharedService,
-    private loadingService: LoadingService
+    // private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -61,9 +59,6 @@ export class SuperannuationChoicePage implements OnInit {
       fund_web_url: ['', Validators.pattern(environment.url)],                                                          // EMPLOYER
       completed: [false],                                                                                               // RSA SMSF EMPLOYER
     });
-
-    // console.log('superannuation', this.superannuation);
-
     this.onLoadData();
   }
 
@@ -80,8 +75,6 @@ export class SuperannuationChoicePage implements OnInit {
         this.pName = 'Superannuation Choice';
         this.super_contribution = 'RSA';
       }
-
-      console.log( ' this.superannuation',this.superannuation.value);
       // this.loadingService.dismissLoading();
     }, error => {
       // this.loadingService.dismissLoading();
@@ -110,6 +103,8 @@ export class SuperannuationChoicePage implements OnInit {
 
       this.globalService.postData('OnboardingSuperannuation/saveSuperannuation', { formData: formData }).subscribe(result => {
         if (result && result['status']) {
+          this.superannuation.reset();
+          this.onLoadData();
           this.toastService.toast(result['message'], 'success');
         } else {
           this.toastService.toast(result['message'], 'danger');
@@ -205,8 +200,6 @@ export class SuperannuationChoicePage implements OnInit {
         }
       });
     }
-
-    console.log('this.superannuation',this.superannuation.value);
     let data = this.sharedService.progressBar(formControlList, this.superannuation);
     this.form_percent = data['form_percent'];
     this.form_percent_val = data['form_percent_val'];

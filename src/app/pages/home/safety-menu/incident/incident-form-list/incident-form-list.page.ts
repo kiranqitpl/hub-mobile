@@ -32,7 +32,7 @@ export class IncidentFormListPage implements OnInit {
   constructor(
     private nav: NavController,
     private global: GlobalService,
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     private sharedService: SharedService
   ) { }
 

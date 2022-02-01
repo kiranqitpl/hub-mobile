@@ -194,7 +194,7 @@ export class ProfilePage implements OnInit {
     private modalController: ModalController,
     // private fileOpener: FileOpener
     // private documentViewer: DocumentViewer
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     private toastService: ToastService,
     public nav: NavController,
   ) { }
@@ -398,15 +398,12 @@ export class ProfilePage implements OnInit {
   }
 
   onSubmit(complete_status) {
-    console.log('this.userProfileForm.value',this.userProfileForm.value);
     this.isSubmitted = true;
     if (this.userProfileForm.valid) {
-      // this.loadingService.presentLoading();
       let dob = this.userProfileForm.value['dob'] != '' && this.userProfileForm.value['dob'] != null ? moment(this.userProfileForm.value['dob']).format("DD-MM-YYYY") : '';
       let ri_expiry_date = this.userProfileForm.value['ri_expiry_date'] != '' && this.userProfileForm.value['ri_expiry_date'] != null ? moment(this.userProfileForm.value['ri_expiry_date']).format("DD-MM-YYYY") : "";
       let fire_wardens_expiry_date = this.userProfileForm.value['fire_wardens_expiry_date'] != '' && this.userProfileForm.value['fire_wardens_expiry_date'] != null ? moment(this.userProfileForm.value['fire_wardens_expiry_date']).format("DD-MM-YYYY") : "";
       let driver_licence_C_expiry_date = this.userProfileForm.value['driver_licence_C_expiry_date'] != '' && this.userProfileForm.value['driver_licence_C_expiry_date'] != null && this.userProfileForm.value['driver_licence_C_expiry_date'] != null ? moment(this.userProfileForm.value['driver_licence_C_expiry_date']).format("DD-MM-YYYY") : "";
-
       this.userProfileForm.controls['dob'].setValue(dob);
       this.userProfileForm.controls['ri_expiry_date'].setValue(ri_expiry_date);
       this.userProfileForm.controls['fire_wardens_expiry_date'].setValue(fire_wardens_expiry_date);
@@ -419,21 +416,23 @@ export class ProfilePage implements OnInit {
 
       this.globalService.postData('OnboardingSuperannuation/saveProfileDetails', { formData: formData }).subscribe(result => {
         if (result && result['status']) {
-          // this.navCtrl.back();
+          this.riDocs = [];
+          this.fireWardenDocs = [];
+          this.driverLicenceExpiryDocs = [];
+          this.userProfileForm.reset();
+          this.onLoadData();
           this.toastService.toast(result['message'], 'success');
         } else {
           this.toastService.toast(result['message'], 'danger');
         }
-        // this.loadingService.dismissLoading();
       }, error => {
-        // this.loadingService.dismissLoading();
         console.log('error', error);
       })
     }
   }
 
   onProgressBar(event) {
-    // this.sharedService.autoScroll(this.content, this.myScrollContainer);
+    this.sharedService.autoScroll(this.content, this.myScrollContainer);
     // this.content.scrollToPoint(0, this.myScrollContainer.nativeElement.scrollHeight, 6000);
     let formControlList = [];
     Object.keys(this.userProfileForm.controls).map(ele => formControlList.push(ele));

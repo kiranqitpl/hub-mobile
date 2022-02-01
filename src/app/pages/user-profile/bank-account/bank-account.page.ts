@@ -30,7 +30,7 @@ export class BankAccountPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private globalService: GlobalService,
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     private toastService: ToastService,
     public nav: NavController,
     private sharedService: SharedService
@@ -87,6 +87,8 @@ export class BankAccountPage implements OnInit {
       this.globalService.postData('OnboardingSuperannuation/saveEmployeeBankDetails', { formData: formData }).subscribe(result => {
         if (result && result['status']) {
           // this.navCtrl.back();
+          this.bankAccountForm.reset();
+          this.onLoadData();
           this.toastService.toast(result['message'], 'success');
         } else {
           this.toastService.toast(result['message'], 'danger');
@@ -97,6 +99,11 @@ export class BankAccountPage implements OnInit {
         console.log('error', error);
       })
     }
+  }
+
+
+  onResetForm() {
+
   }
 
   onProgressBar(event) {

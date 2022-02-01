@@ -8,6 +8,7 @@ import { ReleasePersonalInfoPageRoutingModule } from './release-personal-info-ro
 
 import { ReleasePersonalInfoPage } from './release-personal-info.page';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
+import { SharedModuleModule } from 'src/app/shared-module/shared-module.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
     FormsModule,
     IonicModule,
     ReleasePersonalInfoPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModuleModule
   ],
   declarations: [ReleasePersonalInfoPage],
   providers : [

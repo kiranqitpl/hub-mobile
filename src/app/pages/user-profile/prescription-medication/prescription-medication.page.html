@@ -1,9 +1,77 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>prescription-medication</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- <ion-header>
+  <ion-row>
+    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+      <ion-buttons class="back" title="Go Back">
+        <ion-button (click)="nav.back()">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col class="ion-text-center" size-xl="8" size-lg="8" size-md="8" size-sm="8" size-xs="8" class="title">
+      {{pName}}
+    </ion-col>
+    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+      <ion-buttons class='saveBtn' (click)="onSubmit(0)" title="Submit Incomplete Form">
+        <ion-button>
+          <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+  <div class="tool"></div>
+</ion-header> -->
 
 <ion-content>
+  <app-header [pageName]="pName"></app-header>
+  <div class="container" #target>
+    <ion-row>
+      <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
+      <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+        <ion-card>
+          <ion-row>
+            <ion-col size="12" class="error">
+              Please be advised that Hort Enterprises has a zero tolerance policy in relation to drugs and alcohol.
+            </ion-col>
+            <ion-col size="12" class="error">
+              Employees may at times, be required to undergo random drug and alcohol screens/tests, both within the
+              Company’s site[s] and at various Customer sites.
+            </ion-col>
+            <ion-col size="12" class="error">
+              It is a mandatory requirement of site inductions that employees be tested for drugs and/or alcohol
+              consumption before being allowed to work on the site.
+            </ion-col>
+            <ion-col size="12" class="error">
+              In relation to prescription medications (and some “over the counter” medications), the Company asks that
+              employees inform their Supervisor of any medication[s] being taken as soon as practicable following the
+              commencement of the medication. This is due to various prescription medications containing substances such
+              as codeine, pseudoephedrine etc., which will be detected as illegal substances when the employee is
+              tested.
+            </ion-col>
+            <ion-col size="12" class="error">
+              The taking of prescription medication is not discouraged. The Company merely asks that we be informed of
+              any prescription medication taken so that we and/or the Customer’s site supervision can best manage the
+              effects that may be caused by the medication.
+            </ion-col>
+            <ion-col size="12" class="error">
+              Confidentiality of any medical information will be assured.
+            </ion-col>
+            <ion-col size="12" class="error">
+              If the employee’s Supervisor is unavailable, the employee is advised to contact Reception on (02) 6391
+              4100 and inform them of the medication taken.
+            </ion-col>
+            <ion-col size="12" class="error">
+              Should an employee fail a drug and/or alcohol screen, they may be subject to disciplinary action as
+              outlined in the Company’s Drug and Alcohol Policy.
+            </ion-col>
 
+            <ion-col size="12" class="error">
+              Should an employee fail a drug and/or alcohol screen, they may be subject to disciplinary action as
+              outlined in the Company’s Drug and Alcohol Policy.
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="3"> </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

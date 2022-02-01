@@ -33,7 +33,7 @@ export class VehicleHoistAddFormPage implements OnInit {
   form_percent_val: number = 0;
 
   constructor(
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     private toastService: ToastService,
     public navCtrl: NavController,
     private fb: FormBuilder,
@@ -323,9 +323,12 @@ export class VehicleHoistAddFormPage implements OnInit {
   loadData(id) {
     this.globalService.getData('add_form/getSingleData?table_name=prestart&id=' + id).subscribe(result => {
       if (result && result['data'] && result['data'][0]) {
+        this.pName = 'Edit Vehicle Hoist';
         this.vehicleHoistSingleRecord = result['data'][0];
         this.vehicleHoistForm.patchValue(this.vehicleHoistSingleRecord);
         this.onProgressBar('');
+      } else {
+        this.pName = 'Vehicle Hoist';
       }
     }), error => {
       console.log(error);

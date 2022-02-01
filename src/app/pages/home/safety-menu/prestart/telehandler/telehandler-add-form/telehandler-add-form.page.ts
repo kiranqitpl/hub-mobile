@@ -75,7 +75,7 @@ export class TelehandlerAddFormPage implements OnInit {
     public globalService: GlobalService,
     private toastService: ToastService,
     public nav: NavController,
-    private loadingService: LoadingService,
+    // private loadingService: LoadingService,
     private modalController: ModalController,
     private sharedService: SharedService,
     public actionSheetController: ActionSheetController,
@@ -439,9 +439,12 @@ export class TelehandlerAddFormPage implements OnInit {
   loadData(id) {
     this.globalService.getData('add_form/getSingleData?table_name=telehandler&id=' + id).subscribe(result => {
       if (result && result['data'] && result['data'][0]) {
+        this.pName = 'Edit Telehandler';
         this.telehandlerData = result['data'][0];
         this.teleHandlerForm.patchValue(this.telehandlerData);
         this.onProgressBar('');
+      } else {
+        this.pName = 'Telehandler';
       }
     }), error => {
       console.log(error);
